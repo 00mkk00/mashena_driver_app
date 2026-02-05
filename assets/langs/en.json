@@ -1,0 +1,16 @@
+{
+  "onboarding": {
+    "1": {
+      "title": "Book a Ride Anytime",
+      "subtitle": "Find a nearby driver and book your ride in seconds."
+    },
+    "2": {
+      "title": "Track Your Driver Live",
+      "subtitle": "See your driver’s location and arrival time in real time."
+    },
+    "3": {
+      "title": "Easy & Secure Payments",
+      "subtitle": "Pay cash or online with complete safety and comfort."
+    }
+  }
+}
