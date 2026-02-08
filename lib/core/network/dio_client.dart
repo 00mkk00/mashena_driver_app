@@ -1,50 +1,50 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:easy_localization/easy_localization.dart';
-import './token_manager.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 
-class Api {
-  late final Dio _dio;
-  final TokenManager _tokenManager = TokenManager();
+import 'api_exception.dart';
 
-  static final Api _instance = Api._internal();
-  factory Api() => _instance;
-
-  Api._internal() {
-    _dio = Dio();
-    _setupDio();
+final class ApiClient {
+  ApiClient({
+    required TokenManager tokenManager,
+    Dio? dio,
+    required String baseUrl,
+  }) : _tokenManager = tokenManager,
+       _dio = dio ?? Dio() {
+    _setup(baseUrl);
   }
 
-  void _setupDio() {
+  final Dio _dio;
+  final TokenManager _tokenManager;
+
+  void _setup(String baseUrl) {
     _dio.options = BaseOptions(
+      baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       sendTimeout: const Duration(seconds: 30),
-      headers: {
+      headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     );
 
-    // إضافة interceptor للـ token تلقائياً
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await _tokenManager.getAccessToken();
-          if (token != null) {
+          if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
-          return handler.next(options);
+          handler.next(options);
         },
         onError: (error, handler) async {
-          // معالجة 401 (token expired)
           if (error.response?.statusCode == 401) {
-            // هنا يمكنك إضافة منطق refresh token
-            await _handleTokenExpired();
+            // قرار: امسح التوكين وخلي الـ UI يوجّه للـ login
+            await _tokenManager.clearTokens();
           }
-          return handler.next(error);
+          handler.next(error);
         },
       ),
     );
@@ -60,305 +60,141 @@ class Api {
     }
   }
 
-  Future<void> _handleTokenExpired() async {
-    // يمكنك إضافة منطق refresh token هنا
-    await _tokenManager.clearTokens();
-    // يمكنك إرسال event للتطبيق للانتقال لشاشة الـ login
-  }
-
-  Future<dynamic> get({
-    required String url,
-    Map<String, dynamic>? queryParameters,
-  }) async {
+  Future<dynamic> get(String path, {Map<String, dynamic>? query}) async {
     try {
-      final options = _buildOptions();
-
-      Response response = await _dio.get(
-        url,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
+      final res = await _dio.get(path, queryParameters: query);
+      return _handle(res);
     } on DioException catch (e) {
-      throw Exception(_handleError(e));
+      throw _map(e);
     }
   }
 
-  Future<dynamic> post({
-    required String url,
+  Future<dynamic> post(
+    String path, {
     dynamic body,
-    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? query,
   }) async {
     try {
-      final options = _buildOptions();
-
-      Response response = await _dio.post(
-        url,
-        data: body,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
+      final res = await _dio.post(path, data: body, queryParameters: query);
+      return _handle(res);
     } on DioException catch (e) {
-      throw Exception(_handleError(e));
+      throw _map(e);
     }
   }
 
-  // دالة جديدة لإرسال بيانات multipart/form-data
-  Future<dynamic> postFormData({
-    required String url,
+  Future<dynamic> put(
+    String path, {
+    dynamic body,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      final res = await _dio.put(path, data: body, queryParameters: query);
+      return _handle(res);
+    } on DioException catch (e) {
+      throw _map(e);
+    }
+  }
+
+  Future<dynamic> patch(
+    String path, {
+    dynamic body,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      final res = await _dio.patch(path, data: body, queryParameters: query);
+      return _handle(res);
+    } on DioException catch (e) {
+      throw _map(e);
+    }
+  }
+
+  Future<dynamic> delete(
+    String path, {
+    dynamic body,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      final res = await _dio.delete(path, data: body, queryParameters: query);
+      return _handle(res);
+    } on DioException catch (e) {
+      throw _map(e);
+    }
+  }
+
+  Future<dynamic> postFormData(
+    String path, {
     required Map<String, dynamic> data,
-    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? query,
   }) async {
     try {
-      final options = _buildOptions(
-        additionalHeaders: {'Content-Type': 'multipart/form-data'},
+      final form = FormData.fromMap(data);
+      final res = await _dio.post(
+        path,
+        data: form,
+        queryParameters: query,
+        options: Options(
+          headers: const {'Content-Type': 'multipart/form-data'},
+        ),
       );
-
-      FormData formData = FormData.fromMap(data);
-
-      Response response = await _dio.post(
-        url,
-        data: formData,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
+      return _handle(res);
     } on DioException catch (e) {
-      throw Exception(_handleError(e));
+      throw _map(e);
     }
   }
 
-  Future<dynamic> put({
-    required String url,
-    dynamic body,
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    try {
-      final options = _buildOptions();
+  dynamic _handle(Response response) {
+    final code = response.statusCode ?? 0;
+    if (code >= 200 && code < 300) return response.data;
 
-      Response response = await _dio.put(
-        url,
-        data: body,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw Exception(_handleError(e));
-    }
+    throw ApiException(
+      ApiErrorCode.badResponse,
+      statusCode: code,
+      data: response.data,
+      message: 'Non-2xx response',
+    );
   }
 
-  Future<dynamic> patch({
-    required String url,
-    dynamic body,
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    try {
-      final options = _buildOptions();
-
-      Response response = await _dio.patch(
-        url,
-        data: body,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw Exception(_handleError(e));
-    }
-  }
-
-  Future<dynamic> delete({
-    required String url,
-    dynamic body,
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    try {
-      final options = _buildOptions();
-
-      Response response = await _dio.delete(
-        url,
-        data: body,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw Exception(_handleError(e));
-    }
-  }
-
-  Future<dynamic> uploadFile({
-    required String url,
-    required String filePath,
-    required String fileKey,
-    Map<String, dynamic>? additionalData,
-  }) async {
-    try {
-      final options = _buildOptions();
-
-      FormData formData = FormData.fromMap({
-        fileKey: await MultipartFile.fromFile(filePath),
-        ...?additionalData,
-      });
-
-      Response response = await _dio.post(
-        url,
-        data: formData,
-        options: options,
-      );
-
-      return _handleResponse(response);
-    } on DioException catch (e) {
-      throw Exception(_handleError(e));
-    }
-  }
-
-  Future<void> downloadFile({
-    required String url,
-    required String savePath,
-    ProgressCallback? onProgress,
-  }) async {
-    try {
-      final options = _buildOptions();
-
-      await _dio.download(
-        url,
-        savePath,
-        options: options,
-        onReceiveProgress: onProgress,
-      );
-    } on DioException catch (e) {
-      throw Exception(_handleError(e));
-    }
-  }
-
-  Options _buildOptions({Map<String, dynamic>? additionalHeaders}) {
-    Map<String, dynamic> headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-
-    if (additionalHeaders != null) {
-      headers.addAll(additionalHeaders);
-    }
-
-    return Options(headers: headers);
-  }
-
-  dynamic _handleResponse(Response response) {
-    if (response.statusCode != null &&
-        response.statusCode! >= 200 &&
-        response.statusCode! < 300) {
-      return response.data;
-    } else {
-      throw Exception(
-        'api.request_failed'.tr(args: ['${response.statusCode}']),
-      );
-    }
-  }
-
-  String _handleError(DioException e) {
+  ApiException _map(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
-        return 'api.connection_timeout'.tr();
-
+        return const ApiException(ApiErrorCode.connectionTimeout);
       case DioExceptionType.sendTimeout:
-        return 'api.send_timeout'.tr();
-
+        return const ApiException(ApiErrorCode.sendTimeout);
       case DioExceptionType.receiveTimeout:
-        return 'api.receive_timeout'.tr();
-
-      case DioExceptionType.badResponse:
-        return _handleBadResponse(e);
-
+        return const ApiException(ApiErrorCode.receiveTimeout);
       case DioExceptionType.cancel:
-        return 'api.request_cancelled'.tr();
-
+        return const ApiException(ApiErrorCode.cancel);
       case DioExceptionType.connectionError:
-        return 'api.connection_error'.tr();
-
+        return const ApiException(ApiErrorCode.connectionError);
       case DioExceptionType.badCertificate:
-        return 'api.certificate_error'.tr();
-
+        return const ApiException(ApiErrorCode.badCertificate);
+      case DioExceptionType.badResponse:
+        return ApiException(
+          ApiErrorCode.badResponse,
+          statusCode: e.response?.statusCode,
+          data: e.response?.data,
+          message: e.message,
+        );
       case DioExceptionType.unknown:
-        return e.message ?? 'api.unknown_error'.tr();
+        return ApiException(ApiErrorCode.unknown, message: e.message);
     }
   }
 
-  String _handleBadResponse(DioException e) {
-    final statusCode = e.response?.statusCode;
-    final data = e.response?.data;
-
-    switch (statusCode) {
-      case 400:
-        return _extractErrorMessage(data) ?? 'api.bad_request'.tr();
-      case 401:
-        return 'api.unauthorized'.tr();
-      case 403:
-        return 'api.forbidden'.tr();
-      case 404:
-        return 'api.not_found'.tr();
-      case 422:
-        return _extractErrorMessage(data) ?? 'api.validation_error'.tr();
-      case 500:
-        return 'api.server_error'.tr();
-      case 502:
-        return 'api.bad_gateway'.tr();
-      case 503:
-        return 'api.service_unavailable'.tr();
-      default:
-        return _extractErrorMessage(data) ??
-            'api.request_failed'.tr(args: ['$statusCode']);
-    }
-  }
-
-  String? _extractErrorMessage(dynamic data) {
+  String? extractServerMessage(dynamic data) {
     if (data == null) return null;
 
     try {
       if (data is Map<String, dynamic>) {
-        final possibleKeys = ['message', 'error', 'msg', 'detail', 'details'];
-
-        for (String key in possibleKeys) {
-          if (data.containsKey(key) && data[key] != null) {
-            if (data[key] is String) {
-              return data[key];
-            } else if (data[key] is List && (data[key] as List).isNotEmpty) {
-              return (data[key] as List).first.toString();
-            }
-          }
-        }
-
-        for (var value in data.values) {
-          if (value is String && value.isNotEmpty) {
-            return value;
-          }
+        const keys = ['message', 'error', 'msg', 'detail', 'details'];
+        for (final k in keys) {
+          final v = data[k];
+          if (v is String && v.isNotEmpty) return v;
+          if (v is List && v.isNotEmpty) return v.first.toString();
         }
       }
-
       return data.toString();
     } catch (_) {
       return null;
     }
-  }
-
-  void cancelAllRequests() {
-    _dio.close(force: true);
-  }
-
-  void addRequestInterceptor(InterceptorsWrapper interceptor) {
-    _dio.interceptors.add(interceptor);
-  }
-
-  void clearInterceptors() {
-    _dio.interceptors.clear();
   }
 }

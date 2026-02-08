@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/entities/onboarding_entity.dart';
@@ -14,15 +13,15 @@ class PageViewItem extends StatelessWidget {
       children: [
         const Spacer(),
         Text(
-          onboardingEntity.titleKey.tr(),
-          style: AppTextStyles.w400_12,
+          onboardingEntity.title,
+          style: AppTextStyles.w400_42,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
-            onboardingEntity.subtitleKey.tr(),
+            onboardingEntity.subtitle,
             textAlign: TextAlign.center,
             style: AppTextStyles.w400_16.copyWith(color: Colors.grey.shade700),
           ),

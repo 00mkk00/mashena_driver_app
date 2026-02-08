@@ -1,21 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mashena_driver_app/app/app.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
 
-  runApp(
-    ScreenUtilInit(
-      designSize: Size(428, 926),
-      child: EasyLocalization(
-        supportedLocales: const [Locale('en'), Locale('ar')],
-        path: 'assets/langs',
-        fallbackLocale: const Locale('en'),
-        child: const App(),
-      ),
-    ),
-  );
+  await configureDependencies();
+  await dotenv.load(fileName: '.env');
+  runApp(ScreenUtilInit(designSize: Size(428, 926), child: const App()));
 }

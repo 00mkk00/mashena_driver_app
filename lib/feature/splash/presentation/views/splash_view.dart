@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/app/router/app_routes.dart';
+import 'package:mashena_driver_app/core/constants/app_constants.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/core/utils/app_images.dart';
 
@@ -58,10 +63,18 @@ class _SplashViewState extends State<SplashView>
     _controller.forward();
 
     // اختياري: تنقّل بعد ما تخلص
-    // Future.delayed(const Duration(milliseconds: 1800), () {
-    //   if (!mounted) return;
-    //   Navigator.pushReplacementNamed(context, '/home');
-    // });
+    Future.delayed(const Duration(milliseconds: 1800), () {
+      if (!mounted) return;
+      final storage = getIt<LocalStorage>();
+      final onboardingSeen =
+          storage.getBool(AppConstants.isOnboardingSeenKey) ?? false;
+
+      if (onboardingSeen) {
+        context.go(AppRoutes.signupPath);
+      } else {
+        context.go(AppRoutes.onboardingPath);
+      }
+    });
   }
 
   @override

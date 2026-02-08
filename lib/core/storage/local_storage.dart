@@ -1,29 +1,11 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
-class Prefs {
-  static late SharedPreferences _instance;
-
-  static Future<void> init() async {
-    _instance = await SharedPreferences.getInstance();
-  }
-
-  static void setBool(String key, bool value) {
-    _instance.setBool(key, value);
-  }
-
-  static bool getBool(String key) {
-    return _instance.getBool(key) ?? false;
-  }
-
-  static Future<void> setString(String key, String value) async {
-    await _instance.setString(key, value);
-  }
-
-  static String getString(String key) {
-    return _instance.getString(key) ?? '';
-  }
-
-  static Future<void> remove(String key) async {
-    await _instance.remove(key);
-  }
+abstract class LocalStorage {
+  Future<bool> setBool(String key, bool value);
+  bool? getBool(String key);
+  Future<bool> setString(String key, String value);
+  String? getString(String key);
+  Future<bool> setInt(String key, int value);
+  int? getInt(String key);
+  Future<bool> remove(String key);
+  Future<bool> clear();
+  bool containsKey(String key);
 }

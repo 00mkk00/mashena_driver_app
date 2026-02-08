@@ -1,26 +1,26 @@
-sealed class Failure {
-  const Failure(this.key, {this.args});
-  final String key; // مثل: api.connection_timeout
-  final List<String>? args; // optional args for interpolation
+enum FailureCode {
+  networkTimeout,
+  networkConnection,
+  requestCancelled,
+  unauthorized,
+  forbidden,
+  notFound,
+  validation,
+  server,
+  cache,
+  unknown,
 }
 
-final class NetworkFailure extends Failure {
-  const NetworkFailure(super.key, {super.args});
-}
+final class Failure {
+  const Failure(
+    this.code, {
+    this.statusCode,
+    this.args = const [],
+    this.rawMessage,
+  });
 
-final class ServerFailure extends Failure {
-  const ServerFailure(super.key, {super.args, this.statusCode});
+  final FailureCode code;
   final int? statusCode;
-}
-
-final class CacheFailure extends Failure {
-  const CacheFailure(super.key, {super.args});
-}
-
-final class UnknownFailure extends Failure {
-  const UnknownFailure(super.key, {super.args});
-}
-
-final class UnAuthorizedFailure extends Failure {
-  const UnAuthorizedFailure(super.key, {super.args});
+  final List<String> args;
+  final String? rawMessage;
 }
