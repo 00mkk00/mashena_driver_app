@@ -20,8 +20,8 @@ class SignupViewBody extends StatelessWidget {
         const SizedBox(height: 20),
         Field(
           hint: S.of(context).authFullName,
-          autofillHints: const [AutofillHints.email],
-          keyboardType: TextInputType.emailAddress,
+          autofillHints: const [AutofillHints.name],
+          keyboardType: TextInputType.name,
         ),
         const SizedBox(height: 20),
         Field(
@@ -32,8 +32,15 @@ class SignupViewBody extends StatelessWidget {
         const SizedBox(height: 20),
         Field(
           hint: S.of(context).authPhone,
-          autofillHints: const [AutofillHints.email],
-          keyboardType: TextInputType.emailAddress,
+          autofillHints: const [AutofillHints.telephoneNumber],
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 20),
+        Field(
+          obscureText: true,
+          hint: S.of(context).authPassword,
+          autofillHints: const [AutofillHints.password],
+          keyboardType: TextInputType.visiblePassword,
         ),
         const SizedBox(height: 20),
         SizedBox(
