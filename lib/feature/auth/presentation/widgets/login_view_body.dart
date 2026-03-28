@@ -4,9 +4,9 @@ import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/common/extension/responsive_context_x.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/fields.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/signup_footer.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/signup_header.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_header.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});

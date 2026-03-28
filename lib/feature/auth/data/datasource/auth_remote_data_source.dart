@@ -1,21 +1,21 @@
+import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/auth/data/models/driver_model.dart';
 import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
 
-abstract class DriverRemoteDataSource {
-  Future<DriverModel> createDriver(CreateDriverParams params);
+abstract class AuthRemoteDataSource {
+  Future<DriverModel> signup(CreateDriverParams params);
 }
 
-
-class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final ApiClient apiClient;
 
-  DriverRemoteDataSourceImpl(this.apiClient);
+  AuthRemoteDataSourceImpl(this.apiClient);
 
   @override
-  Future<DriverModel> createDriver(CreateDriverParams params) async {
+  Future<DriverModel> signup(CreateDriverParams params) async {
     final response = await apiClient.post(
-      "/api/user/drivers",
+      Endpoints.signup,
       body: params.toJson(),
     );
 

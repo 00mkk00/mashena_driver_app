@@ -4,10 +4,9 @@ import 'package:mashena_driver_app/feature/auth/domin/usecases/signup_usecase.da
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  final CreateDriverUseCase createDriverUseCase;
+  final SignupUseCase signupUseCase;
 
-  SignupCubit(this.createDriverUseCase)
-      : super(const SignupState.initial());
+  SignupCubit(this.signupUseCase) : super(const SignupState.initial());
 
   Future<void> signup({
     required String fullName,
@@ -27,7 +26,7 @@ class SignupCubit extends Cubit<SignupState> {
         city: city,
       );
 
-      final result = await createDriverUseCase(params);
+      final result = await signupUseCase(params);
 
       emit(SignupState.success(result));
     } catch (e) {

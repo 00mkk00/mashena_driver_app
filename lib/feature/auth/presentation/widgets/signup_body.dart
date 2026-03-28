@@ -7,9 +7,9 @@ import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/fields.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/signup_footer.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/signup_header.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_header.dart';
 
 class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});
@@ -20,10 +20,10 @@ class SignupViewBody extends StatefulWidget {
 
 class _SignupViewBodyState extends State<SignupViewBody> {
   final fullNameController = TextEditingController();
-final emailController = TextEditingController();
-final phoneController = TextEditingController();
-final passwordController = TextEditingController();
-final cityController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  final cityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,15 +61,15 @@ final cityController = TextEditingController();
           child: CustomElevatedButton(
             title: S.of(context).commonNext,
             onPressed: () {
-               final params = CreateDriverParams(
-    fullName: fullNameController.text,
-    email: emailController.text,
-    phoneNumber: phoneController.text,
-    password: passwordController.text,
-    city: cityController.text,
-  );
+              final params = CreateDriverParams(
+                fullName: fullNameController.text,
+                email: emailController.text,
+                phoneNumber: phoneController.text,
+                password: passwordController.text,
+                city: cityController.text,
+              );
 
-  context.read<SignupCubit>().createDriverUseCase(params);
+              context.read<SignupCubit>().signupUseCase(params);
             },
           ),
         ),

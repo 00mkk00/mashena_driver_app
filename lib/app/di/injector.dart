@@ -72,12 +72,12 @@ Future<void> configureDependencies() async {
     () => GetOnboardingStatus(getIt<LocalStorage>()),
   );
   //============================
-  getIt.registerLazySingleton<DriverRemoteDataSource>(
-    () => DriverRemoteDataSourceImpl(getIt<ApiClient>()),
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(getIt<ApiClient>()),
   );
 
-  getIt.registerLazySingleton<DriverRepository>(
-    () => DriverRepositoryImpl(getIt<DriverRemoteDataSource>()),
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(getIt<AuthRemoteDataSource>()),
   );
 
   // ======================

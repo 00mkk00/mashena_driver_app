@@ -1,17 +1,17 @@
 import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
-import 'package:mashena_driver_app/feature/auth/data/mappers/auth_mapper.dart';
+import 'package:mashena_driver_app/feature/auth/data/mappers/driver_mapper.dart';
 import 'package:mashena_driver_app/feature/auth/domin/entities/driver_entity.dart';
 import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/domin/repos/auth_repo.dart';
 
-class DriverRepositoryImpl implements DriverRepository {
-  final DriverRemoteDataSource remoteDataSource;
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthRemoteDataSource remoteDataSource;
 
-  DriverRepositoryImpl(this.remoteDataSource);
+  AuthRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<DriverEntity> createDriver(CreateDriverParams params) async {
-    final model = await remoteDataSource.createDriver(params);
+  Future<DriverEntity> signup(CreateDriverParams params) async {
+    final model = await remoteDataSource.signup(params);
     return model.toEntity();
   }
 }

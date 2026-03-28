@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_state.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/views/widgets/signup_body.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_body.dart';
 
 class SignupView extends StatelessWidget {
   const SignupView({super.key});

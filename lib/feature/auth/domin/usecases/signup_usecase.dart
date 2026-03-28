@@ -2,12 +2,12 @@ import 'package:mashena_driver_app/feature/auth/domin/entities/driver_entity.dar
 import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/domin/repos/auth_repo.dart';
 
-class CreateDriverUseCase {
-  final DriverRepository repository;
+class SignupUseCase {
+  final AuthRepository repository;
 
-  CreateDriverUseCase(this.repository);
+  SignupUseCase(this.repository);
 
   Future<DriverEntity> call(CreateDriverParams params) {
-    return repository.createDriver(params);
+    return repository.signup(params);
   }
 }
