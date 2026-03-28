@@ -45,6 +45,5 @@ class LoginViewBody extends StatelessWidget {
         SignupFooter(onTapLogin: () => context.go(AppRoutes.signupPath)),
       ],
     );
-    ;
   }
 }

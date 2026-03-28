@@ -7,6 +7,9 @@ import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/network/token_manager_impl.dart';
 import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/storage/local_storage_impl.dart';
+import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/auth/data/repos/auth_repository_impl.dart';
+import 'package:mashena_driver_app/feature/auth/domin/repos/auth_repo.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,6 +70,14 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<GetOnboardingStatus>(
     () => GetOnboardingStatus(getIt<LocalStorage>()),
+  );
+  //============================
+  getIt.registerLazySingleton<DriverRemoteDataSource>(
+    () => DriverRemoteDataSourceImpl(getIt<ApiClient>()),
+  );
+
+  getIt.registerLazySingleton<DriverRepository>(
+    () => DriverRepositoryImpl(getIt<DriverRemoteDataSource>()),
   );
 
   // ======================
