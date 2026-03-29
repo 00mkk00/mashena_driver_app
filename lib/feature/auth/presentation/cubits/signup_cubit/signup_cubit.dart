@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
-import 'package:mashena_driver_app/feature/auth/domin/usecases/signup_usecase.dart';
+import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
+import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {

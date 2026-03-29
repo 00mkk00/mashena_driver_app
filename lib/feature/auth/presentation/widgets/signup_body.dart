@@ -5,7 +5,7 @@ import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/common/extension/responsive_context_x.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
-import 'package:mashena_driver_app/feature/auth/domin/params/create_driver_params.dart';
+import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
