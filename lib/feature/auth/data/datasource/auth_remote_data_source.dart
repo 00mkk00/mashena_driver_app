@@ -1,7 +1,9 @@
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/auth/data/models/driver_model.dart';
+import 'package:mashena_driver_app/feature/auth/data/models/login_model.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
+import 'package:mashena_driver_app/feature/auth/domain/params/login_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/send_otp_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/verify_otp_params.dart';
 
@@ -9,6 +11,8 @@ abstract class AuthRemoteDataSource {
   Future<DriverModel> signup(CreateDriverParams params);
    Future<void> sendOtp(SendOtpParams params);
   Future<void> verifyOtp(VerifyOtpParams params);
+    Future<LoginModel> login(LoginParams params);
+
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -40,5 +44,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       "/api/user/verify-otp",
       body: params.toJson(),
     );
+  }
+  @override
+  Future<LoginModel> login(LoginParams params) async {
+    final response = await apiClient.post(
+      "/api/user/login",
+      body: params.toJson(),
+    );
+
+    return LoginModel.fromJson(response.data);
   }
 }

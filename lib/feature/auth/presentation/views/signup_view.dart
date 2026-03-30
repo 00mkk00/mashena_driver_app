@@ -9,32 +9,31 @@ class SignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: BlocListener<SignupCubit, SignupState>(
           listener: (context, state) {
-    state.when(
-      initial: () {},
-      loading: () {
-        showDialog(
-          context: context,
-          builder: (_) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      },
-      success: (driver) {
-        Navigator.pop(context); // close loader
-        // context.go(AppRoutes.homePath);
-      },
-      error: (message) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
-      },
-    );
-  },
+            state.when(
+              initial: () {},
+              loading: () {
+                showDialog(
+                  context: context,
+                  builder: (_) =>
+                      const Center(child: CircularProgressIndicator()),
+                );
+              },
+              success: (driver) {
+                Navigator.pop(context); // close loader
+                // context.go(AppRoutes.homePath);
+              },
+              error: (message) {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(message)));
+              },
+            );
+          },
           child: SignupViewBody(),
         ),
       ),

@@ -1,49 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/common/extension/responsive_context_x.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_state.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_header.dart';
 
-class LoginViewBody extends StatelessWidget {
+class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
 
   @override
+  State<LoginViewBody> createState() => _LoginViewBodyState();
+}
+
+class _LoginViewBodyState extends State<LoginViewBody> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: context.screenHeight * 0.05),
-        SignupHeader(logoHeight: context.screenHeight * 0.15),
+    return BlocListener<LoginCubit, LoginState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(child: CircularProgressIndicator()),
+            );
+          },
 
-        const SizedBox(height: 20),
-        Field(
-          hint: S.of(context).email,
-          autofillHints: const [AutofillHints.email],
-          keyboardType: TextInputType.emailAddress,
-        ),
+          success: (auth) {
+            Navigator.pop(context);
 
-        const SizedBox(height: 20),
-        Field(
-          obscureText: true,
-          hint: S.of(context).authPassword,
-          autofillHints: const [AutofillHints.password],
-          keyboardType: TextInputType.visiblePassword,
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: context.screenWidth * 0.8,
-          child: CustomElevatedButton(
-            title: S.of(context).commonNext,
-            onPressed: () {},
+            // 🔐 خزّن التوكن هون إذا بدك
+            // final token = auth.accessToken;
+
+            // context.go(AppRoutes.homePath);
+          },
+
+          requireOtp: (email, phone) {
+            Navigator.pop(context);
+
+            context.go(
+              AppRoutes.verificationPath,
+              extra: {"email": email, "phone": phone},
+            );
+          },
+
+          error: (message) {
+            Navigator.pop(context);
+
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(message)));
+          },
+        );
+      },
+      child: Column(
+        children: [
+          SizedBox(height: context.screenHeight * 0.05),
+          SignupHeader(logoHeight: context.screenHeight * 0.15),
+
+          const SizedBox(height: 20),
+
+          Field(
+            controller: emailController,
+            hint: S.of(context).email,
+            autofillHints: const [AutofillHints.email],
+            keyboardType: TextInputType.emailAddress,
           ),
-        ),
 
-        const SizedBox(height: 20),
-        SignupFooter(onTapLogin: () => context.go(AppRoutes.signupPath)),
-      ],
+          const SizedBox(height: 20),
+
+          Field(
+            controller: passwordController,
+            obscureText: true,
+            hint: S.of(context).authPassword,
+            autofillHints: const [AutofillHints.password],
+            keyboardType: TextInputType.visiblePassword,
+          ),
+
+          const SizedBox(height: 20),
+
+          SizedBox(
+            width: context.screenWidth * 0.8,
+            child: CustomElevatedButton(
+              title: S.of(context).commonNext,
+              onPressed: () {
+                context.read<LoginCubit>().login(
+                  email: emailController.text,
+                  password: passwordController.text,
+                  fcmToken: "test_fcm_token",
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          SignupFooter(onTapLogin: () => context.go(AppRoutes.signupPath)),
+        ],
+      ),
     );
   }
 }
