@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/core/errors/api_failure.dart';
+import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/login_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/send_otp_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/login_usecase.dart';
@@ -21,34 +23,60 @@ class LoginCubit extends Cubit<LoginState> {
   }) async {
     emit(const LoginState.loading());
 
-    try {
-      final result = await loginUseCase(
-        LoginParams(
-          email: email,
-          password: password,
-          fcmToken: fcmToken,
-        ),
-      );
+    final result = await loginUseCase(
+      LoginParams(
+        email: email.trim(),
+        password: password,
+        fcmToken: fcmToken,
+      ),
+    );
 
-      final driver = result.user;
+    result.fold(
+      /// ❌ Failure
+      (failure) {
+        emit(LoginState.error(_mapFailureToMessage(failure)));
+      },
 
-      if (driver.driverProfile.isVerified) {
-        emit(LoginState.success(result));
-      } else {
-        await sendOtpUseCase(
-          SendOtpParams(
-            email: driver.email,
-            phone: driver.phoneNumber,
-          ),
-        );
+      /// ✅ Success
+      (data) async {
+        final driver = data.user;
 
-        emit(LoginState.requireOtp(
-          driver.email,
-          driver.phoneNumber,
-        ));
-      }
-    } catch (e) {
-      emit(LoginState.error(e.toString()));
+        if (driver.driverProfile.isVerified) {
+          emit(LoginState.success(data));
+        } else {
+          // 🔥 Send OTP
+          final otpResult = await sendOtpUseCase(
+            SendOtpParams(
+              email: driver.email,
+              phone: driver.phoneNumber,
+            ),
+          );
+
+          otpResult.fold(
+            (failure) {
+              emit(LoginState.error(_mapFailureToMessage(failure)));
+            },
+            (_) {
+              emit(LoginState.requireOtp(
+                driver.email,
+                driver.phoneNumber,
+              ));
+            },
+          );
+        }
+      },
+    );
+  }
+
+  // 🔥 تحويل الفشل إلى رسالة
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case const (ServerFailure):
+        return failure.rawMessage ?? "Server error";
+      case const (NetworkFailure):
+        return "No internet connection";
+      default:
+        return "Something went wrong";
     }
   }
 }

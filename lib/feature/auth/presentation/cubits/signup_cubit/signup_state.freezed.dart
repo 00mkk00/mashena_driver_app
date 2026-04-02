@@ -21,21 +21,21 @@ mixin _$SignupState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DriverEntity driver) success,
+    required TResult Function(String email, String phone) requireOtp,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DriverEntity driver)? success,
+    TResult? Function(String email, String phone)? requireOtp,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DriverEntity driver)? success,
+    TResult Function(String email, String phone)? requireOtp,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -43,21 +43,21 @@ mixin _$SignupState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_RequireOtp value) requireOtp,
     required TResult Function(_Error value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_RequireOtp value)? requireOtp,
     TResult? Function(_Error value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_RequireOtp value)? requireOtp,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -130,7 +130,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DriverEntity driver) success,
+    required TResult Function(String email, String phone) requireOtp,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -141,7 +141,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DriverEntity driver)? success,
+    TResult? Function(String email, String phone)? requireOtp,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -152,7 +152,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DriverEntity driver)? success,
+    TResult Function(String email, String phone)? requireOtp,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -167,7 +167,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_RequireOtp value) requireOtp,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -178,7 +178,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_RequireOtp value)? requireOtp,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -189,7 +189,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_RequireOtp value)? requireOtp,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -249,7 +249,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DriverEntity driver) success,
+    required TResult Function(String email, String phone) requireOtp,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -260,7 +260,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DriverEntity driver)? success,
+    TResult? Function(String email, String phone)? requireOtp,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -271,7 +271,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DriverEntity driver)? success,
+    TResult Function(String email, String phone)? requireOtp,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -286,7 +286,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_RequireOtp value) requireOtp,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -297,7 +297,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_RequireOtp value)? requireOtp,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -308,7 +308,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_RequireOtp value)? requireOtp,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -324,93 +324,88 @@ abstract class _Loading implements SignupState {
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-    _$SuccessImpl value,
-    $Res Function(_$SuccessImpl) then,
-  ) = __$$SuccessImplCopyWithImpl<$Res>;
+abstract class _$$RequireOtpImplCopyWith<$Res> {
+  factory _$$RequireOtpImplCopyWith(
+    _$RequireOtpImpl value,
+    $Res Function(_$RequireOtpImpl) then,
+  ) = __$$RequireOtpImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({DriverEntity driver});
-
-  $DriverEntityCopyWith<$Res> get driver;
+  $Res call({String email, String phone});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$SignupStateCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-    _$SuccessImpl _value,
-    $Res Function(_$SuccessImpl) _then,
+class __$$RequireOtpImplCopyWithImpl<$Res>
+    extends _$SignupStateCopyWithImpl<$Res, _$RequireOtpImpl>
+    implements _$$RequireOtpImplCopyWith<$Res> {
+  __$$RequireOtpImplCopyWithImpl(
+    _$RequireOtpImpl _value,
+    $Res Function(_$RequireOtpImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of SignupState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? driver = null}) {
+  $Res call({Object? email = null, Object? phone = null}) {
     return _then(
-      _$SuccessImpl(
-        null == driver
-            ? _value.driver
-            : driver // ignore: cast_nullable_to_non_nullable
-                  as DriverEntity,
+      _$RequireOtpImpl(
+        null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+        null == phone
+            ? _value.phone
+            : phone // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
-  }
-
-  /// Create a copy of SignupState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DriverEntityCopyWith<$Res> get driver {
-    return $DriverEntityCopyWith<$Res>(_value.driver, (value) {
-      return _then(_value.copyWith(driver: value));
-    });
   }
 }
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.driver);
+class _$RequireOtpImpl implements _RequireOtp {
+  const _$RequireOtpImpl(this.email, this.phone);
 
   @override
-  final DriverEntity driver;
+  final String email;
+  @override
+  final String phone;
 
   @override
   String toString() {
-    return 'SignupState.success(driver: $driver)';
+    return 'SignupState.requireOtp(email: $email, phone: $phone)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            (identical(other.driver, driver) || other.driver == driver));
+            other is _$RequireOtpImpl &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, driver);
+  int get hashCode => Object.hash(runtimeType, email, phone);
 
   /// Create a copy of SignupState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$RequireOtpImplCopyWith<_$RequireOtpImpl> get copyWith =>
+      __$$RequireOtpImplCopyWithImpl<_$RequireOtpImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DriverEntity driver) success,
+    required TResult Function(String email, String phone) requireOtp,
     required TResult Function(String message) error,
   }) {
-    return success(driver);
+    return requireOtp(email, phone);
   }
 
   @override
@@ -418,10 +413,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DriverEntity driver)? success,
+    TResult? Function(String email, String phone)? requireOtp,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(driver);
+    return requireOtp?.call(email, phone);
   }
 
   @override
@@ -429,12 +424,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DriverEntity driver)? success,
+    TResult Function(String email, String phone)? requireOtp,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(driver);
+    if (requireOtp != null) {
+      return requireOtp(email, phone);
     }
     return orElse();
   }
@@ -444,10 +439,10 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_RequireOtp value) requireOtp,
     required TResult Function(_Error value) error,
   }) {
-    return success(this);
+    return requireOtp(this);
   }
 
   @override
@@ -455,10 +450,10 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_RequireOtp value)? requireOtp,
     TResult? Function(_Error value)? error,
   }) {
-    return success?.call(this);
+    return requireOtp?.call(this);
   }
 
   @override
@@ -466,26 +461,28 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_RequireOtp value)? requireOtp,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (requireOtp != null) {
+      return requireOtp(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements SignupState {
-  const factory _Success(final DriverEntity driver) = _$SuccessImpl;
+abstract class _RequireOtp implements SignupState {
+  const factory _RequireOtp(final String email, final String phone) =
+      _$RequireOtpImpl;
 
-  DriverEntity get driver;
+  String get email;
+  String get phone;
 
   /// Create a copy of SignupState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+  _$$RequireOtpImplCopyWith<_$RequireOtpImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -561,7 +558,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DriverEntity driver) success,
+    required TResult Function(String email, String phone) requireOtp,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -572,7 +569,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DriverEntity driver)? success,
+    TResult? Function(String email, String phone)? requireOtp,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -583,7 +580,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DriverEntity driver)? success,
+    TResult Function(String email, String phone)? requireOtp,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -598,7 +595,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_RequireOtp value) requireOtp,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -609,7 +606,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_RequireOtp value)? requireOtp,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -620,7 +617,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_RequireOtp value)? requireOtp,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {

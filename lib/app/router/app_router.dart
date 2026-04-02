@@ -67,11 +67,13 @@ final class AppRouter {
         path: AppRoutes.signupPath,
         name: AppRoutes.signup,
         builder: (context, state) => BlocProvider(
-          create: (context) => SignupCubit(getIt<SignupUseCase>()),
+          create: (_) => SignupCubit(
+            signupUseCase: getIt<SignupUseCase>(),
+            sendOtpUseCase: getIt<SendOtpUseCase>(),
+          ),
           child: const SignupView(),
         ),
       ),
-
       GoRoute(
         path: AppRoutes.verificationPath,
         name: AppRoutes.verification,
@@ -80,7 +82,7 @@ final class AppRouter {
           return BlocProvider(
             create: (context) => VerifyOtpCubit(
               sendOtpUseCase: getIt<SendOtpUseCase>(),
-               verifyOtpUseCase: getIt<VerifyOtpUseCase>(),
+              verifyOtpUseCase: getIt<VerifyOtpUseCase>(),
             ),
             child: VerifyOtpView(
               email: data['email'],

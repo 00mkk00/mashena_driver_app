@@ -76,13 +76,6 @@ Future<void> configureDependencies() async {
     () => GetOnboardingStatus(getIt<LocalStorage>()),
   );
   //============================
-  getIt.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(getIt<ApiClient>()),
-  );
-
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(getIt<AuthRemoteDataSource>()),
-  );
 
   // ======================
   // Features: Auth (Data)
@@ -92,9 +85,7 @@ Future<void> configureDependencies() async {
   );
 
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      getIt<AuthRemoteDataSource>()
-    ),
+    () => AuthRepositoryImpl(getIt<AuthRemoteDataSource>(), getIt<ApiClient>()),
   );
 
   // // ======================
@@ -102,17 +93,17 @@ Future<void> configureDependencies() async {
   // // ======================
 
   getIt.registerLazySingleton<SignupUseCase>(
-  () => SignupUseCase(getIt<AuthRepository>()),
-);
+    () => SignupUseCase(getIt<AuthRepository>()),
+  );
   getIt.registerLazySingleton<LoginUseCase>(
-  () => LoginUseCase(getIt<AuthRepository>()),
-);
+    () => LoginUseCase(getIt<AuthRepository>()),
+  );
 
-getIt.registerLazySingleton<SendOtpUseCase>(
-  () => SendOtpUseCase(getIt<AuthRepository>()),
-);
+  getIt.registerLazySingleton<SendOtpUseCase>(
+    () => SendOtpUseCase(getIt<AuthRepository>()),
+  );
 
-getIt.registerLazySingleton<VerifyOtpUseCase>(
-  () => VerifyOtpUseCase(getIt<AuthRepository>()),
-);
+  getIt.registerLazySingleton<VerifyOtpUseCase>(
+    () => VerifyOtpUseCase(getIt<AuthRepository>()),
+  );
 }
