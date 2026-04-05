@@ -3,8 +3,8 @@ import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/core/utils/app_images.dart';
 
-class SignupHeader extends StatelessWidget {
-  const SignupHeader({super.key, required this.logoHeight});
+class AuthHeader extends StatelessWidget {
+  const AuthHeader({super.key, required this.logoHeight});
   final double logoHeight;
 
   @override

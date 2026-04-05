@@ -6,10 +6,9 @@ import 'package:mashena_driver_app/core/common/extension/responsive_context_x.da
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_state.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_header.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_footer.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -24,90 +23,50 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
-      listener: (context, state) {
-        state.when(
-          initial: () {},
-          loading: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => const Center(child: CircularProgressIndicator()),
-            );
-          },
+    return Column(
+      children: [
+        SizedBox(height: context.screenHeight * 0.05),
+        AuthHeader(logoHeight: context.screenHeight * 0.15),
 
-          success: (auth) {
-            Navigator.pop(context);
+        const SizedBox(height: 20),
 
-            // 🔐 خزّن التوكن هون إذا بدك
-            // final token = auth.accessToken;
+        Field(
+          controller: emailController,
+          hint: S.of(context).email,
+          autofillHints: const [AutofillHints.email],
+          keyboardType: TextInputType.emailAddress,
+        ),
 
-            // context.go(AppRoutes.homePath);
-          },
+        const SizedBox(height: 20),
 
-          requireOtp: (email, phone) {
-            Navigator.pop(context);
+        Field(
+          controller: passwordController,
+          obscureText: true,
+          hint: S.of(context).authPassword,
+          autofillHints: const [AutofillHints.password],
+          keyboardType: TextInputType.visiblePassword,
+        ),
 
-            context.go(
-              AppRoutes.verificationPath,
-              extra: {"email": email, "phone": phone},
-            );
-          },
+        const SizedBox(height: 20),
 
-          error: (message) {
-            Navigator.pop(context);
-
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(message)));
-          },
-        );
-      },
-      child: Column(
-        children: [
-          SizedBox(height: context.screenHeight * 0.05),
-          SignupHeader(logoHeight: context.screenHeight * 0.15),
-
-          const SizedBox(height: 20),
-
-          Field(
-            controller: emailController,
-            hint: S.of(context).email,
-            autofillHints: const [AutofillHints.email],
-            keyboardType: TextInputType.emailAddress,
+        SizedBox(
+          width: context.screenWidth * 0.8,
+          child: CustomElevatedButton(
+            title: S.of(context).commonNext,
+            onPressed: () {
+              context.read<LoginCubit>().login(
+                email: emailController.text,
+                password: passwordController.text,
+                fcmToken: "test_fcm_token",
+              );
+            },
           ),
+        ),
 
-          const SizedBox(height: 20),
+        const SizedBox(height: 20),
 
-          Field(
-            controller: passwordController,
-            obscureText: true,
-            hint: S.of(context).authPassword,
-            autofillHints: const [AutofillHints.password],
-            keyboardType: TextInputType.visiblePassword,
-          ),
-
-          const SizedBox(height: 20),
-
-          SizedBox(
-            width: context.screenWidth * 0.8,
-            child: CustomElevatedButton(
-              title: S.of(context).commonNext,
-              onPressed: () {
-                context.read<LoginCubit>().login(
-                  email: emailController.text,
-                  password: passwordController.text,
-                  fcmToken: "test_fcm_token",
-                );
-              },
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          SignupFooter(onTapLogin: () => context.go(AppRoutes.signupPath)),
-        ],
-      ),
+        AuthFooter(onTapLogin: () => context.go(AppRoutes.signupPath)),
+      ],
     );
   }
 }

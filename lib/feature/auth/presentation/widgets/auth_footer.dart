@@ -3,8 +3,8 @@ import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 
-class SignupFooter extends StatelessWidget {
-  const SignupFooter({super.key, required this.onTapLogin});
+class AuthFooter extends StatelessWidget {
+  const AuthFooter({super.key, required this.onTapLogin});
   final VoidCallback onTapLogin;
 
   @override

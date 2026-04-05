@@ -78,15 +78,16 @@ final class AppRouter {
         path: AppRoutes.verificationPath,
         name: AppRoutes.verification,
         builder: (context, state) {
-          final data = state.extra as Map;
+          final data = state.extra as Map<String, dynamic>;
+
           return BlocProvider(
             create: (context) => VerifyOtpCubit(
-              sendOtpUseCase: getIt<SendOtpUseCase>(),
               verifyOtpUseCase: getIt<VerifyOtpUseCase>(),
+              sendOtpUseCase: getIt<SendOtpUseCase>(),
             ),
-            child: VerifyOtpView(
-              email: data['email'],
-              phoneNumber: data['phone'],
+            child: VerificationView(
+              email: data['email'] ?? '',
+              phoneNumber: data['phone'] ?? '',
             ),
           );
         },

@@ -36,14 +36,12 @@ class SignupCubit extends Cubit<SignupState> {
     final result = await signupUseCase(params);
 
     result.fold(
-      /// ❌ Failure
       (failure) {
         emit(SignupState.error(_mapFailureToMessage(failure)));
       },
 
       /// ✅ Success
       (driver) async {
-        // 🔥 بعد التسجيل → إرسال OTP
         final otpResult = await sendOtpUseCase(
           SendOtpParams(
             email: driver.email,
@@ -66,7 +64,6 @@ class SignupCubit extends Cubit<SignupState> {
     );
   }
 
-  // 🔥 Failure mapper
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case const (ServerFailure):

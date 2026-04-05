@@ -16,7 +16,6 @@ class SignupView extends StatelessWidget {
         child: BlocListener<SignupCubit, SignupState>(
           listener: (context, state) {
             state.whenOrNull(
-              /// ⏳ Loading
               loading: () {
                 showDialog(
                   context: context,
@@ -26,7 +25,6 @@ class SignupView extends StatelessWidget {
                 );
               },
 
-              /// 🔥 الانتقال للـ OTP
               requireOtp: (email, phone) {
                 Navigator.pop(context); // close loader
 
@@ -39,7 +37,6 @@ class SignupView extends StatelessWidget {
                 );
               },
 
-              /// ❌ Error
               error: (message) {
                 Navigator.pop(context);
 

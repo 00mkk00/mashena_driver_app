@@ -8,8 +8,8 @@ import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_footer.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/widgets/signup_header.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_footer.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
 
 class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});
@@ -29,7 +29,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
     return Column(
       children: [
         SizedBox(height: context.screenHeight * 0.05),
-        SignupHeader(logoHeight: context.screenHeight * 0.15),
+        AuthHeader(logoHeight: context.screenHeight * 0.15),
         const SizedBox(height: 20),
         Field(
           hint: S.of(context).authFullName,
@@ -75,7 +75,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
         ),
 
         const SizedBox(height: 20),
-        SignupFooter(onTapLogin: () => context.go(AppRoutes.loginPath)),
+        AuthFooter(onTapLogin: () => context.go(AppRoutes.loginPath)),
       ],
     );
   }

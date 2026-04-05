@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.dart';
 
 part 'signup_state.freezed.dart';
 
