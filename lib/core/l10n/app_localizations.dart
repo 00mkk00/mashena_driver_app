@@ -259,6 +259,12 @@ abstract class S {
   /// **'Logout'**
   String get authLogout;
 
+  /// No description provided for @authCity.
+  ///
+  /// In en, this message translates to:
+  /// **'city'**
+  String get authCity;
+
   /// No description provided for @authSendCode.
   ///
   /// In en, this message translates to:
@@ -324,6 +330,90 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Verification successful'**
   String get authOtpSuccess;
+
+  /// No description provided for @uploadedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded Successfully'**
+  String get uploadedSuccessfully;
+
+  /// No description provided for @uploadYourInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your Information'**
+  String get uploadYourInformation;
+
+  /// No description provided for @nationalId.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID'**
+  String get nationalId;
+
+  /// No description provided for @driverLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver License'**
+  String get driverLicense;
+
+  /// No description provided for @mechanicCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic Card'**
+  String get mechanicCard;
+
+  /// No description provided for @vehiclePlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Plate'**
+  String get vehiclePlate;
+
+  /// No description provided for @insurancePolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance Policy'**
+  String get insurancePolicy;
+
+  /// No description provided for @vehicleType.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Type'**
+  String get vehicleType;
+
+  /// No description provided for @vehicleModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Model'**
+  String get vehicleModel;
+
+  /// No description provided for @vehicleColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Color'**
+  String get vehicleColor;
+
+  /// No description provided for @vehicleYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Year'**
+  String get vehicleYear;
+
+  /// No description provided for @pickImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Image'**
+  String get pickImage;
+
+  /// No description provided for @uploadDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Documents'**
+  String get uploadDocuments;
+
+  /// No description provided for @imageIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Image is required'**
+  String get imageIsRequired;
 
   /// No description provided for @otpResendSuccess.
   ///

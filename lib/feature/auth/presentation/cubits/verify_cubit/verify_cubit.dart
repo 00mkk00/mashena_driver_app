@@ -16,7 +16,6 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
 
   Future<void> verify({
     required String email,
-    required String phone,
     required String code,
   }) async {
     emit(const VerifyOtpState.loading());
@@ -25,7 +24,6 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
       await verifyOtpUseCase(
         VerifyOtpParams(
           email: email,
-          phone: phone,
           code: code,
         ),
       );
@@ -38,13 +36,11 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
 
   Future<void> resend({
     required String email,
-    required String phone,
   }) async {
     try {
       await sendOtpUseCase(
         SendOtpParams(
           email: email,
-          phone: phone,
         ),
       );
     } catch (e) {

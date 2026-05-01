@@ -191,4 +191,11 @@ final class Validators {
     if (!isPhoneNumber(value)) return 'رقم هاتف غير صالح';
     return null;
   }
+
+  static String? requiredStringField(String? value, {String message = 'هذا الحقل مطلوب'}) {
+  if (value == null || value.trim().isEmpty) {
+    return message;
+  }
+  return null;
+}
 }

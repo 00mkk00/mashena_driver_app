@@ -5,10 +5,7 @@ part 'send_otp_params.g.dart';
 
 @freezed
 class SendOtpParams with _$SendOtpParams {
-  const factory SendOtpParams({
-    required String email,
-    required String phone,
-  }) = _SendOtpParams;
+  const factory SendOtpParams({required String email}) = _SendOtpParams;
 
   factory SendOtpParams.fromJson(Map<String, dynamic> json) =>
       _$SendOtpParamsFromJson(json);

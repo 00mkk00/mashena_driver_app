@@ -15,13 +15,9 @@ import 'package:mashena_driver_app/feature/auth/presentation/cubits/verify_cubit
 import 'package:pinput/pinput.dart';
 
 class VerificationViewBody extends StatefulWidget {
-  const VerificationViewBody({
-    super.key,
-    required this.email,
-    required this.phone,
-  });
+  const VerificationViewBody({super.key, required this.email});
   final String email;
-  final String phone;
+  // final String phone;
 
   @override
   State<VerificationViewBody> createState() => _VerificationViewBodyState();
@@ -61,8 +57,8 @@ class _VerificationViewBodyState extends State<VerificationViewBody> {
   // ======================
   // Resend OTP
   // ======================
-  Future<void> _onResendTap(String email, String phone) async {
-    context.read<VerifyOtpCubit>().resend(email: email, phone: phone);
+  Future<void> _onResendTap(String email) async {
+    context.read<VerifyOtpCubit>().resend(email: email);
 
     _startResendCooldown(60);
   }
@@ -72,7 +68,6 @@ class _VerificationViewBodyState extends State<VerificationViewBody> {
     final pinputTheme = Theme.of(context).extension<PinputTheme>()!;
 
     final email = widget.email;
-    final phone = widget.phone;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -142,7 +137,7 @@ class _VerificationViewBodyState extends State<VerificationViewBody> {
                     builder: (context, secondsLeft, _) {
                       return InkWell(
                         onTap: secondsLeft == 0
-                            ? () => _onResendTap(email, phone)
+                            ? () => _onResendTap(email)
                             : null,
                         child: Text(
                           secondsLeft == 0
@@ -172,7 +167,6 @@ class _VerificationViewBodyState extends State<VerificationViewBody> {
 
                                 context.read<VerifyOtpCubit>().verify(
                                   email: email,
-                                  phone: phone,
                                   code: otp,
                                 );
                               }

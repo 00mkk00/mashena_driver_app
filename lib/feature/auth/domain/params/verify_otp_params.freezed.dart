@@ -22,7 +22,6 @@ VerifyOtpParams _$VerifyOtpParamsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$VerifyOtpParams {
   String get email => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
 
   /// Serializes this VerifyOtpParams to a JSON map.
@@ -42,7 +41,7 @@ abstract class $VerifyOtpParamsCopyWith<$Res> {
     $Res Function(VerifyOtpParams) then,
   ) = _$VerifyOtpParamsCopyWithImpl<$Res, VerifyOtpParams>;
   @useResult
-  $Res call({String email, String phone, String code});
+  $Res call({String email, String code});
 }
 
 /// @nodoc
@@ -59,16 +58,12 @@ class _$VerifyOtpParamsCopyWithImpl<$Res, $Val extends VerifyOtpParams>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? email = null, Object? phone = null, Object? code = null}) {
+  $Res call({Object? email = null, Object? code = null}) {
     return _then(
       _value.copyWith(
             email: null == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
-                      as String,
-            phone: null == phone
-                ? _value.phone
-                : phone // ignore: cast_nullable_to_non_nullable
                       as String,
             code: null == code
                 ? _value.code
@@ -89,7 +84,7 @@ abstract class _$$VerifyOtpParamsImplCopyWith<$Res>
   ) = __$$VerifyOtpParamsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String phone, String code});
+  $Res call({String email, String code});
 }
 
 /// @nodoc
@@ -105,16 +100,12 @@ class __$$VerifyOtpParamsImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? email = null, Object? phone = null, Object? code = null}) {
+  $Res call({Object? email = null, Object? code = null}) {
     return _then(
       _$VerifyOtpParamsImpl(
         email: null == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
-                  as String,
-        phone: null == phone
-            ? _value.phone
-            : phone // ignore: cast_nullable_to_non_nullable
                   as String,
         code: null == code
             ? _value.code
@@ -128,11 +119,7 @@ class __$$VerifyOtpParamsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$VerifyOtpParamsImpl implements _VerifyOtpParams {
-  const _$VerifyOtpParamsImpl({
-    required this.email,
-    required this.phone,
-    required this.code,
-  });
+  const _$VerifyOtpParamsImpl({required this.email, required this.code});
 
   factory _$VerifyOtpParamsImpl.fromJson(Map<String, dynamic> json) =>
       _$$VerifyOtpParamsImplFromJson(json);
@@ -140,13 +127,11 @@ class _$VerifyOtpParamsImpl implements _VerifyOtpParams {
   @override
   final String email;
   @override
-  final String phone;
-  @override
   final String code;
 
   @override
   String toString() {
-    return 'VerifyOtpParams(email: $email, phone: $phone, code: $code)';
+    return 'VerifyOtpParams(email: $email, code: $code)';
   }
 
   @override
@@ -155,13 +140,12 @@ class _$VerifyOtpParamsImpl implements _VerifyOtpParams {
         (other.runtimeType == runtimeType &&
             other is _$VerifyOtpParamsImpl &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.code, code) || other.code == code));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, email, phone, code);
+  int get hashCode => Object.hash(runtimeType, email, code);
 
   /// Create a copy of VerifyOtpParams
   /// with the given fields replaced by the non-null parameter values.
@@ -183,7 +167,6 @@ class _$VerifyOtpParamsImpl implements _VerifyOtpParams {
 abstract class _VerifyOtpParams implements VerifyOtpParams {
   const factory _VerifyOtpParams({
     required final String email,
-    required final String phone,
     required final String code,
   }) = _$VerifyOtpParamsImpl;
 
@@ -192,8 +175,6 @@ abstract class _VerifyOtpParams implements VerifyOtpParams {
 
   @override
   String get email;
-  @override
-  String get phone;
   @override
   String get code;
 

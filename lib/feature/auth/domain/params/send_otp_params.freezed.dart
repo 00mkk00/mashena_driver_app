@@ -22,7 +22,6 @@ SendOtpParams _$SendOtpParamsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SendOtpParams {
   String get email => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
 
   /// Serializes this SendOtpParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +40,7 @@ abstract class $SendOtpParamsCopyWith<$Res> {
     $Res Function(SendOtpParams) then,
   ) = _$SendOtpParamsCopyWithImpl<$Res, SendOtpParams>;
   @useResult
-  $Res call({String email, String phone});
+  $Res call({String email});
 }
 
 /// @nodoc
@@ -58,16 +57,12 @@ class _$SendOtpParamsCopyWithImpl<$Res, $Val extends SendOtpParams>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? email = null, Object? phone = null}) {
+  $Res call({Object? email = null}) {
     return _then(
       _value.copyWith(
             email: null == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
-                      as String,
-            phone: null == phone
-                ? _value.phone
-                : phone // ignore: cast_nullable_to_non_nullable
                       as String,
           )
           as $Val,
@@ -84,7 +79,7 @@ abstract class _$$SendOtpParamsImplCopyWith<$Res>
   ) = __$$SendOtpParamsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String email, String phone});
+  $Res call({String email});
 }
 
 /// @nodoc
@@ -100,16 +95,12 @@ class __$$SendOtpParamsImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? email = null, Object? phone = null}) {
+  $Res call({Object? email = null}) {
     return _then(
       _$SendOtpParamsImpl(
         email: null == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
-                  as String,
-        phone: null == phone
-            ? _value.phone
-            : phone // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
@@ -119,19 +110,17 @@ class __$$SendOtpParamsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SendOtpParamsImpl implements _SendOtpParams {
-  const _$SendOtpParamsImpl({required this.email, required this.phone});
+  const _$SendOtpParamsImpl({required this.email});
 
   factory _$SendOtpParamsImpl.fromJson(Map<String, dynamic> json) =>
       _$$SendOtpParamsImplFromJson(json);
 
   @override
   final String email;
-  @override
-  final String phone;
 
   @override
   String toString() {
-    return 'SendOtpParams(email: $email, phone: $phone)';
+    return 'SendOtpParams(email: $email)';
   }
 
   @override
@@ -139,13 +128,12 @@ class _$SendOtpParamsImpl implements _SendOtpParams {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SendOtpParamsImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.phone, phone) || other.phone == phone));
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, email, phone);
+  int get hashCode => Object.hash(runtimeType, email);
 
   /// Create a copy of SendOtpParams
   /// with the given fields replaced by the non-null parameter values.
@@ -162,18 +150,14 @@ class _$SendOtpParamsImpl implements _SendOtpParams {
 }
 
 abstract class _SendOtpParams implements SendOtpParams {
-  const factory _SendOtpParams({
-    required final String email,
-    required final String phone,
-  }) = _$SendOtpParamsImpl;
+  const factory _SendOtpParams({required final String email}) =
+      _$SendOtpParamsImpl;
 
   factory _SendOtpParams.fromJson(Map<String, dynamic> json) =
       _$SendOtpParamsImpl.fromJson;
 
   @override
   String get email;
-  @override
-  String get phone;
 
   /// Create a copy of SendOtpParams
   /// with the given fields replaced by the non-null parameter values.

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
+import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_state.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/login_view_body.dart';
@@ -30,34 +32,39 @@ class LoginView extends StatelessWidget {
 
               /// ✅ Success
               success: (auth) {
-                Navigator.pop(context);
-
-                // TODO: خزّن التوكن
-                // final token = auth.accessToken;
-
-                // context.go(AppRoutes.homePath);
+                context.pop();
+                context.showSuccessToast(S.of(context).authLogin);
+                // context.go(AppRoutes.homePath); // Navigate to home
               },
 
-              /// 🔐 يحتاج OTP
-              requireOtp: (email, phone) {
-                Navigator.pop(context);
-
+              /// 📤 Needs Upload
+              needsUpload: (auth) {
+                context.pop();
                 context.go(
+                  AppRoutes.uploadDocsPath,
+                  extra: {"userId": auth.user.id},
+                );
+              },
+
+              /// ℹ️ Approval Status
+              approvalStatus: (status) {
+                context.pop();
+                context.showInfoToast("Account Status: $status");
+              },
+
+              requireOtp: (userId, email) {
+                if (Navigator.canPop(context)) context.pop();
+                context.push(
                   AppRoutes.verificationPath,
-                  extra: {
-                    "email": email,
-                    "phone": phone,
-                  },
+                  extra: {"userId": userId, "email": email},
                 );
               },
 
               /// ❌ Error
               error: (message) {
-                Navigator.pop(context);
+                context.pop();
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(message)),
-                );
+                context.showErrorToast(message);
               },
             );
           },

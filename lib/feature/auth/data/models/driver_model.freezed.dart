@@ -22,10 +22,13 @@ DriverModel _$DriverModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DriverModel {
   int get id => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DriverProfileModel get driverProfile => throw _privateConstructorUsedError;
+  List<RoleModel> get roles => throw _privateConstructorUsedError;
+  String get activeRole => throw _privateConstructorUsedError;
+  DriverApprovalInfoModel get driverApprovalInfo =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this DriverModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,13 +49,15 @@ abstract class $DriverModelCopyWith<$Res> {
   @useResult
   $Res call({
     int id,
+    String fullName,
     String email,
     String phoneNumber,
-    DateTime createdAt,
-    DriverProfileModel driverProfile,
+    List<RoleModel> roles,
+    String activeRole,
+    DriverApprovalInfoModel driverApprovalInfo,
   });
 
-  $DriverProfileModelCopyWith<$Res> get driverProfile;
+  $DriverApprovalInfoModelCopyWith<$Res> get driverApprovalInfo;
 }
 
 /// @nodoc
@@ -71,10 +76,12 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
   @override
   $Res call({
     Object? id = null,
+    Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
-    Object? createdAt = null,
-    Object? driverProfile = null,
+    Object? roles = null,
+    Object? activeRole = null,
+    Object? driverApprovalInfo = null,
   }) {
     return _then(
       _value.copyWith(
@@ -82,6 +89,10 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as int,
+            fullName: null == fullName
+                ? _value.fullName
+                : fullName // ignore: cast_nullable_to_non_nullable
+                      as String,
             email: null == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
@@ -90,14 +101,18 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
                 ? _value.phoneNumber
                 : phoneNumber // ignore: cast_nullable_to_non_nullable
                       as String,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            driverProfile: null == driverProfile
-                ? _value.driverProfile
-                : driverProfile // ignore: cast_nullable_to_non_nullable
-                      as DriverProfileModel,
+            roles: null == roles
+                ? _value.roles
+                : roles // ignore: cast_nullable_to_non_nullable
+                      as List<RoleModel>,
+            activeRole: null == activeRole
+                ? _value.activeRole
+                : activeRole // ignore: cast_nullable_to_non_nullable
+                      as String,
+            driverApprovalInfo: null == driverApprovalInfo
+                ? _value.driverApprovalInfo
+                : driverApprovalInfo // ignore: cast_nullable_to_non_nullable
+                      as DriverApprovalInfoModel,
           )
           as $Val,
     );
@@ -107,9 +122,11 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $DriverProfileModelCopyWith<$Res> get driverProfile {
-    return $DriverProfileModelCopyWith<$Res>(_value.driverProfile, (value) {
-      return _then(_value.copyWith(driverProfile: value) as $Val);
+  $DriverApprovalInfoModelCopyWith<$Res> get driverApprovalInfo {
+    return $DriverApprovalInfoModelCopyWith<$Res>(_value.driverApprovalInfo, (
+      value,
+    ) {
+      return _then(_value.copyWith(driverApprovalInfo: value) as $Val);
     });
   }
 }
@@ -125,14 +142,16 @@ abstract class _$$DriverModelImplCopyWith<$Res>
   @useResult
   $Res call({
     int id,
+    String fullName,
     String email,
     String phoneNumber,
-    DateTime createdAt,
-    DriverProfileModel driverProfile,
+    List<RoleModel> roles,
+    String activeRole,
+    DriverApprovalInfoModel driverApprovalInfo,
   });
 
   @override
-  $DriverProfileModelCopyWith<$Res> get driverProfile;
+  $DriverApprovalInfoModelCopyWith<$Res> get driverApprovalInfo;
 }
 
 /// @nodoc
@@ -150,10 +169,12 @@ class __$$DriverModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
-    Object? createdAt = null,
-    Object? driverProfile = null,
+    Object? roles = null,
+    Object? activeRole = null,
+    Object? driverApprovalInfo = null,
   }) {
     return _then(
       _$DriverModelImpl(
@@ -161,6 +182,10 @@ class __$$DriverModelImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int,
+        fullName: null == fullName
+            ? _value.fullName
+            : fullName // ignore: cast_nullable_to_non_nullable
+                  as String,
         email: null == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
@@ -169,14 +194,18 @@ class __$$DriverModelImplCopyWithImpl<$Res>
             ? _value.phoneNumber
             : phoneNumber // ignore: cast_nullable_to_non_nullable
                   as String,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        driverProfile: null == driverProfile
-            ? _value.driverProfile
-            : driverProfile // ignore: cast_nullable_to_non_nullable
-                  as DriverProfileModel,
+        roles: null == roles
+            ? _value._roles
+            : roles // ignore: cast_nullable_to_non_nullable
+                  as List<RoleModel>,
+        activeRole: null == activeRole
+            ? _value.activeRole
+            : activeRole // ignore: cast_nullable_to_non_nullable
+                  as String,
+        driverApprovalInfo: null == driverApprovalInfo
+            ? _value.driverApprovalInfo
+            : driverApprovalInfo // ignore: cast_nullable_to_non_nullable
+                  as DriverApprovalInfoModel,
       ),
     );
   }
@@ -187,11 +216,13 @@ class __$$DriverModelImplCopyWithImpl<$Res>
 class _$DriverModelImpl implements _DriverModel {
   const _$DriverModelImpl({
     required this.id,
+    required this.fullName,
     required this.email,
     required this.phoneNumber,
-    required this.createdAt,
-    required this.driverProfile,
-  });
+    final List<RoleModel> roles = const [],
+    this.activeRole = '',
+    this.driverApprovalInfo = const DriverApprovalInfoModel(),
+  }) : _roles = roles;
 
   factory _$DriverModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DriverModelImplFromJson(json);
@@ -199,17 +230,30 @@ class _$DriverModelImpl implements _DriverModel {
   @override
   final int id;
   @override
+  final String fullName;
+  @override
   final String email;
   @override
   final String phoneNumber;
+  final List<RoleModel> _roles;
   @override
-  final DateTime createdAt;
+  @JsonKey()
+  List<RoleModel> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_roles);
+  }
+
   @override
-  final DriverProfileModel driverProfile;
+  @JsonKey()
+  final String activeRole;
+  @override
+  @JsonKey()
+  final DriverApprovalInfoModel driverApprovalInfo;
 
   @override
   String toString() {
-    return 'DriverModel(id: $id, email: $email, phoneNumber: $phoneNumber, createdAt: $createdAt, driverProfile: $driverProfile)';
+    return 'DriverModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, roles: $roles, activeRole: $activeRole, driverApprovalInfo: $driverApprovalInfo)';
   }
 
   @override
@@ -218,13 +262,16 @@ class _$DriverModelImpl implements _DriverModel {
         (other.runtimeType == runtimeType &&
             other is _$DriverModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.driverProfile, driverProfile) ||
-                other.driverProfile == driverProfile));
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
+            (identical(other.activeRole, activeRole) ||
+                other.activeRole == activeRole) &&
+            (identical(other.driverApprovalInfo, driverApprovalInfo) ||
+                other.driverApprovalInfo == driverApprovalInfo));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -232,10 +279,12 @@ class _$DriverModelImpl implements _DriverModel {
   int get hashCode => Object.hash(
     runtimeType,
     id,
+    fullName,
     email,
     phoneNumber,
-    createdAt,
-    driverProfile,
+    const DeepCollectionEquality().hash(_roles),
+    activeRole,
+    driverApprovalInfo,
   );
 
   /// Create a copy of DriverModel
@@ -255,10 +304,12 @@ class _$DriverModelImpl implements _DriverModel {
 abstract class _DriverModel implements DriverModel {
   const factory _DriverModel({
     required final int id,
+    required final String fullName,
     required final String email,
     required final String phoneNumber,
-    required final DateTime createdAt,
-    required final DriverProfileModel driverProfile,
+    final List<RoleModel> roles,
+    final String activeRole,
+    final DriverApprovalInfoModel driverApprovalInfo,
   }) = _$DriverModelImpl;
 
   factory _DriverModel.fromJson(Map<String, dynamic> json) =
@@ -267,13 +318,17 @@ abstract class _DriverModel implements DriverModel {
   @override
   int get id;
   @override
+  String get fullName;
+  @override
   String get email;
   @override
   String get phoneNumber;
   @override
-  DateTime get createdAt;
+  List<RoleModel> get roles;
   @override
-  DriverProfileModel get driverProfile;
+  String get activeRole;
+  @override
+  DriverApprovalInfoModel get driverApprovalInfo;
 
   /// Create a copy of DriverModel
   /// with the given fields replaced by the non-null parameter values.
@@ -283,87 +338,58 @@ abstract class _DriverModel implements DriverModel {
       throw _privateConstructorUsedError;
 }
 
-DriverProfileModel _$DriverProfileModelFromJson(Map<String, dynamic> json) {
-  return _DriverProfileModel.fromJson(json);
+RoleModel _$RoleModelFromJson(Map<String, dynamic> json) {
+  return _RoleModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DriverProfileModel {
-  int get userId => throw _privateConstructorUsedError;
-  String get city => throw _privateConstructorUsedError;
-  String get approvalStatus => throw _privateConstructorUsedError;
-  bool get isOnline => throw _privateConstructorUsedError;
-  bool get isVerified => throw _privateConstructorUsedError;
+mixin _$RoleModel {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
 
-  /// Serializes this DriverProfileModel to a JSON map.
+  /// Serializes this RoleModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of DriverProfileModel
+  /// Create a copy of RoleModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DriverProfileModelCopyWith<DriverProfileModel> get copyWith =>
+  $RoleModelCopyWith<RoleModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DriverProfileModelCopyWith<$Res> {
-  factory $DriverProfileModelCopyWith(
-    DriverProfileModel value,
-    $Res Function(DriverProfileModel) then,
-  ) = _$DriverProfileModelCopyWithImpl<$Res, DriverProfileModel>;
+abstract class $RoleModelCopyWith<$Res> {
+  factory $RoleModelCopyWith(RoleModel value, $Res Function(RoleModel) then) =
+      _$RoleModelCopyWithImpl<$Res, RoleModel>;
   @useResult
-  $Res call({
-    int userId,
-    String city,
-    String approvalStatus,
-    bool isOnline,
-    bool isVerified,
-  });
+  $Res call({int id, String name});
 }
 
 /// @nodoc
-class _$DriverProfileModelCopyWithImpl<$Res, $Val extends DriverProfileModel>
-    implements $DriverProfileModelCopyWith<$Res> {
-  _$DriverProfileModelCopyWithImpl(this._value, this._then);
+class _$RoleModelCopyWithImpl<$Res, $Val extends RoleModel>
+    implements $RoleModelCopyWith<$Res> {
+  _$RoleModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DriverProfileModel
+  /// Create a copy of RoleModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? userId = null,
-    Object? city = null,
-    Object? approvalStatus = null,
-    Object? isOnline = null,
-    Object? isVerified = null,
-  }) {
+  $Res call({Object? id = null, Object? name = null}) {
     return _then(
       _value.copyWith(
-            userId: null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
                       as int,
-            city: null == city
-                ? _value.city
-                : city // ignore: cast_nullable_to_non_nullable
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
                       as String,
-            approvalStatus: null == approvalStatus
-                ? _value.approvalStatus
-                : approvalStatus // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isOnline: null == isOnline
-                ? _value.isOnline
-                : isOnline // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isVerified: null == isVerified
-                ? _value.isVerified
-                : isVerified // ignore: cast_nullable_to_non_nullable
-                      as bool,
           )
           as $Val,
     );
@@ -371,65 +397,41 @@ class _$DriverProfileModelCopyWithImpl<$Res, $Val extends DriverProfileModel>
 }
 
 /// @nodoc
-abstract class _$$DriverProfileModelImplCopyWith<$Res>
-    implements $DriverProfileModelCopyWith<$Res> {
-  factory _$$DriverProfileModelImplCopyWith(
-    _$DriverProfileModelImpl value,
-    $Res Function(_$DriverProfileModelImpl) then,
-  ) = __$$DriverProfileModelImplCopyWithImpl<$Res>;
+abstract class _$$RoleModelImplCopyWith<$Res>
+    implements $RoleModelCopyWith<$Res> {
+  factory _$$RoleModelImplCopyWith(
+    _$RoleModelImpl value,
+    $Res Function(_$RoleModelImpl) then,
+  ) = __$$RoleModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int userId,
-    String city,
-    String approvalStatus,
-    bool isOnline,
-    bool isVerified,
-  });
+  $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$$DriverProfileModelImplCopyWithImpl<$Res>
-    extends _$DriverProfileModelCopyWithImpl<$Res, _$DriverProfileModelImpl>
-    implements _$$DriverProfileModelImplCopyWith<$Res> {
-  __$$DriverProfileModelImplCopyWithImpl(
-    _$DriverProfileModelImpl _value,
-    $Res Function(_$DriverProfileModelImpl) _then,
+class __$$RoleModelImplCopyWithImpl<$Res>
+    extends _$RoleModelCopyWithImpl<$Res, _$RoleModelImpl>
+    implements _$$RoleModelImplCopyWith<$Res> {
+  __$$RoleModelImplCopyWithImpl(
+    _$RoleModelImpl _value,
+    $Res Function(_$RoleModelImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of DriverProfileModel
+  /// Create a copy of RoleModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? userId = null,
-    Object? city = null,
-    Object? approvalStatus = null,
-    Object? isOnline = null,
-    Object? isVerified = null,
-  }) {
+  $Res call({Object? id = null, Object? name = null}) {
     return _then(
-      _$DriverProfileModelImpl(
-        userId: null == userId
-            ? _value.userId
-            : userId // ignore: cast_nullable_to_non_nullable
+      _$RoleModelImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
                   as int,
-        city: null == city
-            ? _value.city
-            : city // ignore: cast_nullable_to_non_nullable
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
                   as String,
-        approvalStatus: null == approvalStatus
-            ? _value.approvalStatus
-            : approvalStatus // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isOnline: null == isOnline
-            ? _value.isOnline
-            : isOnline // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isVerified: null == isVerified
-            ? _value.isVerified
-            : isVerified // ignore: cast_nullable_to_non_nullable
-                  as bool,
       ),
     );
   }
@@ -437,104 +439,293 @@ class __$$DriverProfileModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DriverProfileModelImpl implements _DriverProfileModel {
-  const _$DriverProfileModelImpl({
-    required this.userId,
-    required this.city,
-    required this.approvalStatus,
-    required this.isOnline,
-    required this.isVerified,
-  });
+class _$RoleModelImpl implements _RoleModel {
+  const _$RoleModelImpl({required this.id, required this.name});
 
-  factory _$DriverProfileModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DriverProfileModelImplFromJson(json);
+  factory _$RoleModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RoleModelImplFromJson(json);
 
   @override
-  final int userId;
+  final int id;
   @override
-  final String city;
-  @override
-  final String approvalStatus;
-  @override
-  final bool isOnline;
-  @override
-  final bool isVerified;
+  final String name;
 
   @override
   String toString() {
-    return 'DriverProfileModel(userId: $userId, city: $city, approvalStatus: $approvalStatus, isOnline: $isOnline, isVerified: $isVerified)';
+    return 'RoleModel(id: $id, name: $name)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DriverProfileModelImpl &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.approvalStatus, approvalStatus) ||
-                other.approvalStatus == approvalStatus) &&
-            (identical(other.isOnline, isOnline) ||
-                other.isOnline == isOnline) &&
+            other is _$RoleModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name);
+
+  /// Create a copy of RoleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RoleModelImplCopyWith<_$RoleModelImpl> get copyWith =>
+      __$$RoleModelImplCopyWithImpl<_$RoleModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RoleModelImplToJson(this);
+  }
+}
+
+abstract class _RoleModel implements RoleModel {
+  const factory _RoleModel({
+    required final int id,
+    required final String name,
+  }) = _$RoleModelImpl;
+
+  factory _RoleModel.fromJson(Map<String, dynamic> json) =
+      _$RoleModelImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+
+  /// Create a copy of RoleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RoleModelImplCopyWith<_$RoleModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DriverApprovalInfoModel _$DriverApprovalInfoModelFromJson(
+  Map<String, dynamic> json,
+) {
+  return _DriverApprovalInfoModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DriverApprovalInfoModel {
+  bool get isVerified => throw _privateConstructorUsedError;
+  bool get hasApprovalRequest => throw _privateConstructorUsedError;
+  DriverApprovalRequestStatus? get approvalRequestStatus =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this DriverApprovalInfoModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of DriverApprovalInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DriverApprovalInfoModelCopyWith<DriverApprovalInfoModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DriverApprovalInfoModelCopyWith<$Res> {
+  factory $DriverApprovalInfoModelCopyWith(
+    DriverApprovalInfoModel value,
+    $Res Function(DriverApprovalInfoModel) then,
+  ) = _$DriverApprovalInfoModelCopyWithImpl<$Res, DriverApprovalInfoModel>;
+  @useResult
+  $Res call({
+    bool isVerified,
+    bool hasApprovalRequest,
+    DriverApprovalRequestStatus? approvalRequestStatus,
+  });
+}
+
+/// @nodoc
+class _$DriverApprovalInfoModelCopyWithImpl<
+  $Res,
+  $Val extends DriverApprovalInfoModel
+>
+    implements $DriverApprovalInfoModelCopyWith<$Res> {
+  _$DriverApprovalInfoModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DriverApprovalInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isVerified = null,
+    Object? hasApprovalRequest = null,
+    Object? approvalRequestStatus = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            isVerified: null == isVerified
+                ? _value.isVerified
+                : isVerified // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            hasApprovalRequest: null == hasApprovalRequest
+                ? _value.hasApprovalRequest
+                : hasApprovalRequest // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            approvalRequestStatus: freezed == approvalRequestStatus
+                ? _value.approvalRequestStatus
+                : approvalRequestStatus // ignore: cast_nullable_to_non_nullable
+                      as DriverApprovalRequestStatus?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$DriverApprovalInfoModelImplCopyWith<$Res>
+    implements $DriverApprovalInfoModelCopyWith<$Res> {
+  factory _$$DriverApprovalInfoModelImplCopyWith(
+    _$DriverApprovalInfoModelImpl value,
+    $Res Function(_$DriverApprovalInfoModelImpl) then,
+  ) = __$$DriverApprovalInfoModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    bool isVerified,
+    bool hasApprovalRequest,
+    DriverApprovalRequestStatus? approvalRequestStatus,
+  });
+}
+
+/// @nodoc
+class __$$DriverApprovalInfoModelImplCopyWithImpl<$Res>
+    extends
+        _$DriverApprovalInfoModelCopyWithImpl<
+          $Res,
+          _$DriverApprovalInfoModelImpl
+        >
+    implements _$$DriverApprovalInfoModelImplCopyWith<$Res> {
+  __$$DriverApprovalInfoModelImplCopyWithImpl(
+    _$DriverApprovalInfoModelImpl _value,
+    $Res Function(_$DriverApprovalInfoModelImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DriverApprovalInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isVerified = null,
+    Object? hasApprovalRequest = null,
+    Object? approvalRequestStatus = freezed,
+  }) {
+    return _then(
+      _$DriverApprovalInfoModelImpl(
+        isVerified: null == isVerified
+            ? _value.isVerified
+            : isVerified // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        hasApprovalRequest: null == hasApprovalRequest
+            ? _value.hasApprovalRequest
+            : hasApprovalRequest // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        approvalRequestStatus: freezed == approvalRequestStatus
+            ? _value.approvalRequestStatus
+            : approvalRequestStatus // ignore: cast_nullable_to_non_nullable
+                  as DriverApprovalRequestStatus?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DriverApprovalInfoModelImpl implements _DriverApprovalInfoModel {
+  const _$DriverApprovalInfoModelImpl({
+    this.isVerified = false,
+    this.hasApprovalRequest = false,
+    this.approvalRequestStatus,
+  });
+
+  factory _$DriverApprovalInfoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DriverApprovalInfoModelImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final bool isVerified;
+  @override
+  @JsonKey()
+  final bool hasApprovalRequest;
+  @override
+  final DriverApprovalRequestStatus? approvalRequestStatus;
+
+  @override
+  String toString() {
+    return 'DriverApprovalInfoModel(isVerified: $isVerified, hasApprovalRequest: $hasApprovalRequest, approvalRequestStatus: $approvalRequestStatus)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DriverApprovalInfoModelImpl &&
             (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
+                other.isVerified == isVerified) &&
+            (identical(other.hasApprovalRequest, hasApprovalRequest) ||
+                other.hasApprovalRequest == hasApprovalRequest) &&
+            (identical(other.approvalRequestStatus, approvalRequestStatus) ||
+                other.approvalRequestStatus == approvalRequestStatus));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    userId,
-    city,
-    approvalStatus,
-    isOnline,
     isVerified,
+    hasApprovalRequest,
+    approvalRequestStatus,
   );
 
-  /// Create a copy of DriverProfileModel
+  /// Create a copy of DriverApprovalInfoModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DriverProfileModelImplCopyWith<_$DriverProfileModelImpl> get copyWith =>
-      __$$DriverProfileModelImplCopyWithImpl<_$DriverProfileModelImpl>(
-        this,
-        _$identity,
-      );
+  _$$DriverApprovalInfoModelImplCopyWith<_$DriverApprovalInfoModelImpl>
+  get copyWith =>
+      __$$DriverApprovalInfoModelImplCopyWithImpl<
+        _$DriverApprovalInfoModelImpl
+      >(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DriverProfileModelImplToJson(this);
+    return _$$DriverApprovalInfoModelImplToJson(this);
   }
 }
 
-abstract class _DriverProfileModel implements DriverProfileModel {
-  const factory _DriverProfileModel({
-    required final int userId,
-    required final String city,
-    required final String approvalStatus,
-    required final bool isOnline,
-    required final bool isVerified,
-  }) = _$DriverProfileModelImpl;
+abstract class _DriverApprovalInfoModel implements DriverApprovalInfoModel {
+  const factory _DriverApprovalInfoModel({
+    final bool isVerified,
+    final bool hasApprovalRequest,
+    final DriverApprovalRequestStatus? approvalRequestStatus,
+  }) = _$DriverApprovalInfoModelImpl;
 
-  factory _DriverProfileModel.fromJson(Map<String, dynamic> json) =
-      _$DriverProfileModelImpl.fromJson;
+  factory _DriverApprovalInfoModel.fromJson(Map<String, dynamic> json) =
+      _$DriverApprovalInfoModelImpl.fromJson;
 
-  @override
-  int get userId;
-  @override
-  String get city;
-  @override
-  String get approvalStatus;
-  @override
-  bool get isOnline;
   @override
   bool get isVerified;
+  @override
+  bool get hasApprovalRequest;
+  @override
+  DriverApprovalRequestStatus? get approvalRequestStatus;
 
-  /// Create a copy of DriverProfileModel
+  /// Create a copy of DriverApprovalInfoModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DriverProfileModelImplCopyWith<_$DriverProfileModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$DriverApprovalInfoModelImplCopyWith<_$DriverApprovalInfoModelImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }

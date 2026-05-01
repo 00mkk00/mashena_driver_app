@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
+import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.dart';
 
 part 'driver_model.freezed.dart';
 part 'driver_model.g.dart';
@@ -7,10 +9,13 @@ part 'driver_model.g.dart';
 class DriverModel with _$DriverModel {
   const factory DriverModel({
     required int id,
+    required String fullName,
     required String email,
     required String phoneNumber,
-    required DateTime createdAt,
-    required DriverProfileModel driverProfile,
+    @Default([]) List<RoleModel> roles,
+    @Default('') String activeRole,
+    @Default(DriverApprovalInfoModel())
+    DriverApprovalInfoModel driverApprovalInfo,
   }) = _DriverModel;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) =>
@@ -18,15 +23,24 @@ class DriverModel with _$DriverModel {
 }
 
 @freezed
-class DriverProfileModel with _$DriverProfileModel {
-  const factory DriverProfileModel({
-    required int userId,
-    required String city,
-    required String approvalStatus,
-    required bool isOnline,
-    required bool isVerified,
-  }) = _DriverProfileModel;
+class RoleModel with _$RoleModel {
+  const factory RoleModel({
+    required int id,
+    required String name,
+  }) = _RoleModel;
 
-  factory DriverProfileModel.fromJson(Map<String, dynamic> json) =>
-      _$DriverProfileModelFromJson(json);
+  factory RoleModel.fromJson(Map<String, dynamic> json) =>
+      _$RoleModelFromJson(json);
+}
+
+@freezed
+class DriverApprovalInfoModel with _$DriverApprovalInfoModel {
+  const factory DriverApprovalInfoModel({
+    @Default(false) bool isVerified,
+    @Default(false) bool hasApprovalRequest,
+    DriverApprovalRequestStatus? approvalRequestStatus,
+  }) = _DriverApprovalInfoModel;
+
+  factory DriverApprovalInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$DriverApprovalInfoModelFromJson(json);
 }

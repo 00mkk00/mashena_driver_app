@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/core/network/api_exception.dart';
@@ -11,6 +12,7 @@ import 'package:mashena_driver_app/feature/auth/domain/entities/login_entity.dar
 import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/login_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/send_otp_params.dart';
+import 'package:mashena_driver_app/feature/auth/domain/params/upload_driver_docs_param.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/verify_otp_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/repos/auth_repo.dart';
 
@@ -69,5 +71,17 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
     }
     
+  }
+
+  @override
+  Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params) async {
+    try {
+      await _remoteDataSource.uploadDocuments(params);
+      return const Right(null);
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
   }
 }

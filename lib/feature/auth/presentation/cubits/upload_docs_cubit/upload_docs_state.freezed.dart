@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'signup_state.dart';
+part of 'upload_docs_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,26 +16,26 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$SignupState {
+mixin _$UploadDocsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String email, int userId) requireOtp,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String email, int userId)? requireOtp,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String email, int userId)? requireOtp,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -43,45 +43,45 @@ mixin _$SignupState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_RequireOtp value) requireOtp,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_RequireOtp value)? requireOtp,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_RequireOtp value)? requireOtp,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SignupStateCopyWith<$Res> {
-  factory $SignupStateCopyWith(
-    SignupState value,
-    $Res Function(SignupState) then,
-  ) = _$SignupStateCopyWithImpl<$Res, SignupState>;
+abstract class $UploadDocsStateCopyWith<$Res> {
+  factory $UploadDocsStateCopyWith(
+    UploadDocsState value,
+    $Res Function(UploadDocsState) then,
+  ) = _$UploadDocsStateCopyWithImpl<$Res, UploadDocsState>;
 }
 
 /// @nodoc
-class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
-    implements $SignupStateCopyWith<$Res> {
-  _$SignupStateCopyWithImpl(this._value, this._then);
+class _$UploadDocsStateCopyWithImpl<$Res, $Val extends UploadDocsState>
+    implements $UploadDocsStateCopyWith<$Res> {
+  _$UploadDocsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -95,14 +95,14 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$SignupStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$UploadDocsStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
     _$InitialImpl _value,
     $Res Function(_$InitialImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -113,7 +113,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'SignupState.initial()';
+    return 'UploadDocsState.initial()';
   }
 
   @override
@@ -130,7 +130,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String email, int userId) requireOtp,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -141,7 +141,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String email, int userId)? requireOtp,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -152,7 +152,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String email, int userId)? requireOtp,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -167,7 +167,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_RequireOtp value) requireOtp,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -178,7 +178,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_RequireOtp value)? requireOtp,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -189,7 +189,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_RequireOtp value)? requireOtp,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -200,7 +200,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements SignupState {
+abstract class _Initial implements UploadDocsState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -214,14 +214,14 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$SignupStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$UploadDocsStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
     _$LoadingImpl _value,
     $Res Function(_$LoadingImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -232,7 +232,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'SignupState.loading()';
+    return 'UploadDocsState.loading()';
   }
 
   @override
@@ -249,7 +249,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String email, int userId) requireOtp,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -260,7 +260,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String email, int userId)? requireOtp,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -271,7 +271,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String email, int userId)? requireOtp,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -286,7 +286,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_RequireOtp value) requireOtp,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -297,7 +297,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_RequireOtp value)? requireOtp,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -308,7 +308,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_RequireOtp value)? requireOtp,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -319,93 +319,59 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements SignupState {
+abstract class _Loading implements UploadDocsState {
   const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$RequireOtpImplCopyWith<$Res> {
-  factory _$$RequireOtpImplCopyWith(
-    _$RequireOtpImpl value,
-    $Res Function(_$RequireOtpImpl) then,
-  ) = __$$RequireOtpImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String email, int userId});
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+    _$SuccessImpl value,
+    $Res Function(_$SuccessImpl) then,
+  ) = __$$SuccessImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RequireOtpImplCopyWithImpl<$Res>
-    extends _$SignupStateCopyWithImpl<$Res, _$RequireOtpImpl>
-    implements _$$RequireOtpImplCopyWith<$Res> {
-  __$$RequireOtpImplCopyWithImpl(
-    _$RequireOtpImpl _value,
-    $Res Function(_$RequireOtpImpl) _then,
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$UploadDocsStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+    _$SuccessImpl _value,
+    $Res Function(_$SuccessImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? email = null, Object? userId = null}) {
-    return _then(
-      _$RequireOtpImpl(
-        null == email
-            ? _value.email
-            : email // ignore: cast_nullable_to_non_nullable
-                  as String,
-        null == userId
-            ? _value.userId
-            : userId // ignore: cast_nullable_to_non_nullable
-                  as int,
-      ),
-    );
-  }
 }
 
 /// @nodoc
 
-class _$RequireOtpImpl implements _RequireOtp {
-  const _$RequireOtpImpl(this.email, this.userId);
-
-  @override
-  final String email;
-  @override
-  final int userId;
+class _$SuccessImpl implements _Success {
+  const _$SuccessImpl();
 
   @override
   String toString() {
-    return 'SignupState.requireOtp(email: $email, userId: $userId)';
+    return 'UploadDocsState.success()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RequireOtpImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.userId, userId) || other.userId == userId));
+        (other.runtimeType == runtimeType && other is _$SuccessImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, userId);
-
-  /// Create a copy of SignupState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RequireOtpImplCopyWith<_$RequireOtpImpl> get copyWith =>
-      __$$RequireOtpImplCopyWithImpl<_$RequireOtpImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String email, int userId) requireOtp,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
-    return requireOtp(email, userId);
+    return success();
   }
 
   @override
@@ -413,10 +379,10 @@ class _$RequireOtpImpl implements _RequireOtp {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String email, int userId)? requireOtp,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
-    return requireOtp?.call(email, userId);
+    return success?.call();
   }
 
   @override
@@ -424,12 +390,12 @@ class _$RequireOtpImpl implements _RequireOtp {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String email, int userId)? requireOtp,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (requireOtp != null) {
-      return requireOtp(email, userId);
+    if (success != null) {
+      return success();
     }
     return orElse();
   }
@@ -439,10 +405,10 @@ class _$RequireOtpImpl implements _RequireOtp {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_RequireOtp value) requireOtp,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
-    return requireOtp(this);
+    return success(this);
   }
 
   @override
@@ -450,10 +416,10 @@ class _$RequireOtpImpl implements _RequireOtp {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_RequireOtp value)? requireOtp,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
-    return requireOtp?.call(this);
+    return success?.call(this);
   }
 
   @override
@@ -461,29 +427,19 @@ class _$RequireOtpImpl implements _RequireOtp {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_RequireOtp value)? requireOtp,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (requireOtp != null) {
-      return requireOtp(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
 }
 
-abstract class _RequireOtp implements SignupState {
-  const factory _RequireOtp(final String email, final int userId) =
-      _$RequireOtpImpl;
-
-  String get email;
-  int get userId;
-
-  /// Create a copy of SignupState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RequireOtpImplCopyWith<_$RequireOtpImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _Success implements UploadDocsState {
+  const factory _Success() = _$SuccessImpl;
 }
 
 /// @nodoc
@@ -498,14 +454,14 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$SignupStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$UploadDocsStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
     _$ErrorImpl _value,
     $Res Function(_$ErrorImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -531,7 +487,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'SignupState.error(message: $message)';
+    return 'UploadDocsState.error(message: $message)';
   }
 
   @override
@@ -545,7 +501,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -558,7 +514,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String email, int userId) requireOtp,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -569,7 +525,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String email, int userId)? requireOtp,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -580,7 +536,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String email, int userId)? requireOtp,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -595,7 +551,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_RequireOtp value) requireOtp,
+    required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -606,7 +562,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_RequireOtp value)? requireOtp,
+    TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -617,7 +573,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_RequireOtp value)? requireOtp,
+    TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -628,12 +584,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements SignupState {
+abstract class _Error implements UploadDocsState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;
 
-  /// Create a copy of SignupState
+  /// Create a copy of UploadDocsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

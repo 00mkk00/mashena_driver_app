@@ -5,22 +5,31 @@ extension DriverMapper on DriverModel {
   DriverEntity toEntity() {
     return DriverEntity(
       id: id,
+      fullName: fullName,
       email: email,
       phoneNumber: phoneNumber,
-      createdAt: createdAt,
-      driverProfile: driverProfile.toEntity(),
+      roles: roles.map((e) => e.toEntity()).toList(),
+      activeRole: activeRole,
+      driverApprovalInfo: driverApprovalInfo.toEntity(),
     );
   }
 }
 
-extension DriverProfileMapper on DriverProfileModel {
-  DriverProfileEntity toEntity() {
-    return DriverProfileEntity(
-      userId: userId,
-      city: city,
-      approvalStatus: approvalStatus,
-      isOnline: isOnline,
+extension RoleMapper on RoleModel {
+  RoleEntity toEntity() {
+    return RoleEntity(
+      id: id,
+      name: name,
+    );
+  }
+}
+
+extension DriverApprovalInfoMapper on DriverApprovalInfoModel {
+  DriverApprovalInfoEntity toEntity() {
+    return DriverApprovalInfoEntity(
       isVerified: isVerified,
+      hasApprovalRequest: hasApprovalRequest,
+      approvalRequestStatus: approvalRequestStatus,
     );
   }
 }

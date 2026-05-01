@@ -4,8 +4,9 @@ import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 
 class AuthFooter extends StatelessWidget {
-  const AuthFooter({super.key, required this.onTapLogin});
+  const AuthFooter({super.key, required this.onTapLogin, required this.text});
   final VoidCallback onTapLogin;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class AuthFooter extends StatelessWidget {
               child: GestureDetector(
                 onTap: onTapLogin,
                 child: Text(
-                  S.of(context).authLogin,
+                  text,
                   style: AppTextStyles.w600_16.copyWith(
                     color: AppColors.primaryColor,
                   ),

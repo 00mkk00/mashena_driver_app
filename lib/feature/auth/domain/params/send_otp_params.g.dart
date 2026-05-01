@@ -7,10 +7,7 @@ part of 'send_otp_params.dart';
 // **************************************************************************
 
 _$SendOtpParamsImpl _$$SendOtpParamsImplFromJson(Map<String, dynamic> json) =>
-    _$SendOtpParamsImpl(
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-    );
+    _$SendOtpParamsImpl(email: json['email'] as String);
 
 Map<String, dynamic> _$$SendOtpParamsImplToJson(_$SendOtpParamsImpl instance) =>
-    <String, dynamic>{'email': instance.email, 'phone': instance.phone};
+    <String, dynamic>{'email': instance.email};

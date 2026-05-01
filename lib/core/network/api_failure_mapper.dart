@@ -24,19 +24,40 @@ Failure mapApiExceptionToFailure(ApiException e, ApiClient api) {
           FailureCode.unauthorized,
           statusCode: sc,
           rawMessage: raw,
+          data: e.data,
         );
       }
       if (sc == 403) {
-        return Failure(FailureCode.forbidden, statusCode: sc, rawMessage: raw);
+        return Failure(
+          FailureCode.forbidden,
+          statusCode: sc,
+          rawMessage: raw,
+          data: e.data,
+        );
       }
       if (sc == 404) {
-        return Failure(FailureCode.notFound, statusCode: sc, rawMessage: raw);
+        return Failure(
+          FailureCode.notFound,
+          statusCode: sc,
+          rawMessage: raw,
+          data: e.data,
+        );
       }
       if (sc == 422) {
-        return Failure(FailureCode.validation, statusCode: sc, rawMessage: raw);
+        return Failure(
+          FailureCode.validation,
+          statusCode: sc,
+          rawMessage: raw,
+          data: e.data,
+        );
       }
       if (sc != null && sc >= 500) {
-        return Failure(FailureCode.server, statusCode: sc, rawMessage: raw);
+        return Failure(
+          FailureCode.server,
+          statusCode: sc,
+          rawMessage: raw,
+          data: e.data,
+        );
       }
 
       return Failure(
@@ -44,6 +65,7 @@ Failure mapApiExceptionToFailure(ApiException e, ApiClient api) {
         statusCode: sc,
         args: [sc?.toString() ?? ''],
         rawMessage: raw,
+        data: e.data,
       );
 
     case ApiErrorCode.badCertificate:

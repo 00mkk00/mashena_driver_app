@@ -7,12 +7,14 @@ import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/network/token_manager_impl.dart';
 import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/storage/local_storage_impl.dart';
+import 'package:mashena_driver_app/core/utils/image_picker.dart';
 import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/auth/data/repos/auth_repository_impl.dart';
 import 'package:mashena_driver_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/login_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';
+import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
@@ -66,6 +68,10 @@ Future<void> configureDependencies() async {
     ),
   );
 
+
+getIt.registerLazySingleton<ImagePickerService>(
+  () => ImagePickerService(),
+);
   // ======================
   // Features: Onboarding
   // ======================
@@ -105,5 +111,9 @@ Future<void> configureDependencies() async {
 
   getIt.registerLazySingleton<VerifyOtpUseCase>(
     () => VerifyOtpUseCase(getIt<AuthRepository>()),
+  );
+
+  getIt.registerLazySingleton<UploadDriverDocsUseCase>(
+    () => UploadDriverDocsUseCase(getIt<AuthRepository>()),
   );
 }

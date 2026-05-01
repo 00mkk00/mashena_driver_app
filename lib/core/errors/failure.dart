@@ -17,10 +17,12 @@ final class Failure {
     this.statusCode,
     this.args = const [],
     this.rawMessage,
+    this.data,
   });
 
   final FailureCode code;
   final int? statusCode;
   final List<String> args;
   final String? rawMessage;
+  final Map<String, dynamic>? data;
 }

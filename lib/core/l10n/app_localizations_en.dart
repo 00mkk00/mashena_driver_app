@@ -93,6 +93,9 @@ class SEn extends S {
   String get authLogout => 'Logout';
 
   @override
+  String get authCity => 'city';
+
+  @override
   String get authSendCode => 'Send Code';
 
   @override
@@ -124,6 +127,48 @@ class SEn extends S {
 
   @override
   String get authOtpSuccess => 'Verification successful';
+
+  @override
+  String get uploadedSuccessfully => 'Uploaded Successfully';
+
+  @override
+  String get uploadYourInformation => 'Upload your Information';
+
+  @override
+  String get nationalId => 'National ID';
+
+  @override
+  String get driverLicense => 'Driver License';
+
+  @override
+  String get mechanicCard => 'Mechanic Card';
+
+  @override
+  String get vehiclePlate => 'Vehicle Plate';
+
+  @override
+  String get insurancePolicy => 'Insurance Policy';
+
+  @override
+  String get vehicleType => 'Vehicle Type';
+
+  @override
+  String get vehicleModel => 'Vehicle Model';
+
+  @override
+  String get vehicleColor => 'Vehicle Color';
+
+  @override
+  String get vehicleYear => 'Vehicle Year';
+
+  @override
+  String get pickImage => 'Pick Image';
+
+  @override
+  String get uploadDocuments => 'Upload Documents';
+
+  @override
+  String get imageIsRequired => 'Image is required';
 
   @override
   String get otpResendSuccess => 'Code sent successfully';

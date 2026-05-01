@@ -27,6 +27,7 @@
   "authDontHaveAnAccount": "ليس لديك حساب؟",
   "authFullName":" الاسم الكامل",
   "authPhone": "رقم الهاتف",
+  "authCity":"المدينة",
   "authSignUp": "تسجيل",
   "authPassword": "كلمة المرور",
   "authForgotPassword": "نسيت كلمة المرور؟",
