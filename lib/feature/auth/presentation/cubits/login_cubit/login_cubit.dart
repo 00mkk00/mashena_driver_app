@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
-import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/login_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/send_otp_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/login_usecase.dart';

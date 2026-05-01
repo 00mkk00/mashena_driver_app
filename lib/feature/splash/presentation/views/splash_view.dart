@@ -70,7 +70,7 @@ class _SplashViewState extends State<SplashView>
           storage.getBool(AppConstants.isOnboardingSeenKey) ?? false;
 
       if (onboardingSeen) {
-        context.go(AppRoutes.signupPath);
+        context.go(AppRoutes.loginPath);
       } else {
         context.go(AppRoutes.onboardingPath);
       }

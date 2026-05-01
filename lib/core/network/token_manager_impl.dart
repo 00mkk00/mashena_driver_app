@@ -1,5 +1,5 @@
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'token_manager.dart';
 
 final class TokenManagerImpl implements TokenManager {
   TokenManagerImpl(this._prefs);
@@ -12,6 +12,23 @@ final class TokenManagerImpl implements TokenManager {
   String? _accessToken;
   String? _refreshToken;
 
+  // ======================
+  // Load (🔥 مهم للـ router)
+  // ======================
+  Future<void> loadTokens() async {
+    _accessToken = _prefs.getString(_kAccess);
+    _refreshToken = _prefs.getString(_kRefresh);
+  }
+
+  // ======================
+  // Getters (sync)
+  // ======================
+  String? get accessToken => _accessToken;
+  String? get refreshToken => _refreshToken;
+
+  // ======================
+  // Save
+  // ======================
   @override
   Future<void> saveTokens({
     required String accessToken,
@@ -26,6 +43,9 @@ final class TokenManagerImpl implements TokenManager {
     }
   }
 
+  // ======================
+  // Old async methods (اختياري)
+  // ======================
   @override
   Future<String?> getAccessToken() async {
     _accessToken ??= _prefs.getString(_kAccess);
@@ -38,6 +58,9 @@ final class TokenManagerImpl implements TokenManager {
     return _refreshToken;
   }
 
+  // ======================
+  // Clear
+  // ======================
   @override
   Future<void> clearTokens() async {
     _accessToken = null;

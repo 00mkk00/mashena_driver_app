@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 
 import 'app/app.dart';
 
@@ -10,6 +11,8 @@ Future<void> main() async {
   await ScreenUtil.ensureScreenSize();
 
   await configureDependencies();
+  await getIt<TokenManager>().loadTokens();
+
   await dotenv.load(fileName: '.env');
   runApp(ScreenUtilInit(designSize: Size(428, 926), child: const App()));
 }
