@@ -1,3 +1,4 @@
+import 'package:mashena_driver_app/feature/home/presentation/views/home_view.dart';
 
 class AppRoutes {
   // route names (للتنقل)
@@ -8,6 +9,7 @@ class AppRoutes {
   static const verification = 'verification';
   static const uploadDocs = 'upload-docs';
   static const pendingView = 'pending-view';
+  static const homeView = 'home-view';
 
   // route paths (للـ URL)
   static const onboardingPath = '/onboarding';
@@ -16,5 +18,6 @@ class AppRoutes {
   static const loginPath = '/login';
   static const signupPath = '/signup';
   static const uploadDocsPath = '/upload-docs';
-  static const pendingViewPath= '/pending-view';
+  static const pendingViewPath = '/pending-view';
+  static const homeViewPath = '/home-view';
 }

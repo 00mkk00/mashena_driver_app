@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
               success: (auth) {
                 context.pop();
                 context.showSuccessToast(S.of(context).authLogin);
-                // context.go(AppRoutes.homePath); // Navigate to home
+                context.go(AppRoutes.homeViewPath); // Navigate to home
               },
 
               /// 📤 Needs Upload

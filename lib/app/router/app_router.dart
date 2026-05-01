@@ -17,6 +17,7 @@ import 'package:mashena_driver_app/feature/auth/presentation/views/login_view.da
 import 'package:mashena_driver_app/feature/auth/presentation/views/signup_view.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/views/upload_docs_view.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/views/verify_otp_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/views/home_view.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mashena_driver_app/feature/splash/presentation/views/splash_view.dart';
@@ -106,6 +107,11 @@ final class AppRouter {
             child: UploadDocsView(userId: data['userId']),
           );
         },
+      ),
+      GoRoute(
+        path: AppRoutes.homeViewPath,
+        name: AppRoutes.homeView,
+        builder: (context, state) => HomeView(),
       ),
     ],
     errorBuilder: (context, state) => _ErrorPage(error: state.error),
