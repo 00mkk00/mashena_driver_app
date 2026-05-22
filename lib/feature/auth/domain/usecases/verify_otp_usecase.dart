@@ -8,7 +8,7 @@ class VerifyOtpUseCase {
 
   VerifyOtpUseCase(this.repository);
 
-  Future<Either<Failure,void>> call(VerifyOtpParams params) {
+  Future<Either<Failure, void>> call(VerifyOtpParams params) {
     return repository.verifyOtp(params);
   }
 }

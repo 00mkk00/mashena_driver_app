@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
-import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.dart';
 
 part 'driver_model.freezed.dart';
 part 'driver_model.g.dart';
@@ -24,10 +23,7 @@ class DriverModel with _$DriverModel {
 
 @freezed
 class RoleModel with _$RoleModel {
-  const factory RoleModel({
-    required int id,
-    required String name,
-  }) = _RoleModel;
+  const factory RoleModel({required int id, required String name}) = _RoleModel;
 
   factory RoleModel.fromJson(Map<String, dynamic> json) =>
       _$RoleModelFromJson(json);

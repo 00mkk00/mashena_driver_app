@@ -26,16 +26,19 @@ class SignupView extends StatelessWidget {
                 );
               },
 
-              requireOtp: (email,userId) {
+              requireOtp: (email, userId) {
                 context.pop(); // close loader
 
-                context.go(AppRoutes.verificationPath, extra: {"email": email,'userId':userId});
+                context.go(
+                  AppRoutes.verificationPath,
+                  extra: {"email": email, 'userId': userId},
+                );
               },
 
               error: (message) {
                 context.pop();
                 context.showErrorToast(message);
-               },
+              },
             );
           },
           child: const SignupViewBody(),

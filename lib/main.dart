@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,12 @@ Future<void> main() async {
 
   await configureDependencies();
   await getIt<TokenManager>().loadTokens();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
 
   await dotenv.load(fileName: '.env');
   runApp(ScreenUtilInit(designSize: Size(428, 926), child: const App()));

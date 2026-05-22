@@ -36,9 +36,8 @@ class LoginCubit extends Cubit<LoginState> {
         if (failure.statusCode == 401 &&
             (failure.rawMessage?.contains('not verified') == true ||
                 failure.data?['errorCode'] == 'NOT_VERIFIED')) {
-          
           final userId = failure.data?['userId'] as int?;
-          
+
           final otpResult = await sendOtpUseCase(SendOtpParams(email: email));
 
           otpResult.fold(
@@ -63,12 +62,17 @@ class LoginCubit extends Cubit<LoginState> {
         if (info.isVerified) {
           // 3- when user hasApprovalRequest
           if (info.hasApprovalRequest) {
-            if (info.approvalRequestStatus == DriverApprovalRequestStatus.approved) {
+            if (info.approvalRequestStatus ==
+                DriverApprovalRequestStatus.approved) {
               // when state is approved navigate user to home page
               emit(LoginState.success(data));
             } else {
               // give him toast whit message depending on approvalRequestStatus
-              emit(LoginState.approvalStatus(info.approvalRequestStatus?.name ?? 'pending'));
+              emit(
+                LoginState.approvalStatus(
+                  info.approvalRequestStatus?.name ?? 'pending',
+                ),
+              );
             }
           } else {
             // 2- when user is verified and no approval request, navigate user to upload page

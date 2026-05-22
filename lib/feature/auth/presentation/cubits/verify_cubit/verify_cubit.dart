@@ -9,24 +9,14 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
   final VerifyOtpUseCase verifyOtpUseCase;
   final SendOtpUseCase sendOtpUseCase;
 
-  VerifyOtpCubit({
-    required this.verifyOtpUseCase,
-    required this.sendOtpUseCase,
-  }) : super(const VerifyOtpState.initial());
+  VerifyOtpCubit({required this.verifyOtpUseCase, required this.sendOtpUseCase})
+    : super(const VerifyOtpState.initial());
 
-  Future<void> verify({
-    required String email,
-    required String code,
-  }) async {
+  Future<void> verify({required String email, required String code}) async {
     emit(const VerifyOtpState.loading());
 
     try {
-      await verifyOtpUseCase(
-        VerifyOtpParams(
-          email: email,
-          code: code,
-        ),
-      );
+      await verifyOtpUseCase(VerifyOtpParams(email: email, code: code));
 
       emit(const VerifyOtpState.success());
     } catch (e) {
@@ -34,15 +24,9 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
     }
   }
 
-  Future<void> resend({
-    required String email,
-  }) async {
+  Future<void> resend({required String email}) async {
     try {
-      await sendOtpUseCase(
-        SendOtpParams(
-          email: email,
-        ),
-      );
+      await sendOtpUseCase(SendOtpParams(email: email));
     } catch (e) {
       emit(VerifyOtpState.error(e.toString()));
     }

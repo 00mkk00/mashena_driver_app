@@ -1,5 +1,3 @@
-import 'package:mashena_driver_app/feature/home/presentation/views/home_view.dart';
-
 class AppRoutes {
   // route names (للتنقل)
   static const onboarding = 'onboarding';

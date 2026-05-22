@@ -78,7 +78,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             const SizedBox(height: 20),
 
             AuthFooter(
-              onTapLogin: () => context.go(AppRoutes.signupPath),
+              onTapLogin: () => context.push(AppRoutes.signupPath),
               text: S.of(context).authSignUp,
             ),
           ],

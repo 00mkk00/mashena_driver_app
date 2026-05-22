@@ -26,40 +26,40 @@ final class AppRouter {
   const AppRouter._();
 
   static final GoRouter router = GoRouter(
-   redirect: (context, state) {
-  final onboardingSeen = getIt<GetOnboardingStatus>()();
-  final token = getIt<TokenManager>().accessToken;
+    redirect: (context, state) {
+      final onboardingSeen = getIt<GetOnboardingStatus>()();
+      final token = getIt<TokenManager>().accessToken;
 
-  final isLoggedIn = token != null && token.isNotEmpty;
+      final isLoggedIn = token != null && token.isNotEmpty;
 
-  final loc = state.matchedLocation;
+      final loc = state.matchedLocation;
 
-  final isSplash = loc == AppRoutes.splashPath;
-  final isOnboarding = loc == AppRoutes.onboardingPath;
-  final isLogin = loc == AppRoutes.loginPath;
+      final isSplash = loc == AppRoutes.splashPath;
+      final isOnboarding = loc == AppRoutes.onboardingPath;
+      final isLogin = loc == AppRoutes.loginPath;
+      final isSignup = loc == AppRoutes.signupPath;
 
-  // 🟡 خلي splash يمر دائماً
-  if (isSplash) return null;
+      // 🟡 خلي splash يمر دائماً
+      if (isSplash) return null;
 
-  // ======================
-  // 1. Onboarding
-  // ======================
-  if (!onboardingSeen) {
-    return isOnboarding ? null : AppRoutes.onboardingPath;
-  }
+      // ======================
+      // 1. Onboarding
+      // ======================
+      if (!onboardingSeen) {
+        return isOnboarding ? null : AppRoutes.onboardingPath;
+      }
 
-  
-  if (!isLoggedIn) {
-    return isLogin ? null : AppRoutes.loginPath;
-  }
+      if (!isLoggedIn) {
+        return (isLogin || isSignup) ? null : AppRoutes.loginPath;
+      }
 
-  // ✅ مسجل → لا ترجع login أو onboarding
-  if (isLoggedIn && (isLogin || isOnboarding)) {
-    return AppRoutes.homeViewPath;
-  }
+      // ✅ مسجل → لا ترجع login أو onboarding
+      if (isLoggedIn && (isLogin || isOnboarding)) {
+        return AppRoutes.homeViewPath;
+      }
 
-  return null;
-},
+      return null;
+    },
     initialLocation: AppRoutes.splashPath,
     routes: <RouteBase>[
       GoRoute(path: '/', builder: (context, state) => const _RootPage()),

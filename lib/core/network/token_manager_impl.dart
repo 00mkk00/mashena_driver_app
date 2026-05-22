@@ -15,6 +15,7 @@ final class TokenManagerImpl implements TokenManager {
   // ======================
   // Load (🔥 مهم للـ router)
   // ======================
+  @override
   Future<void> loadTokens() async {
     _accessToken = _prefs.getString(_kAccess);
     _refreshToken = _prefs.getString(_kRefresh);
@@ -23,7 +24,9 @@ final class TokenManagerImpl implements TokenManager {
   // ======================
   // Getters (sync)
   // ======================
+  @override
   String? get accessToken => _accessToken;
+  @override
   String? get refreshToken => _refreshToken;
 
   // ======================

@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/core/network/api_exception.dart';
@@ -70,11 +69,12 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
     }
-    
   }
 
   @override
-  Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params) async {
+  Future<Either<Failure, void>> uploadDocuments(
+    UploadDriverDocsParams params,
+  ) async {
     try {
       await _remoteDataSource.uploadDocuments(params);
       return const Right(null);

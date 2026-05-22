@@ -68,10 +68,7 @@ Future<void> configureDependencies() async {
     ),
   );
 
-
-getIt.registerLazySingleton<ImagePickerService>(
-  () => ImagePickerService(),
-);
+  getIt.registerLazySingleton<ImagePickerService>(() => ImagePickerService());
   // ======================
   // Features: Onboarding
   // ======================

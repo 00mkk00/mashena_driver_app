@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mashena_driver_app/core/errors/api_failure.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';

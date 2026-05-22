@@ -23,13 +23,11 @@ class Field extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: CustomFormField(
-        
         controller: controller,
         autofillHints: autofillHints,
         keyboardType: keyboardType,

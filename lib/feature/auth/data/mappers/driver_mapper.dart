@@ -17,10 +17,7 @@ extension DriverMapper on DriverModel {
 
 extension RoleMapper on RoleModel {
   RoleEntity toEntity() {
-    return RoleEntity(
-      id: id,
-      name: name,
-    );
+    return RoleEntity(id: id, name: name);
   }
 }
 

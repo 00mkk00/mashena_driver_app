@@ -8,7 +8,7 @@ class SendOtpUseCase {
 
   SendOtpUseCase(this.repository);
 
-  Future<Either<Failure,void>> call(SendOtpParams params) {
+  Future<Either<Failure, void>> call(SendOtpParams params) {
     return repository.sendOtp(params);
   }
 }

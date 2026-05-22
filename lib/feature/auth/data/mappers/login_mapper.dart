@@ -4,9 +4,6 @@ import 'package:mashena_driver_app/feature/auth/domain/entities/login_entity.dar
 
 extension LoginMapper on LoginModel {
   LoginEntity toEntity() {
-    return LoginEntity(
-      accessToken: accessToken,
-      user: user.toEntity(),
-    );
+    return LoginEntity(accessToken: accessToken, user: user.toEntity());
   }
 }

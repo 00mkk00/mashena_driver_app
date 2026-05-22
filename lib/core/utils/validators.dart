@@ -192,10 +192,13 @@ final class Validators {
     return null;
   }
 
-  static String? requiredStringField(String? value, {String message = 'هذا الحقل مطلوب'}) {
-  if (value == null || value.trim().isEmpty) {
-    return message;
+  static String? requiredStringField(
+    String? value, {
+    String message = 'هذا الحقل مطلوب',
+  }) {
+    if (value == null || value.trim().isEmpty) {
+      return message;
+    }
+    return null;
   }
-  return null;
-}
 }

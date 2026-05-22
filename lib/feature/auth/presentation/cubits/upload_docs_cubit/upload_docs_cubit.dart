@@ -6,8 +6,7 @@ import 'package:mashena_driver_app/feature/auth/presentation/cubits/upload_docs_
 class UploadDocsCubit extends Cubit<UploadDocsState> {
   final UploadDriverDocsUseCase useCase;
 
-  UploadDocsCubit(this.useCase)
-      : super(const UploadDocsState.initial());
+  UploadDocsCubit(this.useCase) : super(const UploadDocsState.initial());
 
   Future<void> upload(UploadDriverDocsParams params) async {
     emit(const UploadDocsState.loading());
@@ -17,9 +16,7 @@ class UploadDocsCubit extends Cubit<UploadDocsState> {
     result.fold(
       (failure) {
         emit(
-          UploadDocsState.error(
-            failure.rawMessage ?? "Something went wrong",
-          ),
+          UploadDocsState.error(failure.rawMessage ?? "Something went wrong"),
         );
       },
 

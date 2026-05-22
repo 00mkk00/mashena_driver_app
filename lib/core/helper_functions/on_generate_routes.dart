@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
-  
     default:
       return MaterialPageRoute(builder: (_) => const Scaffold());
   }

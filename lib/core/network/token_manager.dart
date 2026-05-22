@@ -8,10 +8,7 @@ abstract class TokenManager {
   // ======================
   // Async (Storage)
   // ======================
-  Future<void> saveTokens({
-    required String accessToken,
-    String? refreshToken,
-  });
+  Future<void> saveTokens({required String accessToken, String? refreshToken});
 
   Future<String?> getAccessToken();
   Future<String?> getRefreshToken();
