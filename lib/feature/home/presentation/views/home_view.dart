@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 
 import '../widgets/home_view_body.dart';
@@ -15,7 +20,12 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => DriverStatusCubit()),
+        BlocProvider(
+          create: (_) => DriverStatusCubit(
+            getIt.get<GoOnlineUseCase>(),
+            getIt.get<GoOfflineUseCase>(),
+          ),
+        ),
         BlocProvider(create: (_) => MapCubit()..initializeMap()),
       ],
       child: const _HomeViewContent(),
@@ -39,6 +49,13 @@ class _HomeViewContentState extends State<_HomeViewContent> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeViewBody(driver: _driver, rideRequest: _demoRequest);
+    return BlocListener<DriverStatusCubit, DriverStatusState>(
+      listenWhen: (prev, curr) =>
+          curr.errorMessage != null && prev.errorMessage != curr.errorMessage,
+      listener: (context, state) {
+        context.showErrorToast(state.errorMessage!);
+      },
+      child: HomeViewBody(driver: _driver, rideRequest: _demoRequest),
+    );
   }
 }

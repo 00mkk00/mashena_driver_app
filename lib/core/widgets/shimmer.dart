@@ -45,7 +45,7 @@ class _ShimmerCardState extends State<ShimmerCard>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _shimmer,
-      builder: (_, __) => Container(
+      builder: (_, _) => Container(
         width: widget.width,
         height: widget.height.h,
         decoration: BoxDecoration(

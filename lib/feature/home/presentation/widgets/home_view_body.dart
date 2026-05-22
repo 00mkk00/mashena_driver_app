@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
@@ -9,6 +8,7 @@ import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/core/widgets/shimmer.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
+import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
@@ -69,9 +69,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         // Top bar
                         HomeTopBar(
                           statusState: driverState,
-                          onToggleStatus: () => context
-                              .read<DriverStatusCubit>()
-                              .toggleOnlineStatus(),
+                          onToggleStatus: () {
+                            final position = context
+                                .read<MapCubit>()
+                                .state
+                                .currentPosition;
+                            if (position == null) return;
+                            context
+                                .read<DriverStatusCubit>()
+                                .toggleOnlineStatus(
+                                  GoOnlineParams(
+                                    lat: position.latitude,
+                                    lng: position.longitude,
+                                  ),
+                                );
+                          },
                           onOpenDrawer: () =>
                               _scaffoldKey.currentState?.openDrawer(),
                           onNotificationTap: () {

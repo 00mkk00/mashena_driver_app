@@ -65,7 +65,7 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
                 const SizedBox(height: 4),
                 AnimatedBuilder(
                   animation: _dotController,
-                  builder: (_, __) {
+                  builder: (_, _) {
                     final dots =
                         '.' * ((_dotController.value * 4).floor().clamp(1, 3));
                     return Text(
@@ -125,7 +125,7 @@ class _PulseRingState extends State<_PulseRing>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (_, __) => Stack(
+      builder: (_, _) => Stack(
         alignment: Alignment.center,
         children: [
           Container(

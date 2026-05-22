@@ -1,6 +1,7 @@
 enum DriverStatus {
   offline,
-  goingOnline, // transition animation state
+  goingOnline,
+  goingOffline, // transition animation state
   onlineWaiting,
   newRequest,
   tripAccepted,

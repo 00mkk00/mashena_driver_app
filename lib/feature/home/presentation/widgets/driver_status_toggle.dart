@@ -127,7 +127,7 @@ class _StatusDotState extends State<_StatusDot>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _pulse,
-      builder: (_, __) => Container(
+      builder: (_, _) => Container(
         width: 8,
         height: 8,
         decoration: BoxDecoration(

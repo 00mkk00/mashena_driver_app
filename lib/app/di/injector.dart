@@ -16,6 +16,10 @@ import 'package:mashena_driver_app/feature/auth/domain/usecases/send_otp_usecase
 import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
+import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/home/data/repository/home_repository_impl.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,5 +116,20 @@ Future<void> configureDependencies() async {
 
   getIt.registerLazySingleton<UploadDriverDocsUseCase>(
     () => UploadDriverDocsUseCase(getIt<AuthRepository>()),
+  );
+
+  ///////////////home/////////////////////
+  getIt.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(getIt<ApiClient>()),
+  );
+
+  getIt.registerLazySingleton<HomeRepositoryImpl>(
+    () => HomeRepositoryImpl(getIt<HomeRemoteDataSource>(), getIt<ApiClient>()),
+  );
+  getIt.registerLazySingleton<GoOnlineUseCase>(
+    () => GoOnlineUseCase(getIt<HomeRepositoryImpl>()),
+  );
+  getIt.registerLazySingleton<GoOfflineUseCase>(
+    () => GoOfflineUseCase(getIt<HomeRepositoryImpl>()),
   );
 }
