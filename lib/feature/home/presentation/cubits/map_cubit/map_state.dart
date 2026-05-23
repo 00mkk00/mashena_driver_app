@@ -1,32 +1,65 @@
 import 'package:flutter_map/flutter_map.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:latlong2/latlong.dart';
-
-part 'map_state.freezed.dart';
 
 enum MapLoadStatus { initial, loading, loaded, error, permissionDenied }
 
-@freezed
-class MapState with _$MapState {
-  const factory MapState({
-    @Default(MapLoadStatus.initial) MapLoadStatus status,
-    double? latitude,
-    double? longitude,
-    double? heading, // degrees 0–360
-    MapController? controller,
-    @Default([]) List<Marker> markers,
-    @Default([]) List<Polyline> polylines,
-    @Default(false) bool isDarkMode,
-    String? errorMessage,
-  }) = _MapState;
+class MapState {
+  final MapLoadStatus status;
+  final double? latitude;
+  final double? longitude;
+  final double? heading;
+  final MapController? controller;
+  final List<Marker> markers;
+  final List<Polyline> polylines;
+  final bool isDarkMode;
+  final String? errorMessage;
+  final String? locationSyncError;
 
-  /// Convenience getter — available because of the `const MapState()` trick.
-  const MapState._();
+  const MapState({
+    this.status = MapLoadStatus.initial,
+    this.latitude,
+    this.longitude,
+    this.heading,
+    this.controller,
+    this.markers = const [],
+    this.polylines = const [],
+    this.isDarkMode = false,
+    this.errorMessage,
+    this.locationSyncError,
+  });
 
-  /// Returns a [LatLng] only when both coordinates are present.
   LatLng? get currentPosition => (latitude != null && longitude != null)
       ? LatLng(latitude!, longitude!)
       : null;
 
   bool get isLoaded => status == MapLoadStatus.loaded;
+  bool get hasSyncError => locationSyncError != null;
+
+  MapState copyWith({
+    MapLoadStatus? status,
+    double? latitude,
+    double? longitude,
+    double? heading,
+    MapController? controller,
+    List<Marker>? markers,
+    List<Polyline>? polylines,
+    bool? isDarkMode,
+    String? errorMessage,
+    bool clearErrorMessage = false,
+    String? locationSyncError,
+    bool clearLocationSyncError = false,
+  }) => MapState(
+    status: status ?? this.status,
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    heading: heading ?? this.heading,
+    controller: controller ?? this.controller,
+    markers: markers ?? this.markers,
+    polylines: polylines ?? this.polylines,
+    isDarkMode: isDarkMode ?? this.isDarkMode,
+    errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+    locationSyncError: clearLocationSyncError
+        ? null
+        : locationSyncError ?? this.locationSyncError,
+  );
 }

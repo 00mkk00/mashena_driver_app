@@ -6,4 +6,6 @@ class Endpoints {
   static const String uploadDocs = '/driver-approval-requests';
   static const goOnline = '/driver/go-online';
   static const goOffline = '/driver/go-offline';
+  static const updateDriverLocation = '/driver/location';
+  static const updateDriverRadius = '/driver/radius';
 }

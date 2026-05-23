@@ -5,6 +5,8 @@ import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
@@ -26,7 +28,13 @@ class HomeView extends StatelessWidget {
             getIt.get<GoOfflineUseCase>(),
           ),
         ),
-        BlocProvider(create: (_) => MapCubit()..initializeMap()),
+        BlocProvider(
+          create: (ctx) => MapCubit(
+            updateDriverLocationUseCase: getIt
+                .get<UpdateDriverLocationUseCase>(),
+            driverStatusCubit: ctx.read<DriverStatusCubit>(),
+          )..initializeMap(),
+        ),
       ],
       child: const _HomeViewContent(),
     );
