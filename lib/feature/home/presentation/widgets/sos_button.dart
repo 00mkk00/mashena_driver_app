@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
+import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 
 class SosButton extends StatefulWidget {
   final VoidCallback onActivate;
@@ -22,10 +24,9 @@ class _SosButtonState extends State<SosButton>
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-    _scale = Tween<double>(
-      begin: 1.0,
-      end: 1.12,
-    ).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
+    _scale = Tween<double>(begin: 1.0, end: 1.12).animate(
+      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -43,8 +44,8 @@ class _SosButtonState extends State<SosButton>
         builder: (_, child) =>
             Transform.scale(scale: _scale.value, child: child),
         child: Container(
-          width: 52,
-          height: 52,
+          width: 52.r,
+          height: 52.r,
           decoration: BoxDecoration(
             color: AppColors.sos,
             shape: BoxShape.circle,
@@ -56,15 +57,14 @@ class _SosButtonState extends State<SosButton>
               ),
             ],
           ),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.warning_amber_rounded, size: 18, color: Colors.white),
+              Icon(Icons.warning_amber_rounded, size: 18.r, color: Colors.white),
               Text(
                 'SOS',
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
+                style: AppTextStyles.w700_12.copyWith(
+                  fontSize: 10.sp,
                   color: Colors.white,
                   letterSpacing: 0.5,
                 ),

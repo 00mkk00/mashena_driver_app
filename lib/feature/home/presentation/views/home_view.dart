@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
+import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/update_radius_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
 
 import '../widgets/home_view_body.dart';
 
@@ -26,12 +28,18 @@ class HomeView extends StatelessWidget {
           create: (_) => DriverStatusCubit(
             getIt.get<GoOnlineUseCase>(),
             getIt.get<GoOfflineUseCase>(),
+            getIt.get<UpdateDriverRadiusUseCase>(),
           ),
         ),
         BlocProvider(
+          create: (ctx) => SocketCubit(
+            driverStatusCubit: ctx.read<DriverStatusCubit>(),
+            service: getIt.get<SocketService>(),
+          )..connect(accessToken: getIt<TokenManager>().accessToken ?? ''),
+        ),
+        BlocProvider(
           create: (ctx) => MapCubit(
-            updateDriverLocationUseCase: getIt
-                .get<UpdateDriverLocationUseCase>(),
+            socketCubit: ctx.read<SocketCubit>(),
             driverStatusCubit: ctx.read<DriverStatusCubit>(),
           )..initializeMap(),
         ),

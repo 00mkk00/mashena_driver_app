@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
+import 'package:mashena_driver_app/core/theme/app_radius.dart';
+import 'package:mashena_driver_app/core/theme/app_shadows.dart';
+import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 
 class MapPlaceholder extends StatefulWidget {
@@ -40,10 +43,10 @@ class _MapPlaceholderState extends State<MapPlaceholder>
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: const [
-                Color(0xFFE8F0E8),
-                Color(0xFFD0E4D0),
-                Color(0xFFE8F0E8),
+              colors: [
+                AppColors.primarySurface,
+                AppColors.lightScaffold,
+                AppColors.primarySurface,
               ],
               stops: [
                 (_shimmer.value - 0.3).clamp(0.0, 1.0),
@@ -54,40 +57,34 @@ class _MapPlaceholderState extends State<MapPlaceholder>
           ),
           child: Stack(
             children: [
-              // Map grid pattern
+              // ── Map grid pattern ───────────────────────────────
               CustomPaint(size: Size.infinite, painter: _MapGridPainter()),
 
-              // Loading message
+              // ── Loading message ────────────────────────────────
               if (widget.message != null)
                 Center(
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 12.h,
+                      horizontal: AppSpacing.md.w,
+                      vertical: AppSpacing.sm.h,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
-                          blurRadius: 20,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                      color: AppColors.cardLight,
+                      borderRadius: BorderRadius.circular(AppRadius.md.r),
+                      boxShadow: AppShadows.card,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          width: 18.w,
-                          height: 18.w,
+                          width: 18.r,
+                          height: 18.r,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppColors.online,
+                            color: AppColors.primaryColor,
                           ),
                         ),
-                        SizedBox(width: 10.w),
+                        SizedBox(width: AppSpacing.sm.w),
                         Text(
                           widget.message!,
                           style: AppTextStyles.w500_14.copyWith(
@@ -110,7 +107,7 @@ class _MapGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.2)
+      ..color = AppColors.borderColor.withValues(alpha: 0.2)
       ..strokeWidth = 1;
 
     const spacing = 40.0;

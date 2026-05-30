@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 
 class StarRatingWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class StarRatingWidget extends StatelessWidget {
         final partial = !filled && i < rating;
         return Icon(
           partial ? Icons.star_half_rounded : Icons.star_rounded,
-          size: size,
+          size: size.r,
           color: filled || partial ? AppColors.warning : AppColors.divider,
         );
       }),

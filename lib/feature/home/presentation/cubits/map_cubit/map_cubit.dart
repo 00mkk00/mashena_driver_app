@@ -8,11 +8,13 @@ import 'package:mashena_driver_app/feature/home/data/params/update_location_para
 import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
 import 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
-  final UpdateDriverLocationUseCase _updateDriverLocationUseCase;
   final DriverStatusCubit _driverStatusCubit;
+  final SocketCubit _socketCubit;
+  
 
   final MapController _mapController = MapController();
 
@@ -25,9 +27,10 @@ class MapCubit extends Cubit<MapState> {
   );
 
   MapCubit({
-    required UpdateDriverLocationUseCase updateDriverLocationUseCase,
     required DriverStatusCubit driverStatusCubit,
-  }) : _updateDriverLocationUseCase = updateDriverLocationUseCase,
+      required SocketCubit socketCubit,        // 👈 new
+
+  }) :  _socketCubit = socketCubit,
        _driverStatusCubit = driverStatusCubit,
        super(const MapState()) {
     _listenToDriverStatus();
@@ -110,48 +113,25 @@ class MapCubit extends Cubit<MapState> {
   }
 
   void _onPositionUpdate(Position position) {
-    final latLng = LatLng(position.latitude, position.longitude);
+  final latLng = LatLng(position.latitude, position.longitude);
 
-    // 1. Update map UI — move marker + re-center camera
-    emit(
-      state.copyWith(
-        latitude: position.latitude,
-        longitude: position.longitude,
-        markers: _rebuildMarkersWithDriver(latLng),
-        clearLocationSyncError: true,
-      ),
-    );
+  emit(
+    state.copyWith(
+      latitude: position.latitude,
+      longitude: position.longitude,
+      markers: _rebuildMarkersWithDriver(latLng),
+      clearLocationSyncError: true,
+    ),
+  );
 
-    // 2. Sync with backend — fire-and-forget, never blocks the UI
-    _syncLocationToServer(position);
-  }
+  // ✅ Socket instead of HTTP
+  _socketCubit.updateLocation(
+    lat: position.latitude,
+    lng: position.longitude,
+  );
+}
 
-  Future<void> _syncLocationToServer(Position position) async {
-    final params = UpdateDriverLocationParams(
-      lat: position.latitude,
-      lng: position.longitude,
-    );
-
-    final result = await _updateDriverLocationUseCase.call(params);
-
-    result.fold(
-      (failure) {
-        // Surface sync errors in state without disrupting the map
-        if (!isClosed) {
-          emit(
-            state.copyWith(
-              locationSyncError: failure.rawMessage ?? 'Sync failed',
-            ),
-          );
-        }
-      },
-      (_) {
-        if (!isClosed && state.locationSyncError != null) {
-          emit(state.copyWith(clearLocationSyncError: true));
-        }
-      },
-    );
-  }
+  
 
   // ─── Map controls ──────────────────────────────────────────────────────────
 

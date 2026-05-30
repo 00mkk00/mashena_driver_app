@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
@@ -34,38 +35,42 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      padding: const EdgeInsets.all(AppSpacing.md),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        color: AppColors.cardLight,
+        borderRadius: BorderRadius.circular(AppRadius.lg.r),
         boxShadow: AppShadows.card,
       ),
       child: Row(
         children: [
+          // ── Search icon ─────────────────────────────────────
           Container(
-            width: 44,
-            height: 44,
+            width: 44.r,
+            height: 44.r,
             decoration: BoxDecoration(
-              color: AppColors.surfaceVariant,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+              color: AppColors.primarySurface,
+              borderRadius: BorderRadius.circular(AppRadius.sm.r),
             ),
             child: Icon(
               Icons.search_rounded,
               color: AppColors.primaryColor,
-              size: 22,
+              size: 22.r,
             ),
           ),
-          const SizedBox(width: AppSpacing.md),
+
+          SizedBox(width: AppSpacing.md.w),
+
+          // ── Labels ──────────────────────────────────────────
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Looking for passengers', style: AppTextStyles.w500_12),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 AnimatedBuilder(
                   animation: _dotController,
-                  builder: (_, _) {
+                  builder: (_, __) {
                     final dots =
                         '.' * ((_dotController.value * 4).floor().clamp(1, 3));
                     return Text(
@@ -79,15 +84,19 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
               ],
             ),
           ),
-          // Animated green pulse
-          _PulseRing(),
+
+          // ── Pulse ring ──────────────────────────────────────
+          const _PulseRing(),
         ],
       ),
     );
   }
 }
 
+// ─── Pulse Ring ───────────────────────────────────────────────────────────────
 class _PulseRing extends StatefulWidget {
+  const _PulseRing();
+
   @override
   State<_PulseRing> createState() => _PulseRingState();
 }
@@ -105,14 +114,12 @@ class _PulseRingState extends State<_PulseRing>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..repeat();
-    _size = Tween<double>(
-      begin: 20,
-      end: 36,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
-    _opacity = Tween<double>(
-      begin: 0.8,
-      end: 0,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
+    _size = Tween<double>(begin: 20.r, end: 36.r).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+    );
+    _opacity = Tween<double>(begin: 0.8, end: 0.0).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+    );
   }
 
   @override
@@ -125,9 +132,10 @@ class _PulseRingState extends State<_PulseRing>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (_, _) => Stack(
+      builder: (_, __) => Stack(
         alignment: Alignment.center,
         children: [
+          // ── Expanding ring ─────────────────────────────────
           Container(
             width: _size.value,
             height: _size.value,
@@ -139,10 +147,11 @@ class _PulseRingState extends State<_PulseRing>
               ),
             ),
           ),
+          // ── Center dot ─────────────────────────────────────
           Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(
+            width: 12.r,
+            height: 12.r,
+            decoration: const BoxDecoration(
               color: AppColors.primaryColor,
               shape: BoxShape.circle,
             ),

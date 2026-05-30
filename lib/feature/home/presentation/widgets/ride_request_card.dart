@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
+import 'package:mashena_driver_app/core/theme/app_radius.dart';
+import 'package:mashena_driver_app/core/theme/app_shadows.dart';
+import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 
@@ -63,21 +66,14 @@ class _RideRequestCardState extends State<RideRequestCard>
       child: FadeTransition(
         opacity: _fadeAnimation,
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.w),
+          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.cardLight,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(28.r),
-              bottom: Radius.circular(20.r),
+              top: Radius.circular(AppRadius.xl.r),
+              bottom: Radius.circular(AppRadius.lg.r),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.13),
-                blurRadius: 30,
-                offset: const Offset(0, 8),
-                spreadRadius: -4,
-              ),
-            ],
+            boxShadow: AppShadows.card,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -85,7 +81,12 @@ class _RideRequestCardState extends State<RideRequestCard>
               _DragHandle(onTap: widget.onToggleExpand),
               _CountdownBar(seconds: widget.countdownSeconds, total: 30),
               Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
+                padding: EdgeInsets.fromLTRB(
+                  AppSpacing.md.w,
+                  AppSpacing.sm.h,
+                  AppSpacing.md.w,
+                  AppSpacing.md.h,
+                ),
                 child: Column(
                   children: [
                     _PassengerInfoRow(request: widget.request),
@@ -95,7 +96,7 @@ class _RideRequestCardState extends State<RideRequestCard>
                     _RouteDetails(request: widget.request),
                     SizedBox(height: 14.h),
                     _TripMetaRow(request: widget.request),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: AppSpacing.md.h),
                     _ActionButtons(
                       onAccept: widget.onAccept,
                       onReject: widget.onReject,
@@ -122,14 +123,14 @@ class _DragHandle extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.h),
+        padding: EdgeInsets.symmetric(vertical: AppSpacing.sm.h),
         child: Center(
           child: Container(
             width: 36.w,
             height: 4.h,
             decoration: BoxDecoration(
               color: AppColors.divider,
-              borderRadius: BorderRadius.circular(999.r),
+              borderRadius: BorderRadius.circular(AppRadius.full.r),
             ),
           ),
         ),
@@ -154,7 +155,7 @@ class _CountdownBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
       child: Column(
         children: [
           Row(
@@ -162,10 +163,13 @@ class _CountdownBar extends StatelessWidget {
             children: [
               Text('New Ride Request', style: AppTextStyles.w600_16),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.sm.w,
+                  vertical: 3.h,
+                ),
                 decoration: BoxDecoration(
                   color: _barColor.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(999.r),
+                  borderRadius: BorderRadius.circular(AppRadius.full.r),
                 ),
                 child: Text(
                   '${seconds}s',
@@ -174,9 +178,9 @@ class _CountdownBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: AppSpacing.sm.h),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999.r),
+            borderRadius: BorderRadius.circular(AppRadius.full.r),
             child: LinearProgressIndicator(
               value: seconds / total,
               backgroundColor: AppColors.divider,
@@ -199,32 +203,33 @@ class _PassengerInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // Avatar
+        // ── Avatar ─────────────────────────────────────────────
         Stack(
           children: [
             CircleAvatar(
               radius: 26.r,
               backgroundImage: NetworkImage(request.passengerPhotoUrl),
-              backgroundColor: AppColors.surfaceVariant,
+              backgroundColor: AppColors.primarySurface,
             ),
             Positioned(
               bottom: 0,
               right: 0,
               child: Container(
-                width: 16.w,
-                height: 16.w,
+                width: 16.r,
+                height: 16.r,
                 decoration: const BoxDecoration(
                   color: AppColors.online,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.check, size: 10.sp, color: Colors.white),
+                child: Icon(Icons.check, size: 10.r, color: Colors.white),
               ),
             ),
           ],
         ),
-        SizedBox(width: 12.w),
 
-        // Name & rating
+        SizedBox(width: AppSpacing.sm.w),
+
+        // ── Name & rating ───────────────────────────────────────
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +240,7 @@ class _PassengerInfoRow extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.star_rounded,
-                    size: 13.sp,
+                    size: 13.r,
                     color: AppColors.warning,
                   ),
                   SizedBox(width: 3.w),
@@ -245,7 +250,7 @@ class _PassengerInfoRow extends StatelessWidget {
                       color: AppColors.onSurface,
                     ),
                   ),
-                  SizedBox(width: 4.w),
+                  SizedBox(width: AppSpacing.xs.w),
                   Text(
                     '· ${request.passengerTotalTrips} trips',
                     style: AppTextStyles.w400_12.copyWith(
@@ -258,12 +263,15 @@ class _PassengerInfoRow extends StatelessWidget {
           ),
         ),
 
-        // Payment chip
+        // ── Payment chip ────────────────────────────────────────
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm.w,
+            vertical: AppSpacing.xs.h,
+          ),
           decoration: BoxDecoration(
             color: AppColors.onlineSurface,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(AppRadius.sm.r),
           ),
           child: Row(
             children: [
@@ -271,7 +279,7 @@ class _PassengerInfoRow extends StatelessWidget {
                 request.paymentMethod == 'cash'
                     ? Icons.attach_money
                     : Icons.credit_card_outlined,
-                size: 13.sp,
+                size: 13.r,
                 color: AppColors.online,
               ),
               SizedBox(width: 2.w),
@@ -297,14 +305,14 @@ class _RouteDetails extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Route line
+        // ── Route line ──────────────────────────────────────────
         SizedBox(
           width: 20.w,
           child: Column(
             children: [
               Container(
-                width: 10.w,
-                height: 10.w,
+                width: 10.r,
+                height: 10.r,
                 decoration: const BoxDecoration(
                   color: AppColors.online,
                   shape: BoxShape.circle,
@@ -312,8 +320,8 @@ class _RouteDetails extends StatelessWidget {
               ),
               Container(width: 2.w, height: 32.h, color: AppColors.divider),
               Container(
-                width: 10.w,
-                height: 10.w,
+                width: 10.r,
+                height: 10.r,
                 decoration: BoxDecoration(
                   color: AppColors.danger,
                   borderRadius: BorderRadius.circular(2.r),
@@ -322,15 +330,16 @@ class _RouteDetails extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: 10.w),
 
-        // Addresses
+        SizedBox(width: AppSpacing.sm.w),
+
+        // ── Addresses ───────────────────────────────────────────
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AddressItem(label: 'Pickup', address: request.pickupAddress),
-              SizedBox(height: 12.h),
+              SizedBox(height: AppSpacing.sm.h),
               _AddressItem(
                 label: 'Drop-off',
                 address: request.destinationAddress,
@@ -385,7 +394,7 @@ class _TripMetaRow extends StatelessWidget {
           value: '${request.distanceKm.toStringAsFixed(1)} km',
           color: AppColors.info,
         ),
-        SizedBox(width: 8.w),
+        SizedBox(width: AppSpacing.sm.w),
         _MetaChip(
           icon: Icons.access_time_outlined,
           value: '~${request.estimatedMinutes} min',
@@ -425,15 +434,18 @@ class _MetaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm.w,
+        vertical: AppSpacing.xs.h,
+      ),
       decoration: BoxDecoration(
         color: color.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(AppRadius.sm.r),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 13.sp, color: color),
-          SizedBox(width: 4.w),
+          Icon(icon, size: 13.r, color: color),
+          SizedBox(width: AppSpacing.xs.w),
           Text(value, style: AppTextStyles.w600_12.copyWith(color: color)),
         ],
       ),
@@ -451,29 +463,30 @@ class _ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // Reject
+        // ── Reject ─────────────────────────────────────────────
         Expanded(
           flex: 2,
           child: OutlinedButton.icon(
             onPressed: onReject,
             style: OutlinedButton.styleFrom(
-              side: BorderSide(color: AppColors.danger, width: 1.5.w),
+              side: BorderSide(color: AppColors.danger, width: 1.5),
               foregroundColor: AppColors.danger,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(AppRadius.md.r),
               ),
               padding: EdgeInsets.symmetric(vertical: 13.h),
             ),
-            icon: Icon(Icons.close_rounded, size: 17.sp),
+            icon: Icon(Icons.close_rounded, size: 17.r),
             label: Text(
               'Reject',
               style: AppTextStyles.w600_14.copyWith(color: AppColors.danger),
             ),
           ),
         ),
-        SizedBox(width: 10.w),
 
-        // Accept
+        SizedBox(width: AppSpacing.sm.w),
+
+        // ── Accept ─────────────────────────────────────────────
         Expanded(
           flex: 3,
           child: ElevatedButton.icon(
@@ -484,11 +497,11 @@ class _ActionButtons extends StatelessWidget {
               elevation: 0,
               shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(AppRadius.md.r),
               ),
               padding: EdgeInsets.symmetric(vertical: 13.h),
             ),
-            icon: Icon(Icons.check_rounded, size: 17.sp),
+            icon: Icon(Icons.check_rounded, size: 17.r),
             label: Text(
               'Accept',
               style: AppTextStyles.w700_14.copyWith(color: Colors.white),

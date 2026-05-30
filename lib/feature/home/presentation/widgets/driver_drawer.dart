@@ -148,7 +148,12 @@ class _DrawerHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(driver.name, style: AppTextStyles.w500_14),
+                Text(
+                  driver.name,
+                  style: AppTextStyles.w500_14.copyWith(
+                    color: AppColors.cardDark,
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.xs), // ✅ was: hardcoded 2
                 Row(
                   children: [
@@ -158,7 +163,12 @@ class _DrawerHeader extends StatelessWidget {
                       color: AppColors.warning,
                     ),
                     const SizedBox(width: AppSpacing.xs), // ✅ was: hardcoded 3
-                    Text('${driver.rating}', style: AppTextStyles.w500_12),
+                    Text(
+                      '${driver.rating}',
+                      style: AppTextStyles.w500_12.copyWith(
+                        color: AppColors.cardDark,
+                      ),
+                    ),
                     const SizedBox(width: AppSpacing.sm),
                     Text(
                       '· ${driver.totalTrips} trips',

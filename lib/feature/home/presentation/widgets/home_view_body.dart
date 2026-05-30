@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
@@ -20,12 +21,10 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/earning_min
 import 'package:mashena_driver_app/feature/home/presentation/widgets/home_top_bar.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeholder.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/online_waiting_indicator.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_cart.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_sheet.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_card.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/sos_button.dart';
 
-/// The body of the home screen. Composed as Stack with map + overlays.
-/// All map logic (GoogleMap widget) is marked with TODO for wiring up
-/// google_maps_flutter once API keys are configured.
 class HomeViewBody extends StatefulWidget {
   final DriverProfileModel driver;
   final RideRequestModel? rideRequest;
@@ -39,13 +38,10 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Demo countdown — in production, wire to RideRequestCubit timer stream
   final int _countdown = 28;
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       key: _scaffoldKey,
       drawer: DriverAppDrawer(driver: widget.driver),
@@ -55,18 +51,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             builder: (context, mapState) {
               return Stack(
                 children: [
-                  // ── Layer 0: Full-screen Map ─────────────────────────────
+                  // ── Layer 0: Full-screen Map ───────────────────────────
                   _buildMapLayer(mapState),
 
-                  // ── Layer 1: Safe Area Overlay Content ───────────────────
+                  // ── Layer 1: Safe Area Overlay ─────────────────────────
                   SafeArea(
                     child: Column(
                       children: [
-                        // Internet status banner (conditionally shown)
-                        // TODO: Wire to connectivity_plus stream
-                        // const NoInternetBanner(),
-
-                        // Top bar
                         HomeTopBar(
                           statusState: driverState,
                           onToggleStatus: () {
@@ -86,32 +77,28 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           },
                           onOpenDrawer: () =>
                               _scaffoldKey.currentState?.openDrawer(),
-                          onNotificationTap: () {
-                            // TODO: Navigate to notifications
-                          },
+                          onNotificationTap: () {},
                           notificationCount: 2,
                         ),
 
-                        const SizedBox(height: AppSpacing.sm),
+                        SizedBox(height: AppSpacing.sm.h),
 
-                        // Earnings mini card (online only)
                         if (driverState.isOnline) ...[
                           EarningsMiniCard(driver: widget.driver),
-                          const SizedBox(height: AppSpacing.sm),
+                          SizedBox(height: AppSpacing.sm.h),
                         ],
 
                         const Spacer(),
 
-                        // ── Bottom overlay based on driver state ──────────
-                        _buildBottomOverlay(context, driverState, screenHeight),
+                        _buildBottomOverlay(context, driverState),
 
-                        const SizedBox(height: AppSpacing.md),
+                        SizedBox(height: AppSpacing.md.h),
                       ],
                     ),
                   ),
 
-                  // ── Layer 2: Right-side floating action buttons ───────────
-                  _buildRightFabs(context, mapState, driverState),
+                  // ── Layer 2: Right FABs ────────────────────────────────
+                  _buildRightFabs(context, driverState),
                 ],
               );
             },
@@ -121,39 +108,33 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
+  // ─── Map Layer ─────────────────────────────────────────────────────────────
   Widget _buildMapLayer(MapState mapState) {
-    // ── Loading / permission states ──────────────────────────────────────────
     if (mapState.status == MapLoadStatus.loading) {
       return const MapPlaceholder(message: 'Getting your location...');
     }
-
     if (mapState.status == MapLoadStatus.permissionDenied) {
       return const MapPlaceholder(message: 'Enable location permission');
     }
-
     if (mapState.status == MapLoadStatus.error) {
       return MapPlaceholder(
         message: mapState.errorMessage ?? 'Something went wrong',
       );
     }
 
-    // ── Guard: wait until coordinates are available ──────────────────────────
-    final position = mapState.currentPosition; // nullable LatLng getter
+    final position = mapState.currentPosition;
     if (position == null || mapState.controller == null) {
       return const MapPlaceholder(message: 'Waiting for location...');
     }
 
-    // ── Fully loaded map ─────────────────────────────────────────────────────
     return FlutterMap(
       mapController: mapState.controller!,
       options: MapOptions(initialCenter: position, initialZoom: 16),
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName:
-              'com.example.mashena_driver_app', // ← set your package name
+          userAgentPackageName: 'com.example.mashena_driver_app',
         ),
-
         PolylineLayer(polylines: mapState.polylines),
         MarkerLayer(markers: mapState.markers),
       ],
@@ -164,14 +145,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget _buildBottomOverlay(
     BuildContext context,
     DriverStatusState driverState,
-    double screenHeight,
   ) {
     switch (driverState.status) {
       case DriverStatus.offline:
-        return _OfflineCard();
+        return const _OfflineCard();
 
       case DriverStatus.goingOnline:
-        return const ShimmerCard(height: 80);
+        return ShimmerCard(height: 80.h);
 
       case DriverStatus.onlineWaiting:
         return const WaitingForRideCard();
@@ -183,12 +163,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           countdownSeconds: _countdown,
           isExpanded: false,
           onToggleExpand: () {},
-          onAccept: () {
-            context.read<DriverStatusCubit>().acceptRide();
-          },
-          onReject: () {
-            context.read<DriverStatusCubit>().rejectRide();
-          },
+          onAccept: () => context.read<DriverStatusCubit>().acceptRide(),
+          onReject: () => context.read<DriverStatusCubit>().rejectRide(),
         );
 
       case DriverStatus.tripAccepted:
@@ -211,38 +187,20 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     }
   }
 
-  // ─── Right Side FABs ────────────────────────────────────────────────────────
-  Widget _buildRightFabs(
-    BuildContext context,
-    MapState mapState,
-    DriverStatusState driverState,
-  ) {
+  // ─── Right FABs ────────────────────────────────────────────────────────────
+  Widget _buildRightFabs(BuildContext context, DriverStatusState driverState) {
     return Positioned(
-      right: AppSpacing.md,
-      bottom: 180,
+      right: AppSpacing.md.w,
+      bottom: 180.h,
       child: SafeArea(
         child: Column(
           children: [
-            // Current location button
             _FabButton(
               icon: Icons.my_location_rounded,
               onTap: () => context.read<MapCubit>().recenterOnDriver(),
               tooltip: 'My Location',
             ),
-            const SizedBox(height: AppSpacing.sm),
-
-            // Map style toggle
-            // Map style toggle — was calling initializeMap() by mistake
-            // _FabButton(
-            //   icon: mapState.isDarkMode
-            //       ? Icons.light_mode_outlined
-            //       : Icons.dark_mode_outlined,
-            //   onTap: () => context.read<MapCubit>().toggleDarkMode(), // ← fixed
-            //   tooltip: 'Toggle Map Style',
-            // ),
-            // const SizedBox(height: AppSpacing.md),
-
-            // SOS — only visible when online
+            SizedBox(height: AppSpacing.sm.h),
             if (driverState.isOnline)
               SosButton(
                 onActivate: () =>
@@ -255,49 +213,105 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   }
 }
 
-// ─── Offline Card ─────────────────────────────────────────────────────────────
+// ─── Offline Card ──────────────────────────────────────────────────────────────
 class _OfflineCard extends StatelessWidget {
+  const _OfflineCard();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        boxShadow: AppShadows.card,
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceVariant,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-            ),
-            child: const Icon(
-              Icons.power_settings_new_rounded,
-              color: AppColors.offline,
-              size: 24,
-            ),
+    return BlocBuilder<DriverStatusCubit, DriverStatusState>(
+      builder: (context, state) {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+          padding: EdgeInsets.all(AppSpacing.md.r),
+          decoration: BoxDecoration(
+            color: AppColors.cardLight,
+            borderRadius: BorderRadius.circular(AppRadius.lg.r),
+            boxShadow: AppShadows.card,
           ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("You're Offline", style: AppTextStyles.w500_14),
-                SizedBox(height: 2),
-                Text(
-                  'Go online to start accepting rides',
-                  style: AppTextStyles.w500_14,
+          child: Row(
+            children: [
+              // ── Power icon ───────────────────────────────────────
+              Container(
+                width: 44.r,
+                height: 44.r,
+                decoration: BoxDecoration(
+                  color: AppColors.offlineSurface,
+                  borderRadius: BorderRadius.circular(AppRadius.sm.r),
                 ),
-              ],
-            ),
+                child: Icon(
+                  Icons.power_settings_new_rounded,
+                  color: AppColors.offline,
+                  size: 24.r,
+                ),
+              ),
+
+              SizedBox(width: AppSpacing.md.w),
+
+              // ── Labels ───────────────────────────────────────────
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "You're Offline",
+                      style: AppTextStyles.w600_14.copyWith(
+                        color: AppColors.darkScaffold,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      'Go online to start accepting rides',
+                      style: AppTextStyles.w400_12.copyWith(
+                        color: AppColors.textGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // ── Radius chip ──────────────────────────────────────
+              GestureDetector(
+                onTap: () => showRadiusSelectorSheet(context, state.radiusKm),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm.w,
+                    vertical: AppSpacing.xs.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primarySurface,
+                    borderRadius: BorderRadius.circular(AppRadius.full.r),
+                    border: Border.all(color: AppColors.borderColor),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.radar_rounded,
+                        size: 14.r,
+                        color: AppColors.primaryColor,
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        '${state.radiusKm} km',
+                        style: AppTextStyles.w600_12.copyWith(
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      SizedBox(width: 2.w),
+                      Icon(
+                        Icons.expand_more_rounded,
+                        size: 14.r,
+                        color: AppColors.primaryColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -310,32 +324,31 @@ class _TripAcceptedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      padding: const EdgeInsets.all(AppSpacing.md),
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        boxShadow: AppShadows.floating,
+        color: AppColors.cardLight,
+        borderRadius: BorderRadius.circular(AppRadius.lg.r),
+        boxShadow: AppShadows.card,
         border: Border.all(color: AppColors.primaryColor.withOpacity(0.25)),
       ),
       child: Column(
         children: [
           Row(
             children: [
+              // ── Badge ─────────────────────────────────────────
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: AppSpacing.xs,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.sm.w,
+                  vertical: AppSpacing.xs.h,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: BorderRadius.circular(AppRadius.full),
+                  color: AppColors.primarySurface,
+                  borderRadius: BorderRadius.circular(AppRadius.full.r),
                 ),
-                child: const Text(
+                child: Text(
                   'Trip Accepted ✓',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                  style: AppTextStyles.w700_12.copyWith(
                     color: AppColors.primaryColor,
                   ),
                 ),
@@ -349,15 +362,18 @@ class _TripAcceptedCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+
+          SizedBox(height: AppSpacing.sm.h),
+
+          // ── Pickup row ──────────────────────────────────────
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.location_on_rounded,
-                size: 16,
+                size: 16.r,
                 color: AppColors.primaryColor,
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4.w),
               Expanded(
                 child: Text(
                   request?.pickupAddress ?? 'Pickup address',
@@ -368,9 +384,13 @@ class _TripAcceptedCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+
+          SizedBox(height: AppSpacing.sm.h),
+
+          // ── Start trip button ───────────────────────────────
           SizedBox(
             width: double.infinity,
+            height: 48.h,
             child: ElevatedButton.icon(
               onPressed: () => context.read<DriverStatusCubit>().startTrip(),
               style: ElevatedButton.styleFrom(
@@ -378,13 +398,13 @@ class _TripAcceptedCard extends StatelessWidget {
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  borderRadius: BorderRadius.circular(AppRadius.md.r),
                 ),
               ),
-              icon: const Icon(Icons.navigation_rounded, size: 18),
-              label: const Text(
+              icon: Icon(Icons.navigation_rounded, size: 18.r),
+              label: Text(
                 'Start Trip',
-                style: TextStyle(fontWeight: FontWeight.w700),
+                style: AppTextStyles.w700_14.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -394,7 +414,7 @@ class _TripAcceptedCard extends StatelessWidget {
   }
 }
 
-// ─── Mini FAB ─────────────────────────────────────────────────────────────────
+// ─── FAB Button ───────────────────────────────────────────────────────────────
 class _FabButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
@@ -413,14 +433,14 @@ class _FabButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 44,
-          height: 44,
+          width: 44.r,
+          height: 44.r,
           decoration: BoxDecoration(
-            color: AppColors.surfaceVariant,
+            color: AppColors.cardLight,
             shape: BoxShape.circle,
             boxShadow: AppShadows.card,
           ),
-          child: Icon(icon, size: 20, color: AppColors.onSurface),
+          child: Icon(icon, size: 20.r, color: AppColors.onSurface),
         ),
       ),
     );

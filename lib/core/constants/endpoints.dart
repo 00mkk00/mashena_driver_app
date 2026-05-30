@@ -8,4 +8,6 @@ class Endpoints {
   static const goOffline = '/driver/go-offline';
   static const updateDriverLocation = '/driver/location';
   static const updateDriverRadius = '/driver/radius';
+  static const String tripByRide = '/trips/by-ride';
+
 }

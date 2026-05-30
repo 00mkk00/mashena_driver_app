@@ -11,8 +11,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
+  await dotenv.load(fileName: '.env');
   await configureDependencies();
   await getIt<TokenManager>().loadTokens();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -20,6 +22,5 @@ Future<void> main() async {
     ),
   );
 
-  await dotenv.load(fileName: '.env');
   runApp(ScreenUtilInit(designSize: Size(428, 926), child: const App()));
 }

@@ -4,9 +4,12 @@ import 'package:mashena_driver_app/core/network/api_exception.dart';
 import 'package:mashena_driver_app/core/network/api_failure_mapper.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/trip_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_location_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/repository/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -58,6 +61,20 @@ class HomeRepositoryImpl implements HomeRepository {
     try {
       await _remoteDataSource.updateDriverRadius(params);
       return const Right(unit);
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TripEntity>> getTripByRide(
+    GetTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.getTripByRide(params);
+      return Right(model.toEntity());
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
+import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 
 class GlassIconButton extends StatelessWidget {
   final IconData icon;
@@ -18,28 +19,19 @@ class GlassIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buttonSize = size ?? 44.r;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: size ?? 44.w,
-        height: size ?? 44.w,
+        width: buttonSize,
+        height: buttonSize,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.cardLight,
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 6,
-              offset: const Offset(0, 1),
-            ),
-          ],
+          boxShadow: AppShadows.card,
         ),
-        child: Icon(icon, size: 22.sp, color: iconColor ?? AppColors.onSurface),
+        child: Icon(icon, size: 22.r, color: iconColor ?? AppColors.onSurface),
       ),
     );
   }

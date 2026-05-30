@@ -18,7 +18,9 @@ import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/home/data/repository/home_repository_impl.dart';
+import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/domain/repository/home_repository.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/get_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
@@ -142,4 +144,8 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => UpdateDriverRadiusUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(() => SocketService());
+
+  getIt.registerLazySingleton(() => GetTripUseCase(getIt<HomeRepository>()));
+  
 }

@@ -1,17 +1,47 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/update_radius_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 
 class DriverStatusCubit extends Cubit<DriverStatusState> {
   final GoOnlineUseCase goOnlineUseCase;
   final GoOfflineUseCase goOfflineUseCase;
+  final UpdateDriverRadiusUseCase updateDriverRadiusUseCase;
 
-  DriverStatusCubit(this.goOnlineUseCase, this.goOfflineUseCase)
-    : super(const DriverStatusState(status: DriverStatus.offline));
+  DriverStatusCubit(
+    this.goOnlineUseCase,
+    this.goOfflineUseCase,
+    this.updateDriverRadiusUseCase, // 👈 new
+  ) : super(const DriverStatusState(status: DriverStatus.offline,));
+
+  Future<void> updateRadius(int radiusKm) async {
+    emit(state.copyWith(isRadiusLoading: true, clearRadiusError: true));
+
+    final result = await updateDriverRadiusUseCase.call(
+      UpdateDriverRadiusParams(radiusKm: radiusKm),
+    );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isRadiusLoading: false,
+          radiusError: _mapFailureToMessage(failure),
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          isRadiusLoading: false,
+          radiusKm: radiusKm, // ✅ persist confirmed value
+          clearRadiusError: true,
+        ),
+      ),
+    );
+  }
 
   void toggleOnlineStatus(GoOnlineParams params) {
     if (state.status == DriverStatus.offline) {
@@ -68,11 +98,16 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
     );
   }
 
-  void onNewRideRequest() {
-    if (state.status == DriverStatus.onlineWaiting) {
-      emit(state.copyWith(status: DriverStatus.newRequest));
-    }
+  // Update onNewRideRequest signature
+void onNewRideRequest({required int rideRequestId, required int timeoutSec}) {
+  if (state.status == DriverStatus.onlineWaiting) {
+    emit(state.copyWith(
+      status: DriverStatus.newRequest,
+      pendingRideRequestId: rideRequestId,  // 👈 add to state
+      pendingTimeoutSec: timeoutSec,
+    ));
   }
+}
 
   void acceptRide() {
     emit(state.copyWith(status: DriverStatus.tripAccepted));
