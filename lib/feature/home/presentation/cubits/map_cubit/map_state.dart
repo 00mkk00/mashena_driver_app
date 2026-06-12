@@ -11,6 +11,7 @@ class MapState {
   final MapController? controller;
   final List<Marker> markers;
   final List<Polyline> polylines;
+  final List<CircleMarker> circles;
   final bool isDarkMode;
   final String? errorMessage;
   final String? locationSyncError;
@@ -23,6 +24,7 @@ class MapState {
     this.controller,
     this.markers = const [],
     this.polylines = const [],
+    this.circles = const [],
     this.isDarkMode = false,
     this.errorMessage,
     this.locationSyncError,
@@ -43,6 +45,7 @@ class MapState {
     MapController? controller,
     List<Marker>? markers,
     List<Polyline>? polylines,
+    List<CircleMarker>? circles,
     bool? isDarkMode,
     String? errorMessage,
     bool clearErrorMessage = false,
@@ -56,6 +59,7 @@ class MapState {
     controller: controller ?? this.controller,
     markers: markers ?? this.markers,
     polylines: polylines ?? this.polylines,
+    circles: circles ?? this.circles,
     isDarkMode: isDarkMode ?? this.isDarkMode,
     errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
     locationSyncError: clearLocationSyncError

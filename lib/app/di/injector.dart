@@ -18,13 +18,18 @@ import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/home/data/repository/home_repository_impl.dart';
+import 'package:mashena_driver_app/feature/home/data/services/routing_service.dart';
 import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/domain/repository/home_repository.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/get_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/use_cases/get_ride_request_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/use_cases/update_radius_use_case.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -146,6 +151,69 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton(() => SocketService());
 
-  getIt.registerLazySingleton(() => GetTripUseCase(getIt<HomeRepository>()));
-  
+  getIt.registerLazySingleton(() => GetRideRequestUseCase(getIt<HomeRepository>()));
+  // DI
+  getIt.registerFactory<RideRequestCubit>(
+    () => RideRequestCubit(
+      getRideRequestUseCase: getIt<GetRideRequestUseCase>(),
+    ),
+  );
+
+  // ── Driver Status ────────────────────────────
+
+  getIt.registerFactory(
+    () => DriverStatusCubit(
+      getIt<GoOnlineUseCase>(),
+      getIt<GoOfflineUseCase>(),
+      getIt<UpdateDriverRadiusUseCase>(),
+    ),
+  );
+
+  // ── Socket ────────────────────────────────────
+  // NOTE: Requires DriverStatusCubit, RideRequestCubit, and accessToken from widget tree
+  getIt.registerFactoryParam<SocketCubit, SocketCubitParams, void>(
+    (params, _) => SocketCubit(
+      service: getIt<SocketService>(),
+      rideRequestCubit: params.rideRequestCubit,
+      driverStatusCubit: params.driverStatusCubit,
+      accessToken: params.accessToken,
+    ),
+  );
+
+  // ── Services ─────────────────────────────────
+
+  getIt.registerLazySingleton(() => RoutingService());
+
+  // getIt.registerLazySingleton(() => GeocodingService());
+
+  // ── Map ──────────────────────────────────────
+  // NOTE: Requires DriverStatusCubit and SocketCubit from widget tree
+  getIt.registerFactoryParam<MapCubit, MapCubitParams, void>(
+    (params, _) => MapCubit(
+      driverStatusCubit: params.driverStatusCubit,
+      socketCubit: params.socketCubit,
+      routingService: getIt<RoutingService>(),
+    ),
+  );
+}
+
+// ── Helper classes for parameterized factories ─────────────
+
+class SocketCubitParams {
+  final DriverStatusCubit driverStatusCubit;
+  final RideRequestCubit rideRequestCubit;
+  final String accessToken;
+
+  SocketCubitParams({
+    required this.driverStatusCubit,
+    required this.rideRequestCubit,
+    required this.accessToken,
+  });
+}
+
+class MapCubitParams {
+  final DriverStatusCubit driverStatusCubit;
+  final SocketCubit socketCubit;
+
+  MapCubitParams({required this.driverStatusCubit, required this.socketCubit});
 }

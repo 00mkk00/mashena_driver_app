@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
@@ -17,7 +19,7 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
     this.goOnlineUseCase,
     this.goOfflineUseCase,
     this.updateDriverRadiusUseCase, // 👈 new
-  ) : super(const DriverStatusState(status: DriverStatus.offline,));
+  ) : super(const DriverStatusState(status: DriverStatus.offline));
 
   Future<void> updateRadius(int radiusKm) async {
     emit(state.copyWith(isRadiusLoading: true, clearRadiusError: true));
@@ -41,6 +43,12 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
         ),
       ),
     );
+  }
+
+  void onNewRideRequest() {
+    if (state.status == DriverStatus.onlineWaiting) {
+      emit(state.copyWith(status: DriverStatus.newRequest));
+    }
   }
 
   void toggleOnlineStatus(GoOnlineParams params) {
@@ -98,17 +106,6 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
     );
   }
 
-  // Update onNewRideRequest signature
-void onNewRideRequest({required int rideRequestId, required int timeoutSec}) {
-  if (state.status == DriverStatus.onlineWaiting) {
-    emit(state.copyWith(
-      status: DriverStatus.newRequest,
-      pendingRideRequestId: rideRequestId,  // 👈 add to state
-      pendingTimeoutSec: timeoutSec,
-    ));
-  }
-}
-
   void acceptRide() {
     emit(state.copyWith(status: DriverStatus.tripAccepted));
   }
@@ -117,6 +114,8 @@ void onNewRideRequest({required int rideRequestId, required int timeoutSec}) {
     emit(state.copyWith(status: DriverStatus.onlineWaiting));
   }
 
+  StreamSubscription<int>? _tripTimerSubscription;
+
   void startTrip() {
     emit(
       state.copyWith(
@@ -124,9 +123,26 @@ void onNewRideRequest({required int rideRequestId, required int timeoutSec}) {
         activeTripDuration: Duration.zero,
       ),
     );
+    _startTripTimer();
+  }
+
+  void _startTripTimer() {
+    _tripTimerSubscription?.cancel();
+    _tripTimerSubscription =
+        Stream.periodic(const Duration(seconds: 1), (tick) => tick + 1).listen((
+          seconds,
+        ) {
+          if (!isClosed) {
+            emit(
+              state.copyWith(activeTripDuration: Duration(seconds: seconds)),
+            );
+          }
+        });
   }
 
   void endTrip() {
+    _tripTimerSubscription?.cancel();
+    _tripTimerSubscription = null;
     emit(
       state.copyWith(
         status: DriverStatus.onlineWaiting,

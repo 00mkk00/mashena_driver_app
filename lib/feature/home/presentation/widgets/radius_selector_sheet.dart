@@ -158,15 +158,16 @@ class _RadiusSelectorSheetState extends State<RadiusSelectorSheet> {
                   onPressed: isLoading
                       ? null
                       : () {
-                          context
-                              .read<DriverStatusCubit>()
-                              .updateRadius(_selected);
+                          context.read<DriverStatusCubit>().updateRadius(
+                            _selected,
+                          );
                           Navigator.pop(context);
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
-                    disabledBackgroundColor:
-                        AppColors.primaryColor.withOpacity(0.5),
+                    disabledBackgroundColor: AppColors.primaryColor.withValues(
+                      alpha: 0.5,
+                    ),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(

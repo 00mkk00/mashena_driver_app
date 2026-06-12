@@ -10,10 +10,13 @@ import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/core/widgets/shimmer.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/active_trip_card.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/driver_drawer.dart';
@@ -23,13 +26,11 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeho
 import 'package:mashena_driver_app/feature/home/presentation/widgets/online_waiting_indicator.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_sheet.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_card.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/sos_button.dart';
 
 class HomeViewBody extends StatefulWidget {
   final DriverProfileModel driver;
-  final RideRequestModel? rideRequest;
 
-  const HomeViewBody({super.key, required this.driver, this.rideRequest});
+  const HomeViewBody({super.key, required this.driver});
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -38,23 +39,44 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final int _countdown = 28;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DriverAppDrawer(driver: widget.driver),
-      body: BlocBuilder<DriverStatusCubit, DriverStatusState>(
+      body: BlocConsumer<DriverStatusCubit, DriverStatusState>(
+        // ── React to status transitions ──────────────────────────
+        listener: (context, driverState) {
+          // Draw route when trip is accepted
+          if (driverState.status == DriverStatus.tripAccepted) {
+            final rideRequest = context
+                .read<RideRequestCubit>()
+                .state
+                .rideRequestEntity;
+            if (rideRequest != null) {
+              context.read<MapCubit>().drawRoute(
+                pickupLat: rideRequest.pickupLat,
+                pickupLng: rideRequest.pickupLng,
+                destinationLat: rideRequest.destLat,
+                destinationLng: rideRequest.destLng,
+              );
+            }
+          }
+          // Clear route when back to waiting or offline
+          if (driverState.status == DriverStatus.onlineWaiting ||
+              driverState.status == DriverStatus.offline) {
+            context.read<MapCubit>().clearRoute();
+          }
+        },
         builder: (context, driverState) {
           return BlocBuilder<MapCubit, MapState>(
             builder: (context, mapState) {
               return Stack(
                 children: [
-                  // ── Layer 0: Full-screen Map ───────────────────────────
+                  // ── Layer 0: Map ───────────────────────────────
                   _buildMapLayer(mapState),
 
-                  // ── Layer 1: Safe Area Overlay ─────────────────────────
+                  // ── Layer 1: Overlay ───────────────────────────
                   SafeArea(
                     child: Column(
                       children: [
@@ -97,7 +119,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     ),
                   ),
 
-                  // ── Layer 2: Right FABs ────────────────────────────────
+                  // ── Layer 2: Right FABs ────────────────────────
                   _buildRightFabs(context, driverState),
                 ],
               );
@@ -121,7 +143,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         message: mapState.errorMessage ?? 'Something went wrong',
       );
     }
-
     final position = mapState.currentPosition;
     if (position == null || mapState.controller == null) {
       return const MapPlaceholder(message: 'Waiting for location...');
@@ -132,9 +153,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       options: MapOptions(initialCenter: position, initialZoom: 16),
       children: [
         TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          urlTemplate: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
           userAgentPackageName: 'com.example.mashena_driver_app',
         ),
+        CircleLayer(circles: mapState.circles),
         PolylineLayer(polylines: mapState.polylines),
         MarkerLayer(markers: mapState.markers),
       ],
@@ -151,35 +173,31 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         return const _OfflineCard();
 
       case DriverStatus.goingOnline:
+      case DriverStatus.goingOffline:
         return ShimmerCard(height: 80.h);
 
       case DriverStatus.onlineWaiting:
         return const WaitingForRideCard();
 
       case DriverStatus.newRequest:
-        if (widget.rideRequest == null) return const SizedBox.shrink();
-        return RideRequestCard(
-          request: widget.rideRequest!,
-          countdownSeconds: _countdown,
-          isExpanded: false,
-          onToggleExpand: () {},
-          onAccept: () => context.read<DriverStatusCubit>().acceptRide(),
-          onReject: () => context.read<DriverStatusCubit>().rejectRide(),
-        );
+        return const RideRequestCard(); // ✅ no props — self-contained
 
       case DriverStatus.tripAccepted:
-        return _TripAcceptedCard(request: widget.rideRequest);
+        return const _TripAcceptedCard(); // ✅ reads from RideRequestCubit
 
       case DriverStatus.onTrip:
-        return ActiveTripCard(
-          trip: RideRequestModelLite(
-            passengerName: widget.rideRequest?.passengerName ?? 'Passenger',
-            destination:
-                widget.rideRequest?.destinationAddress ?? 'Destination',
-            fare: widget.rideRequest?.estimatedFare ?? 0,
-          ),
-          elapsed: driverState.activeTripDuration ?? Duration.zero,
-          onEndTrip: () => context.read<DriverStatusCubit>().endTrip(),
+        return BlocBuilder<RideRequestCubit, RideRequestState>(
+          builder: (context, rideState) {
+            final rideRequest = rideState.rideRequestEntity;
+            return ActiveTripCard(
+              rideRequest: rideRequest, // 👈 full entity
+              elapsed: driverState.activeTripDuration ?? Duration.zero,
+              onEndTrip: () {
+                context.read<DriverStatusCubit>().endTrip();
+                context.read<MapCubit>().clearRoute();
+              },
+            );
+          },
         );
 
       default:
@@ -191,7 +209,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget _buildRightFabs(BuildContext context, DriverStatusState driverState) {
     return Positioned(
       right: AppSpacing.md.w,
-      bottom: 180.h,
+      bottom: 350.h,
       child: SafeArea(
         child: Column(
           children: [
@@ -200,12 +218,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               onTap: () => context.read<MapCubit>().recenterOnDriver(),
               tooltip: 'My Location',
             ),
-            SizedBox(height: AppSpacing.sm.h),
-            if (driverState.isOnline)
-              SosButton(
-                onActivate: () =>
-                    context.read<DriverStatusCubit>().triggerSos(),
-              ),
+            // SizedBox(height: AppSpacing.sm.h),
+            // if (driverState.isOnline)
+            //   SosButton(
+            //     onActivate: () =>
+            //         context.read<DriverStatusCubit>().triggerSos(),
+            //   ),
           ],
         ),
       ),
@@ -231,7 +249,6 @@ class _OfflineCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // ── Power icon ───────────────────────────────────────
               Container(
                 width: 44.r,
                 height: 44.r,
@@ -245,10 +262,7 @@ class _OfflineCard extends StatelessWidget {
                   size: 24.r,
                 ),
               ),
-
               SizedBox(width: AppSpacing.md.w),
-
-              // ── Labels ───────────────────────────────────────────
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,8 +283,6 @@ class _OfflineCard extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // ── Radius chip ──────────────────────────────────────
               GestureDetector(
                 onTap: () => showRadiusSelectorSheet(context, state.radiusKm),
                 child: Container(
@@ -316,100 +328,255 @@ class _OfflineCard extends StatelessWidget {
   }
 }
 
-// ─── Trip Accepted Card ───────────────────────────────────────────────────────
 class _TripAcceptedCard extends StatelessWidget {
-  final RideRequestModel? request;
-  const _TripAcceptedCard({this.request});
+  const _TripAcceptedCard();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
-      padding: EdgeInsets.all(AppSpacing.md.r),
-      decoration: BoxDecoration(
-        color: AppColors.cardLight,
-        borderRadius: BorderRadius.circular(AppRadius.lg.r),
-        boxShadow: AppShadows.card,
-        border: Border.all(color: AppColors.primaryColor.withOpacity(0.25)),
-      ),
-      child: Column(
-        children: [
-          Row(
+    return BlocBuilder<RideRequestCubit, RideRequestState>(
+      builder: (context, rideState) {
+        final trip = rideState.rideRequestEntity;
+
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+          padding: EdgeInsets.all(AppSpacing.md.r),
+          decoration: BoxDecoration(
+            color: AppColors.cardLight,
+            borderRadius: BorderRadius.circular(AppRadius.lg.r),
+            boxShadow: AppShadows.card,
+            border: Border.all(
+              color: AppColors.primaryColor.withValues(alpha: 0.25),
+            ),
+          ),
+          child: Column(
             children: [
-              // ── Badge ─────────────────────────────────────────
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm.w,
-                  vertical: AppSpacing.xs.h,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.primarySurface,
-                  borderRadius: BorderRadius.circular(AppRadius.full.r),
-                ),
-                child: Text(
-                  'Trip Accepted ✓',
-                  style: AppTextStyles.w700_12.copyWith(
-                    color: AppColors.primaryColor,
+              // ── Header ──────────────────────────────────────────
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm.w,
+                      vertical: AppSpacing.xs.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.primarySurface,
+                      borderRadius: BorderRadius.circular(AppRadius.full.r),
+                    ),
+                    child: Text(
+                      'Trip Accepted ✓',
+                      style: AppTextStyles.w700_12.copyWith(
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  if (trip != null)
+                    Text(
+                      'ID #${trip.id}',
+                      style: AppTextStyles.w600_12.copyWith(
+                        color: AppColors.cardDark,
+                      ),
+                    ),
+                ],
+              ),
+
+              SizedBox(height: AppSpacing.sm.h),
+              Divider(color: AppColors.divider, height: 1),
+              SizedBox(height: AppSpacing.sm.h),
+
+              // ── Route ───────────────────────────────────────────
+              if (trip != null) ...[
+                _RouteRow(trip: trip),
+                if (trip.stops.isNotEmpty) ...[
+                  SizedBox(height: AppSpacing.sm.h),
+                  _StopsRow(stops: trip.stops),
+                ],
+                SizedBox(height: AppSpacing.sm.h),
+              ] else ...[
+                ShimmerCard(height: 50.h),
+                SizedBox(height: AppSpacing.sm.h),
+              ],
+
+              // ── Start trip button ────────────────────────────────
+              SizedBox(
+                width: double.infinity,
+                height: 48.h,
+                child: ElevatedButton.icon(
+                  onPressed: trip == null
+                      ? null
+                      : () => context.read<DriverStatusCubit>().startTrip(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    disabledBackgroundColor: AppColors.primaryColor.withValues(
+                      alpha: 0.5,
+                    ),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md.r),
+                    ),
+                  ),
+                  icon: Icon(Icons.navigation_rounded, size: 18.r),
+                  label: Text(
+                    'Start Trip',
+                    style: AppTextStyles.w700_14.copyWith(color: Colors.white),
                   ),
                 ),
               ),
-              const Spacer(),
-              Text(
-                'EGP ${request?.estimatedFare.toStringAsFixed(0) ?? "--"}',
-                style: AppTextStyles.w700_12.copyWith(
-                  color: AppColors.primaryColor,
-                ),
-              ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
 
-          SizedBox(height: AppSpacing.sm.h),
+// ─── Route Row ────────────────────────────────────────────────────────────────
+class _RouteRow extends StatelessWidget {
+  final RideRequestEntity trip;
+  const _RouteRow({required this.trip});
 
-          // ── Pickup row ──────────────────────────────────────
-          Row(
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ── Route line ───────────────────────────────────────
+        SizedBox(
+          width: 20.w,
+          child: Column(
             children: [
-              Icon(
-                Icons.location_on_rounded,
-                size: 16.r,
-                color: AppColors.primaryColor,
+              Container(
+                width: 10.r,
+                height: 10.r,
+                decoration: const BoxDecoration(
+                  color: AppColors.online,
+                  shape: BoxShape.circle,
+                ),
               ),
-              SizedBox(width: 4.w),
-              Expanded(
-                child: Text(
-                  request?.pickupAddress ?? 'Pickup address',
-                  style: AppTextStyles.w400_14,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              Container(width: 2.w, height: 28.h, color: AppColors.divider),
+              Container(
+                width: 10.r,
+                height: 10.r,
+                decoration: BoxDecoration(
+                  color: AppColors.danger,
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
             ],
           ),
+        ),
 
-          SizedBox(height: AppSpacing.sm.h),
+        SizedBox(width: AppSpacing.sm.w),
 
-          // ── Start trip button ───────────────────────────────
-          SizedBox(
-            width: double.infinity,
-            height: 48.h,
-            child: ElevatedButton.icon(
-              onPressed: () => context.read<DriverStatusCubit>().startTrip(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md.r),
+        // ── Addresses from API ────────────────────────────────
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _AddressItem(
+                label: 'Pickup',
+                address: trip.pickupAddress, // ✅ real address from API
+              ),
+              SizedBox(height: AppSpacing.sm.h),
+              _AddressItem(
+                label: 'Drop-off',
+                address: trip.destAddress, // ✅ real address from API
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ─── Address Item — replaces _CoordItem ──────────────────────────────────────
+class _AddressItem extends StatelessWidget {
+  final String label;
+  final String address;
+  const _AddressItem({required this.label, required this.address});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.w400_12.copyWith(
+            color: AppColors.onSurfaceVariant,
+          ),
+        ),
+        SizedBox(height: 2.h),
+        Text(
+          address,
+          style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+}
+
+// ─── Stops Row ────────────────────────────────────────────────────────────────
+class _StopsRow extends StatelessWidget {
+  final List<RideRequestStopEntity> stops;
+  const _StopsRow({required this.stops});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.stop_circle_outlined,
+              size: 14.r,
+              color: AppColors.warning,
+            ),
+            SizedBox(width: AppSpacing.xs.w),
+            Text(
+              '${stops.length} stop${stops.length > 1 ? 's' : ''}',
+              style: AppTextStyles.w600_12.copyWith(color: AppColors.warning),
+            ),
+          ],
+        ),
+        SizedBox(height: AppSpacing.xs.h),
+        ...stops.map(
+          (stop) => Padding(
+            padding: EdgeInsets.only(
+              left: AppSpacing.sm.w,
+              bottom: AppSpacing.xs.h,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 6.r,
+                  height: 6.r,
+                  decoration: BoxDecoration(
+                    color: AppColors.warning,
+                    shape: BoxShape.circle,
+                  ),
                 ),
-              ),
-              icon: Icon(Icons.navigation_rounded, size: 18.r),
-              label: Text(
-                'Start Trip',
-                style: AppTextStyles.w700_14.copyWith(color: Colors.white),
-              ),
+                SizedBox(width: AppSpacing.xs.w),
+                Expanded(
+                  child: Text(
+                    stop.address, // ✅ real address from API
+                    style: AppTextStyles.w400_12.copyWith(
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

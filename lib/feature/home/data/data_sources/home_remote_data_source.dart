@@ -1,7 +1,7 @@
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
-import 'package:mashena_driver_app/feature/home/data/models/trip_model.dart';
-import 'package:mashena_driver_app/feature/home/data/params/get_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/data/models/ride_request_model.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_ride_request_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_location_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
@@ -11,7 +11,7 @@ abstract class HomeRemoteDataSource {
   Future<void> goOffline();
   Future<void> updateDriverLocation(UpdateDriverLocationParams params);
   Future<void> updateDriverRadius(UpdateDriverRadiusParams params);
-  Future<TripModel> getTripByRide(GetTripParams params);
+  Future<RideRequestModel> getRideRequest(GetRideRequestParams params); // 👈 new
 
 }
 
@@ -37,11 +37,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<void> updateDriverRadius(UpdateDriverRadiusParams params) async {
     await apiClient.post(Endpoints.updateDriverRadius, body: params.toJson());
   }
-  @override
-  Future<TripModel> getTripByRide(GetTripParams params) async {
-    final response = await apiClient.get(
-      '${Endpoints.tripByRide}/${params.rideRequestId}',
-    );
-    return TripModel.fromJson(response);
-  }
+ @override
+Future<RideRequestModel> getRideRequest(GetRideRequestParams params) async {
+  final response = await apiClient.get(
+    '${Endpoints.rideRequest}/${params.id}',
+  );
+  return RideRequestModel.fromJson(response);
+}
 }

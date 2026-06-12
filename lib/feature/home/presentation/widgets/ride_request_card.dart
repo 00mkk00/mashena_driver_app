@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mashena_driver_app/app/app.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
-import 'package:mashena_driver_app/feature/home/data/home_models.dart';
+import 'package:mashena_driver_app/core/widgets/shimmer.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/stops_section.dart';
 
 class RideRequestCard extends StatefulWidget {
-  final RideRequestModel request;
-  final int countdownSeconds;
-  final VoidCallback onAccept;
-  final VoidCallback onReject;
-  final bool isExpanded;
-  final VoidCallback onToggleExpand;
-
-  const RideRequestCard({
-    super.key,
-    required this.request,
-    required this.countdownSeconds,
-    required this.onAccept,
-    required this.onReject,
-    required this.isExpanded,
-    required this.onToggleExpand,
-  });
+  const RideRequestCard({super.key});
 
   @override
   State<RideRequestCard> createState() => _RideRequestCardState();
@@ -61,53 +54,265 @@ class _RideRequestCardState extends State<RideRequestCard>
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _slideAnimation,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
-          decoration: BoxDecoration(
-            color: AppColors.cardLight,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(AppRadius.xl.r),
-              bottom: Radius.circular(AppRadius.lg.r),
-            ),
-            boxShadow: AppShadows.card,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _DragHandle(onTap: widget.onToggleExpand),
-              _CountdownBar(seconds: widget.countdownSeconds, total: 30),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppSpacing.md.w,
-                  AppSpacing.sm.h,
-                  AppSpacing.md.w,
-                  AppSpacing.md.h,
+    return BlocBuilder<RideRequestCubit, RideRequestState>(
+      builder: (context, state) {
+        return SlideTransition(
+          position: _slideAnimation,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+              decoration: BoxDecoration(
+                color: AppColors.cardLight,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(AppRadius.xl.r),
+                  bottom: Radius.circular(AppRadius.lg.r),
                 ),
-                child: Column(
-                  children: [
-                    _PassengerInfoRow(request: widget.request),
-                    SizedBox(height: 14.h),
-                    Divider(color: AppColors.divider, height: 1),
-                    SizedBox(height: 14.h),
-                    _RouteDetails(request: widget.request),
-                    SizedBox(height: 14.h),
-                    _TripMetaRow(request: widget.request),
-                    SizedBox(height: AppSpacing.md.h),
-                    _ActionButtons(
-                      onAccept: widget.onAccept,
-                      onReject: widget.onReject,
+                boxShadow: AppShadows.card,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _DragHandle(
+                    onTap: () =>
+                        context.read<RideRequestCubit>().toggleBottomSheet(),
+                  ),
+                  _CountdownBar(seconds: state.countdownSeconds, total: 30),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.md.w,
+                      AppSpacing.sm.h,
+                      AppSpacing.md.w,
+                      AppSpacing.md.h,
                     ),
-                  ],
+                    child: state.isLoadingDetails
+                        ? _TripDetailsShimmer()
+                        : state.rideRequestEntity != null
+                        ? _TripDetailsContent(ride: state.rideRequestEntity!)
+                        : _TripDetailsError(
+                            message: state.errorMessage ?? 'Failed to load',
+                          ),
+                  ),
+                  // ── Action buttons always visible ──────────────────
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.md.w,
+                      0,
+                      AppSpacing.md.w,
+                      AppSpacing.md.h,
+                    ),
+                    child: _ActionButtons(
+                      onAccept: () {
+                        final id = context
+                            .read<RideRequestCubit>()
+                            .state
+                            .rideRequestId!;
+                        context.read<RideRequestCubit>().acceptRequest();
+                        context.read<SocketCubit>().acceptOffer(id);
+                        context.read<DriverStatusCubit>().acceptRide();
+                      },
+                      onReject: () {
+                        final id = context
+                            .read<RideRequestCubit>()
+                            .state
+                            .rideRequestId!;
+                        context.read<RideRequestCubit>().rejectRequest();
+                        context.read<SocketCubit>().rejectOffer(id);
+                        context.read<DriverStatusCubit>().rejectRide();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ─── Trip Details Content ─────────────────────────────────────────────────────
+class _TripDetailsContent extends StatelessWidget {
+  final RideRequestEntity ride;
+  const _TripDetailsContent({required this.ride});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _RouteDetails(trip: ride),
+        SizedBox(height: 14.h),
+        if (ride.stops.isNotEmpty) ...[
+          StopsSection(stops: ride.stops),
+          SizedBox(height: 14.h),
+        ],
+        // _TripStatusChip(status: ride.status),
+      ],
+    );
+  }
+}
+
+// ─── Route Details ────────────────────────────────────────────────────────────
+class _RouteDetails extends StatelessWidget {
+  final RideRequestEntity trip;
+  const _RouteDetails({required this.trip});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ── Route line ──────────────────────────────────────────
+        SizedBox(
+          width: 20.w,
+          child: Column(
+            children: [
+              Container(
+                width: 10.r,
+                height: 10.r,
+                decoration: const BoxDecoration(
+                  color: AppColors.online,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              Container(width: 2.w, height: 32.h, color: AppColors.divider),
+              Container(
+                width: 10.r,
+                height: 10.r,
+                decoration: BoxDecoration(
+                  color: AppColors.danger,
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
             ],
           ),
         ),
-      ),
+
+        SizedBox(width: AppSpacing.sm.w),
+
+        // ── Coordinates ─────────────────────────────────────────
+        Expanded(
+          child: BlocBuilder<RideRequestCubit, RideRequestState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _LocationItem(
+                    label: 'Pickup',
+                    address: state.destinationAddress,
+                    isResolving: state.isResolvingAddresses,
+                  ),
+                  SizedBox(height: AppSpacing.sm.h),
+                  _LocationItem(
+                    label: 'Drop-off',
+                    address: state.destinationAddress,
+                    isResolving: state.isResolvingAddresses,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LocationItem extends StatelessWidget {
+  final String label;
+  final String? address; // 👈 resolved address
+  final bool isResolving;
+  const _LocationItem({
+    required this.label,
+    required this.address,
+    this.isResolving = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.w400_12.copyWith(
+            color: AppColors.onSurfaceVariant,
+          ),
+        ),
+        SizedBox(height: 2.h),
+        Text(
+          address ?? '—',
+          style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+}
+
+// // ─── Trip Status Chip ─────────────────────────────────────────────────────────
+// class _TripStatusChip extends StatelessWidget {
+//   final String status;
+//   const _TripStatusChip({required this.status});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Align(
+//       alignment: Alignment.centerLeft,
+//       child: Container(
+//         padding: EdgeInsets.symmetric(
+//           horizontal: AppSpacing.sm.w,
+//           vertical: AppSpacing.xs.h,
+//         ),
+//         decoration: BoxDecoration(
+//           color: AppColors.primarySurface,
+//           borderRadius: BorderRadius.circular(AppRadius.full.r),
+//         ),
+//         child: Text(
+//           status.toUpperCase(),
+//           style: AppTextStyles.w400_10.copyWith(color: AppColors.primaryColor),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// ─── Shimmer while loading ────────────────────────────────────────────────────
+class _TripDetailsShimmer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ShimmerCard(height: 20.h),
+        SizedBox(height: AppSpacing.sm.h),
+        ShimmerCard(height: 20.h),
+        SizedBox(height: AppSpacing.sm.h),
+        ShimmerCard(height: 16.h),
+      ],
+    );
+  }
+}
+
+// ─── Error state ──────────────────────────────────────────────────────────────
+class _TripDetailsError extends StatelessWidget {
+  final String message;
+  const _TripDetailsError({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.error_outline_rounded, size: 16.r, color: AppColors.danger),
+        SizedBox(width: AppSpacing.xs.w),
+        Expanded(
+          child: Text(
+            message,
+            style: AppTextStyles.w400_12.copyWith(color: AppColors.danger),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -161,14 +366,19 @@ class _CountdownBar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('New Ride Request', style: AppTextStyles.w600_16),
+              Text(
+                'New Ride Request',
+                style: AppTextStyles.w600_16.copyWith(
+                  color: AppColors.borderColorDark,
+                ),
+              ),
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: AppSpacing.sm.w,
                   vertical: 3.h,
                 ),
                 decoration: BoxDecoration(
-                  color: _barColor.withOpacity(0.12),
+                  color: _barColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(AppRadius.full.r),
                 ),
                 child: Text(
@@ -194,265 +404,6 @@ class _CountdownBar extends StatelessWidget {
   }
 }
 
-// ─── Passenger Info Row ───────────────────────────────────────────────────────
-class _PassengerInfoRow extends StatelessWidget {
-  final RideRequestModel request;
-  const _PassengerInfoRow({required this.request});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // ── Avatar ─────────────────────────────────────────────
-        Stack(
-          children: [
-            CircleAvatar(
-              radius: 26.r,
-              backgroundImage: NetworkImage(request.passengerPhotoUrl),
-              backgroundColor: AppColors.primarySurface,
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                width: 16.r,
-                height: 16.r,
-                decoration: const BoxDecoration(
-                  color: AppColors.online,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.check, size: 10.r, color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-
-        SizedBox(width: AppSpacing.sm.w),
-
-        // ── Name & rating ───────────────────────────────────────
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(request.passengerName, style: AppTextStyles.w600_14),
-              SizedBox(height: 3.h),
-              Row(
-                children: [
-                  Icon(
-                    Icons.star_rounded,
-                    size: 13.r,
-                    color: AppColors.warning,
-                  ),
-                  SizedBox(width: 3.w),
-                  Text(
-                    '${request.passengerRating}',
-                    style: AppTextStyles.w600_12.copyWith(
-                      color: AppColors.onSurface,
-                    ),
-                  ),
-                  SizedBox(width: AppSpacing.xs.w),
-                  Text(
-                    '· ${request.passengerTotalTrips} trips',
-                    style: AppTextStyles.w400_12.copyWith(
-                      color: AppColors.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-
-        // ── Payment chip ────────────────────────────────────────
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm.w,
-            vertical: AppSpacing.xs.h,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.onlineSurface,
-            borderRadius: BorderRadius.circular(AppRadius.sm.r),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                request.paymentMethod == 'cash'
-                    ? Icons.attach_money
-                    : Icons.credit_card_outlined,
-                size: 13.r,
-                color: AppColors.online,
-              ),
-              SizedBox(width: 2.w),
-              Text(
-                request.paymentMethod.toUpperCase(),
-                style: AppTextStyles.w700_14.copyWith(color: AppColors.online),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ─── Route Details ────────────────────────────────────────────────────────────
-class _RouteDetails extends StatelessWidget {
-  final RideRequestModel request;
-  const _RouteDetails({required this.request});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // ── Route line ──────────────────────────────────────────
-        SizedBox(
-          width: 20.w,
-          child: Column(
-            children: [
-              Container(
-                width: 10.r,
-                height: 10.r,
-                decoration: const BoxDecoration(
-                  color: AppColors.online,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Container(width: 2.w, height: 32.h, color: AppColors.divider),
-              Container(
-                width: 10.r,
-                height: 10.r,
-                decoration: BoxDecoration(
-                  color: AppColors.danger,
-                  borderRadius: BorderRadius.circular(2.r),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(width: AppSpacing.sm.w),
-
-        // ── Addresses ───────────────────────────────────────────
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _AddressItem(label: 'Pickup', address: request.pickupAddress),
-              SizedBox(height: AppSpacing.sm.h),
-              _AddressItem(
-                label: 'Drop-off',
-                address: request.destinationAddress,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _AddressItem extends StatelessWidget {
-  final String label;
-  final String address;
-  const _AddressItem({required this.label, required this.address});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.w400_12.copyWith(
-            color: AppColors.onSurfaceVariant,
-          ),
-        ),
-        SizedBox(height: 2.h),
-        Text(
-          address,
-          style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-}
-
-// ─── Trip Meta Row ────────────────────────────────────────────────────────────
-class _TripMetaRow extends StatelessWidget {
-  final RideRequestModel request;
-  const _TripMetaRow({required this.request});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _MetaChip(
-          icon: Icons.straighten_outlined,
-          value: '${request.distanceKm.toStringAsFixed(1)} km',
-          color: AppColors.info,
-        ),
-        SizedBox(width: AppSpacing.sm.w),
-        _MetaChip(
-          icon: Icons.access_time_outlined,
-          value: '~${request.estimatedMinutes} min',
-          color: AppColors.warning,
-        ),
-        const Spacer(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              'Est. Fare',
-              style: AppTextStyles.w400_12.copyWith(
-                color: AppColors.onSurfaceVariant,
-              ),
-            ),
-            Text(
-              'EGP ${request.estimatedFare.toStringAsFixed(2)}',
-              style: AppTextStyles.w700_20.copyWith(color: AppColors.online),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _MetaChip extends StatelessWidget {
-  final IconData icon;
-  final String value;
-  final Color color;
-  const _MetaChip({
-    required this.icon,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm.w,
-        vertical: AppSpacing.xs.h,
-      ),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(AppRadius.sm.r),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 13.r, color: color),
-          SizedBox(width: AppSpacing.xs.w),
-          Text(value, style: AppTextStyles.w600_12.copyWith(color: color)),
-        ],
-      ),
-    );
-  }
-}
-
 // ─── Action Buttons ───────────────────────────────────────────────────────────
 class _ActionButtons extends StatelessWidget {
   final VoidCallback onAccept;
@@ -463,13 +414,11 @@ class _ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // ── Reject ─────────────────────────────────────────────
         Expanded(
-          flex: 2,
           child: OutlinedButton.icon(
             onPressed: onReject,
             style: OutlinedButton.styleFrom(
-              side: BorderSide(color: AppColors.danger, width: 1.5),
+              side: const BorderSide(color: AppColors.danger, width: 1.5),
               foregroundColor: AppColors.danger,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.md.r),
@@ -483,12 +432,8 @@ class _ActionButtons extends StatelessWidget {
             ),
           ),
         ),
-
         SizedBox(width: AppSpacing.sm.w),
-
-        // ── Accept ─────────────────────────────────────────────
         Expanded(
-          flex: 3,
           child: ElevatedButton.icon(
             onPressed: onAccept,
             style: ElevatedButton.styleFrom(

@@ -11,10 +11,6 @@ class DriverStatusState {
   final bool isRadiusLoading;
   final String? radiusError;
 
-  // ── Pending ride ─────────────────────────────────────────
-  final int? pendingRideRequestId;
-  final int? pendingTimeoutSec;
-
   const DriverStatusState({
     required this.status,
     this.activeTripDuration,
@@ -23,8 +19,6 @@ class DriverStatusState {
     this.radiusKm = 3,
     this.isRadiusLoading = false,
     this.radiusError,
-    this.pendingRideRequestId,
-    this.pendingTimeoutSec,
   });
 
   bool get isOnline => status != DriverStatus.offline;
@@ -42,10 +36,6 @@ class DriverStatusState {
     bool? isRadiusLoading,
     String? radiusError,
     bool clearRadiusError = false,
-    int? pendingRideRequestId,
-    bool clearPendingRideRequestId = false,
-    int? pendingTimeoutSec,
-    bool clearPendingTimeoutSec = false,
   }) => DriverStatusState(
     status: status ?? this.status,
     activeTripDuration: clearActiveTripDuration
@@ -56,11 +46,5 @@ class DriverStatusState {
     radiusKm: radiusKm ?? this.radiusKm,
     isRadiusLoading: isRadiusLoading ?? this.isRadiusLoading,
     radiusError: clearRadiusError ? null : radiusError ?? this.radiusError,
-    pendingRideRequestId: clearPendingRideRequestId
-        ? null
-        : pendingRideRequestId ?? this.pendingRideRequestId,
-    pendingTimeoutSec: clearPendingTimeoutSec
-        ? null
-        : pendingTimeoutSec ?? this.pendingTimeoutSec,
   );
 }

@@ -66,11 +66,16 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Looking for passengers', style: AppTextStyles.w500_12),
+                Text(
+                  'Looking for passengers',
+                  style: AppTextStyles.w500_12.copyWith(
+                    color: AppColors.borderColorDark,
+                  ),
+                ),
                 SizedBox(height: 4.h),
                 AnimatedBuilder(
                   animation: _dotController,
-                  builder: (_, __) {
+                  builder: (_, _) {
                     final dots =
                         '.' * ((_dotController.value * 4).floor().clamp(1, 3));
                     return Text(
@@ -114,12 +119,14 @@ class _PulseRingState extends State<_PulseRing>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..repeat();
-    _size = Tween<double>(begin: 20.r, end: 36.r).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
-    );
-    _opacity = Tween<double>(begin: 0.8, end: 0.0).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
-    );
+    _size = Tween<double>(
+      begin: 20.r,
+      end: 36.r,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
+    _opacity = Tween<double>(
+      begin: 0.8,
+      end: 0.0,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
   }
 
   @override
