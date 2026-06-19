@@ -77,7 +77,11 @@ class _RideRequestCardState extends State<RideRequestCard>
                     onTap: () =>
                         context.read<RideRequestCubit>().toggleBottomSheet(),
                   ),
-                  _CountdownBar(seconds: state.countdownSeconds, total: 10),
+                  _CountdownBar(
+                    context,
+                    seconds: state.countdownSeconds,
+                    total: 10,
+                  ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                       AppSpacing.md.w,
@@ -348,12 +352,20 @@ class _DragHandle extends StatelessWidget {
 class _CountdownBar extends StatelessWidget {
   final int seconds;
   final int total;
-  const _CountdownBar({required this.seconds, required this.total});
+  final BuildContext context;
+  const _CountdownBar(
+    this.context, {
+    required this.seconds,
+    required this.total,
+  });
 
   Color get _barColor {
     final ratio = seconds / total;
     if (ratio > 0.5) return AppColors.online;
     if (ratio > 0.25) return AppColors.warning;
+    if (ratio == 0) {
+      context.read<DriverStatusCubit>.call().rejectRide();
+    }
     return AppColors.danger;
   }
 

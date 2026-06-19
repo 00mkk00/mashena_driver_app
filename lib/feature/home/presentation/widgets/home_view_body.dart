@@ -20,7 +20,6 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request
 import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/active_trip_card.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/driver_drawer.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/earning_mini_cart.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/home_top_bar.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeholder.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/online_waiting_indicator.dart';
@@ -54,11 +53,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                 .state
                 .rideRequestEntity;
             if (rideRequest != null) {
+              // Convert stops to the format expected by drawRoute
+              final stops = rideRequest.stops.isNotEmpty
+                  ? rideRequest.stops
+                        .map((s) => (lat: s.lat, lng: s.lng, order: s.order))
+                        .toList()
+                  : null;
+
               context.read<MapCubit>().drawRoute(
                 pickupLat: rideRequest.pickupLat,
                 pickupLng: rideRequest.pickupLng,
                 destinationLat: rideRequest.destLat,
                 destinationLng: rideRequest.destLng,
+                stops: stops,
               );
             }
           }

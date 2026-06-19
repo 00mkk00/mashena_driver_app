@@ -13,16 +13,29 @@ class RoutingService {
         ),
       );
 
-  /// Fetches a driving route between two coordinates.
+  /// Fetches a driving route between coordinates with optional stops.
   /// Returns a list of [LatLng] points or throws on failure.
   Future<List<LatLng>> fetchRoute({
     required double pickupLat,
     required double pickupLng,
     required double destinationLat,
     required double destinationLng,
+    List<({double lat, double lng})>? stops,
   }) async {
-    final path =
-        '/route/v1/driving/$pickupLng,$pickupLat;$destinationLng,$destinationLat';
+    // Build coordinates string: pickup;stop1;stop2;...;destination
+    final coordinates = StringBuffer('$pickupLng,$pickupLat');
+
+    // Add stops if present
+    if (stops != null && stops.isNotEmpty) {
+      for (final stop in stops) {
+        coordinates.write(';${stop.lng},${stop.lat}');
+      }
+    }
+
+    // Add destination
+    coordinates.write(';$destinationLng,$destinationLat');
+
+    final path = '/route/v1/driving/$coordinates';
 
     final response = await _dio.get<Map<String, dynamic>>(
       path,

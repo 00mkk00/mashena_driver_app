@@ -46,6 +46,7 @@ class MapCubit extends Cubit<MapState> {
     required double pickupLng,
     required double destinationLat,
     required double destinationLng,
+    List<({double lat, double lng, int order})>? stops,
   }) async {
     try {
       final points = await _routingService.fetchRoute(
@@ -53,20 +54,30 @@ class MapCubit extends Cubit<MapState> {
         pickupLng: pickupLng,
         destinationLat: destinationLat,
         destinationLng: destinationLng,
+        stops: stops?.map((s) => (lat: s.lat, lng: s.lng)).toList(),
       );
 
       final driverMarker = state.markers
           .where((m) => m.width == 48)
           .firstOrNull;
 
+      final markers = <Marker>[
+        if (driverMarker != null) driverMarker,
+        _buildPickupMarker(LatLng(pickupLat, pickupLng)),
+        _buildDestinationMarker(LatLng(destinationLat, destinationLng)),
+      ];
+
+      // Add stop markers
+      if (stops != null && stops.isNotEmpty) {
+        for (final stop in stops) {
+          markers.add(_buildStopMarker(LatLng(stop.lat, stop.lng), stop.order));
+        }
+      }
+
       emit(
         state.copyWith(
           polylines: [_buildRoutePolyline(points)],
-          markers: [
-            if (driverMarker != null) driverMarker,
-            _buildPickupMarker(LatLng(pickupLat, pickupLng)),
-            _buildDestinationMarker(LatLng(destinationLat, destinationLng)),
-          ],
+          markers: markers,
         ),
       );
 
@@ -146,6 +157,30 @@ class MapCubit extends Cubit<MapState> {
         boxShadow: AppShadows.card,
       ),
       child: Icon(Icons.flag_rounded, color: Colors.white, size: 22.r),
+    ),
+  );
+
+  Marker _buildStopMarker(LatLng point, int order) => Marker(
+    point: point,
+    width: 40.r,
+    height: 40.r,
+    child: Container(
+      decoration: BoxDecoration(
+        color: AppColors.warning,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: AppShadows.card,
+      ),
+      child: Center(
+        child: Text(
+          '${order}',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16.r,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     ),
   );
 
