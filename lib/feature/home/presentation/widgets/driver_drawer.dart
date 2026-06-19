@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/app/router/app_routes.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/core/utils/toast_helper.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_state.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 
 /// Full-featured professional driver app drawer.
@@ -13,92 +21,123 @@ class DriverAppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: AppColors
-          .lightScaffold, // ✅ was: AppColors.surfaceVariant (wrong usage — surfaceVariant is for inputs)
-      child: SafeArea(
-        child: Column(
-          children: [
-            // Profile header
-            _DrawerHeader(driver: driver),
+    return BlocListener<LogoutCubit, LogoutState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {
+            // Show loading indicator
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) =>
+                  const Center(child: CircularProgressIndicator()),
+            );
+          },
+          success: () {
+            // Close loading dialog
+            context.pop(context);
+            // Close drawer
+            context.pop(context);
+            // Navigate to login and clear navigation stack
+            context.go(AppRoutes.loginPath);
+            // Show success snackbar
+            context.showSuccessToast(S.of(context).authLogout);
+          },
+          failure: (error) {
+            // Close loading dialog
+            context.pop(context);
+            // Show error snackbar
+            context.showErrorToast(S.of(context).errorsNetwork);
+          },
+        );
+      },
+      child: Drawer(
+        backgroundColor: AppColors
+            .lightScaffold, // ✅ was: AppColors.surfaceVariant (wrong usage — surfaceVariant is for inputs)
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Profile header
+              _DrawerHeader(driver: driver),
 
-            const Divider(height: 1, color: AppColors.divider),
+              const Divider(height: 1, color: AppColors.divider),
 
-            // Navigation items
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                children: [
-                  _DrawerItem(
-                    icon: Icons.account_circle_outlined,
-                    label: 'My Profile',
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  _DrawerItem(
-                    icon: Icons.account_balance_wallet_outlined,
-                    label: 'Earnings',
-                    trailing: Text(
-                      'EGP ${driver.todayEarnings.toStringAsFixed(0)}',
-                      style: AppTextStyles.w600_12.copyWith(
-                        color: AppColors.earning,
-                      ), // ✅ was: AppColors.primaryColor — earnings use earning token
+              // Navigation items
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  children: [
+                    _DrawerItem(
+                      icon: Icons.account_circle_outlined,
+                      label: 'My Profile',
+                      onTap: () => Navigator.pop(context),
                     ),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  _DrawerItem(
-                    icon: Icons.history_rounded,
-                    label: 'Ride History',
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  _DrawerItem(
-                    icon: Icons.description_outlined,
-                    label: 'Documents',
-                    trailing: _StatusBadge(label: 'Verified', isGood: true),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  _DrawerItem(
-                    icon: Icons.settings_outlined,
-                    label: 'Settings',
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  _DrawerItem(
-                    icon: Icons.help_outline_rounded,
-                    label: 'Help & Support',
-                    onTap: () => Navigator.pop(context),
-                  ),
-
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.sm,
+                    _DrawerItem(
+                      icon: Icons.account_balance_wallet_outlined,
+                      label: 'Earnings',
+                      trailing: Text(
+                        'EGP ${driver.todayEarnings.toStringAsFixed(0)}',
+                        style: AppTextStyles.w600_12.copyWith(
+                          color: AppColors.earning,
+                        ), // ✅ was: AppColors.primaryColor — earnings use earning token
+                      ),
+                      onTap: () => Navigator.pop(context),
                     ),
-                    child: Divider(color: AppColors.divider),
-                  ),
+                    _DrawerItem(
+                      icon: Icons.history_rounded,
+                      label: 'Ride History',
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    _DrawerItem(
+                      icon: Icons.description_outlined,
+                      label: 'Documents',
+                      trailing: _StatusBadge(label: 'Verified', isGood: true),
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    _DrawerItem(
+                      icon: Icons.settings_outlined,
+                      label: 'Settings',
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    _DrawerItem(
+                      icon: Icons.help_outline_rounded,
+                      label: 'Help & Support',
+                      onTap: () => Navigator.pop(context),
+                    ),
 
-                  _DrawerItem(
-                    icon: Icons.logout_rounded,
-                    label: 'Logout',
-                    iconColor: AppColors.danger,
-                    labelColor: AppColors.danger,
-                    onTap: () {
-                      // TODO: Implement logout — clear auth tokens, navigate to login
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.sm,
+                      ),
+                      child: Divider(color: AppColors.divider),
+                    ),
 
-            // App version footer
-            Padding(
-              padding: EdgeInsets.all(AppSpacing.md),
-              child: Text(
-                'Captain App v2.4.1',
-                style: AppTextStyles
-                    .w400_12, // ✅ was: w400_16 — too large for a footer caption
+                    _DrawerItem(
+                      icon: Icons.logout_rounded,
+                      label: 'Logout',
+                      iconColor: AppColors.danger,
+                      labelColor: AppColors.danger,
+                      onTap: () {
+                        context.read<LogoutCubit>().logout();
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+
+              // App version footer
+              Padding(
+                padding: EdgeInsets.all(AppSpacing.md),
+                child: Text(
+                  'Captain App v2.4.1',
+                  style: AppTextStyles
+                      .w400_12, // ✅ was: w400_16 — too large for a footer caption
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

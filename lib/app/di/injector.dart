@@ -12,10 +12,12 @@ import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data
 import 'package:mashena_driver_app/feature/auth/data/repos/auth_repository_impl.dart';
 import 'package:mashena_driver_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/login_usecase.dart';
+import 'package:mashena_driver_app/feature/auth/domain/usecases/logout_use_case.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/home/data/repository/home_repository_impl.dart';
 import 'package:mashena_driver_app/feature/home/data/services/routing_service.dart';
@@ -127,6 +129,10 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<UploadDriverDocsUseCase>(
     () => UploadDriverDocsUseCase(getIt<AuthRepository>()),
   );
+  getIt.registerLazySingleton(() => LogoutUseCase(getIt<AuthRepository>()));
+
+  // Register LogoutCubit
+  getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt<LogoutUseCase>()));
 
   ///////////////home/////////////////////
   getIt.registerLazySingleton<HomeRemoteDataSource>(
@@ -151,12 +157,13 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton(() => SocketService());
 
-  getIt.registerLazySingleton(() => GetRideRequestUseCase(getIt<HomeRepository>()));
+  getIt.registerLazySingleton(
+    () => GetRideRequestUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
-    () => RideRequestCubit(
-      getRideRequestUseCase: getIt<GetRideRequestUseCase>(),
-    ),
+    () =>
+        RideRequestCubit(getRideRequestUseCase: getIt<GetRideRequestUseCase>()),
   );
 
   // ── Driver Status ────────────────────────────

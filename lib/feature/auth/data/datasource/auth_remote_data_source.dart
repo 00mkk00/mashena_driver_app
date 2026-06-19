@@ -16,6 +16,7 @@ abstract class AuthRemoteDataSource {
 
   Future<void> verifyOtp(VerifyOtpParams params);
   Future<void> uploadDocuments(UploadDriverDocsParams params);
+  Future<void> logout();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -70,5 +71,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     });
 
     await apiClient.post(Endpoints.uploadDocs, body: formData);
+  }
+
+  @override
+  Future<void> logout() async {
+    await apiClient.post(Endpoints.logout);
   }
 }

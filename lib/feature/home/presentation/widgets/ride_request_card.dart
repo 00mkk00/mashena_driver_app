@@ -77,7 +77,7 @@ class _RideRequestCardState extends State<RideRequestCard>
                     onTap: () =>
                         context.read<RideRequestCubit>().toggleBottomSheet(),
                   ),
-                  _CountdownBar(seconds: state.countdownSeconds, total: 30),
+                  _CountdownBar(seconds: state.countdownSeconds, total: 10),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                       AppSpacing.md.w,

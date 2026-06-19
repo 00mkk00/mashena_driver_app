@@ -9,5 +9,8 @@ class Endpoints {
   static const updateDriverLocation = '/driver/location';
   static const updateDriverRadius = '/driver/radius';
   static const String rideRequest = '/ride-requests';
+  static const String logout = '/auth/logout';
+
+
 
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
@@ -33,6 +34,7 @@ class HomeView extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider<LogoutCubit>(create: (_) => getIt<LogoutCubit>()),
         BlocProvider<DriverStatusCubit>(create: (_) => driverStatusCubit),
         BlocProvider<RideRequestCubit>(create: (_) => rideRequestCubit),
         BlocProvider<SocketCubit>(create: (_) => socketCubit),

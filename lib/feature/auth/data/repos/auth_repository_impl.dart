@@ -84,4 +84,15 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
     }
   }
+  @override
+Future<Either<Failure, Unit>> logout() async {
+  try {
+    await _remoteDataSource.logout();
+    return const Right(unit);
+  } on ApiException catch (e) {
+    return Left(mapApiExceptionToFailure(e, _apiClient));
+  } catch (e) {
+    return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+  }
+}
 }
