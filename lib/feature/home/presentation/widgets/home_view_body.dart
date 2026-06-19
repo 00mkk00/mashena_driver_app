@@ -105,11 +105,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
                         SizedBox(height: AppSpacing.sm.h),
 
-                        if (driverState.isOnline) ...[
-                          EarningsMiniCard(driver: widget.driver),
-                          SizedBox(height: AppSpacing.sm.h),
-                        ],
-
+                        // if (driverState.isOnline) ...[
+                        //   EarningsMiniCard(driver: widget.driver),
+                        //   SizedBox(height: AppSpacing.sm.h),
+                        // ],
                         const Spacer(),
 
                         _buildBottomOverlay(context, driverState),

@@ -151,14 +151,14 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
     );
   }
 
-  void triggerSos() {
-    emit(state.copyWith(isSosActive: true));
-    // TODO: Integrate emergency services API / Firebase alert
-  }
+  // void triggerSos() {
+  //   emit(state.copyWith(isSosActive: true));
+  //   // TODO: Integrate emergency services API / Firebase alert
+  // }
 
-  void dismissSos() {
-    emit(state.copyWith(isSosActive: false));
-  }
+  // void dismissSos() {
+  //   emit(state.copyWith(isSosActive: false));
+  // }
 
   String _mapFailureToMessage(Failure failure) {
     if (failure.code == FailureCode.networkConnection ||

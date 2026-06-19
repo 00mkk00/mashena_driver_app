@@ -8,9 +8,11 @@ import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/core/utils/app_images.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_state.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 
 /// Full-featured professional driver app drawer.
@@ -58,9 +60,8 @@ class DriverAppDrawer extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Profile header
-              _DrawerHeader(driver: driver),
-
+              Image.asset(Assets.logo, height: 150), // Profile header
+              // _DrawerHeader(driver: driver),
               const Divider(height: 1, color: AppColors.divider),
 
               // Navigation items
@@ -128,14 +129,6 @@ class DriverAppDrawer extends StatelessWidget {
               ),
 
               // App version footer
-              Padding(
-                padding: EdgeInsets.all(AppSpacing.md),
-                child: Text(
-                  'Captain App v2.4.1',
-                  style: AppTextStyles
-                      .w400_12, // ✅ was: w400_16 — too large for a footer caption
-                ),
-              ),
             ],
           ),
         ),

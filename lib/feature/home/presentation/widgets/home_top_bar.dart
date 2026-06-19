@@ -31,56 +31,50 @@ class HomeTopBar extends StatelessWidget {
         vertical: AppSpacing.sm.h,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // ── Drawer button ─────────────────────────────────────
           GlassIconButton(icon: Icons.menu_rounded, onTap: onOpenDrawer),
 
-          SizedBox(width: AppSpacing.sm.w),
-
+          Spacer(),
           // ── Status toggle ─────────────────────────────────────
-          Expanded(
-            child: Center(
-              child: DriverStatusToggle(
-                state: statusState,
-                onTap: onToggleStatus,
-              ),
-            ),
-          ),
-
-          SizedBox(width: AppSpacing.sm.w),
+          DriverStatusToggle(state: statusState, onTap: onToggleStatus),
+          Spacer(),
+          SizedBox(width: 35.w),
 
           // ── Notification button + badge ───────────────────────
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              GlassIconButton(
-                icon: Icons.notifications_outlined,
-                onTap: onNotificationTap,
-              ),
-              if (notificationCount > 0)
-                Positioned(
-                  top: -4.r,
-                  right: -4.r,
-                  child: Container(
-                    width: 18.r,
-                    height: 18.r,
-                    decoration: BoxDecoration(
-                      color: AppColors.danger,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        notificationCount > 9 ? '9+' : '$notificationCount',
-                        style: AppTextStyles.w700_12.copyWith(
-                          fontSize: 10.sp,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+          //   Stack(
+          //     clipBehavior: Clip.none,
+          //     children: [
+          //       GlassIconButton(
+          //         icon: Icons.notifications_outlined,
+          //         onTap: onNotificationTap,
+          //       ),
+          //       if (notificationCount > 0)
+          //         Positioned(
+          //           top: -4.r,
+          //           right: -4.r,
+          //           child: Container(
+          //             width: 18.r,
+          //             height: 18.r,
+          //             decoration: BoxDecoration(
+          //               color: AppColors.danger,
+          //               shape: BoxShape.circle,
+          //             ),
+          //             child: Center(
+          //               child: Text(
+          //                 notificationCount > 9 ? '9+' : '$notificationCount',
+          //                 style: AppTextStyles.w700_12.copyWith(
+          //                   fontSize: 10.sp,
+          //                   color: Colors.white,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //     ],
+          //   ),
+          //
         ],
       ),
     );
