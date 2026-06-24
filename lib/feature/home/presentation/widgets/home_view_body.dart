@@ -23,7 +23,7 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/driver_draw
 import 'package:mashena_driver_app/feature/home/presentation/widgets/home_top_bar.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeholder.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/online_waiting_indicator.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_sheet.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_dialog.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_card.dart';
 
 class HomeViewBody extends StatefulWidget {
@@ -224,6 +224,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               onTap: () => context.read<MapCubit>().recenterOnDriver(),
               tooltip: 'My Location',
             ),
+            SizedBox(height: AppSpacing.sm.h),
+            _FabButton(
+              icon: Icons.radar_rounded,
+              onTap: () =>
+                  showRadiusSelectorDialog(context, driverState.radiusKm),
+              tooltip: 'Ride Radius (${driverState.radiusKm} km)',
+            ),
             // SizedBox(height: AppSpacing.sm.h),
             // if (driverState.isOnline)
             //   SosButton(
@@ -287,43 +294,6 @@ class _OfflineCard extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () => showRadiusSelectorSheet(context, state.radiusKm),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm.w,
-                    vertical: AppSpacing.xs.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primarySurface,
-                    borderRadius: BorderRadius.circular(AppRadius.full.r),
-                    border: Border.all(color: AppColors.borderColor),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.radar_rounded,
-                        size: 14.r,
-                        color: AppColors.primaryColor,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        '${state.radiusKm} km',
-                        style: AppTextStyles.w600_12.copyWith(
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                      SizedBox(width: 2.w),
-                      Icon(
-                        Icons.expand_more_rounded,
-                        size: 14.r,
-                        color: AppColors.primaryColor,
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ],

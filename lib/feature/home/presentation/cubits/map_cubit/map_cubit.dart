@@ -12,6 +12,8 @@ import 'package:mashena_driver_app/feature/home/data/services/routing_service.da
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/animated_pulse.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/premium_map_pin.dart';
 import 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
@@ -128,62 +130,36 @@ class MapCubit extends Cubit<MapState> {
 
   Marker _buildPickupMarker(LatLng point) => Marker(
     point: point,
-    width: 40.r,
-    height: 40.r,
-    child: Container(
-      decoration: BoxDecoration(
-        color: AppColors.online,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
-        boxShadow: AppShadows.card,
-      ),
-      child: Icon(
-        Icons.person_pin_circle_rounded,
-        color: Colors.white,
-        size: 22.r,
+    width: 70.r, // Increased to accommodate the pulsing aura
+    height: 70.r,
+    child: AnimatedPulse(
+      pulseColor: AppColors.online.withOpacity(0.3),
+      child: PremiumMapPin(
+        gradientColors: [AppColors.online.withOpacity(0.8), AppColors.online],
+        iconData: Icons.person_rounded,
       ),
     ),
   );
 
   Marker _buildDestinationMarker(LatLng point) => Marker(
     point: point,
-    width: 40.r,
-    height: 40.r,
-    child: Container(
-      decoration: BoxDecoration(
-        color: AppColors.danger,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
-        boxShadow: AppShadows.card,
-      ),
-      child: Icon(Icons.flag_rounded, color: Colors.white, size: 22.r),
+    width: 45.r,
+    height: 45.r,
+    child: PremiumMapPin(
+      gradientColors: [AppColors.danger.withOpacity(0.8), AppColors.danger],
+      iconData: Icons.flag_rounded,
     ),
   );
 
   Marker _buildStopMarker(LatLng point, int order) => Marker(
     point: point,
-    width: 40.r,
-    height: 40.r,
-    child: Container(
-      decoration: BoxDecoration(
-        color: AppColors.warning,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 2),
-        boxShadow: AppShadows.card,
-      ),
-      child: Center(
-        child: Text(
-          '${order}',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.r,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+    width: 45.r,
+    height: 45.r,
+    child: PremiumMapPin(
+      gradientColors: [AppColors.warning.withOpacity(0.8), AppColors.warning],
+      text: '$order',
     ),
   );
-
   // ─── Init ──────────────────────────────────────────────────────────────────
 
   Future<void> initializeMap() async {
