@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -12,7 +11,6 @@ import 'package:mashena_driver_app/core/utils/app_images.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_state.dart';
-import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 
 /// Full-featured professional driver app drawer.
@@ -137,96 +135,96 @@ class DriverAppDrawer extends StatelessWidget {
   }
 }
 
-// ─── Drawer Header ────────────────────────────────────────────────────────────
-class _DrawerHeader extends StatelessWidget {
-  final DriverProfileModel driver;
-  const _DrawerHeader({required this.driver});
+// // ─── Drawer Header ────────────────────────────────────────────────────────────
+// class _DrawerHeader extends StatelessWidget {
+//   final DriverProfileModel driver;
+//   const _DrawerHeader({required this.driver});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Row(
-        children: [
-          Stack(
-            children: [
-              CircleAvatar(
-                radius: 34,
-                backgroundImage: NetworkImage(driver.photoUrl),
-                backgroundColor: AppColors.surfaceVariant,
-              ),
-              Positioned(
-                bottom: 2,
-                right: 2,
-                child: Container(
-                  width: 14,
-                  height: 14,
-                  decoration: BoxDecoration(
-                    color: AppColors
-                        .online, // ✅ was: AppColors.primaryColor — online status dot uses online token
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors
-                          .lightScaffold, // ✅ was: Colors.white — use scaffold bg token
-                      width: 2,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  driver.name,
-                  style: AppTextStyles.w500_14.copyWith(
-                    color: AppColors.cardDark,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xs), // ✅ was: hardcoded 2
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.star_rounded,
-                      size: 14,
-                      color: AppColors.warning,
-                    ),
-                    const SizedBox(width: AppSpacing.xs), // ✅ was: hardcoded 3
-                    Text(
-                      '${driver.rating}',
-                      style: AppTextStyles.w500_12.copyWith(
-                        color: AppColors.cardDark,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Text(
-                      '· ${driver.totalTrips} trips',
-                      style: AppTextStyles.w400_12.copyWith(
-                        // ✅ was: w400_16 — too large for a secondary detail
-                        color: AppColors.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xs), // ✅ was: hardcoded 4
-                Text(
-                  driver.vehiclePlate,
-                  style: AppTextStyles.w600_12.copyWith(
-                    // ✅ was: w400_14 + manual fontWeight override
-                    color: AppColors.textGrey,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(AppSpacing.lg),
+//       child: Row(
+//         children: [
+//           Stack(
+//             children: [
+//               CircleAvatar(
+//                 radius: 34,
+//                 backgroundImage: NetworkImage(driver.photoUrl),
+//                 backgroundColor: AppColors.surfaceVariant,
+//               ),
+//               Positioned(
+//                 bottom: 2,
+//                 right: 2,
+//                 child: Container(
+//                   width: 14,
+//                   height: 14,
+//                   decoration: BoxDecoration(
+//                     color: AppColors
+//                         .online, // ✅ was: AppColors.primaryColor — online status dot uses online token
+//                     shape: BoxShape.circle,
+//                     border: Border.all(
+//                       color: AppColors
+//                           .lightScaffold, // ✅ was: Colors.white — use scaffold bg token
+//                       width: 2,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           const SizedBox(width: AppSpacing.md),
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   driver.name,
+//                   style: AppTextStyles.w500_14.copyWith(
+//                     color: AppColors.cardDark,
+//                   ),
+//                 ),
+//                 const SizedBox(height: AppSpacing.xs), // ✅ was: hardcoded 2
+//                 Row(
+//                   children: [
+//                     const Icon(
+//                       Icons.star_rounded,
+//                       size: 14,
+//                       color: AppColors.warning,
+//                     ),
+//                     const SizedBox(width: AppSpacing.xs), // ✅ was: hardcoded 3
+//                     Text(
+//                       '${driver.rating}',
+//                       style: AppTextStyles.w500_12.copyWith(
+//                         color: AppColors.cardDark,
+//                       ),
+//                     ),
+//                     const SizedBox(width: AppSpacing.sm),
+//                     Text(
+//                       '· ${driver.totalTrips} trips',
+//                       style: AppTextStyles.w400_12.copyWith(
+//                         // ✅ was: w400_16 — too large for a secondary detail
+//                         color: AppColors.onSurfaceVariant,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: AppSpacing.xs), // ✅ was: hardcoded 4
+//                 Text(
+//                   driver.vehiclePlate,
+//                   style: AppTextStyles.w600_12.copyWith(
+//                     // ✅ was: w400_14 + manual fontWeight override
+//                     color: AppColors.textGrey,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // ─── Drawer Item ──────────────────────────────────────────────────────────────
 class _DrawerItem extends StatelessWidget {

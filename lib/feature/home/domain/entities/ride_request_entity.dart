@@ -19,7 +19,29 @@ class RideRequestEntity with _$RideRequestEntity {
     required DateTime createdAt,
     required DateTime updatedAt,
     required List<RideRequestStopEntity> stops,
+    int? rideRequestId,
+    double? distanceKm,
+    int? durationMin,
+    bool? isNight,
+    String? estimatedFare,
+    String? currency,
+    RouteGeometryEntity? routeGeometry,
   }) = _RideRequestEntity;
+}
+
+@freezed
+class RouteGeometryEntity with _$RouteGeometryEntity {
+  const factory RouteGeometryEntity({
+    required double distanceMeters,
+    required double durationSeconds,
+    required List<RoutePointEntity> points,
+  }) = _RouteGeometryEntity;
+}
+
+@freezed
+class RoutePointEntity with _$RoutePointEntity {
+  const factory RoutePointEntity({required double lat, required double lng}) =
+      _RoutePointEntity;
 }
 
 @freezed

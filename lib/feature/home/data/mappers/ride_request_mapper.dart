@@ -3,22 +3,72 @@ import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_ent
 
 extension RideRequestMapper on RideRequestModel {
   RideRequestEntity toEntity() {
+    final geomPoints = routeGeometry?.points;
+    final firstPoint = (geomPoints != null && geomPoints.isNotEmpty)
+        ? geomPoints.first
+        : null;
+    final lastPoint = (geomPoints != null && geomPoints.isNotEmpty)
+        ? geomPoints.last
+        : null;
+
+    final parsedPickupLat = pickupLat != null
+        ? double.tryParse(pickupLat!)
+        : firstPoint?.lat;
+    final parsedPickupLng = pickupLng != null
+        ? double.tryParse(pickupLng!)
+        : firstPoint?.lng;
+    final parsedDestLat = destLat != null
+        ? double.tryParse(destLat!)
+        : lastPoint?.lat;
+    final parsedDestLng = destLng != null
+        ? double.tryParse(destLng!)
+        : lastPoint?.lng;
+
     return RideRequestEntity(
-      id: id,
-      riderProfileId: riderProfileId,
-      status: status,
-      pickupLat: double.parse(pickupLat),
-      pickupLng: double.parse(pickupLng),
-      pickupAddress: pickupAddress,
-      destLat: double.parse(destLat),
-      destLng: double.parse(destLng),
-      destAddress: destAddress,
-      vehicleTypeId: vehicleTypeId,
-      submittedAt: DateTime.parse(submittedAt),
-      createdAt: DateTime.parse(createdAt),
-      updatedAt: DateTime.parse(updatedAt),
-      stops: stops.map((s) => s.toEntity()).toList(),
+      id: id ?? rideRequestId ?? 0,
+      riderProfileId: riderProfileId ?? 0,
+      status: status ?? '',
+      pickupLat: parsedPickupLat ?? 0.0,
+      pickupLng: parsedPickupLng ?? 0.0,
+      pickupAddress: pickupAddress ?? '',
+      destLat: parsedDestLat ?? 0.0,
+      destLng: parsedDestLng ?? 0.0,
+      destAddress: destAddress ?? '',
+      vehicleTypeId: vehicleTypeId ?? 0,
+      submittedAt: submittedAt != null
+          ? (DateTime.tryParse(submittedAt!) ?? DateTime.now())
+          : DateTime.now(),
+      createdAt: createdAt != null
+          ? (DateTime.tryParse(createdAt!) ?? DateTime.now())
+          : DateTime.now(),
+      updatedAt: updatedAt != null
+          ? (DateTime.tryParse(updatedAt!) ?? DateTime.now())
+          : DateTime.now(),
+      stops: stops?.map((s) => s.toEntity()).toList() ?? [],
+      rideRequestId: rideRequestId,
+      distanceKm: estimatedDistanceKm,
+      durationMin: estimatedDurationSec,
+      isNight: isNight,
+      estimatedFare: estimatedFare,
+      currency: currency,
+      routeGeometry: routeGeometry?.toEntity(),
     );
+  }
+}
+
+extension RouteGeometryMapper on RouteGeometryModel {
+  RouteGeometryEntity toEntity() {
+    return RouteGeometryEntity(
+      distanceMeters: distanceMeters,
+      durationSeconds: durationSeconds,
+      points: points.map((p) => p.toEntity()).toList(),
+    );
+  }
+}
+
+extension RoutePointMapper on RoutePointModel {
+  RoutePointEntity toEntity() {
+    return RoutePointEntity(lat: lat, lng: lng);
   }
 }
 

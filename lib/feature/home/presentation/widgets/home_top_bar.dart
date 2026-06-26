@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
-import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/glass_icon_button.dart';
 import 'driver_status_toggle.dart';

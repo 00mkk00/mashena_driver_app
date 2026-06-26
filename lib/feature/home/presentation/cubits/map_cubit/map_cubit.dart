@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
-import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/feature/home/data/services/routing_service.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
@@ -49,15 +48,21 @@ class MapCubit extends Cubit<MapState> {
     required double destinationLat,
     required double destinationLng,
     List<({double lat, double lng, int order})>? stops,
+    List<LatLng>? predefinedPoints,
   }) async {
     try {
-      final points = await _routingService.fetchRoute(
-        pickupLat: pickupLat,
-        pickupLng: pickupLng,
-        destinationLat: destinationLat,
-        destinationLng: destinationLng,
-        stops: stops?.map((s) => (lat: s.lat, lng: s.lng)).toList(),
-      );
+      final List<LatLng> points;
+      if (predefinedPoints != null && predefinedPoints.isNotEmpty) {
+        points = predefinedPoints;
+      } else {
+        points = await _routingService.fetchRoute(
+          pickupLat: pickupLat,
+          pickupLng: pickupLng,
+          destinationLat: destinationLat,
+          destinationLng: destinationLng,
+          stops: stops?.map((s) => (lat: s.lat, lng: s.lng)).toList(),
+        );
+      }
 
       final driverMarker = state.markers
           .where((m) => m.width == 48)
@@ -133,9 +138,9 @@ class MapCubit extends Cubit<MapState> {
     width: 70.r, // Increased to accommodate the pulsing aura
     height: 70.r,
     child: AnimatedPulse(
-      pulseColor: AppColors.online.withOpacity(0.3),
+      pulseColor: AppColors.online.withValues(alpha: .3),
       child: PremiumMapPin(
-        gradientColors: [AppColors.online.withOpacity(0.8), AppColors.online],
+        gradientColors: [AppColors.online.withValues(alpha: .8), AppColors.online],
         iconData: Icons.person_rounded,
       ),
     ),
@@ -146,7 +151,7 @@ class MapCubit extends Cubit<MapState> {
     width: 45.r,
     height: 45.r,
     child: PremiumMapPin(
-      gradientColors: [AppColors.danger.withOpacity(0.8), AppColors.danger],
+      gradientColors: [AppColors.danger.withValues(alpha: .8), AppColors.danger],
       iconData: Icons.flag_rounded,
     ),
   );
@@ -156,7 +161,7 @@ class MapCubit extends Cubit<MapState> {
     width: 45.r,
     height: 45.r,
     child: PremiumMapPin(
-      gradientColors: [AppColors.warning.withOpacity(0.8), AppColors.warning],
+      gradientColors: [AppColors.warning.withValues(alpha: .8), AppColors.warning],
       text: '$order',
     ),
   );

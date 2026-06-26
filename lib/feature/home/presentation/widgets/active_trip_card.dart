@@ -7,6 +7,8 @@ import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/route_row.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_meta_row.dart';
 
 class ActiveTripCard extends StatelessWidget {
   final RideRequestEntity? rideRequest;
@@ -48,7 +50,12 @@ class ActiveTripCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
               child: Column(
                 children: [
-                  _RouteSection(rideRequest: rideRequest!),
+                  SizedBox(height: AppSpacing.sm.h),
+
+                  TripMetaRow(ride: rideRequest!),
+                  SizedBox(height: AppSpacing.sm.h),
+
+                  RouteRow(trip: rideRequest!),
                   if (rideRequest!.stops.isNotEmpty) ...[
                     SizedBox(height: AppSpacing.sm.h),
                     _ActiveStopsSection(stops: rideRequest!.stops),
@@ -107,7 +114,7 @@ class _TripHeader extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.online.withOpacity(0.5),
+                      color: AppColors.online.withValues(alpha: 0.5),
                       blurRadius: 6,
                       spreadRadius: 1,
                     ),
@@ -139,139 +146,13 @@ class _TripHeader extends StatelessWidget {
               Text(
                 'elapsed',
                 style: AppTextStyles.w400_10.copyWith(
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withValues(alpha: .6),
                 ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-// ─── Route Section ────────────────────────────────────────────────────────────
-class _RouteSection extends StatelessWidget {
-  final RideRequestEntity rideRequest;
-  const _RouteSection({required this.rideRequest});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: AppSpacing.md.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ── Timeline indicators ────────────────────────────
-          SizedBox(
-            width: 24.w,
-            child: Column(
-              children: [
-                SizedBox(height: 2.h),
-                Container(
-                  width: 12.r,
-                  height: 12.r,
-                  decoration: BoxDecoration(
-                    color: AppColors.online,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors.online.withOpacity(0.3),
-                      width: 3,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 1.5.w,
-                  height: 30.h,
-                  margin: EdgeInsets.symmetric(vertical: 3.h),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        AppColors.online.withOpacity(0.6),
-                        AppColors.danger.withOpacity(0.6),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 12.r,
-                  height: 12.r,
-                  decoration: BoxDecoration(
-                    color: AppColors.danger,
-                    borderRadius: BorderRadius.circular(3.r),
-                    border: Border.all(
-                      color: AppColors.danger.withOpacity(0.3),
-                      width: 3,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(width: AppSpacing.sm.w),
-
-          // ── Addresses ─────────────────────────────────────
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _AddressRow(
-                  label: 'Pickup',
-                  address: rideRequest.pickupAddress,
-                  labelColor: AppColors.online,
-                ),
-                SizedBox(height: AppSpacing.sm.h),
-                _AddressRow(
-                  label: 'Drop-off',
-                  address: rideRequest.destAddress,
-                  labelColor: AppColors.danger,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AddressRow extends StatelessWidget {
-  final String label;
-  final String address;
-  final Color labelColor;
-
-  const _AddressRow({
-    required this.label,
-    required this.address,
-    required this.labelColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label.toUpperCase(),
-          style: AppTextStyles.w700_12.copyWith(
-            color: labelColor,
-            letterSpacing: 0.8,
-          ),
-        ),
-        SizedBox(height: 2.h),
-        Text(
-          address,
-          style: AppTextStyles.w500_12.copyWith(
-            color: AppColors.onSurface,
-            height: 1.3,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
     );
   }
 }

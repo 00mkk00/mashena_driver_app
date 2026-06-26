@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mashena_driver_app/app/app.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
@@ -13,7 +12,9 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_statu
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/route_row.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/stops_section.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_meta_row.dart';
 
 class RideRequestCard extends StatefulWidget {
   const RideRequestCard({super.key});
@@ -145,7 +146,10 @@ class _TripDetailsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _RouteDetails(trip: ride),
+        const SizedBox(height: 5),
+        TripMetaRow(ride: ride),
+        const SizedBox(height: 10),
+        RouteRow(trip: ride),
         SizedBox(height: 14.h),
         if (ride.stops.isNotEmpty) ...[
           StopsSection(stops: ride.stops),
@@ -158,103 +162,6 @@ class _TripDetailsContent extends StatelessWidget {
 }
 
 // ─── Route Details ────────────────────────────────────────────────────────────
-class _RouteDetails extends StatelessWidget {
-  final RideRequestEntity trip;
-  const _RouteDetails({required this.trip});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // ── Route line ──────────────────────────────────────────
-        SizedBox(
-          width: 20.w,
-          child: Column(
-            children: [
-              Container(
-                width: 10.r,
-                height: 10.r,
-                decoration: const BoxDecoration(
-                  color: AppColors.online,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              Container(width: 2.w, height: 32.h, color: AppColors.divider),
-              Container(
-                width: 10.r,
-                height: 10.r,
-                decoration: BoxDecoration(
-                  color: AppColors.danger,
-                  borderRadius: BorderRadius.circular(2.r),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(width: AppSpacing.sm.w),
-
-        // ── Coordinates ─────────────────────────────────────────
-        Expanded(
-          child: BlocBuilder<RideRequestCubit, RideRequestState>(
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _LocationItem(
-                    label: 'Pickup',
-                    address: state.destinationAddress,
-                    isResolving: state.isResolvingAddresses,
-                  ),
-                  SizedBox(height: AppSpacing.sm.h),
-                  _LocationItem(
-                    label: 'Drop-off',
-                    address: state.destinationAddress,
-                    isResolving: state.isResolvingAddresses,
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _LocationItem extends StatelessWidget {
-  final String label;
-  final String? address; // 👈 resolved address
-  final bool isResolving;
-  const _LocationItem({
-    required this.label,
-    required this.address,
-    this.isResolving = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.w400_12.copyWith(
-            color: AppColors.onSurfaceVariant,
-          ),
-        ),
-        SizedBox(height: 2.h),
-        Text(
-          address ?? '—',
-          style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-}
 
 // // ─── Trip Status Chip ─────────────────────────────────────────────────────────
 // class _TripStatusChip extends StatelessWidget {

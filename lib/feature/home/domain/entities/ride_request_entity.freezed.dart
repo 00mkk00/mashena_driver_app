@@ -31,6 +31,13 @@ mixin _$RideRequestEntity {
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
   List<RideRequestStopEntity> get stops => throw _privateConstructorUsedError;
+  int? get rideRequestId => throw _privateConstructorUsedError;
+  double? get distanceKm => throw _privateConstructorUsedError;
+  int? get durationMin => throw _privateConstructorUsedError;
+  bool? get isNight => throw _privateConstructorUsedError;
+  String? get estimatedFare => throw _privateConstructorUsedError;
+  String? get currency => throw _privateConstructorUsedError;
+  RouteGeometryEntity? get routeGeometry => throw _privateConstructorUsedError;
 
   /// Create a copy of RideRequestEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -61,7 +68,16 @@ abstract class $RideRequestEntityCopyWith<$Res> {
     DateTime createdAt,
     DateTime updatedAt,
     List<RideRequestStopEntity> stops,
+    int? rideRequestId,
+    double? distanceKm,
+    int? durationMin,
+    bool? isNight,
+    String? estimatedFare,
+    String? currency,
+    RouteGeometryEntity? routeGeometry,
   });
+
+  $RouteGeometryEntityCopyWith<$Res>? get routeGeometry;
 }
 
 /// @nodoc
@@ -93,6 +109,13 @@ class _$RideRequestEntityCopyWithImpl<$Res, $Val extends RideRequestEntity>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? stops = null,
+    Object? rideRequestId = freezed,
+    Object? distanceKm = freezed,
+    Object? durationMin = freezed,
+    Object? isNight = freezed,
+    Object? estimatedFare = freezed,
+    Object? currency = freezed,
+    Object? routeGeometry = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -152,9 +175,51 @@ class _$RideRequestEntityCopyWithImpl<$Res, $Val extends RideRequestEntity>
                 ? _value.stops
                 : stops // ignore: cast_nullable_to_non_nullable
                       as List<RideRequestStopEntity>,
+            rideRequestId: freezed == rideRequestId
+                ? _value.rideRequestId
+                : rideRequestId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            distanceKm: freezed == distanceKm
+                ? _value.distanceKm
+                : distanceKm // ignore: cast_nullable_to_non_nullable
+                      as double?,
+            durationMin: freezed == durationMin
+                ? _value.durationMin
+                : durationMin // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            isNight: freezed == isNight
+                ? _value.isNight
+                : isNight // ignore: cast_nullable_to_non_nullable
+                      as bool?,
+            estimatedFare: freezed == estimatedFare
+                ? _value.estimatedFare
+                : estimatedFare // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            currency: freezed == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            routeGeometry: freezed == routeGeometry
+                ? _value.routeGeometry
+                : routeGeometry // ignore: cast_nullable_to_non_nullable
+                      as RouteGeometryEntity?,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of RideRequestEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RouteGeometryEntityCopyWith<$Res>? get routeGeometry {
+    if (_value.routeGeometry == null) {
+      return null;
+    }
+
+    return $RouteGeometryEntityCopyWith<$Res>(_value.routeGeometry!, (value) {
+      return _then(_value.copyWith(routeGeometry: value) as $Val);
+    });
   }
 }
 
@@ -182,7 +247,17 @@ abstract class _$$RideRequestEntityImplCopyWith<$Res>
     DateTime createdAt,
     DateTime updatedAt,
     List<RideRequestStopEntity> stops,
+    int? rideRequestId,
+    double? distanceKm,
+    int? durationMin,
+    bool? isNight,
+    String? estimatedFare,
+    String? currency,
+    RouteGeometryEntity? routeGeometry,
   });
+
+  @override
+  $RouteGeometryEntityCopyWith<$Res>? get routeGeometry;
 }
 
 /// @nodoc
@@ -213,6 +288,13 @@ class __$$RideRequestEntityImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? stops = null,
+    Object? rideRequestId = freezed,
+    Object? distanceKm = freezed,
+    Object? durationMin = freezed,
+    Object? isNight = freezed,
+    Object? estimatedFare = freezed,
+    Object? currency = freezed,
+    Object? routeGeometry = freezed,
   }) {
     return _then(
       _$RideRequestEntityImpl(
@@ -272,6 +354,34 @@ class __$$RideRequestEntityImplCopyWithImpl<$Res>
             ? _value._stops
             : stops // ignore: cast_nullable_to_non_nullable
                   as List<RideRequestStopEntity>,
+        rideRequestId: freezed == rideRequestId
+            ? _value.rideRequestId
+            : rideRequestId // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        distanceKm: freezed == distanceKm
+            ? _value.distanceKm
+            : distanceKm // ignore: cast_nullable_to_non_nullable
+                  as double?,
+        durationMin: freezed == durationMin
+            ? _value.durationMin
+            : durationMin // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        isNight: freezed == isNight
+            ? _value.isNight
+            : isNight // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        estimatedFare: freezed == estimatedFare
+            ? _value.estimatedFare
+            : estimatedFare // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        currency: freezed == currency
+            ? _value.currency
+            : currency // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        routeGeometry: freezed == routeGeometry
+            ? _value.routeGeometry
+            : routeGeometry // ignore: cast_nullable_to_non_nullable
+                  as RouteGeometryEntity?,
       ),
     );
   }
@@ -295,6 +405,13 @@ class _$RideRequestEntityImpl implements _RideRequestEntity {
     required this.createdAt,
     required this.updatedAt,
     required final List<RideRequestStopEntity> stops,
+    this.rideRequestId,
+    this.distanceKm,
+    this.durationMin,
+    this.isNight,
+    this.estimatedFare,
+    this.currency,
+    this.routeGeometry,
   }) : _stops = stops;
 
   @override
@@ -332,8 +449,23 @@ class _$RideRequestEntityImpl implements _RideRequestEntity {
   }
 
   @override
+  final int? rideRequestId;
+  @override
+  final double? distanceKm;
+  @override
+  final int? durationMin;
+  @override
+  final bool? isNight;
+  @override
+  final String? estimatedFare;
+  @override
+  final String? currency;
+  @override
+  final RouteGeometryEntity? routeGeometry;
+
+  @override
   String toString() {
-    return 'RideRequestEntity(id: $id, riderProfileId: $riderProfileId, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, pickupAddress: $pickupAddress, destLat: $destLat, destLng: $destLng, destAddress: $destAddress, vehicleTypeId: $vehicleTypeId, submittedAt: $submittedAt, createdAt: $createdAt, updatedAt: $updatedAt, stops: $stops)';
+    return 'RideRequestEntity(id: $id, riderProfileId: $riderProfileId, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, pickupAddress: $pickupAddress, destLat: $destLat, destLng: $destLng, destAddress: $destAddress, vehicleTypeId: $vehicleTypeId, submittedAt: $submittedAt, createdAt: $createdAt, updatedAt: $updatedAt, stops: $stops, rideRequestId: $rideRequestId, distanceKm: $distanceKm, durationMin: $durationMin, isNight: $isNight, estimatedFare: $estimatedFare, currency: $currency, routeGeometry: $routeGeometry)';
   }
 
   @override
@@ -363,11 +495,24 @@ class _$RideRequestEntityImpl implements _RideRequestEntity {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality().equals(other._stops, _stops));
+            const DeepCollectionEquality().equals(other._stops, _stops) &&
+            (identical(other.rideRequestId, rideRequestId) ||
+                other.rideRequestId == rideRequestId) &&
+            (identical(other.distanceKm, distanceKm) ||
+                other.distanceKm == distanceKm) &&
+            (identical(other.durationMin, durationMin) ||
+                other.durationMin == durationMin) &&
+            (identical(other.isNight, isNight) || other.isNight == isNight) &&
+            (identical(other.estimatedFare, estimatedFare) ||
+                other.estimatedFare == estimatedFare) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.routeGeometry, routeGeometry) ||
+                other.routeGeometry == routeGeometry));
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     runtimeType,
     id,
     riderProfileId,
@@ -383,7 +528,14 @@ class _$RideRequestEntityImpl implements _RideRequestEntity {
     createdAt,
     updatedAt,
     const DeepCollectionEquality().hash(_stops),
-  );
+    rideRequestId,
+    distanceKm,
+    durationMin,
+    isNight,
+    estimatedFare,
+    currency,
+    routeGeometry,
+  ]);
 
   /// Create a copy of RideRequestEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -413,6 +565,13 @@ abstract class _RideRequestEntity implements RideRequestEntity {
     required final DateTime createdAt,
     required final DateTime updatedAt,
     required final List<RideRequestStopEntity> stops,
+    final int? rideRequestId,
+    final double? distanceKm,
+    final int? durationMin,
+    final bool? isNight,
+    final String? estimatedFare,
+    final String? currency,
+    final RouteGeometryEntity? routeGeometry,
   }) = _$RideRequestEntityImpl;
 
   @override
@@ -443,12 +602,377 @@ abstract class _RideRequestEntity implements RideRequestEntity {
   DateTime get updatedAt;
   @override
   List<RideRequestStopEntity> get stops;
+  @override
+  int? get rideRequestId;
+  @override
+  double? get distanceKm;
+  @override
+  int? get durationMin;
+  @override
+  bool? get isNight;
+  @override
+  String? get estimatedFare;
+  @override
+  String? get currency;
+  @override
+  RouteGeometryEntity? get routeGeometry;
 
   /// Create a copy of RideRequestEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RideRequestEntityImplCopyWith<_$RideRequestEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RouteGeometryEntity {
+  double get distanceMeters => throw _privateConstructorUsedError;
+  double get durationSeconds => throw _privateConstructorUsedError;
+  List<RoutePointEntity> get points => throw _privateConstructorUsedError;
+
+  /// Create a copy of RouteGeometryEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RouteGeometryEntityCopyWith<RouteGeometryEntity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RouteGeometryEntityCopyWith<$Res> {
+  factory $RouteGeometryEntityCopyWith(
+    RouteGeometryEntity value,
+    $Res Function(RouteGeometryEntity) then,
+  ) = _$RouteGeometryEntityCopyWithImpl<$Res, RouteGeometryEntity>;
+  @useResult
+  $Res call({
+    double distanceMeters,
+    double durationSeconds,
+    List<RoutePointEntity> points,
+  });
+}
+
+/// @nodoc
+class _$RouteGeometryEntityCopyWithImpl<$Res, $Val extends RouteGeometryEntity>
+    implements $RouteGeometryEntityCopyWith<$Res> {
+  _$RouteGeometryEntityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RouteGeometryEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? distanceMeters = null,
+    Object? durationSeconds = null,
+    Object? points = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            distanceMeters: null == distanceMeters
+                ? _value.distanceMeters
+                : distanceMeters // ignore: cast_nullable_to_non_nullable
+                      as double,
+            durationSeconds: null == durationSeconds
+                ? _value.durationSeconds
+                : durationSeconds // ignore: cast_nullable_to_non_nullable
+                      as double,
+            points: null == points
+                ? _value.points
+                : points // ignore: cast_nullable_to_non_nullable
+                      as List<RoutePointEntity>,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RouteGeometryEntityImplCopyWith<$Res>
+    implements $RouteGeometryEntityCopyWith<$Res> {
+  factory _$$RouteGeometryEntityImplCopyWith(
+    _$RouteGeometryEntityImpl value,
+    $Res Function(_$RouteGeometryEntityImpl) then,
+  ) = __$$RouteGeometryEntityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    double distanceMeters,
+    double durationSeconds,
+    List<RoutePointEntity> points,
+  });
+}
+
+/// @nodoc
+class __$$RouteGeometryEntityImplCopyWithImpl<$Res>
+    extends _$RouteGeometryEntityCopyWithImpl<$Res, _$RouteGeometryEntityImpl>
+    implements _$$RouteGeometryEntityImplCopyWith<$Res> {
+  __$$RouteGeometryEntityImplCopyWithImpl(
+    _$RouteGeometryEntityImpl _value,
+    $Res Function(_$RouteGeometryEntityImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RouteGeometryEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? distanceMeters = null,
+    Object? durationSeconds = null,
+    Object? points = null,
+  }) {
+    return _then(
+      _$RouteGeometryEntityImpl(
+        distanceMeters: null == distanceMeters
+            ? _value.distanceMeters
+            : distanceMeters // ignore: cast_nullable_to_non_nullable
+                  as double,
+        durationSeconds: null == durationSeconds
+            ? _value.durationSeconds
+            : durationSeconds // ignore: cast_nullable_to_non_nullable
+                  as double,
+        points: null == points
+            ? _value._points
+            : points // ignore: cast_nullable_to_non_nullable
+                  as List<RoutePointEntity>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$RouteGeometryEntityImpl implements _RouteGeometryEntity {
+  const _$RouteGeometryEntityImpl({
+    required this.distanceMeters,
+    required this.durationSeconds,
+    required final List<RoutePointEntity> points,
+  }) : _points = points;
+
+  @override
+  final double distanceMeters;
+  @override
+  final double durationSeconds;
+  final List<RoutePointEntity> _points;
+  @override
+  List<RoutePointEntity> get points {
+    if (_points is EqualUnmodifiableListView) return _points;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_points);
+  }
+
+  @override
+  String toString() {
+    return 'RouteGeometryEntity(distanceMeters: $distanceMeters, durationSeconds: $durationSeconds, points: $points)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RouteGeometryEntityImpl &&
+            (identical(other.distanceMeters, distanceMeters) ||
+                other.distanceMeters == distanceMeters) &&
+            (identical(other.durationSeconds, durationSeconds) ||
+                other.durationSeconds == durationSeconds) &&
+            const DeepCollectionEquality().equals(other._points, _points));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    distanceMeters,
+    durationSeconds,
+    const DeepCollectionEquality().hash(_points),
+  );
+
+  /// Create a copy of RouteGeometryEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RouteGeometryEntityImplCopyWith<_$RouteGeometryEntityImpl> get copyWith =>
+      __$$RouteGeometryEntityImplCopyWithImpl<_$RouteGeometryEntityImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _RouteGeometryEntity implements RouteGeometryEntity {
+  const factory _RouteGeometryEntity({
+    required final double distanceMeters,
+    required final double durationSeconds,
+    required final List<RoutePointEntity> points,
+  }) = _$RouteGeometryEntityImpl;
+
+  @override
+  double get distanceMeters;
+  @override
+  double get durationSeconds;
+  @override
+  List<RoutePointEntity> get points;
+
+  /// Create a copy of RouteGeometryEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RouteGeometryEntityImplCopyWith<_$RouteGeometryEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RoutePointEntity {
+  double get lat => throw _privateConstructorUsedError;
+  double get lng => throw _privateConstructorUsedError;
+
+  /// Create a copy of RoutePointEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RoutePointEntityCopyWith<RoutePointEntity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RoutePointEntityCopyWith<$Res> {
+  factory $RoutePointEntityCopyWith(
+    RoutePointEntity value,
+    $Res Function(RoutePointEntity) then,
+  ) = _$RoutePointEntityCopyWithImpl<$Res, RoutePointEntity>;
+  @useResult
+  $Res call({double lat, double lng});
+}
+
+/// @nodoc
+class _$RoutePointEntityCopyWithImpl<$Res, $Val extends RoutePointEntity>
+    implements $RoutePointEntityCopyWith<$Res> {
+  _$RoutePointEntityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RoutePointEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? lat = null, Object? lng = null}) {
+    return _then(
+      _value.copyWith(
+            lat: null == lat
+                ? _value.lat
+                : lat // ignore: cast_nullable_to_non_nullable
+                      as double,
+            lng: null == lng
+                ? _value.lng
+                : lng // ignore: cast_nullable_to_non_nullable
+                      as double,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RoutePointEntityImplCopyWith<$Res>
+    implements $RoutePointEntityCopyWith<$Res> {
+  factory _$$RoutePointEntityImplCopyWith(
+    _$RoutePointEntityImpl value,
+    $Res Function(_$RoutePointEntityImpl) then,
+  ) = __$$RoutePointEntityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({double lat, double lng});
+}
+
+/// @nodoc
+class __$$RoutePointEntityImplCopyWithImpl<$Res>
+    extends _$RoutePointEntityCopyWithImpl<$Res, _$RoutePointEntityImpl>
+    implements _$$RoutePointEntityImplCopyWith<$Res> {
+  __$$RoutePointEntityImplCopyWithImpl(
+    _$RoutePointEntityImpl _value,
+    $Res Function(_$RoutePointEntityImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RoutePointEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? lat = null, Object? lng = null}) {
+    return _then(
+      _$RoutePointEntityImpl(
+        lat: null == lat
+            ? _value.lat
+            : lat // ignore: cast_nullable_to_non_nullable
+                  as double,
+        lng: null == lng
+            ? _value.lng
+            : lng // ignore: cast_nullable_to_non_nullable
+                  as double,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$RoutePointEntityImpl implements _RoutePointEntity {
+  const _$RoutePointEntityImpl({required this.lat, required this.lng});
+
+  @override
+  final double lat;
+  @override
+  final double lng;
+
+  @override
+  String toString() {
+    return 'RoutePointEntity(lat: $lat, lng: $lng)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RoutePointEntityImpl &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.lng, lng) || other.lng == lng));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lat, lng);
+
+  /// Create a copy of RoutePointEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RoutePointEntityImplCopyWith<_$RoutePointEntityImpl> get copyWith =>
+      __$$RoutePointEntityImplCopyWithImpl<_$RoutePointEntityImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _RoutePointEntity implements RoutePointEntity {
+  const factory _RoutePointEntity({
+    required final double lat,
+    required final double lng,
+  }) = _$RoutePointEntityImpl;
+
+  @override
+  double get lat;
+  @override
+  double get lng;
+
+  /// Create a copy of RoutePointEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RoutePointEntityImplCopyWith<_$RoutePointEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
