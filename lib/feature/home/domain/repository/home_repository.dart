@@ -14,7 +14,8 @@ abstract class HomeRepository {
   );
   Future<Either<Failure, Unit>> updateDriverRadius(
     UpdateDriverRadiusParams params,
-  ); 
-    Future<Either<Failure, RideRequestEntity>> getRideRequest(GetRideRequestParams params); // 👈
-
+  );
+  Future<Either<Failure, RideRequestEntity>> getRideRequest(
+    GetRideRequestParams params,
+  ); // 👈
 }

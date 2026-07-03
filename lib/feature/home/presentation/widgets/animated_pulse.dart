@@ -27,7 +27,9 @@ class AnimatedPulse extends StatelessWidget {
               height: 40.r + (value * 30.r),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: pulseColor.withOpacity(1 - value), // Fades out as it expands
+                color: pulseColor.withOpacity(
+                  1 - value,
+                ), // Fades out as it expands
               ),
             ),
             // The static marker pin on top
@@ -38,7 +40,7 @@ class AnimatedPulse extends StatelessWidget {
       // Loop the animation infinitely
       onEnd: () {
         // To loop it, you would typically wrap this in a StatefulWidget with an AnimationController.
-        // For a quick stateless loop in TweenAnimationBuilder, you can trigger a rebuild 
+        // For a quick stateless loop in TweenAnimationBuilder, you can trigger a rebuild
         // by altering the key, or better yet, use a dedicated AnimationController in your map screen.
       },
       child: child,

@@ -14,6 +14,5 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> verifyOtp(VerifyOtpParams params);
   Future<Either<Failure, LoginEntity>> login(LoginParams params);
   Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params);
-    Future<Either<Failure, Unit>> logout(); 
-
+  Future<Either<Failure, Unit>> logout();
 }

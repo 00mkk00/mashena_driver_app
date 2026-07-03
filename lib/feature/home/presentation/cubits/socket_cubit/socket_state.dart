@@ -2,13 +2,13 @@ enum SocketStatus {
   disconnected,
   connecting,
   connected,
-  registered,     // driver:registered received — ready for rides
+  registered, // driver:registered received — ready for rides
   error,
 }
 
 class SocketState {
   final SocketStatus status;
-  final int? driverId;         // received from driver:registered
+  final int? driverId; // received from driver:registered
   final String? errorMessage;
 
   const SocketState({

@@ -11,7 +11,10 @@ class PremiumMapPin extends StatelessWidget {
     required this.gradientColors,
     this.iconData,
     this.text,
-  })  : assert(iconData != null || text != null, 'Must provide either an icon or text');
+  }) : assert(
+         iconData != null || text != null,
+         'Must provide either an icon or text',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +41,20 @@ class PremiumMapPin extends StatelessWidget {
         border: Border.all(
           color: Colors.white,
           width: 2.5.r,
-          strokeAlign: BorderSide.strokeAlignOutside, // Keeps the inner area spacious
+          strokeAlign:
+              BorderSide.strokeAlignOutside, // Keeps the inner area spacious
         ),
       ),
       child: Center(
         child: iconData != null
-            ? Icon(
-                iconData,
-                color: Colors.white,
-                size: 22.r,
-              )
+            ? Icon(iconData, color: Colors.white, size: 22.r)
             : Text(
                 text!,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.r,
-                  fontWeight: FontWeight.w800, // Black/Heavy weights look more modern
+                  fontWeight:
+                      FontWeight.w800, // Black/Heavy weights look more modern
                   letterSpacing: -0.5,
                 ),
               ),

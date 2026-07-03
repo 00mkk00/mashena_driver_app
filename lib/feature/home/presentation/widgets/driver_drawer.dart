@@ -70,18 +70,18 @@ class DriverAppDrawer extends StatelessWidget {
                     _DrawerItem(
                       icon: Icons.account_circle_outlined,
                       label: 'My Profile',
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => context.push(AppRoutes.profileViewPath),
                     ),
                     _DrawerItem(
                       icon: Icons.account_balance_wallet_outlined,
-                      label: 'Earnings',
+                      label: 'Wallet',
                       trailing: Text(
                         'EGP ${driver.todayEarnings.toStringAsFixed(0)}',
                         style: AppTextStyles.w600_12.copyWith(
                           color: AppColors.earning,
                         ), // ✅ was: AppColors.primaryColor — earnings use earning token
                       ),
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => context.push(AppRoutes.walletViewPath),
                     ),
                     _DrawerItem(
                       icon: Icons.history_rounded,
@@ -92,7 +92,7 @@ class DriverAppDrawer extends StatelessWidget {
                       icon: Icons.description_outlined,
                       label: 'Documents',
                       trailing: _StatusBadge(label: 'Verified', isGood: true),
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => context.push(AppRoutes.documentViewPath),
                     ),
                     _DrawerItem(
                       icon: Icons.settings_outlined,

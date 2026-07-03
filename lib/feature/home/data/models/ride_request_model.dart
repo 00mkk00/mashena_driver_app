@@ -47,10 +47,8 @@ class RouteGeometryModel with _$RouteGeometryModel {
 
 @freezed
 class RoutePointModel with _$RoutePointModel {
-  const factory RoutePointModel({
-    required double lat,
-    required double lng,
-  }) = _RoutePointModel;
+  const factory RoutePointModel({required double lat, required double lng}) =
+      _RoutePointModel;
 
   factory RoutePointModel.fromJson(Map<String, dynamic> json) =>
       _$RoutePointModelFromJson(json);

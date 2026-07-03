@@ -24,9 +24,10 @@ class _SosButtonState extends State<SosButton>
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-    _scale = Tween<double>(begin: 1.0, end: 1.12).animate(
-      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
-    );
+    _scale = Tween<double>(
+      begin: 1.0,
+      end: 1.12,
+    ).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
   }
 
   @override
@@ -60,7 +61,11 @@ class _SosButtonState extends State<SosButton>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.warning_amber_rounded, size: 18.r, color: Colors.white),
+              Icon(
+                Icons.warning_amber_rounded,
+                size: 18.r,
+                color: Colors.white,
+              ),
               Text(
                 'SOS',
                 style: AppTextStyles.w700_12.copyWith(

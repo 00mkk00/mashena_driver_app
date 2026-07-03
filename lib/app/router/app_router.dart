@@ -17,7 +17,10 @@ import 'package:mashena_driver_app/feature/auth/presentation/views/login_view.da
 import 'package:mashena_driver_app/feature/auth/presentation/views/signup_view.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/views/upload_docs_view.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/views/verify_otp_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/views/edit_docments_view.dart';
 import 'package:mashena_driver_app/feature/home/presentation/views/home_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/views/profile_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/views/wallet_view.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mashena_driver_app/feature/splash/presentation/views/splash_view.dart';
@@ -129,7 +132,30 @@ final class AppRouter {
         name: AppRoutes.homeView,
         builder: (context, state) => HomeView(),
       ),
+
+      GoRoute(
+        path: AppRoutes.walletViewPath,
+        name: AppRoutes.walletViewPath,
+        builder: (context, state) => WalletView(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileViewPath,
+        name: AppRoutes.profileView,
+        builder: (context, state) => ProfileView(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.documentViewPath,
+        name: AppRoutes.documentView,
+        builder: (context, state) => DocumentsView(),
+      ),
+      //  GoRoute(
+      //   path: AppRoutes.walletViewPath,
+      //   name: AppRoutes.walletViewPath,
+      //   builder: (context, state) => WalletView(),
+      // ),
     ],
+
     errorBuilder: (context, state) => _ErrorPage(error: state.error),
   );
 }

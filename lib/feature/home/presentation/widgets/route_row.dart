@@ -92,5 +92,3 @@ class _AddressItem extends StatelessWidget {
     );
   }
 }
-
-

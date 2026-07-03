@@ -69,16 +69,16 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-Future<Either<Failure, RideRequestEntity>> getRideRequest(
-  GetRideRequestParams params,
-) async {
-  try {
-    final model = await _remoteDataSource.getRideRequest(params);
-    return Right(model.toEntity());
-  } on ApiException catch (e) {
-    return Left(mapApiExceptionToFailure(e, _apiClient));
-  } catch (e) {
-    return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+  Future<Either<Failure, RideRequestEntity>> getRideRequest(
+    GetRideRequestParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.getRideRequest(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
   }
-}
 }

@@ -56,7 +56,7 @@ class RideRequestState {
     isLoadingDetails: isLoadingDetails ?? this.isLoadingDetails,
     rideRequestEntity: clearTripDetails
         ? null
-        : rideRequest ?? rideRequestEntity,
+        : rideRequest ?? this.rideRequestEntity,
     errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
     pickupAddress: clearPickupAddress
         ? null

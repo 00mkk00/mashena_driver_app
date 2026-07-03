@@ -9,7 +9,8 @@ class FabButton extends StatelessWidget {
   final VoidCallback onTap;
   final String tooltip;
 
-  const FabButton({super.key, 
+  const FabButton({
+    super.key,
     required this.icon,
     required this.onTap,
     required this.tooltip,

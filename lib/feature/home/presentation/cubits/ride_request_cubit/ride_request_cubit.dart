@@ -8,7 +8,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   final GetRideRequestUseCase _getRideRequestUseCase;
 
   Timer? _countdownTimer;
-  Timer? _resetTimer; // 👈 track reset timer separately
+  Timer? _resetTimer;
 
   void Function(int rideRequestId)? onAutoReject;
 
@@ -22,7 +22,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     required int rideRequestId,
     required int timeoutSec,
   }) async {
-    // ✅ Cancel any lingering timers from previous request before starting new
+    // Cancel any lingering timers from previous request
     _cancelAllTimers();
 
     emit(
@@ -63,15 +63,19 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   }
 
   // ─── Accept ───────────────────────────────────────────────────────────────
+  // FIX: cancel ALL timers including _resetTimer so a pending reset from a
+  // previous reject/expire can never wipe the accepted state.
 
   void acceptRequest() {
-    _cancelAllTimers();
+    _cancelAllTimers(); // ← kills both _countdownTimer AND _resetTimer
     emit(
       state.copyWith(
         status: RideRequestStatus.accepted,
         isBottomSheetExpanded: true,
       ),
     );
+    // Do NOT call _scheduleReset here — the accepted state must persist
+    // until DriverStatusCubit.endTrip() is called.
   }
 
   // ─── Reject ───────────────────────────────────────────────────────────────
@@ -84,7 +88,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
         isBottomSheetExpanded: false,
       ),
     );
-    _scheduleReset();
+    _scheduleReset(); // only rejected/expired should reset back to idle
   }
 
   // ─── Toggle bottom sheet ───────────────────────────────────────────────────
@@ -96,8 +100,16 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   // ─── Countdown ────────────────────────────────────────────────────────────
 
   void _startCountdown() {
-    _countdownTimer?.cancel(); // ✅ guard against duplicate timers
+    _countdownTimer?.cancel();
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      // Guard: if we're no longer in an incoming state (e.g. accepted just fired)
+      // stop the countdown immediately — don't auto-reject an accepted ride.
+      if (state.status != RideRequestStatus.incoming) {
+        _countdownTimer?.cancel();
+        _countdownTimer = null;
+        return;
+      }
+
       final remaining = state.countdownSeconds - 1;
       if (remaining <= 0) {
         _onCountdownExpired();
@@ -110,6 +122,9 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   void _onCountdownExpired() {
     _countdownTimer?.cancel();
     _countdownTimer = null;
+
+    // Guard: don't auto-reject if the driver already accepted
+    if (state.status == RideRequestStatus.accepted) return;
 
     final rideRequestId = state.rideRequestId;
     if (rideRequestId != null) {
@@ -124,9 +139,10 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   }
 
   // ─── Reset ────────────────────────────────────────────────────────────────
+  // Only called after rejected / expired — never after accepted.
 
   void _scheduleReset() {
-    _resetTimer?.cancel(); // ✅ cancel previous reset if pending
+    _resetTimer?.cancel();
     _resetTimer = Timer(const Duration(milliseconds: 600), () {
       if (!isClosed) emit(const RideRequestState());
     });
@@ -137,7 +153,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   void _cancelAllTimers() {
     _countdownTimer?.cancel();
     _countdownTimer = null;
-    _resetTimer?.cancel(); // ✅ critical — cancels pending reset
+    _resetTimer?.cancel(); // ← critical: kills any pending reset
     _resetTimer = null;
   }
 

@@ -140,7 +140,10 @@ class MapCubit extends Cubit<MapState> {
     child: AnimatedPulse(
       pulseColor: AppColors.online.withValues(alpha: .3),
       child: PremiumMapPin(
-        gradientColors: [AppColors.online.withValues(alpha: .8), AppColors.online],
+        gradientColors: [
+          AppColors.online.withValues(alpha: .8),
+          AppColors.online,
+        ],
         iconData: Icons.person_rounded,
       ),
     ),
@@ -151,7 +154,10 @@ class MapCubit extends Cubit<MapState> {
     width: 45.r,
     height: 45.r,
     child: PremiumMapPin(
-      gradientColors: [AppColors.danger.withValues(alpha: .8), AppColors.danger],
+      gradientColors: [
+        AppColors.danger.withValues(alpha: .8),
+        AppColors.danger,
+      ],
       iconData: Icons.flag_rounded,
     ),
   );
@@ -161,7 +167,10 @@ class MapCubit extends Cubit<MapState> {
     width: 45.r,
     height: 45.r,
     child: PremiumMapPin(
-      gradientColors: [AppColors.warning.withValues(alpha: .8), AppColors.warning],
+      gradientColors: [
+        AppColors.warning.withValues(alpha: .8),
+        AppColors.warning,
+      ],
       text: '$order',
     ),
   );

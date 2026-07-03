@@ -8,6 +8,10 @@ class AppRoutes {
   static const uploadDocs = 'upload-docs';
   static const pendingView = 'pending-view';
   static const homeView = 'home-view';
+  static const walletView = 'wallet-view';
+  static const profileView = 'profile-view';
+  static const documentView = 'document-view';
+  static const notificationView = 'notification-view';
 
   // route paths (للـ URL)
   static const onboardingPath = '/onboarding';
@@ -18,4 +22,8 @@ class AppRoutes {
   static const uploadDocsPath = '/upload-docs';
   static const pendingViewPath = '/pending-view';
   static const homeViewPath = '/home-view';
+  static const walletViewPath = '/wallet-view';
+  static const profileViewPath = '/profile-view';
+  static const documentViewPath = '/document-view';
+  static const notificationViewPath = '/notification-view';
 }
