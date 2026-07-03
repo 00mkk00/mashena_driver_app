@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/home/data/models/ride_request_model.dart';

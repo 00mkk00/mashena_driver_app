@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
-import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/login_params.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/send_otp_params.dart';
@@ -11,13 +10,9 @@ import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/
 class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase loginUseCase;
   final SendOtpUseCase sendOtpUseCase;
-  final TokenManager tokenManager;
 
-  LoginCubit({
-    required this.loginUseCase,
-    required this.sendOtpUseCase,
-    required this.tokenManager,
-  }) : super(const LoginState.initial());
+  LoginCubit({required this.loginUseCase, required this.sendOtpUseCase})
+    : super(const LoginState.initial());
 
   Future<void> login({
     required String email,
@@ -54,7 +49,6 @@ class LoginCubit extends Cubit<LoginState> {
       },
       (data) async {
         // Store the token
-        await tokenManager.saveTokens(accessToken: data.accessToken);
 
         final user = data.user;
         final info = user.driverApprovalInfo;

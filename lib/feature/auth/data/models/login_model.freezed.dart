@@ -21,6 +21,7 @@ LoginModel _$LoginModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginModel {
+  String get refreshToken => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
   DriverModel get user => throw _privateConstructorUsedError;
 
@@ -41,7 +42,7 @@ abstract class $LoginModelCopyWith<$Res> {
     $Res Function(LoginModel) then,
   ) = _$LoginModelCopyWithImpl<$Res, LoginModel>;
   @useResult
-  $Res call({String accessToken, DriverModel user});
+  $Res call({String refreshToken, String accessToken, DriverModel user});
 
   $DriverModelCopyWith<$Res> get user;
 }
@@ -60,9 +61,17 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? accessToken = null, Object? user = null}) {
+  $Res call({
+    Object? refreshToken = null,
+    Object? accessToken = null,
+    Object? user = null,
+  }) {
     return _then(
       _value.copyWith(
+            refreshToken: null == refreshToken
+                ? _value.refreshToken
+                : refreshToken // ignore: cast_nullable_to_non_nullable
+                      as String,
             accessToken: null == accessToken
                 ? _value.accessToken
                 : accessToken // ignore: cast_nullable_to_non_nullable
@@ -96,7 +105,7 @@ abstract class _$$LoginModelImplCopyWith<$Res>
   ) = __$$LoginModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String accessToken, DriverModel user});
+  $Res call({String refreshToken, String accessToken, DriverModel user});
 
   @override
   $DriverModelCopyWith<$Res> get user;
@@ -115,9 +124,17 @@ class __$$LoginModelImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? accessToken = null, Object? user = null}) {
+  $Res call({
+    Object? refreshToken = null,
+    Object? accessToken = null,
+    Object? user = null,
+  }) {
     return _then(
       _$LoginModelImpl(
+        refreshToken: null == refreshToken
+            ? _value.refreshToken
+            : refreshToken // ignore: cast_nullable_to_non_nullable
+                  as String,
         accessToken: null == accessToken
             ? _value.accessToken
             : accessToken // ignore: cast_nullable_to_non_nullable
@@ -134,11 +151,17 @@ class __$$LoginModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LoginModelImpl implements _LoginModel {
-  const _$LoginModelImpl({required this.accessToken, required this.user});
+  const _$LoginModelImpl({
+    required this.refreshToken,
+    required this.accessToken,
+    required this.user,
+  });
 
   factory _$LoginModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginModelImplFromJson(json);
 
+  @override
+  final String refreshToken;
   @override
   final String accessToken;
   @override
@@ -146,7 +169,7 @@ class _$LoginModelImpl implements _LoginModel {
 
   @override
   String toString() {
-    return 'LoginModel(accessToken: $accessToken, user: $user)';
+    return 'LoginModel(refreshToken: $refreshToken, accessToken: $accessToken, user: $user)';
   }
 
   @override
@@ -154,6 +177,8 @@ class _$LoginModelImpl implements _LoginModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginModelImpl &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.user, user) || other.user == user));
@@ -161,7 +186,7 @@ class _$LoginModelImpl implements _LoginModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, accessToken, user);
+  int get hashCode => Object.hash(runtimeType, refreshToken, accessToken, user);
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.
@@ -179,6 +204,7 @@ class _$LoginModelImpl implements _LoginModel {
 
 abstract class _LoginModel implements LoginModel {
   const factory _LoginModel({
+    required final String refreshToken,
     required final String accessToken,
     required final DriverModel user,
   }) = _$LoginModelImpl;
@@ -186,6 +212,8 @@ abstract class _LoginModel implements LoginModel {
   factory _LoginModel.fromJson(Map<String, dynamic> json) =
       _$LoginModelImpl.fromJson;
 
+  @override
+  String get refreshToken;
   @override
   String get accessToken;
   @override

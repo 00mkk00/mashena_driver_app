@@ -7,6 +7,7 @@ part 'login_model.g.dart';
 @freezed
 class LoginModel with _$LoginModel {
   const factory LoginModel({
+    required String refreshToken,
     required String accessToken,
     required DriverModel user,
   }) = _LoginModel;

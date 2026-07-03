@@ -104,7 +104,11 @@ Future<void> configureDependencies() async {
   );
 
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(getIt<AuthRemoteDataSource>(), getIt<ApiClient>()),
+    () => AuthRepositoryImpl(
+      getIt<AuthRemoteDataSource>(),
+      getIt<ApiClient>(),
+      getIt<TokenManager>(),
+    ),
   );
 
   // // ======================
@@ -183,7 +187,6 @@ Future<void> configureDependencies() async {
       service: getIt<SocketService>(),
       rideRequestCubit: params.rideRequestCubit,
       driverStatusCubit: params.driverStatusCubit,
-      accessToken: params.accessToken,
     ),
   );
 

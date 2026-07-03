@@ -10,4 +10,5 @@ class Endpoints {
   static const updateDriverRadius = '/driver/radius';
   static const String rideRequest = '/ride-requests';
   static const String logout = '/auth/logout';
+  static const String refresh = '/auth/refresh';
 }

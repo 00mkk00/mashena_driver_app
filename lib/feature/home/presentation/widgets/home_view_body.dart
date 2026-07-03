@@ -11,7 +11,6 @@ import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/core/widgets/shimmer.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
-import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
@@ -27,10 +26,7 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeho
 import 'package:mashena_driver_app/feature/home/presentation/widgets/online_waiting_indicator.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_dialog.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_card.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/route_row.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/stops_section.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_accepted_card.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_meta_row.dart';
 
 class HomeViewBody extends StatefulWidget {
   final DriverProfileModel driver;

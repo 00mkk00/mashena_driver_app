@@ -83,7 +83,6 @@ final class AppRouter {
           create: (context) => LoginCubit(
             loginUseCase: getIt<LoginUseCase>(),
             sendOtpUseCase: getIt<SendOtpUseCase>(),
-            tokenManager: getIt<TokenManager>(),
           ),
           child: const LoginView(),
         ),

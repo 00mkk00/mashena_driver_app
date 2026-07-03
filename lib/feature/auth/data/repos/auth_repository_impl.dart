@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/core/network/api_exception.dart';
 import 'package:mashena_driver_app/core/network/api_failure_mapper.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/driver_mapper.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/login_mapper.dart';
@@ -18,8 +20,13 @@ import 'package:mashena_driver_app/feature/auth/domain/repos/auth_repo.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final ApiClient _apiClient;
+  final TokenManager _tokenManager;
 
-  AuthRepositoryImpl(this._remoteDataSource, this._apiClient);
+  AuthRepositoryImpl(
+    this._remoteDataSource,
+    this._apiClient,
+    this._tokenManager,
+  );
 
   @override
   Future<Either<Failure, DriverEntity>> signup(
@@ -63,6 +70,11 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, LoginEntity>> login(LoginParams params) async {
     try {
       final model = await _remoteDataSource.login(params);
+      await _tokenManager.saveTokens(
+        accessToken: model.accessToken,
+        refreshToken: model.refreshToken,
+      );
+
       return Right(model.toEntity());
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));
@@ -89,6 +101,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Unit>> logout() async {
     try {
       await _remoteDataSource.logout();
+      await getIt<TokenManager>().clearTokens(); // clear stored token
+
       return const Right(unit);
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));

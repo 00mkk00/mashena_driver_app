@@ -11,7 +11,6 @@ class SocketCubit extends Cubit<SocketState> {
   final SocketService _service;
   final RideRequestCubit _rideRequestCubit;
   final DriverStatusCubit _driverStatusCubit;
-  final String _accessToken;
 
   StreamSubscription<DriverStatusState>? _driverStatusSubscription;
 
@@ -19,11 +18,10 @@ class SocketCubit extends Cubit<SocketState> {
     required SocketService service,
     required RideRequestCubit rideRequestCubit,
     required DriverStatusCubit driverStatusCubit,
-    required String accessToken,
   }) : _service = service,
        _rideRequestCubit = rideRequestCubit,
        _driverStatusCubit = driverStatusCubit,
-       _accessToken = accessToken,
+
        super(const SocketState()) {
     // ✅ Wire auto-reject callback — no circular dependency
     rideRequestCubit.onAutoReject = (rideRequestId) {
@@ -40,14 +38,14 @@ class SocketCubit extends Cubit<SocketState> {
     // Check current state immediately
     final currentStatus = _driverStatusCubit.state;
     if (currentStatus.isOnline && state.status == SocketStatus.disconnected) {
-      connect(accessToken: _accessToken);
+      connect();
     }
 
     // Listen for future changes
     _driverStatusSubscription = _driverStatusCubit.stream.listen((statusState) {
       if (statusState.isOnline && !state.isConnected) {
         log('🔌 Driver went online → connecting socket');
-        connect(accessToken: _accessToken);
+        connect();
       } else if (!statusState.isOnline && state.isConnected) {
         log('🔌 Driver went offline → disconnecting socket');
         disconnect();
@@ -57,10 +55,10 @@ class SocketCubit extends Cubit<SocketState> {
 
   // ─── Connect ───────────────────────────────────────────────────────────────
 
-  void connect({required String accessToken}) {
+  void connect() {
     emit(state.copyWith(status: SocketStatus.connecting, clearError: true));
 
-    _service.connect(accessToken: accessToken);
+    _service.connect();
 
     _service.onConnect(() {
       emit(state.copyWith(status: SocketStatus.connected));

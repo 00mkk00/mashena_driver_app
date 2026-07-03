@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:mashena_driver_app/app/config/env.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 typedef JsonCallback = void Function(Map<String, dynamic> data);
@@ -13,7 +15,7 @@ class SocketService {
 
   // ─── Connect ──────────────────────────────────────────────────────────────
 
-  void connect({required String accessToken}) {
+  void connect() {
     _log('Connecting to ${Env.socketUrl} ...');
 
     _socket = io.io(
@@ -21,7 +23,7 @@ class SocketService {
       io.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
-          .setAuth({'token': accessToken})
+          .setAuth({'token': getIt.get<TokenManager>().accessToken})
           .build(),
     );
 
