@@ -11,4 +11,5 @@ class Endpoints {
   static const String rideRequest = '/ride-requests';
   static const String logout = '/auth/logout';
   static const String refresh = '/auth/refresh';
+  static const String appSettings = '/app-settings';
 }

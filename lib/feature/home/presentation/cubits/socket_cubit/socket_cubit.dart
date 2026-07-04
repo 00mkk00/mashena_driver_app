@@ -106,7 +106,11 @@ class SocketCubit extends Cubit<SocketState> {
       log('⚠️ location error: $data');
     });
   }
-
+void reconnect() {
+  if (!state.isConnected) return;
+  emit(const SocketState()); // reset to disconnected
+  connect();                 // reconnects with the fresh token from TokenManager
+}
   // ─── Location ─────────────────────────────────────────────────────────────
 
   void updateLocation({required double lat, required double lng}) {

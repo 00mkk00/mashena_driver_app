@@ -34,6 +34,10 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
+import 'package:mashena_driver_app/feature/shared/data/data_source/shared_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/shared/domain/repository/shared_repo.dart';
+import 'package:mashena_driver_app/feature/shared/domain/use_cases/app_settings_use_case.dart';
+import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -205,6 +209,25 @@ Future<void> configureDependencies() async {
       routingService: getIt<RoutingService>(),
     ),
   );
+
+  // shared ---------------------------
+  getIt.registerLazySingleton<SharedRemoteDataSource>(
+    () => SharedRemoteDataSourceImpl(getIt<ApiClient>()),
+  );
+
+  getIt.registerLazySingleton<SharedRepository>(
+    () => SharedRepositoryImpl(
+      getIt<SharedRemoteDataSource>(),
+      getIt<ApiClient>(),
+    ),
+  );
+
+   getIt.registerLazySingleton<GetAppSettingUseCase>(
+    () => GetAppSettingUseCase(getIt<SharedRepository>()),
+  );
+    getIt.registerFactory<AppSettingCubit>(() => AppSettingCubit(getIt<GetAppSettingUseCase>()));
+
+
 }
 
 // ── Helper classes for parameterized factories ─────────────

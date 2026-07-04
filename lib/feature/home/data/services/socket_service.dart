@@ -30,6 +30,18 @@ class SocketService {
     _socket!.connect();
   }
 
+  void reconnect() {
+  _log('Reconnecting with fresh token...');
+  _socket?.off('driver:registered');
+  _socket?.off('driver:register:error');
+  _socket?.off('ride:offer');
+  _socket?.off('driver:update-location:error');
+  _socket?.disconnect();
+  _socket?.dispose();
+  _socket = null;
+  connect();
+}
+
   void disconnect() {
     _log('Disconnecting...');
     _socket?.disconnect();

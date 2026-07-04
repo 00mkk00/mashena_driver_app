@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
+import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 
 import 'api_exception.dart';
 
@@ -86,6 +88,10 @@ final class ApiClient {
                 accessToken: newAccessToken,
                 refreshToken: newRefreshToken,
               );
+
+              try {
+                getIt<SocketService>().reconnect();
+              } catch (_) {}
 
               // Complete all pending requests in the queue
               for (final completer in _refreshQueue) {

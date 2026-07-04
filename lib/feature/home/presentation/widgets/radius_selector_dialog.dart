@@ -1,3 +1,4 @@
+// presentation/widgets/radius_selector_dialog.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,9 @@ import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
+import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
+import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_states.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RadiusSelectorDialog extends StatefulWidget {
   final int initialRadius;
@@ -20,12 +24,12 @@ class RadiusSelectorDialog extends StatefulWidget {
 class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
   late int _selected;
 
-  static const _options = [1, 3, 5, 10, 20, 50];
-
   @override
   void initState() {
     super.initState();
     _selected = widget.initialRadius;
+    // Trigger API call when dialog opens
+    context.read<AppSettingCubit>().loadMaxRadius();
   }
 
   @override
@@ -50,7 +54,7 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Title row
+            // ── Title row ──────────────────────────────────────
             Row(
               children: [
                 Container(
@@ -72,9 +76,8 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                     Text('Ride Radius', style: AppTextStyles.w700_14),
                     Text(
                       'How far will you accept rides?',
-                      style: AppTextStyles.w400_12.copyWith(
-                        color: AppColors.textGrey,
-                      ),
+                      style: AppTextStyles.w400_12
+                          .copyWith(color: AppColors.textGrey),
                     ),
                   ],
                 ),
@@ -91,9 +94,8 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                   ),
                   child: Text(
                     '$_selected km',
-                    style: AppTextStyles.w700_14.copyWith(
-                      color: AppColors.primaryColor,
-                    ),
+                    style: AppTextStyles.w700_14
+                        .copyWith(color: AppColors.primaryColor),
                   ),
                 ),
               ],
@@ -101,47 +103,56 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
 
             SizedBox(height: AppSpacing.lg.h),
 
-            // Option chips
-            Wrap(
-              spacing: AppSpacing.sm.w,
-              runSpacing: AppSpacing.sm.h,
-              children: _options.map((km) {
-                final isSelected = _selected == km;
-                return GestureDetector(
-                  onTap: () => setState(() => _selected = km),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md.w,
-                      vertical: AppSpacing.sm.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primaryColor
-                          : AppColors.primarySurface,
-                      borderRadius: BorderRadius.circular(AppRadius.full.r),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primaryColor
-                            : AppColors.borderColor,
+            // ── Chips (shimmer while loading) ───────────────────
+            BlocBuilder<AppSettingCubit, AppSettingsState>(
+              builder: (context, settingState) {
+                if (settingState.isLoadingRadius) {
+                  return _RadiusShimmer();
+                }
+
+                return Wrap(
+                  spacing: AppSpacing.sm.w,
+                  runSpacing: AppSpacing.sm.h,
+                  children: settingState.radiusOptions.map((km) {
+                    final isSelected = _selected == km;
+                    return GestureDetector(
+                      onTap: () => setState(() => _selected = km),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md.w,
+                          vertical: AppSpacing.sm.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.primaryColor
+                              : AppColors.primarySurface,
+                          borderRadius:
+                              BorderRadius.circular(AppRadius.full.r),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.primaryColor
+                                : AppColors.borderColor,
+                          ),
+                        ),
+                        child: Text(
+                          '$km km',
+                          style: AppTextStyles.w600_14.copyWith(
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.primaryColor,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      '$km km',
-                      style: AppTextStyles.w600_14.copyWith(
-                        color: isSelected
-                            ? Colors.white
-                            : AppColors.primaryColor,
-                      ),
-                    ),
-                  ),
+                    );
+                  }).toList(),
                 );
-              }).toList(),
+              },
             ),
 
             SizedBox(height: AppSpacing.lg.h),
 
-            // Confirm button
+            // ── Confirm button ──────────────────────────────────
             BlocBuilder<DriverStatusCubit, DriverStatusState>(
               builder: (context, state) {
                 final isLoading = state.isRadiusLoading;
@@ -152,15 +163,15 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                     onPressed: isLoading
                         ? null
                         : () {
-                            context.read<DriverStatusCubit>().updateRadius(
-                              _selected,
-                            );
+                            context
+                                .read<DriverStatusCubit>()
+                                .updateRadius(_selected);
                             Navigator.pop(context);
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
-                      disabledBackgroundColor: AppColors.primaryColor
-                          .withValues(alpha: 0.5),
+                      disabledBackgroundColor:
+                          AppColors.primaryColor.withValues(alpha: 0.5),
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -178,9 +189,8 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                           )
                         : Text(
                             'Confirm Radius',
-                            style: AppTextStyles.w700_14.copyWith(
-                              color: Colors.white,
-                            ),
+                            style: AppTextStyles.w700_14
+                                .copyWith(color: Colors.white),
                           ),
                   ),
                 );
@@ -193,12 +203,45 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
   }
 }
 
-// Helper to open the dialog
+// ── Shimmer placeholder ─────────────────────────────────────────────────────
+
+class _RadiusShimmer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: AppColors.borderColor,
+      highlightColor: AppColors.primarySurface,
+      child: Wrap(
+        spacing: AppSpacing.sm.w,
+        runSpacing: AppSpacing.sm.h,
+        // Show 8 fake chips while loading
+        children: List.generate(8, (i) {
+          // Alternate widths so it feels natural
+          final width = i.isEven ? 58.w : 72.w;
+          return Container(
+            width: width,
+            height: 36.h,
+            decoration: BoxDecoration(
+              color: AppColors.borderColor,
+              borderRadius: BorderRadius.circular(AppRadius.full.r),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+}
+
+// ── Helper ──────────────────────────────────────────────────────────────────
+
 void showRadiusSelectorDialog(BuildContext context, int currentRadius) {
   showDialog(
     context: context,
-    builder: (_) => BlocProvider.value(
-      value: context.read<DriverStatusCubit>(),
+    builder: (_) => MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: context.read<DriverStatusCubit>()),
+        BlocProvider.value(value: context.read<AppSettingCubit>()),
+      ],
       child: RadiusSelectorDialog(initialRadius: currentRadius),
     ),
   );

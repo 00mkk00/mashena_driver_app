@@ -10,6 +10,7 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_statu
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
 
 import '../widgets/home_view_body.dart';
 
@@ -46,6 +47,8 @@ class HomeView extends StatelessWidget {
             ),
           )..initializeMap(),
         ),
+
+        BlocProvider(create: (_) => getIt<AppSettingCubit>()),
       ],
       child: const _HomeViewContent(),
     );
