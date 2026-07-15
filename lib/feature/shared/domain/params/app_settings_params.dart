@@ -4,7 +4,6 @@ part 'app_settings_params.freezed.dart';
 
 @freezed
 class GetAppSettingParams with _$GetAppSettingParams {
-  const factory GetAppSettingParams({
-    required String key,
-  }) = _GetAppSettingParams;
+  const factory GetAppSettingParams({required String key}) =
+      _GetAppSettingParams;
 }

@@ -76,8 +76,9 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                     Text('Ride Radius', style: AppTextStyles.w700_14),
                     Text(
                       'How far will you accept rides?',
-                      style: AppTextStyles.w400_12
-                          .copyWith(color: AppColors.textGrey),
+                      style: AppTextStyles.w400_12.copyWith(
+                        color: AppColors.textGrey,
+                      ),
                     ),
                   ],
                 ),
@@ -94,8 +95,9 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                   ),
                   child: Text(
                     '$_selected km',
-                    style: AppTextStyles.w700_14
-                        .copyWith(color: AppColors.primaryColor),
+                    style: AppTextStyles.w700_14.copyWith(
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 ),
               ],
@@ -127,8 +129,7 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                           color: isSelected
                               ? AppColors.primaryColor
                               : AppColors.primarySurface,
-                          borderRadius:
-                              BorderRadius.circular(AppRadius.full.r),
+                          borderRadius: BorderRadius.circular(AppRadius.full.r),
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primaryColor
@@ -163,15 +164,15 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                     onPressed: isLoading
                         ? null
                         : () {
-                            context
-                                .read<DriverStatusCubit>()
-                                .updateRadius(_selected);
+                            context.read<DriverStatusCubit>().updateRadius(
+                              _selected,
+                            );
                             Navigator.pop(context);
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
-                      disabledBackgroundColor:
-                          AppColors.primaryColor.withValues(alpha: 0.5),
+                      disabledBackgroundColor: AppColors.primaryColor
+                          .withValues(alpha: 0.5),
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -189,8 +190,9 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                           )
                         : Text(
                             'Confirm Radius',
-                            style: AppTextStyles.w700_14
-                                .copyWith(color: Colors.white),
+                            style: AppTextStyles.w700_14.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                   ),
                 );

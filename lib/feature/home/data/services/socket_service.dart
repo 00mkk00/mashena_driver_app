@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:mashena_driver_app/app/config/env.dart';
-import 'package:mashena_driver_app/app/di/injector.dart';
-import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 typedef JsonCallback = void Function(Map<String, dynamic> data);
@@ -15,7 +13,7 @@ class SocketService {
 
   // ─── Connect ──────────────────────────────────────────────────────────────
 
-  void connect() {
+  void connect({required String accessToken}) {
     _log('Connecting to ${Env.socketUrl} ...');
 
     _socket = io.io(
@@ -23,24 +21,25 @@ class SocketService {
       io.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
-          .setAuth({'token': getIt.get<TokenManager>().accessToken})
+          .enableForceNewConnection()
+          .setAuth({'token': accessToken})
           .build(),
     );
 
     _socket!.connect();
   }
 
-  void reconnect() {
-  _log('Reconnecting with fresh token...');
-  _socket?.off('driver:registered');
-  _socket?.off('driver:register:error');
-  _socket?.off('ride:offer');
-  _socket?.off('driver:update-location:error');
-  _socket?.disconnect();
-  _socket?.dispose();
-  _socket = null;
-  connect();
-}
+  void reconnect({required String accessToken}) {
+    _log('Reconnecting with fresh token...');
+    _socket?.off('driver:registered');
+    _socket?.off('driver:register:error');
+    _socket?.off('ride:offer');
+    _socket?.off('driver:update-location:error');
+    _socket?.disconnect();
+    _socket?.dispose();
+    _socket = null;
+    connect(accessToken: accessToken);
+  }
 
   void disconnect() {
     _log('Disconnecting...');

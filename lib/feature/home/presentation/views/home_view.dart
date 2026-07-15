@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
-import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/logout_cubit/logout_cubit.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
@@ -23,13 +22,11 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final driverStatusCubit = getIt<DriverStatusCubit>();
     final rideRequestCubit = getIt<RideRequestCubit>();
-    final accessToken = getIt<TokenManager>().accessToken ?? '';
 
     final socketCubit = getIt.get<SocketCubit>(
       param1: SocketCubitParams(
         driverStatusCubit: driverStatusCubit,
         rideRequestCubit: rideRequestCubit,
-        accessToken: accessToken,
       ),
     );
 

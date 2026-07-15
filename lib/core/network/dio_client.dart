@@ -90,7 +90,7 @@ final class ApiClient {
               );
 
               try {
-                getIt<SocketService>().reconnect();
+                getIt<SocketService>().reconnect(accessToken: newAccessToken);
               } catch (_) {}
 
               // Complete all pending requests in the queue

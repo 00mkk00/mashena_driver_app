@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
@@ -11,6 +12,7 @@ class SocketCubit extends Cubit<SocketState> {
   final SocketService _service;
   final RideRequestCubit _rideRequestCubit;
   final DriverStatusCubit _driverStatusCubit;
+  final TokenManager _tokenManager;
 
   StreamSubscription<DriverStatusState>? _driverStatusSubscription;
 
@@ -18,9 +20,11 @@ class SocketCubit extends Cubit<SocketState> {
     required SocketService service,
     required RideRequestCubit rideRequestCubit,
     required DriverStatusCubit driverStatusCubit,
+    required TokenManager tokenManager,
   }) : _service = service,
        _rideRequestCubit = rideRequestCubit,
        _driverStatusCubit = driverStatusCubit,
+       _tokenManager = tokenManager,
 
        super(const SocketState()) {
     // ✅ Wire auto-reject callback — no circular dependency
@@ -56,9 +60,10 @@ class SocketCubit extends Cubit<SocketState> {
   // ─── Connect ───────────────────────────────────────────────────────────────
 
   void connect() {
+    final accessToken = _tokenManager.accessToken ?? '';
     emit(state.copyWith(status: SocketStatus.connecting, clearError: true));
 
-    _service.connect();
+    _service.connect(accessToken: accessToken);
 
     _service.onConnect(() {
       emit(state.copyWith(status: SocketStatus.connected));
@@ -106,11 +111,12 @@ class SocketCubit extends Cubit<SocketState> {
       log('⚠️ location error: $data');
     });
   }
-void reconnect() {
-  if (!state.isConnected) return;
-  emit(const SocketState()); // reset to disconnected
-  connect();                 // reconnects with the fresh token from TokenManager
-}
+
+  void reconnect() {
+    final accessToken = _tokenManager.accessToken ?? '';
+    _service.reconnect(accessToken: accessToken);
+    emit(state.copyWith(status: SocketStatus.connecting, clearError: true));
+  }
   // ─── Location ─────────────────────────────────────────────────────────────
 
   void updateLocation({required double lat, required double lng}) {

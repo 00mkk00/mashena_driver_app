@@ -188,9 +188,10 @@ Future<void> configureDependencies() async {
   // NOTE: Requires DriverStatusCubit, RideRequestCubit, and accessToken from widget tree
   getIt.registerFactoryParam<SocketCubit, SocketCubitParams, void>(
     (params, _) => SocketCubit(
-      service: getIt<SocketService>(),
+      service: getIt.get<SocketService>(),
       rideRequestCubit: params.rideRequestCubit,
       driverStatusCubit: params.driverStatusCubit,
+      tokenManager: getIt<TokenManager>(),
     ),
   );
 
@@ -222,12 +223,12 @@ Future<void> configureDependencies() async {
     ),
   );
 
-   getIt.registerLazySingleton<GetAppSettingUseCase>(
+  getIt.registerLazySingleton<GetAppSettingUseCase>(
     () => GetAppSettingUseCase(getIt<SharedRepository>()),
   );
-    getIt.registerFactory<AppSettingCubit>(() => AppSettingCubit(getIt<GetAppSettingUseCase>()));
-
-
+  getIt.registerFactory<AppSettingCubit>(
+    () => AppSettingCubit(getIt<GetAppSettingUseCase>()),
+  );
 }
 
 // ── Helper classes for parameterized factories ─────────────
@@ -235,12 +236,10 @@ Future<void> configureDependencies() async {
 class SocketCubitParams {
   final DriverStatusCubit driverStatusCubit;
   final RideRequestCubit rideRequestCubit;
-  final String accessToken;
 
   SocketCubitParams({
     required this.driverStatusCubit,
     required this.rideRequestCubit,
-    required this.accessToken,
   });
 }
 

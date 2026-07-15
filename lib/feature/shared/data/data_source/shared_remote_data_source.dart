@@ -7,8 +7,6 @@ abstract class SharedRemoteDataSource {
   Future<AppSettingsModel> getAppSetting(GetAppSettingParams params);
 }
 
-
-
 class SharedRemoteDataSourceImpl implements SharedRemoteDataSource {
   final ApiClient _apiClient;
 

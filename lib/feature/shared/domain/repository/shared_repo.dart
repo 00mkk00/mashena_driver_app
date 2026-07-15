@@ -14,9 +14,6 @@ abstract class SharedRepository {
   );
 }
 
-
-
-
 class SharedRepositoryImpl implements SharedRepository {
   final SharedRemoteDataSource _remoteDataSource;
   final ApiClient _apiClient;
