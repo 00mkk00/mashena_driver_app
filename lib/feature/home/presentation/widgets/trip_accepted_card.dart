@@ -6,22 +6,48 @@ import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/core/widgets/shimmer.dart';
+
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/route_row.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/stops_section.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_meta_row.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/start_trip_slider.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/wait_timer_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/cancel_trip_dialog.dart';
 
 class TripAcceptedCard extends StatelessWidget {
   const TripAcceptedCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RideRequestCubit, RideRequestState>(
+    return BlocConsumer<RideRequestCubit, RideRequestState>(
+      listenWhen: (prev, curr) =>
+          (curr.errorMessage != null &&
+              prev.errorMessage != curr.errorMessage) ||
+          (prev.status != curr.status &&
+              (curr.status == RideRequestStatus.rejected ||
+                  curr.status == RideRequestStatus.started)),
+      listener: (context, state) {
+        if (state.errorMessage != null) {
+          context.showErrorToast(state.errorMessage!);
+        }
+        if (state.status == RideRequestStatus.rejected) {
+          context.read<DriverStatusCubit>().rejectRide();
+        }
+        if (state.status == RideRequestStatus.started) {
+          context.read<DriverStatusCubit>().startTrip();
+        }
+      },
       builder: (context, rideState) {
         final trip = rideState.rideRequestEntity;
+        final isArrived = rideState.status == RideRequestStatus.arrived;
+        final isArriving = rideState.isArrivingTrip;
+        final isCanceling = rideState.isCancelingTrip;
+        final isStarting = rideState.isStartingTrip;
 
         return Container(
           margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
@@ -49,7 +75,7 @@ class TripAcceptedCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.full.r),
                     ),
                     child: Text(
-                      'Trip Accepted ✓',
+                      isArrived ? 'Arrived ✓' : 'Trip Accepted ✓',
                       style: AppTextStyles.w700_12.copyWith(
                         color: AppColors.primaryColor,
                       ),
@@ -85,32 +111,108 @@ class TripAcceptedCard extends StatelessWidget {
                 SizedBox(height: AppSpacing.sm.h),
               ],
 
-              // ── Start trip button ────────────────────────────────
-              SizedBox(
-                width: double.infinity,
-                height: 48.h,
-                child: ElevatedButton.icon(
-                  onPressed: trip == null
-                      ? null
-                      : () => context.read<DriverStatusCubit>().startTrip(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    disabledBackgroundColor: AppColors.primaryColor.withValues(
-                      alpha: 0.5,
+              // ── Action button(s) ─────────────────────────────────
+              if (isArriving || isCanceling || isStarting) ...[
+                // Loading state — shimmer placeholder
+                ShimmerCard(height: 48.h),
+              ] else if (isArrived) ...[
+                if (rideState.freeWaitTimeSeconds > 0) ...[
+                  WaitTimerView(totalSeconds: rideState.freeWaitTimeSeconds),
+                  SizedBox(height: AppSpacing.md.h),
+                ],
+                // After arriving — two disabled buttons
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48.h,
+                      child: ElevatedButton.icon(
+                        onPressed: () => showCancelTripDialog(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade400,
+                          disabledBackgroundColor: Colors.red.shade400
+                              .withValues(alpha: 0.5),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.md.r),
+                          ),
+                        ),
+                        icon: Icon(Icons.cancel_outlined, size: 18.r),
+                        label: Text(
+                          'Cancel',
+                          style: AppTextStyles.w700_14.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.md.r),
+                    SizedBox(height: AppSpacing.sm.h),
+                    StartTripSlider(
+                      onStartTrip: () =>
+                          context.read<RideRequestCubit>().startTrip(),
                     ),
-                  ),
-                  icon: Icon(Icons.navigation_rounded, size: 18.r),
-                  label: Text(
-                    'Start Trip',
-                    style: AppTextStyles.w700_14.copyWith(color: Colors.white),
-                  ),
+                  ],
                 ),
-              ),
+              ] else ...[
+                // Default accepted state — Cancel & Mark as Arrived buttons
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48.h,
+                      child: ElevatedButton.icon(
+                        onPressed: () => showCancelTripDialog(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red.shade400,
+                          disabledBackgroundColor: Colors.red.shade400
+                              .withValues(alpha: 0.5),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.md.r),
+                          ),
+                        ),
+                        icon: Icon(Icons.cancel_outlined, size: 18.r),
+                        label: Text(
+                          'Cancel',
+                          style: AppTextStyles.w700_14.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: AppSpacing.sm.h),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48.h,
+                      child: ElevatedButton.icon(
+                        onPressed: trip == null
+                            ? null
+                            : () =>
+                                  context.read<RideRequestCubit>().arriveTrip(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          disabledBackgroundColor: AppColors.primaryColor
+                              .withValues(alpha: 0.5),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.md.r),
+                          ),
+                        ),
+                        icon: Icon(Icons.location_on_rounded, size: 18.r),
+                        label: Text(
+                          'Mark as Arrived',
+                          style: AppTextStyles.w700_14.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         );

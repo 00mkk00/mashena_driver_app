@@ -110,6 +110,13 @@ class SocketCubit extends Cubit<SocketState> {
     _service.onLocationError((data) {
       log('⚠️ location error: $data');
     });
+
+    _service.onTripCancelled((data) {
+      final cancelledBy = (data['cancelledBy'] as String?) ?? 'unknown';
+      log('🚫 trip:cancelled by $cancelledBy — data: $data');
+      _driverStatusCubit.onTripCancelledByServer();
+      _rideRequestCubit.onTripCancelledByServer(cancelledBy: cancelledBy);
+    });
   }
 
   void reconnect() {

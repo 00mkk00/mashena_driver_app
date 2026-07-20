@@ -48,8 +48,6 @@ class LoginCubit extends Cubit<LoginState> {
         }
       },
       (data) async {
-        // Store the token
-
         final user = data.user;
         final info = user.driverApprovalInfo;
 

@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/update_radius_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/go_offline_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/go_online_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 
@@ -147,6 +147,20 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
       state.copyWith(
         status: DriverStatus.onlineWaiting,
         clearActiveTripDuration: true,
+      ),
+    );
+  }
+
+  /// Called when the server emits `trip:cancelled` (by rider or admin).
+  /// Stops the trip timer and returns the driver to the waiting state.
+  void onTripCancelledByServer() {
+    _tripTimerSubscription?.cancel();
+    _tripTimerSubscription = null;
+    emit(
+      state.copyWith(
+        status: DriverStatus.onlineWaiting,
+        clearActiveTripDuration: true,
+        clearErrorMessage: true,
       ),
     );
   }

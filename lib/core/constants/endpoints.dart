@@ -12,4 +12,9 @@ class Endpoints {
   static const String logout = '/auth/logout';
   static const String refresh = '/auth/refresh';
   static const String appSettings = '/app-settings';
+  static const String startTrip = '/trips/by-ride/{rideRequestId}/start';
+
+  static const String arriveTrip = '/trips/by-ride/{rideRequestId}/arrive';
+  static const String completeTrip = '/trips/by-ride/{rideRequestId}/complete';
+  static const String cancelTrip = '/trips/by-ride/{rideRequestId}/cancel';
 }

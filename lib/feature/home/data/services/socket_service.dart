@@ -35,6 +35,7 @@ class SocketService {
     _socket?.off('driver:register:error');
     _socket?.off('ride:offer');
     _socket?.off('driver:update-location:error');
+    _socket?.off('trip:cancelled');
     _socket?.disconnect();
     _socket?.dispose();
     _socket = null;
@@ -129,6 +130,13 @@ class SocketService {
     });
   }
 
+  void onTripCancelled(JsonCallback handler) {
+    _on('trip:cancelled', (data) {
+      _log('← trip:cancelled $data');
+      handler(data);
+    });
+  }
+
   // ─── Remove listeners ─────────────────────────────────────────────────────
 
   void offAll() {
@@ -137,6 +145,7 @@ class SocketService {
     _socket?.off('driver:register:error');
     _socket?.off('ride:offer');
     _socket?.off('driver:update-location:error');
+    _socket?.off('trip:cancelled');
   }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────

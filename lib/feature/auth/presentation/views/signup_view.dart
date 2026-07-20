@@ -29,8 +29,8 @@ class SignupView extends StatelessWidget {
               requireOtp: (email, userId) {
                 context.pop(); // close loader
 
-                context.go(
-                  AppRoutes.verificationPath,
+                context.goNamed(
+                  AppRoutes.verification,
                   extra: {"email": email, 'userId': userId},
                 );
               },

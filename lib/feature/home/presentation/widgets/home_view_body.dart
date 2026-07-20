@@ -45,100 +45,139 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DriverAppDrawer(driver: widget.driver),
-      body: BlocConsumer<DriverStatusCubit, DriverStatusState>(
-        // ── React to status transitions ──────────────────────────
-        listener: (context, driverState) {
-          // Draw route when trip is accepted
-          if (driverState.status == DriverStatus.tripAccepted) {
-            final rideRequest = context
-                .read<RideRequestCubit>()
-                .state
-                .rideRequestEntity;
-            if (rideRequest != null) {
-              // Convert stops to the format expected by drawRoute
-              final stops = rideRequest.stops.isNotEmpty
-                  ? rideRequest.stops
-                        .map((s) => (lat: s.lat, lng: s.lng, order: s.order))
-                        .toList()
-                  : null;
-
-              context.read<MapCubit>().drawRoute(
-                pickupLat: rideRequest.pickupLat,
-                pickupLng: rideRequest.pickupLng,
-                destinationLat: rideRequest.destLat,
-                destinationLng: rideRequest.destLng,
-                stops: stops,
-                predefinedPoints: rideRequest.routeGeometry?.points
-                    .map((p) => LatLng(p.lat, p.lng))
-                    .toList(),
-              );
-            }
-          }
-          // Clear route when back to waiting or offline
-          if (driverState.status == DriverStatus.onlineWaiting ||
-              driverState.status == DriverStatus.offline) {
-            context.read<MapCubit>().clearRoute();
-          }
-        },
-        builder: (context, driverState) {
-          return BlocBuilder<MapCubit, MapState>(
-            builder: (context, mapState) {
-              return Stack(
-                children: [
-                  // ── Layer 0: Map ───────────────────────────────
-                  _buildMapLayer(mapState),
-
-                  // ── Layer 1: Overlay ───────────────────────────
-                  SafeArea(
-                    child: Column(
-                      children: [
-                        HomeTopBar(
-                          statusState: driverState,
-                          onToggleStatus: () {
-                            final position = context
-                                .read<MapCubit>()
-                                .state
-                                .currentPosition;
-                            if (position == null) return;
-                            context
-                                .read<DriverStatusCubit>()
-                                .toggleOnlineStatus(
-                                  GoOnlineParams(
-                                    lat: position.latitude,
-                                    lng: position.longitude,
-                                  ),
-                                );
-                          },
-                          onOpenDrawer: () =>
-                              _scaffoldKey.currentState?.openDrawer(),
-                          onNotificationTap: () {},
-                          notificationCount: 2,
-                        ),
-
-                        SizedBox(height: AppSpacing.sm.h),
-
-                        // if (driverState.isOnline) ...[
-                        //   EarningsMiniCard(driver: widget.driver),
-                        //   SizedBox(height: AppSpacing.sm.h),
-                        // ],
-                        const Spacer(),
-
-                        _buildBottomOverlay(context, driverState),
-
-                        SizedBox(height: AppSpacing.md.h),
-                      ],
-                    ),
-                  ),
-
-                  // ── Layer 2: Right FABs ────────────────────────
-                  _buildRightFabs(context, driverState),
-                ],
+      body: MultiBlocListener(
+        listeners: [
+          // ── Listen for server-side trip cancellation ──────────────
+          BlocListener<RideRequestCubit, RideRequestState>(
+            listenWhen: (prev, curr) =>
+                prev.tripCancelledBy == null && curr.tripCancelledBy != null,
+            listener: (context, rideState) {
+              // Clear map route
+              context.read<MapCubit>().clearRoute();
+              // Show the cancellation sheet
+              _showTripCancelledSheet(
+                context,
+                cancelledBy: rideState.tripCancelledBy!,
               );
             },
-          );
-        },
-      ),
+          ),
+        ],
+        child: BlocConsumer<DriverStatusCubit, DriverStatusState>(
+          // ── React to status transitions ──────────────────────────
+          listener: (context, driverState) {
+            // Draw route when trip is accepted
+            if (driverState.status == DriverStatus.tripAccepted) {
+              final rideRequest = context
+                  .read<RideRequestCubit>()
+                  .state
+                  .rideRequestEntity;
+              if (rideRequest != null) {
+                // Convert stops to the format expected by drawRoute
+                final stops = rideRequest.stops.isNotEmpty
+                    ? rideRequest.stops
+                          .map((s) => (lat: s.lat, lng: s.lng, order: s.order))
+                          .toList()
+                    : null;
+
+                context.read<MapCubit>().drawRoute(
+                  pickupLat: rideRequest.pickupLat,
+                  pickupLng: rideRequest.pickupLng,
+                  destinationLat: rideRequest.destLat,
+                  destinationLng: rideRequest.destLng,
+                  stops: stops,
+                  predefinedPoints: rideRequest.routeGeometry?.points
+                      .map((p) => LatLng(p.lat, p.lng))
+                      .toList(),
+                );
+              }
+            }
+            // Clear route when back to waiting or offline
+            if (driverState.status == DriverStatus.onlineWaiting ||
+                driverState.status == DriverStatus.offline) {
+              context.read<MapCubit>().clearRoute();
+            }
+          },
+          builder: (context, driverState) {
+            return BlocBuilder<MapCubit, MapState>(
+              builder: (context, mapState) {
+                return Stack(
+                  children: [
+                    // ── Layer 0: Map ───────────────────────────────
+                    _buildMapLayer(mapState),
+
+                    // ── Layer 1: Overlay ───────────────────────────
+                    SafeArea(
+                      child: Column(
+                        children: [
+                          HomeTopBar(
+                            statusState: driverState,
+                            onToggleStatus: () {
+                              final position = context
+                                  .read<MapCubit>()
+                                  .state
+                                  .currentPosition;
+                              if (position == null) return;
+                              context
+                                  .read<DriverStatusCubit>()
+                                  .toggleOnlineStatus(
+                                    GoOnlineParams(
+                                      lat: position.latitude,
+                                      lng: position.longitude,
+                                    ),
+                                  );
+                            },
+                            onOpenDrawer: () =>
+                                _scaffoldKey.currentState?.openDrawer(),
+                            onNotificationTap: () {},
+                            notificationCount: 2,
+                          ),
+
+                          SizedBox(height: AppSpacing.sm.h),
+
+                          // if (driverState.isOnline) ...[
+                          //   EarningsMiniCard(driver: widget.driver),
+                          //   SizedBox(height: AppSpacing.sm.h),
+                          // ],
+                          const Spacer(),
+
+                          _buildBottomOverlay(context, driverState),
+
+                          SizedBox(height: AppSpacing.md.h),
+                        ],
+                      ),
+                    ),
+
+                    // ── Layer 2: Right FABs ────────────────────────
+                    _buildRightFabs(context, driverState),
+                  ],
+                );
+              },
+            );
+          },
+        ), // ← BlocConsumer
+      ), // ← MultiBlocListener
     );
+  }
+
+  // ─── Trip Cancelled Sheet ──────────────────────────────────────────────────
+
+  void _showTripCancelledSheet(
+    BuildContext context, {
+    required String cancelledBy,
+  }) {
+    final isAdmin = cancelledBy == 'admin';
+    showModalBottomSheet<void>(
+      context: context,
+      isDismissible: true,
+      enableDrag: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _TripCancelledSheet(isAdmin: isAdmin),
+    ).whenComplete(() {
+      // Only call clearTripCancellation if widget is still mounted
+      if (context.mounted) {
+        context.read<RideRequestCubit>().clearTripCancellation();
+      }
+    });
   }
 
   // ─── Map Layer ─────────────────────────────────────────────────────────────
@@ -204,6 +243,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               rideRequest: rideRequest, // 👈 full entity
               elapsed: driverState.activeTripDuration ?? Duration.zero,
               onEndTrip: () {
+                context.read<RideRequestCubit>().completeTrip();
                 context.read<DriverStatusCubit>().endTrip();
                 context.read<MapCubit>().clearRoute();
               },
@@ -305,6 +345,111 @@ class _OfflineCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+// ─── Trip Cancelled Sheet ──────────────────────────────────────────────────────
+
+class _TripCancelledSheet extends StatelessWidget {
+  final bool isAdmin;
+
+  const _TripCancelledSheet({required this.isAdmin});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isAdmin ? AppColors.danger : AppColors.warning;
+    final icon = isAdmin
+        ? Icons.admin_panel_settings_rounded
+        : Icons.person_off_rounded;
+    final title = isAdmin
+        ? 'Trip Cancelled by Admin'
+        : 'Trip Cancelled by Rider';
+    final subtitle = isAdmin
+        ? 'An administrator has ended this trip. You are now available for new rides.'
+        : 'The rider has cancelled the trip. You are now available for new rides.';
+
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: AppSpacing.md.w,
+        vertical: AppSpacing.sm.h,
+      ),
+      padding: EdgeInsets.all(AppSpacing.lg.r),
+      decoration: BoxDecoration(
+        color: AppColors.cardLight,
+        borderRadius: BorderRadius.circular(AppRadius.xl.r),
+        boxShadow: AppShadows.card,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // ── Handle ────────────────────────────────────────
+          Container(
+            width: 40.w,
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: AppColors.textGrey.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(AppRadius.full.r),
+            ),
+          ),
+          SizedBox(height: AppSpacing.md.h),
+
+          // ── Icon ──────────────────────────────────────────
+          Container(
+            width: 64.r,
+            height: 64.r,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.12),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: 32.r),
+          ),
+          SizedBox(height: AppSpacing.md.h),
+
+          // ── Title ─────────────────────────────────────────
+          Text(
+            title,
+            style: AppTextStyles.w700_16.copyWith(
+              color: AppColors.darkScaffold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: AppSpacing.xs.h),
+
+          // ── Subtitle ──────────────────────────────────────
+          Text(
+            subtitle,
+            style: AppTextStyles.w400_12.copyWith(
+              color: AppColors.textGrey,
+              height: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: AppSpacing.lg.h),
+
+          // ── Dismiss button ────────────────────────────────
+          SizedBox(
+            width: double.infinity,
+            height: 48.h,
+            child: ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: color,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.full.r),
+                ),
+              ),
+              child: Text(
+                'Got it',
+                style: AppTextStyles.w600_14.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(height: AppSpacing.sm.h),
+        ],
+      ),
     );
   }
 }

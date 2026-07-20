@@ -41,6 +41,8 @@ final class AppRouter {
       final isOnboarding = loc == AppRoutes.onboardingPath;
       final isLogin = loc == AppRoutes.loginPath;
       final isSignup = loc == AppRoutes.signupPath;
+      final isVerification = loc == AppRoutes.verificationPath;
+      final isUploadDocs = loc == AppRoutes.uploadDocsPath;
 
       // 🟡 خلي splash يمر دائماً
       if (isSplash) return null;
@@ -53,7 +55,9 @@ final class AppRouter {
       }
 
       if (!isLoggedIn) {
-        return (isLogin || isSignup) ? null : AppRoutes.loginPath;
+        return (isLogin || isSignup || isVerification || isUploadDocs)
+            ? null
+            : AppRoutes.loginPath;
       }
 
       // ✅ مسجل → لا ترجع login أو onboarding

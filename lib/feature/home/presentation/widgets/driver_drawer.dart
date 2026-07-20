@@ -79,7 +79,7 @@ class DriverAppDrawer extends StatelessWidget {
                         'EGP ${driver.todayEarnings.toStringAsFixed(0)}',
                         style: AppTextStyles.w600_12.copyWith(
                           color: AppColors.earning,
-                        ), // ✅ was: AppColors.primaryColor — earnings use earning token
+                        ),
                       ),
                       onTap: () => context.push(AppRoutes.walletViewPath),
                     ),
@@ -99,12 +99,12 @@ class DriverAppDrawer extends StatelessWidget {
                       label: 'Settings',
                       onTap: () => Navigator.pop(context),
                     ),
-                    _DrawerItem(
-                      icon: Icons.help_outline_rounded,
-                      label: 'Help & Support',
-                      onTap: () => Navigator.pop(context),
-                    ),
 
+                    // _DrawerItem(
+                    //   icon: Icons.help_outline_rounded,
+                    //   label: 'Help & Support',
+                    //   onTap: () => Navigator.pop(context),
+                    // ),
                     const Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: AppSpacing.md,
@@ -118,9 +118,7 @@ class DriverAppDrawer extends StatelessWidget {
                       label: 'Logout',
                       iconColor: AppColors.danger,
                       labelColor: AppColors.danger,
-                      onTap: () {
-                        context.read<LogoutCubit>().logout();
-                      },
+                      onTap: () => _showLogoutDialog(context),
                     ),
                   ],
                 ),
@@ -225,6 +223,107 @@ class DriverAppDrawer extends StatelessWidget {
 //     );
 //   }
 // }
+
+// ─── Logout Dialog ────────────────────────────────────────────────────────────
+void _showLogoutDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (dialogCtx) => Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      backgroundColor: AppColors.cardLight,
+      elevation: 0,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Icon
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                color: AppColors.danger.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.logout_rounded,
+                color: AppColors.danger,
+                size: 32,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Title
+            Text(
+              'Logout',
+              style: AppTextStyles.w700_18.copyWith(color: AppColors.onSurface),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+
+            // Description
+            Text(
+              'Are you sure you want to log out?',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.w400_14.copyWith(
+                color: AppColors.textGrey,
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+
+            // Actions
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(dialogCtx),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      side: const BorderSide(color: AppColors.borderColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: AppTextStyles.w600_14.copyWith(
+                        color: AppColors.onSurface,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(dialogCtx);
+                      context.read<LogoutCubit>().logout();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.danger,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                      ),
+                    ),
+                    child: Text(
+                      'Logout',
+                      style: AppTextStyles.w600_14.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
 // ─── Drawer Item ──────────────────────────────────────────────────────────────
 class _DrawerItem extends StatelessWidget {

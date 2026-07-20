@@ -53,9 +53,9 @@ class LoginView extends StatelessWidget {
               },
 
               requireOtp: (userId, email) {
-                if (Navigator.canPop(context)) context.pop();
-                context.push(
-                  AppRoutes.verificationPath,
+                context.pop(); // close loader
+                context.pushNamed(
+                  AppRoutes.verification,
                   extra: {"userId": userId, "email": email},
                 );
               },

@@ -23,11 +23,15 @@ import 'package:mashena_driver_app/feature/home/data/repository/home_repository_
 import 'package:mashena_driver_app/feature/home/data/services/routing_service.dart';
 import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/domain/repository/home_repository.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/get_ride_request_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/go_offline_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/go_online_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/update_location_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/use_cases/update_radius_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/arrive_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/cancel_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/complete_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_ride_request_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/go_offline_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/go_online_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/start_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/update_location_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
@@ -168,10 +172,21 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => GetRideRequestUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(() => ArriveTripUseCase(getIt<HomeRepository>()));
+  getIt.registerLazySingleton(() => CancelTripUseCase(getIt<HomeRepository>()));
+  getIt.registerLazySingleton(() => StartTripUseCase(getIt<HomeRepository>()));
+  getIt.registerLazySingleton(
+    () => CompleteTripUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
-    () =>
-        RideRequestCubit(getRideRequestUseCase: getIt<GetRideRequestUseCase>()),
+    () => RideRequestCubit(
+      getRideRequestUseCase: getIt<GetRideRequestUseCase>(),
+      arriveTripUseCase: getIt<ArriveTripUseCase>(),
+      cancelTripUseCase: getIt<CancelTripUseCase>(),
+      startTripUseCase: getIt<StartTripUseCase>(),
+      completeTripUseCase: getIt<CompleteTripUseCase>(),
+    ),
   );
 
   // ── Driver Status ────────────────────────────

@@ -5,12 +5,24 @@ import 'package:mashena_driver_app/core/network/api_failure_mapper.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/home/data/data_sources/home_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/ride_request_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/start_trip_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/params/arrive_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_ride_request_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_location_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/start_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/start_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/repository/home_repository.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/arrive_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/arrive_trip_mapper.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/complete_trip_mapper.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/cancel_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/cancel_trip_mapper.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource _remoteDataSource;
@@ -74,6 +86,66 @@ class HomeRepositoryImpl implements HomeRepository {
   ) async {
     try {
       final model = await _remoteDataSource.getRideRequest(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, StartTripEntity>> startTrip(
+    StartTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.startTrip(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(
+        mapApiExceptionToFailure(e, _apiClient),
+      ); // assuming mapApiExceptionToFailure
+    } catch (e) {
+      return Left(
+        Failure(FailureCode.unknown, rawMessage: e.toString()),
+      ); // assuming FailureCode.unknown
+    }
+  }
+
+  @override
+  Future<Either<Failure, ArriveTripEntity>> arriveTrip(
+    ArriveTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.arriveTrip(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CompleteTripEntity>> completeTrip(
+    CompleteTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.completeTrip(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CancelTripEntity>> cancelTrip(
+    CancelTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.cancelTrip(params);
       return Right(model.toEntity());
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));
