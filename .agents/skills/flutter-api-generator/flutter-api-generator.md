@@ -211,6 +211,8 @@ reuse it.
 
 Do not duplicate models.
 
+model attributes should be nullable.
+
 ---
 
 # Entities
@@ -220,6 +222,8 @@ Before creating an entity:
 Search the project.
 
 Reuse existing entities whenever possible.
+
+Entities attributes should be required.
 
 ---
 
@@ -236,6 +240,7 @@ GET requests without parameters should not create unnecessary Params classes.
 Generate mapper extensions only when needed.
 
 Reuse existing nested mappers.
+
 
 ---
 

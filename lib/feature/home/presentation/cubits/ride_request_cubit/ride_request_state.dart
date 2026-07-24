@@ -1,3 +1,4 @@
+import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
 
 enum RideRequestStatus {
@@ -21,6 +22,7 @@ class RideRequestState {
   final bool isStartingTrip;
   final bool isCompletingTrip;
   final RideRequestEntity? rideRequestEntity;
+  final CompleteTripEntity? completedTripSummary;
   final String? errorMessage;
   final String? pickupAddress; // 👈 resolved from lat/lng
   final String? destinationAddress; // 👈 resolved from lat/lng
@@ -41,6 +43,7 @@ class RideRequestState {
     this.isStartingTrip = false,
     this.isCompletingTrip = false,
     this.rideRequestEntity,
+    this.completedTripSummary,
     this.errorMessage,
     this.pickupAddress,
     this.destinationAddress,
@@ -64,6 +67,8 @@ class RideRequestState {
     bool? isStartingTrip,
     bool? isCompletingTrip,
     RideRequestEntity? rideRequest,
+    CompleteTripEntity? completedTripSummary,
+    bool clearCompletedTripSummary = false,
     bool clearTripDetails = false,
     String? errorMessage,
     bool clearErrorMessage = false,
@@ -90,6 +95,9 @@ class RideRequestState {
     rideRequestEntity: clearTripDetails
         ? null
         : rideRequest ?? rideRequestEntity,
+    completedTripSummary: clearCompletedTripSummary
+        ? null
+        : completedTripSummary ?? this.completedTripSummary,
     errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
     pickupAddress: clearPickupAddress
         ? null

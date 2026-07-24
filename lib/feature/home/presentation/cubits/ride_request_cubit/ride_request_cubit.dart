@@ -212,16 +212,31 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     if (isClosed) return;
 
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          isCompletingTrip: false,
-          errorMessage: failure.rawMessage ?? 'Failed to complete trip',
-        ),
-      ),
-      (_) => emit(
-        state.copyWith(isCompletingTrip: false, clearErrorMessage: true),
-      ),
+      (failure) {
+        
+        emit(
+          state.copyWith(
+            isCompletingTrip: false,
+            errorMessage: failure.rawMessage ?? 'Failed to complete trip',
+          ),
+        );
+      },
+      (entity) {
+        
+        emit(
+          state.copyWith(
+            isCompletingTrip: false,
+            completedTripSummary: entity,
+            clearErrorMessage: true,
+          ),
+        );
+      },
     );
+  }
+
+  /// Called by the UI after it has shown the trip summary bottom sheet.
+  void clearCompletedTripSummary() {
+    emit(state.copyWith(clearCompletedTripSummary: true));
   }
 
   // ─── Trip cancelled by server (rider or admin) ───────────────────────────────

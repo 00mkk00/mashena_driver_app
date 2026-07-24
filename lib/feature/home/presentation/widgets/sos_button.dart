@@ -52,7 +52,7 @@ class _SosButtonState extends State<SosButton>
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.sos.withOpacity(0.4),
+                color: AppColors.sos.withValues(alpha: .4),
                 blurRadius: 16,
                 spreadRadius: 2,
               ),

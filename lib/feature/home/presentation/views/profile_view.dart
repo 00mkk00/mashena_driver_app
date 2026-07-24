@@ -80,7 +80,6 @@ class _ProfileViewState extends State<ProfileView> {
 
   void _saveProfile() {
     if (_formKey.currentState!.validate()) {
-      // TODO: call cubit / use case
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Profile saved!')));

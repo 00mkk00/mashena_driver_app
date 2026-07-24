@@ -1,3 +1,4 @@
+
 class AppRoutes {
   // route names (للتنقل)
   static const onboarding = 'onboarding';
@@ -12,6 +13,8 @@ class AppRoutes {
   static const profileView = 'profile-view';
   static const documentView = 'document-view';
   static const notificationView = 'notification-view';
+  static const settingsView = 'settings-view';
+  static const historyView = 'histroy-view';
 
   // route paths (للـ URL)
   static const onboardingPath = '/onboarding';
@@ -26,4 +29,6 @@ class AppRoutes {
   static const profileViewPath = '/profile-view';
   static const documentViewPath = '/document-view';
   static const notificationViewPath = '/notification-view';
+  static const settingsViewPath = '/settings-view';
+  static const historyViewPath = '/history-view';
 }

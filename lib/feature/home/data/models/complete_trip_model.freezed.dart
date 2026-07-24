@@ -21,7 +21,17 @@ CompleteTripModel _$CompleteTripModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CompleteTripModel {
-  String get message => throw _privateConstructorUsedError;
+  int? get tripId => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  String? get completedAt => throw _privateConstructorUsedError;
+  double? get distanceKm => throw _privateConstructorUsedError;
+  int? get durationSec => throw _privateConstructorUsedError;
+  num? get originalFare => throw _privateConstructorUsedError;
+  num? get discountAmount => throw _privateConstructorUsedError;
+  num? get finalFare => throw _privateConstructorUsedError;
+  String? get fareTotal => throw _privateConstructorUsedError;
+  bool? get appliedCoupon => throw _privateConstructorUsedError;
+  num? get platformCommission => throw _privateConstructorUsedError;
 
   /// Serializes this CompleteTripModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +50,19 @@ abstract class $CompleteTripModelCopyWith<$Res> {
     $Res Function(CompleteTripModel) then,
   ) = _$CompleteTripModelCopyWithImpl<$Res, CompleteTripModel>;
   @useResult
-  $Res call({String message});
+  $Res call({
+    int? tripId,
+    String? status,
+    String? completedAt,
+    double? distanceKm,
+    int? durationSec,
+    num? originalFare,
+    num? discountAmount,
+    num? finalFare,
+    String? fareTotal,
+    bool? appliedCoupon,
+    num? platformCommission,
+  });
 }
 
 /// @nodoc
@@ -57,13 +79,65 @@ class _$CompleteTripModelCopyWithImpl<$Res, $Val extends CompleteTripModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
+  $Res call({
+    Object? tripId = freezed,
+    Object? status = freezed,
+    Object? completedAt = freezed,
+    Object? distanceKm = freezed,
+    Object? durationSec = freezed,
+    Object? originalFare = freezed,
+    Object? discountAmount = freezed,
+    Object? finalFare = freezed,
+    Object? fareTotal = freezed,
+    Object? appliedCoupon = freezed,
+    Object? platformCommission = freezed,
+  }) {
     return _then(
       _value.copyWith(
-            message: null == message
-                ? _value.message
-                : message // ignore: cast_nullable_to_non_nullable
-                      as String,
+            tripId: freezed == tripId
+                ? _value.tripId
+                : tripId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            status: freezed == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            completedAt: freezed == completedAt
+                ? _value.completedAt
+                : completedAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            distanceKm: freezed == distanceKm
+                ? _value.distanceKm
+                : distanceKm // ignore: cast_nullable_to_non_nullable
+                      as double?,
+            durationSec: freezed == durationSec
+                ? _value.durationSec
+                : durationSec // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            originalFare: freezed == originalFare
+                ? _value.originalFare
+                : originalFare // ignore: cast_nullable_to_non_nullable
+                      as num?,
+            discountAmount: freezed == discountAmount
+                ? _value.discountAmount
+                : discountAmount // ignore: cast_nullable_to_non_nullable
+                      as num?,
+            finalFare: freezed == finalFare
+                ? _value.finalFare
+                : finalFare // ignore: cast_nullable_to_non_nullable
+                      as num?,
+            fareTotal: freezed == fareTotal
+                ? _value.fareTotal
+                : fareTotal // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            appliedCoupon: freezed == appliedCoupon
+                ? _value.appliedCoupon
+                : appliedCoupon // ignore: cast_nullable_to_non_nullable
+                      as bool?,
+            platformCommission: freezed == platformCommission
+                ? _value.platformCommission
+                : platformCommission // ignore: cast_nullable_to_non_nullable
+                      as num?,
           )
           as $Val,
     );
@@ -79,7 +153,19 @@ abstract class _$$CompleteTripModelImplCopyWith<$Res>
   ) = __$$CompleteTripModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message});
+  $Res call({
+    int? tripId,
+    String? status,
+    String? completedAt,
+    double? distanceKm,
+    int? durationSec,
+    num? originalFare,
+    num? discountAmount,
+    num? finalFare,
+    String? fareTotal,
+    bool? appliedCoupon,
+    num? platformCommission,
+  });
 }
 
 /// @nodoc
@@ -95,13 +181,65 @@ class __$$CompleteTripModelImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
+  $Res call({
+    Object? tripId = freezed,
+    Object? status = freezed,
+    Object? completedAt = freezed,
+    Object? distanceKm = freezed,
+    Object? durationSec = freezed,
+    Object? originalFare = freezed,
+    Object? discountAmount = freezed,
+    Object? finalFare = freezed,
+    Object? fareTotal = freezed,
+    Object? appliedCoupon = freezed,
+    Object? platformCommission = freezed,
+  }) {
     return _then(
       _$CompleteTripModelImpl(
-        message: null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+        tripId: freezed == tripId
+            ? _value.tripId
+            : tripId // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        status: freezed == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        completedAt: freezed == completedAt
+            ? _value.completedAt
+            : completedAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        distanceKm: freezed == distanceKm
+            ? _value.distanceKm
+            : distanceKm // ignore: cast_nullable_to_non_nullable
+                  as double?,
+        durationSec: freezed == durationSec
+            ? _value.durationSec
+            : durationSec // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        originalFare: freezed == originalFare
+            ? _value.originalFare
+            : originalFare // ignore: cast_nullable_to_non_nullable
+                  as num?,
+        discountAmount: freezed == discountAmount
+            ? _value.discountAmount
+            : discountAmount // ignore: cast_nullable_to_non_nullable
+                  as num?,
+        finalFare: freezed == finalFare
+            ? _value.finalFare
+            : finalFare // ignore: cast_nullable_to_non_nullable
+                  as num?,
+        fareTotal: freezed == fareTotal
+            ? _value.fareTotal
+            : fareTotal // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        appliedCoupon: freezed == appliedCoupon
+            ? _value.appliedCoupon
+            : appliedCoupon // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        platformCommission: freezed == platformCommission
+            ? _value.platformCommission
+            : platformCommission // ignore: cast_nullable_to_non_nullable
+                  as num?,
       ),
     );
   }
@@ -110,17 +248,49 @@ class __$$CompleteTripModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CompleteTripModelImpl implements _CompleteTripModel {
-  const _$CompleteTripModelImpl({required this.message});
+  const _$CompleteTripModelImpl({
+    this.tripId,
+    this.status,
+    this.completedAt,
+    this.distanceKm,
+    this.durationSec,
+    this.originalFare,
+    this.discountAmount,
+    this.finalFare,
+    this.fareTotal,
+    this.appliedCoupon,
+    this.platformCommission,
+  });
 
   factory _$CompleteTripModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CompleteTripModelImplFromJson(json);
 
   @override
-  final String message;
+  final int? tripId;
+  @override
+  final String? status;
+  @override
+  final String? completedAt;
+  @override
+  final double? distanceKm;
+  @override
+  final int? durationSec;
+  @override
+  final num? originalFare;
+  @override
+  final num? discountAmount;
+  @override
+  final num? finalFare;
+  @override
+  final String? fareTotal;
+  @override
+  final bool? appliedCoupon;
+  @override
+  final num? platformCommission;
 
   @override
   String toString() {
-    return 'CompleteTripModel(message: $message)';
+    return 'CompleteTripModel(tripId: $tripId, status: $status, completedAt: $completedAt, distanceKm: $distanceKm, durationSec: $durationSec, originalFare: $originalFare, discountAmount: $discountAmount, finalFare: $finalFare, fareTotal: $fareTotal, appliedCoupon: $appliedCoupon, platformCommission: $platformCommission)';
   }
 
   @override
@@ -128,12 +298,44 @@ class _$CompleteTripModelImpl implements _CompleteTripModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CompleteTripModelImpl &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.tripId, tripId) || other.tripId == tripId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
+            (identical(other.distanceKm, distanceKm) ||
+                other.distanceKm == distanceKm) &&
+            (identical(other.durationSec, durationSec) ||
+                other.durationSec == durationSec) &&
+            (identical(other.originalFare, originalFare) ||
+                other.originalFare == originalFare) &&
+            (identical(other.discountAmount, discountAmount) ||
+                other.discountAmount == discountAmount) &&
+            (identical(other.finalFare, finalFare) ||
+                other.finalFare == finalFare) &&
+            (identical(other.fareTotal, fareTotal) ||
+                other.fareTotal == fareTotal) &&
+            (identical(other.appliedCoupon, appliedCoupon) ||
+                other.appliedCoupon == appliedCoupon) &&
+            (identical(other.platformCommission, platformCommission) ||
+                other.platformCommission == platformCommission));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(
+    runtimeType,
+    tripId,
+    status,
+    completedAt,
+    distanceKm,
+    durationSec,
+    originalFare,
+    discountAmount,
+    finalFare,
+    fareTotal,
+    appliedCoupon,
+    platformCommission,
+  );
 
   /// Create a copy of CompleteTripModel
   /// with the given fields replaced by the non-null parameter values.
@@ -153,14 +355,45 @@ class _$CompleteTripModelImpl implements _CompleteTripModel {
 }
 
 abstract class _CompleteTripModel implements CompleteTripModel {
-  const factory _CompleteTripModel({required final String message}) =
-      _$CompleteTripModelImpl;
+  const factory _CompleteTripModel({
+    final int? tripId,
+    final String? status,
+    final String? completedAt,
+    final double? distanceKm,
+    final int? durationSec,
+    final num? originalFare,
+    final num? discountAmount,
+    final num? finalFare,
+    final String? fareTotal,
+    final bool? appliedCoupon,
+    final num? platformCommission,
+  }) = _$CompleteTripModelImpl;
 
   factory _CompleteTripModel.fromJson(Map<String, dynamic> json) =
       _$CompleteTripModelImpl.fromJson;
 
   @override
-  String get message;
+  int? get tripId;
+  @override
+  String? get status;
+  @override
+  String? get completedAt;
+  @override
+  double? get distanceKm;
+  @override
+  int? get durationSec;
+  @override
+  num? get originalFare;
+  @override
+  num? get discountAmount;
+  @override
+  num? get finalFare;
+  @override
+  String? get fareTotal;
+  @override
+  bool? get appliedCoupon;
+  @override
+  num? get platformCommission;
 
   /// Create a copy of CompleteTripModel
   /// with the given fields replaced by the non-null parameter values.

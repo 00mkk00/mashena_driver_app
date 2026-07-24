@@ -163,8 +163,8 @@ class _RidePopupOverlayState extends State<_RidePopupOverlay>
             onTap: () => _animateOut(widget.onDismiss),
             child: AnimatedBuilder(
               animation: _fadeAnim,
-              builder: (_, __) => Container(
-                color: Colors.black.withOpacity(0.55 * _fadeAnim.value),
+              builder: (_, _) => Container(
+                color: Colors.black.withValues(alpha:  0.55 * _fadeAnim.value),
               ),
             ),
           ),
@@ -228,14 +228,14 @@ class _PopupCard extends StatelessWidget {
         boxShadow: [
           ...AppShadows.card,
           BoxShadow(
-            color: AppColors.primaryColor.withOpacity(0.12),
+            color: AppColors.primaryColor.withValues(alpha: .12),
             blurRadius: 32,
             spreadRadius: -4,
             offset: const Offset(0, 8),
           ),
         ],
         border: Border.all(
-          color: AppColors.primaryColor.withOpacity(0.15),
+          color: AppColors.primaryColor.withValues(alpha: .15),
           width: 1.5,
         ),
       ),
@@ -346,10 +346,10 @@ class _TopBand extends StatelessWidget {
                   vertical: 3.h,
                 ),
                 decoration: BoxDecoration(
-                  color: timerColor.withOpacity(0.18),
+                  color: timerColor.withValues(alpha:0.18),
                   borderRadius: BorderRadius.circular(AppRadius.full.r),
                   border: Border.all(
-                    color: timerColor.withOpacity(0.5),
+                    color: timerColor.withValues(alpha:0.5),
                     width: 1.2,
                   ),
                 ),
@@ -379,9 +379,9 @@ class _TopBand extends StatelessWidget {
                 end: secondsLeft / totalSeconds,
               ),
               duration: const Duration(milliseconds: 400),
-              builder: (_, val, __) => LinearProgressIndicator(
+              builder: (_, val, _) => LinearProgressIndicator(
                 value: val,
-                backgroundColor: Colors.white.withOpacity(0.2),
+                backgroundColor: Colors.white.withValues(alpha: .2),
                 valueColor: AlwaysStoppedAnimation<Color>(timerColor),
                 minHeight: 5.h,
               ),
@@ -592,7 +592,7 @@ class _StopsChip extends StatelessWidget {
           ),
           SizedBox(width: AppSpacing.xs.w),
           Text(
-            '${count} stop${count > 1 ? 's' : ''} along the way',
+            '$count stop${count > 1 ? 's' : ''} along the way',
             style: AppTextStyles.w600_12.copyWith(color: AppColors.warningDark),
           ),
         ],

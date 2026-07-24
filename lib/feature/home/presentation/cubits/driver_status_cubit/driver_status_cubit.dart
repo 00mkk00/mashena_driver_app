@@ -167,7 +167,6 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
 
   // void triggerSos() {
   //   emit(state.copyWith(isSosActive: true));
-  //   // TODO: Integrate emergency services API / Firebase alert
   // }
 
   // void dismissSos() {

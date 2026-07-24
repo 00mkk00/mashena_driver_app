@@ -70,34 +70,47 @@ class DriverAppDrawer extends StatelessWidget {
                     _DrawerItem(
                       icon: Icons.account_circle_outlined,
                       label: 'My Profile',
-                      onTap: () => context.push(AppRoutes.profileViewPath),
+                      onTap: () {
+                        context.pop();
+
+                        context.push(AppRoutes.profileViewPath);
+                      },
                     ),
                     _DrawerItem(
                       icon: Icons.account_balance_wallet_outlined,
                       label: 'Wallet',
-                      trailing: Text(
-                        'EGP ${driver.todayEarnings.toStringAsFixed(0)}',
-                        style: AppTextStyles.w600_12.copyWith(
-                          color: AppColors.earning,
-                        ),
-                      ),
-                      onTap: () => context.push(AppRoutes.walletViewPath),
+
+                      onTap: () {
+                        context.pop();
+
+                        context.push(AppRoutes.walletViewPath);
+                      },
                     ),
                     _DrawerItem(
                       icon: Icons.history_rounded,
                       label: 'Ride History',
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        context.pop();
+
+                        context.push(AppRoutes.historyViewPath);
+                      },
                     ),
                     _DrawerItem(
                       icon: Icons.description_outlined,
                       label: 'Documents',
-                      trailing: _StatusBadge(label: 'Verified', isGood: true),
-                      onTap: () => context.push(AppRoutes.documentViewPath),
+                      onTap: () {
+                        context.pop();
+
+                        context.push(AppRoutes.documentViewPath);
+                      },
                     ),
                     _DrawerItem(
                       icon: Icons.settings_outlined,
                       label: 'Settings',
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        context.pop();
+                        context.push(AppRoutes.settingsViewPath);
+                      },
                     ),
 
                     // _DrawerItem(
@@ -114,6 +127,7 @@ class DriverAppDrawer extends StatelessWidget {
                     ),
 
                     _DrawerItem(
+                      trailing: null,
                       icon: Icons.logout_rounded,
                       label: 'Logout',
                       iconColor: AppColors.danger,
@@ -386,33 +400,33 @@ class _DrawerItem extends StatelessWidget {
 }
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
-class _StatusBadge extends StatelessWidget {
-  final String label;
-  final bool isGood;
-  const _StatusBadge({required this.label, required this.isGood});
+// class _StatusBadge extends StatelessWidget {
+//   final String label;
+//   final bool isGood;
+//   const _StatusBadge({required this.label, required this.isGood});
 
-  @override
-  Widget build(BuildContext context) {
-    final color = isGood ? AppColors.success : AppColors.danger;
-    final surfaceColor = isGood
-        ? AppColors.successSurface
-        : AppColors
-              .dangerSurface; // ✅ was: color.withOpacity(0.1) — use surface tokens
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: AppSpacing.xs,
-      ), // ✅ was: hardcoded 3
-      decoration: BoxDecoration(
-        color: surfaceColor,
-        borderRadius: BorderRadius.circular(AppRadius.full),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.w600_12.copyWith(
-          color: color,
-        ), // ✅ was: w300_12 + hardcoded fontSize: 11
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final color = isGood ? AppColors.success : AppColors.danger;
+//     final surfaceColor = isGood
+//         ? AppColors.successSurface
+//         : AppColors
+//               .dangerSurface; // ✅ was: color.withOpacity(0.1) — use surface tokens
+//     return Container(
+//       padding: const EdgeInsets.symmetric(
+//         horizontal: AppSpacing.sm,
+//         vertical: AppSpacing.xs,
+//       ), // ✅ was: hardcoded 3
+//       decoration: BoxDecoration(
+//         color: surfaceColor,
+//         borderRadius: BorderRadius.circular(AppRadius.full),
+//       ),
+//       child: Text(
+//         label,
+//         style: AppTextStyles.w600_12.copyWith(
+//           color: color,
+//         ), // ✅ was: w300_12 + hardcoded fontSize: 11
+//       ),
+//     );
+//   }
+// }

@@ -72,7 +72,7 @@ class _StopsSectionState extends State<StopsSection>
                   width: 18.r,
                   height: 18.r,
                   decoration: BoxDecoration(
-                    color: AppColors.warning.withOpacity(0.15),
+                    color: AppColors.warning.withValues(alpha: .15),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -133,9 +133,9 @@ class _StopsTimeline extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppSpacing.sm.r),
       decoration: BoxDecoration(
-        color: AppColors.warningSurface.withOpacity(0.5),
+        color: AppColors.warningSurface.withValues(alpha: .5),
         borderRadius: BorderRadius.circular(AppRadius.md.r),
-        border: Border.all(color: AppColors.warning.withOpacity(0.2), width: 1),
+        border: Border.all(color: AppColors.warning.withValues(alpha: .2), width: 1),
       ),
       child: Column(
         children: List.generate(stops.length, (index) {
@@ -160,7 +160,7 @@ class _StopsTimeline extends StatelessWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.warning.withOpacity(0.3),
+                              color: AppColors.warning.withValues(alpha: .3),
                               blurRadius: 6,
                               offset: const Offset(0, 2),
                             ),
@@ -186,8 +186,8 @@ class _StopsTimeline extends StatelessWidget {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  AppColors.warning.withOpacity(0.6),
-                                  AppColors.warning.withOpacity(0.1),
+                                  AppColors.warning.withValues(alpha: .6),
+                                  AppColors.warning.withValues(alpha:0.1),
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(1.r),

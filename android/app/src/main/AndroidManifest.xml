@@ -7,7 +7,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="mashena_driver_app"
+        android:label="Mashena Driver"
         android:enableOnBackInvokedCallback="true">
 
         <activity

@@ -91,7 +91,6 @@ class _DocumentsViewState extends State<DocumentsView> {
         );
         return;
       }
-      // TODO: call UploadDocsCubit
     }
   }
 

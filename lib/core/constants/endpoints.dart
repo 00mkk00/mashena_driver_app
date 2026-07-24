@@ -17,4 +17,5 @@ class Endpoints {
   static const String arriveTrip = '/trips/by-ride/{rideRequestId}/arrive';
   static const String completeTrip = '/trips/by-ride/{rideRequestId}/complete';
   static const String cancelTrip = '/trips/by-ride/{rideRequestId}/cancel';
+  static const String driverTripHistory = '/trips/driver/history';
 }

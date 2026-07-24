@@ -1,6 +1,6 @@
 enum DriverApprovalRequestStatus {
   submitted,
-  under_review,
+  underReview,
   approved,
   rejected,
   blocked,

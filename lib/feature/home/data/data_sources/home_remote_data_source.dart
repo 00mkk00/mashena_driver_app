@@ -14,6 +14,9 @@ import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params
 import 'package:mashena_driver_app/feature/home/data/models/cancel_trip_model.dart';
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
 
+import 'package:mashena_driver_app/feature/home/data/models/driver_trip_history_model.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
+
 abstract class HomeRemoteDataSource {
   Future<void> goOnline(GoOnlineParams params);
   Future<void> goOffline();
@@ -24,6 +27,9 @@ abstract class HomeRemoteDataSource {
   Future<ArriveTripModel> arriveTrip(ArriveTripParams params);
   Future<CompleteTripModel> completeTrip(CompleteTripParams params);
   Future<CancelTripModel> cancelTrip(CancelTripParams params);
+  Future<List<DriverTripHistoryModel>> getDriverTripHistory(
+    GetDriverTripHistoryParams params,
+  );
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -84,7 +90,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       ),
       body: params.toJson(),
     );
-    return CompleteTripModel.fromJson(response);
+    return CompleteTripModel.fromJson(response as Map<String, dynamic>);
   }
 
   @override
@@ -94,5 +100,23 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       body: params.toJson(),
     );
     return CancelTripModel.fromJson(response);
+  }
+
+  @override
+  Future<List<DriverTripHistoryModel>> getDriverTripHistory(
+    GetDriverTripHistoryParams params,
+  ) async {
+    final queryParams = <String, dynamic>{};
+    if (params.skip != null) queryParams['skip'] = params.skip;
+    if (params.limit != null) queryParams['limit'] = params.limit;
+
+    final response = await apiClient.get(
+      Endpoints.driverTripHistory,
+      query: queryParams.isNotEmpty ? queryParams : null,
+    );
+    final list = response['data'] as List;
+    return list
+        .map((e) => DriverTripHistoryModel.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 }

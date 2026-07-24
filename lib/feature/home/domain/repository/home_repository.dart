@@ -14,6 +14,9 @@ import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params
 import 'package:mashena_driver_app/feature/home/domain/entities/cancel_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
 
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_trip_history_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
+
 abstract class HomeRepository {
   Future<Either<Failure, Unit>> goOnline(GoOnlineParams params);
   Future<Either<Failure, Unit>> goOffline();
@@ -32,4 +35,7 @@ abstract class HomeRepository {
     CompleteTripParams params,
   );
   Future<Either<Failure, CancelTripEntity>> cancelTrip(CancelTripParams params);
+  Future<Either<Failure, List<DriverTripHistoryEntity>>> getDriverTripHistory(
+    GetDriverTripHistoryParams params,
+  );
 }

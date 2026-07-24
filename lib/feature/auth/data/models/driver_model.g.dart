@@ -67,7 +67,7 @@ Map<String, dynamic> _$$DriverApprovalInfoModelImplToJson(
 
 const _$DriverApprovalRequestStatusEnumMap = {
   DriverApprovalRequestStatus.submitted: 'submitted',
-  DriverApprovalRequestStatus.under_review: 'under_review',
+  DriverApprovalRequestStatus.underReview: 'under_review',
   DriverApprovalRequestStatus.approved: 'approved',
   DriverApprovalRequestStatus.rejected: 'rejected',
   DriverApprovalRequestStatus.blocked: 'blocked',

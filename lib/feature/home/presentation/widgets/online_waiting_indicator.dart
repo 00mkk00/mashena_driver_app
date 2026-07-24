@@ -139,7 +139,7 @@ class _PulseRingState extends State<_PulseRing>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (_, __) => Stack(
+      builder: (_, _) => Stack(
         alignment: Alignment.center,
         children: [
           // ── Expanding ring ─────────────────────────────────
@@ -149,7 +149,7 @@ class _PulseRingState extends State<_PulseRing>
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColors.primaryColor.withOpacity(_opacity.value),
+                color: AppColors.primaryColor.withValues(alpha: _opacity.value),
                 width: 2,
               ),
             ),

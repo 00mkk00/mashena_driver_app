@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -27,6 +29,9 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/online_wait
 import 'package:mashena_driver_app/feature/home/presentation/widgets/radius_selector_dialog.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/ride_request_card.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_accepted_card.dart';
+
+import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_summary_sheet.dart';
 
 class HomeViewBody extends StatefulWidget {
   final DriverProfileModel driver;
@@ -58,6 +63,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               _showTripCancelledSheet(
                 context,
                 cancelledBy: rideState.tripCancelledBy!,
+              );
+            },
+          ),
+          // ── Listen for trip completion summary ────────────────────
+          BlocListener<RideRequestCubit, RideRequestState>(
+            listenWhen: (prev, curr) =>
+                prev.completedTripSummary == null &&
+                curr.completedTripSummary != null,
+            listener: (context, rideState) {
+              context.read<DriverStatusCubit>().endTrip();
+              context.read<MapCubit>().clearRoute();
+              log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+              _showTripSummarySheet(
+                context,
+                summary: rideState.completedTripSummary!,
               );
             },
           ),
@@ -180,6 +200,28 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     });
   }
 
+  // ─── Trip Summary Sheet ────────────────────────────────────────────────────
+
+  void _showTripSummarySheet(
+    BuildContext context, {
+    required CompleteTripEntity summary,
+  }) {
+    showModalBottomSheet<void>(
+      context: context,
+      isDismissible: true,
+      enableDrag: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => TripSummarySheet(
+        summary: summary,
+        onDismiss: () => Navigator.of(context).pop(),
+      ),
+    ).whenComplete(() {
+      if (context.mounted) {
+        context.read<RideRequestCubit>().clearCompletedTripSummary();
+      }
+    });
+  }
+
   // ─── Map Layer ─────────────────────────────────────────────────────────────
   Widget _buildMapLayer(MapState mapState) {
     if (mapState.status == MapLoadStatus.loading) {
@@ -244,8 +286,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               elapsed: driverState.activeTripDuration ?? Duration.zero,
               onEndTrip: () {
                 context.read<RideRequestCubit>().completeTrip();
-                context.read<DriverStatusCubit>().endTrip();
-                context.read<MapCubit>().clearRoute();
               },
             );
           },

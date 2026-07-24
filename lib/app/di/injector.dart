@@ -26,6 +26,7 @@ import 'package:mashena_driver_app/feature/home/domain/repository/home_repositor
 import 'package:mashena_driver_app/feature/home/domain/usecases/arrive_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/cancel_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/complete_trip_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_driver_trip_history_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/get_ride_request_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/go_online_use_case.dart';
@@ -36,6 +37,7 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_statu
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/trip_history_cubit/trip_history_cubit.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
 import 'package:mashena_driver_app/feature/shared/data/data_source/shared_remote_data_source.dart';
@@ -178,6 +180,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => CompleteTripUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(
+    () => GetDriverTripHistoryUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
     () => RideRequestCubit(
@@ -187,6 +192,10 @@ Future<void> configureDependencies() async {
       startTripUseCase: getIt<StartTripUseCase>(),
       completeTripUseCase: getIt<CompleteTripUseCase>(),
     ),
+  );
+  
+  getIt.registerFactory<TripHistoryCubit>(
+    () => TripHistoryCubit(getIt<GetDriverTripHistoryUseCase>()),
   );
 
   // ── Driver Status ────────────────────────────
