@@ -4,7 +4,7 @@ import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.da
 extension DriverMapper on DriverModel {
   DriverEntity toEntity() {
     return DriverEntity(
-      id: id,
+      id: id ,
       fullName: fullName,
       email: email,
       phoneNumber: phoneNumber,

@@ -68,8 +68,10 @@ class RideHistoryCard extends StatelessWidget {
     required this.ratingAvg,
     this.myComment,
     this.myScore,
+    this.myTags,
     this.receivedComment,
     this.receivedScore,
+    this.receivedTags,
     this.onTap,
   });
 
@@ -83,13 +85,15 @@ class RideHistoryCard extends StatelessWidget {
   final String phoneNumber;
   final double ratingAvg;
 
-  /// Rating/comment YOU (the driver) gave the rider.
+  /// Rating/comment/tags YOU (the driver) gave the rider.
   final String? myComment;
   final double? myScore;
+  final List<String>? myTags;
 
-  /// Rating/comment the rider gave YOU.
+  /// Rating/comment/tags the rider gave YOU.
   final String? receivedComment;
   final double? receivedScore;
+  final List<String>? receivedTags;
 
   final VoidCallback? onTap;
 
@@ -104,8 +108,10 @@ class RideHistoryCard extends StatelessWidget {
   bool get _hasExchange =>
       myComment != null ||
       myScore != null ||
+      (myTags != null && myTags!.isNotEmpty) ||
       receivedComment != null ||
-      receivedScore != null;
+      receivedScore != null ||
+      (receivedTags != null && receivedTags!.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -161,17 +167,19 @@ class RideHistoryCard extends StatelessWidget {
                 ratingAvg: ratingAvg,
               ),
               if (_hasExchange) ...[
-                SizedBox(height: AppSpacing.sm.r),
+                SizedBox(height: AppSpacing.xs.r),
                 Divider(
                   height: 1,
                   color: isDark ? AppColors.dividerDark : AppColors.divider,
                 ),
-                SizedBox(height: AppSpacing.sm.r),
-                _RatingExchange(
+                SizedBox(height: AppSpacing.xs.r),
+                _ExpandableRatingSection(
                   myComment: myComment,
                   myScore: myScore,
+                  myTags: myTags,
                   receivedComment: receivedComment,
                   receivedScore: receivedScore,
+                  receivedTags: receivedTags,
                 ),
               ],
             ],
@@ -218,7 +226,7 @@ class _StatusAndFareRow extends StatelessWidget {
               Text(
                 status.label,
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
                   color: status.color(context),
                 ),
@@ -230,20 +238,20 @@ class _StatusAndFareRow extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: finalFare.toStringAsFixed(2),
+                text: 'EGP ',
                 style: TextStyle(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.earning,
-                  letterSpacing: -0.5,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryColor,
                 ),
               ),
               TextSpan(
-                text: ' S.P',
+                text: finalFare.toStringAsFixed(2),
                 style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.earning.withValues(alpha: 0.7),
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.onSurface,
+                  letterSpacing: -0.5,
                 ),
               ),
             ],
@@ -254,7 +262,7 @@ class _StatusAndFareRow extends StatelessWidget {
   }
 }
 
-/// Pickup → destination shown as a compact two-line route, not a map.
+/// Compact route visualization: green dot (pickup) ➔ dashed vertical line ➔ red dot (dest).
 class _RouteBlock extends StatelessWidget {
   const _RouteBlock({required this.pickupAddress, required this.destAddress});
 
@@ -263,72 +271,63 @@ class _RouteBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _AddressLine(
-          color: AppColors.success,
-          text: pickupAddress,
-          isFirst: true,
-        ),
-        _AddressLine(
-          color: AppColors.danger,
-          text: destAddress,
-          isFirst: false,
-        ),
-      ],
-    );
-  }
-}
-
-class _AddressLine extends StatelessWidget {
-  const _AddressLine({
-    required this.color,
-    required this.text,
-    required this.isFirst,
-  });
-
-  final Color color;
-  final String text;
-  final bool isFirst;
-
-  @override
-  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
           children: [
-            if (!isFirst)
-              Container(width: 2.w, height: 12.h, color: AppColors.divider),
-            if (isFirst) SizedBox(height: 4.h),
+            SizedBox(height: 4.r),
             Container(
-              width: 10.r,
-              height: 10.r,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
+              width: 8.r,
+              height: 8.r,
+              decoration: const BoxDecoration(
+                color: AppColors.success,
                 shape: BoxShape.circle,
-                border: Border.all(color: color, width: 2.5),
               ),
             ),
-            if (isFirst)
-              Container(width: 2.w, height: 12.h, color: AppColors.divider),
+            Container(
+              width: 1.r,
+              height: 24.r,
+              margin: EdgeInsets.symmetric(vertical: 2.r),
+              color: AppColors.divider,
+            ),
+            Container(
+              width: 8.r,
+              height: 8.r,
+              decoration: const BoxDecoration(
+                color: AppColors.danger,
+                shape: BoxShape.circle,
+              ),
+            ),
           ],
         ),
         SizedBox(width: AppSpacing.sm.r),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: isFirst ? 0 : 8.h),
-            child: Text(
-              text,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.onSurface,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                pickupAddress,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.onSurface,
+                ),
               ),
-            ),
+              SizedBox(height: 12.r),
+              Text(
+                destAddress,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.onSurfaceVariant,
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -336,8 +335,7 @@ class _AddressLine extends StatelessWidget {
   }
 }
 
-/// Distance + duration as small secondary chips — supporting facts,
-/// never competing visually with the fare.
+/// Distance and duration chips side by side.
 class _MetaChipsRow extends StatelessWidget {
   const _MetaChipsRow({required this.distanceKm, required this.durationLabel});
 
@@ -348,26 +346,54 @@ class _MetaChipsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.route_outlined, size: 14.r, color: AppColors.textGrey),
-        SizedBox(width: AppSpacing.xs.r),
-        Text(
-          '${distanceKm.toStringAsFixed(1)} km',
-          style: TextStyle(fontSize: 12.sp, color: AppColors.textGrey),
+        _Chip(
+          icon: Icons.straighten_rounded,
+          text: '${distanceKm.toStringAsFixed(1)} km',
         ),
-        SizedBox(width: AppSpacing.md.r),
-        Icon(Icons.schedule_outlined, size: 14.r, color: AppColors.textGrey),
         SizedBox(width: AppSpacing.xs.r),
-        Text(
-          durationLabel,
-          style: TextStyle(fontSize: 12.sp, color: AppColors.textGrey),
-        ),
+        _Chip(icon: Icons.access_time_rounded, text: durationLabel),
       ],
     );
   }
 }
 
-/// Rider identity — name, phone, their overall rating average.
-/// Kept to a single row: this is identification, not a profile view.
+class _Chip extends StatelessWidget {
+  const _Chip({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.xs.r,
+        vertical: (AppSpacing.xs / 2).r,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceVariant,
+        borderRadius: BorderRadius.circular(AppRadius.sm.r),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12.r, color: AppColors.onSurfaceVariant),
+          SizedBox(width: 4.r),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Rider info section: avatar, name, phone, and rating.
 class _RiderRow extends StatelessWidget {
   const _RiderRow({
     required this.fullName,
@@ -381,20 +407,11 @@ class _RiderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Container(
       padding: EdgeInsets.all(AppSpacing.sm.r),
       decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.surfaceVariantDark.withValues(alpha: 0.3)
-            : AppColors.surfaceVariant.withValues(alpha: 0.5),
+        color: AppColors.surfaceVariant.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(AppRadius.md.r),
-        border: Border.all(
-          color: isDark
-              ? Colors.transparent
-              : AppColors.borderColor.withValues(alpha: 0.3),
-        ),
       ),
       child: Row(
         children: [
@@ -452,6 +469,108 @@ class _RiderRow extends StatelessWidget {
   }
 }
 
+class _ExpandableRatingSection extends StatefulWidget {
+  const _ExpandableRatingSection({
+    this.myComment,
+    this.myScore,
+    this.myTags,
+    this.receivedComment,
+    this.receivedScore,
+    this.receivedTags,
+  });
+
+  final String? myComment;
+  final double? myScore;
+  final List<String>? myTags;
+  final String? receivedComment;
+  final double? receivedScore;
+  final List<String>? receivedTags;
+
+  @override
+  State<_ExpandableRatingSection> createState() =>
+      __ExpandableRatingSectionState();
+}
+
+class __ExpandableRatingSectionState extends State<_ExpandableRatingSection> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => setState(() => _isExpanded = !_isExpanded),
+          borderRadius: BorderRadius.circular(AppRadius.sm.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.r, horizontal: 2.r),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star_rounded,
+                      size: 16.r,
+                      color: AppColors.warning,
+                    ),
+                    SizedBox(width: 4.r),
+                    Text(
+                      'Rating Details',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Icon(
+                  _isExpanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  size: 20.r,
+                  color: AppColors.primaryColor,
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          child: _isExpanded
+              ? Padding(
+                  padding: EdgeInsets.only(top: AppSpacing.xs.r),
+                  child: Column(
+                    children: [
+                      Divider(
+                        height: 1,
+                        color: isDark
+                            ? AppColors.dividerDark
+                            : AppColors.divider,
+                      ),
+                      SizedBox(height: AppSpacing.sm.r),
+                      _RatingExchange(
+                        myComment: widget.myComment,
+                        myScore: widget.myScore,
+                        myTags: widget.myTags,
+                        receivedComment: widget.receivedComment,
+                        receivedScore: widget.receivedScore,
+                        receivedTags: widget.receivedTags,
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
+  }
+}
+
 /// The two-way rating/comment exchange — the "read layer".
 /// Shown as a mirrored pair (You ↔ Them) so it's scannable as a
 /// comparison, not two separate paragraphs.
@@ -459,14 +578,18 @@ class _RatingExchange extends StatelessWidget {
   const _RatingExchange({
     this.myComment,
     this.myScore,
+    this.myTags,
     this.receivedComment,
     this.receivedScore,
+    this.receivedTags,
   });
 
   final String? myComment;
   final double? myScore;
+  final List<String>? myTags;
   final String? receivedComment;
   final double? receivedScore;
+  final List<String>? receivedTags;
 
   @override
   Widget build(BuildContext context) {
@@ -478,16 +601,18 @@ class _RatingExchange extends StatelessWidget {
             label: 'You rated',
             score: myScore,
             comment: myComment,
+            tags: myTags,
           ),
         ),
         SizedBox(width: AppSpacing.md.r),
-        Container(width: 1, height: 32.r, color: AppColors.divider),
+        Container(width: 1, height: 36.r, color: AppColors.divider),
         SizedBox(width: AppSpacing.md.r),
         Expanded(
           child: _ExchangeSide(
             label: 'Rider rated you',
             score: receivedScore,
             comment: receivedComment,
+            tags: receivedTags,
           ),
         ),
       ],
@@ -500,15 +625,18 @@ class _ExchangeSide extends StatelessWidget {
     required this.label,
     required this.score,
     required this.comment,
+    this.tags,
   });
 
   final String label;
   final double? score;
   final String? comment;
+  final List<String>? tags;
 
   @override
   Widget build(BuildContext context) {
-    final hasData = score != null || (comment?.isNotEmpty ?? false);
+    final hasTags = tags != null && tags!.isNotEmpty;
+    final hasData = score != null || (comment?.isNotEmpty ?? false) || hasTags;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -558,6 +686,45 @@ class _ExchangeSide extends StatelessWidget {
                 color: AppColors.onSurfaceVariant,
                 height: 1.3,
               ),
+            ),
+          ],
+          if (hasTags) ...[
+            SizedBox(height: 4.r),
+            Wrap(
+              spacing: 4.r,
+              runSpacing: 4.r,
+              children: tags!.map((tag) {
+                final formatted = tag.replaceAll('_', ' ').toLowerCase();
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6.r, vertical: 2.r),
+                  decoration: BoxDecoration(
+                    color: AppColors.primarySurface,
+                    borderRadius: BorderRadius.circular(AppRadius.full.r),
+                    border: Border.all(
+                      color: AppColors.primaryColor.withValues(alpha: 0.25),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.local_offer_rounded,
+                        size: 9.r,
+                        color: AppColors.primaryColor,
+                      ),
+                      SizedBox(width: 3.r),
+                      Text(
+                        formatted,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
           ],
         ],

@@ -14,7 +14,13 @@ import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params
 import 'package:mashena_driver_app/feature/home/domain/entities/cancel_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
 
+import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_trip_history_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/rate_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/rating_tag_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
 
 abstract class HomeRepository {
@@ -38,4 +44,11 @@ abstract class HomeRepository {
   Future<Either<Failure, List<DriverTripHistoryEntity>>> getDriverTripHistory(
     GetDriverTripHistoryParams params,
   );
+  Future<Either<Failure, DriverWalletSummaryEntity>> getDriverWalletSummary();
+  Future<Either<Failure, RateTripEntity>> rateTrip(RateTripParams params);
+  Future<Either<Failure, List<RatingTagEntity>>> getRatingTags(
+    GetRatingTagsParams params,
+  );
+  Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments();
 }
+

@@ -8,10 +8,10 @@ part of 'driver_model.dart';
 
 _$DriverModelImpl _$$DriverModelImplFromJson(Map<String, dynamic> json) =>
     _$DriverModelImpl(
-      id: (json['id'] as num).toInt(),
-      fullName: json['fullName'] as String,
-      email: json['email'] as String,
-      phoneNumber: json['phoneNumber'] as String,
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      fullName: json['fullName'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      phoneNumber: json['phoneNumber'] as String? ?? '',
       roles:
           (json['roles'] as List<dynamic>?)
               ?.map((e) => RoleModel.fromJson(e as Map<String, dynamic>))
@@ -67,7 +67,7 @@ Map<String, dynamic> _$$DriverApprovalInfoModelImplToJson(
 
 const _$DriverApprovalRequestStatusEnumMap = {
   DriverApprovalRequestStatus.submitted: 'submitted',
-  DriverApprovalRequestStatus.underReview: 'under_review',
+  DriverApprovalRequestStatus.underReview: 'underReview',
   DriverApprovalRequestStatus.approved: 'approved',
   DriverApprovalRequestStatus.rejected: 'rejected',
   DriverApprovalRequestStatus.blocked: 'blocked',

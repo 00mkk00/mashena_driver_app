@@ -46,11 +46,16 @@ Never require the user to manually copy generated code.
 
 ---
 
-# Project Inspection (MANDATORY)
+<!-- # Project Inspection (MANDATORY)
 
 Before making any changes:
-
-1. Inspect the entire project.
+1. Locate the target feature module first.
+2. Inspect only: the target feature's folder, the DI/service-locator file,
+   the Endpoints/constants file, and one sibling feature (for convention
+   reference) if the target feature is new.
+3. Do NOT scan the entire project tree unless the feature module cannot
+   be located or no similar feature exists to infer conventions from. -->
+<!-- 1. Inspect the entire project.
 2. Locate the feature module.
 3. Detect the existing Clean Architecture structure.
 4. Detect:
@@ -66,7 +71,7 @@ Before making any changes:
    - imports
    - error handling
 5. Follow the project's conventions exactly.
-6. Never replace project conventions with generic examples.
+6. Never replace project conventions with generic examples. -->
 
 If similar APIs already exist, copy their implementation style.
 
@@ -218,12 +223,13 @@ model attributes should be nullable.
 # Entities
 
 Before creating an entity:
-
 Search the project.
-
 Reuse existing entities whenever possible.
 
-Entities attributes should be required.
+Entity attributes MUST be required (non-nullable), regardless of whether
+the corresponding model field is nullable.
+Never make an entity field nullable to avoid handling a null case —
+that handling belongs in the mapper, not the entity.
 
 ---
 
@@ -238,8 +244,16 @@ GET requests without parameters should not create unnecessary Params classes.
 # Mapper
 
 Generate mapper extensions only when needed.
-
 Reuse existing nested mappers.
+
+The mapper is solely responsible for reconciling nullable model fields
+into required entity fields. For every model field that is nullable
+but maps to a required entity field:
+- Use a sensible default (empty string, 0, false, empty list) OR
+- Use the project's existing fallback/default-value convention if one
+  exists (search for patterns like `?? ''`, `?? 0`, `.orDefault()`, etc.)
+Never mark an entity field nullable just because the source model field
+is nullable — resolve it in the mapper instead.
 
 
 ---
@@ -289,3 +303,9 @@ Instead provide a concise summary like:
 ✔ Feature implementation completed
 
 If any ambiguity prevented completion, clearly state only those remaining issues.
+
+# Fast Path
+If an existing endpoint in the same feature is structurally similar
+(same HTTP method shape, same datasource/repository), skip full
+convention detection and directly clone that endpoint's pattern,
+substituting the new path/fields.

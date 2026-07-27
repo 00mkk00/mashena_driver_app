@@ -14,8 +14,14 @@ import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params
 import 'package:mashena_driver_app/feature/home/data/models/cancel_trip_model.dart';
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
 
+import 'package:mashena_driver_app/feature/home/data/models/driver_document_model.dart';
 import 'package:mashena_driver_app/feature/home/data/models/driver_trip_history_model.dart';
+import 'package:mashena_driver_app/feature/home/data/models/driver_wallet_summary_model.dart';
+import 'package:mashena_driver_app/feature/home/data/models/rate_trip_model.dart';
+import 'package:mashena_driver_app/feature/home/data/models/rating_tag_model.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
 
 abstract class HomeRemoteDataSource {
   Future<void> goOnline(GoOnlineParams params);
@@ -30,6 +36,10 @@ abstract class HomeRemoteDataSource {
   Future<List<DriverTripHistoryModel>> getDriverTripHistory(
     GetDriverTripHistoryParams params,
   );
+  Future<DriverWalletSummaryModel> getDriverWalletSummary();
+  Future<RateTripModel> rateTrip(RateTripParams params);
+  Future<List<RatingTagModel>> getRatingTags(GetRatingTagsParams params);
+  Future<List<DriverDocumentModel>> getDriverDocuments();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -119,4 +129,52 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         .map((e) => DriverTripHistoryModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
+
+  @override
+  Future<DriverWalletSummaryModel> getDriverWalletSummary() async {
+    final response = await apiClient.get(Endpoints.driverWalletSummary);
+    return DriverWalletSummaryModel.fromJson(response as Map<String, dynamic>);
+  }
+
+  @override
+  Future<RateTripModel> rateTrip(RateTripParams params) async {
+    final response = await apiClient.post(
+      Endpoints.rateTrip.replaceAll('{tripId}', params.tripId.toString()),
+      body: {
+        'score': params.score,
+        if (params.comment != null) 'comment': params.comment,
+        if (params.tagIds != null) 'tagIds': params.tagIds,
+      },
+    );
+    return RateTripModel.fromJson(response as Map<String, dynamic>);
+  }
+
+  @override
+  Future<List<RatingTagModel>> getRatingTags(GetRatingTagsParams params) async {
+    final queryParams = <String, dynamic>{
+      'targetType': params.targetType,
+      'isActive': params.isActive,
+    };
+    if (params.skip != null) queryParams['skip'] = params.skip;
+    if (params.limit != null) queryParams['limit'] = params.limit;
+
+    final response = await apiClient.get(
+      Endpoints.ratingTags,
+      query: queryParams,
+    );
+    final list = response['data'] as List;
+    return list
+        .map((e) => RatingTagModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<DriverDocumentModel>> getDriverDocuments() async {
+    final response = await apiClient.get(Endpoints.driverDocuments);
+    final list = (response is List) ? response : (response['data'] as List? ?? []);
+    return list
+        .map((e) => DriverDocumentModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
 }
+

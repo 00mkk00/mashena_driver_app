@@ -4,12 +4,23 @@ import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
 
 class BalanceCard extends StatelessWidget {
-  const BalanceCard({super.key});
+  final DriverWalletSummaryEntity? summary;
+
+  const BalanceCard({super.key, this.summary});
 
   @override
   Widget build(BuildContext context) {
+    final currency = summary?.currency ?? 'SYR';
+    final balance = summary != null
+        ? summary!.availableBalance.toStringAsFixed(2)
+        : '0.00';
+    final totalEarned = summary != null ? summary!.totalEarned.toString() : '0';
+    final totalWithdrawn =
+        summary != null ? summary!.totalWithdrawn.toString() : '0';
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(AppSpacing.lg.r),
@@ -50,7 +61,7 @@ class BalanceCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.full.r),
                 ),
                 child: Text(
-                  'EGP',
+                  currency,
                   style: AppTextStyles.w600_12.copyWith(color: Colors.white),
                 ),
               ),
@@ -58,7 +69,7 @@ class BalanceCard extends StatelessWidget {
           ),
           SizedBox(height: AppSpacing.sm.h),
           Text(
-            '1,840.50',
+            balance,
             style: AppTextStyles.w700_36.copyWith(
               color: Colors.white,
               letterSpacing: -1,
@@ -69,14 +80,14 @@ class BalanceCard extends StatelessWidget {
           SizedBox(height: AppSpacing.md.h),
           Row(
             children: [
-              _CardStat(label: 'Total Earned', value: '12,340.00'),
+              _CardStat(label: 'Total Earned', value: totalEarned),
               Container(
                 width: 1,
                 height: 32.h,
                 color: Colors.white.withValues(alpha: 0.25),
                 margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
               ),
-              _CardStat(label: 'Total Withdrawn', value: '10,499.50'),
+              _CardStat(label: 'Total Withdrawn', value: totalWithdrawn),
             ],
           ),
         ],

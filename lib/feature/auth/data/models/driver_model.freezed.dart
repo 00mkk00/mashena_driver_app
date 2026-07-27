@@ -215,10 +215,10 @@ class __$$DriverModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DriverModelImpl implements _DriverModel {
   const _$DriverModelImpl({
-    required this.id,
-    required this.fullName,
-    required this.email,
-    required this.phoneNumber,
+    this.id = 0,
+    this.fullName = '',
+    this.email = '',
+    this.phoneNumber = '',
     final List<RoleModel> roles = const [],
     this.activeRole = '',
     this.driverApprovalInfo = const DriverApprovalInfoModel(),
@@ -228,12 +228,16 @@ class _$DriverModelImpl implements _DriverModel {
       _$$DriverModelImplFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
+  @JsonKey()
   final String fullName;
   @override
+  @JsonKey()
   final String email;
   @override
+  @JsonKey()
   final String phoneNumber;
   final List<RoleModel> _roles;
   @override
@@ -303,10 +307,10 @@ class _$DriverModelImpl implements _DriverModel {
 
 abstract class _DriverModel implements DriverModel {
   const factory _DriverModel({
-    required final int id,
-    required final String fullName,
-    required final String email,
-    required final String phoneNumber,
+    final int id,
+    final String fullName,
+    final String email,
+    final String phoneNumber,
     final List<RoleModel> roles,
     final String activeRole,
     final DriverApprovalInfoModel driverApprovalInfo,

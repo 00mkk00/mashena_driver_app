@@ -1,257 +1,350 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
-import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/doc_field.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/photo_picker.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/section_header.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/submit_footer.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/documents_summary_header.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/driver_document_card.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/docments_widgets/driver_document_shimmer.dart';
 
 // ─── Documents View ───────────────────────────────────────────────────────────
-class DocumentsView extends StatefulWidget {
+class DocumentsView extends StatelessWidget {
   const DocumentsView({super.key});
 
   @override
-  State<DocumentsView> createState() => _DocumentsViewState();
+  Widget build(BuildContext context) {
+    return BlocProvider<DriverDocumentsCubit>(
+      create: (_) => getIt<DriverDocumentsCubit>()..fetchDocuments(),
+      child: const _DocumentsViewBody(),
+    );
+  }
 }
 
-class _DocumentsViewState extends State<DocumentsView> {
-  final _formKey = GlobalKey<FormState>();
-
-  // Controllers
-  final _nationalIdController = TextEditingController();
-  final _licenseController = TextEditingController();
-  final _mechanicCardController = TextEditingController();
-  final _vehiclePlateController = TextEditingController();
-  final _insuranceController = TextEditingController();
-  final _vehicleTypeController = TextEditingController();
-  final _vehicleModelController = TextEditingController();
-  final _vehicleColorController = TextEditingController();
-  final _vehicleYearController = TextEditingController();
-
-  String? _imagePath;
-  bool _isDirty = false;
+class _DocumentsViewBody extends StatefulWidget {
+  const _DocumentsViewBody();
 
   @override
-  void initState() {
-    super.initState();
-    final controllers = [
-      _nationalIdController,
-      _licenseController,
-      _mechanicCardController,
-      _vehiclePlateController,
-      _insuranceController,
-      _vehicleTypeController,
-      _vehicleModelController,
-      _vehicleColorController,
-      _vehicleYearController,
-    ];
-    for (final c in controllers) {
-      c.addListener(_checkDirty);
-    }
-  }
+  State<_DocumentsViewBody> createState() => _DocumentsViewBodyState();
+}
 
-  void _checkDirty() {
-    final dirty =
-        _nationalIdController.text.isNotEmpty ||
-        _licenseController.text.isNotEmpty ||
-        _vehiclePlateController.text.isNotEmpty ||
-        _imagePath != null;
-    if (dirty != _isDirty) setState(() => _isDirty = dirty);
-  }
+class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
+  String _selectedFilter = 'all';
 
-  @override
-  void dispose() {
-    _nationalIdController.dispose();
-    _licenseController.dispose();
-    _mechanicCardController.dispose();
-    _vehiclePlateController.dispose();
-    _insuranceController.dispose();
-    _vehicleTypeController.dispose();
-    _vehicleModelController.dispose();
-    _vehicleColorController.dispose();
-    _vehicleYearController.dispose();
-    super.dispose();
-  }
-
-  void _pickImage() {
-    // In real app: use ImagePickerService from getIt
-    setState(() {
-      _imagePath = 'picked';
-      _isDirty = true;
-    });
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      if (_imagePath == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please upload your vehicle photo')),
-        );
-        return;
+  List<DriverDocumentEntity> _filterDocuments(
+    List<DriverDocumentEntity> documents,
+  ) {
+    if (_selectedFilter == 'all') return documents;
+    return documents.where((doc) {
+      if (_selectedFilter == 'verified') {
+        return doc.status == DriverDocStatus.approved;
+      } else if (_selectedFilter == 'rejected') {
+        return doc.status == DriverDocStatus.rejected;
+      } else if (_selectedFilter == 'pending') {
+        return doc.status == DriverDocStatus.pending;
+      } else if (_selectedFilter == 'expired') {
+        return doc.status == DriverDocStatus.expired;
       }
-    }
+      return true;
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.lightScaffold,
+      backgroundColor: isDark ? AppColors.darkScaffold : AppColors.lightScaffold,
       appBar: AppBar(
-        backgroundColor: AppColors.lightScaffold,
+        backgroundColor: isDark ? AppColors.darkScaffold : AppColors.cardLight,
         elevation: 0,
+        scrolledUnderElevation: 1,
+        centerTitle: true,
         leading: IconButton(
+          onPressed: () => context.pop(),
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
+            color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
             size: 20.r,
-            color: AppColors.onSurface,
           ),
-          onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'My Documents',
-          style: AppTextStyles.w600_18.copyWith(color: AppColors.onSurface),
+          style: AppTextStyles.w700_18.copyWith(
+            color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+          ),
         ),
-        centerTitle: true,
       ),
-      body: Column(
-        children: [
-          // ── Scrollable Form ────────────────────────────────────────
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.md.w,
-                vertical: AppSpacing.md.h,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // ── Required docs section ──────────────────────
-                    SectionHeader(
-                      icon: Icons.badge_outlined,
-                      title: 'Identity & License',
-                      color: AppColors.primaryColor,
-                      surface: AppColors.primarySurface,
-                    ),
-                    SizedBox(height: AppSpacing.sm.h),
-                    DocField(
-                      controller: _nationalIdController,
-                      label: 'National ID Number',
-                      hint: 'e.g. 29901234567890',
-                      icon: Icons.credit_card_outlined,
-                      keyboardType: TextInputType.number,
-                      isRequired: true,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    DocField(
-                      controller: _licenseController,
-                      label: 'Driver License Number',
-                      hint: 'e.g. DL-2023-XXXXX',
-                      icon: Icons.drive_eta_outlined,
-                      isRequired: true,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    DocField(
-                      controller: _mechanicCardController,
-                      label: 'Mechanic Card Number',
-                      hint: 'Optional',
-                      icon: Icons.build_outlined,
-                    ),
+      body: BlocBuilder<DriverDocumentsCubit, DriverDocumentsState>(
+        builder: (context, state) {
+          if (state.status == DriverDocumentsStatus.loading &&
+              state.documents.isEmpty) {
+            return const DriverDocumentShimmer();
+          }
 
-                    SizedBox(height: AppSpacing.lg.h),
+          if (state.status == DriverDocumentsStatus.failure &&
+              state.documents.isEmpty) {
+            return _buildErrorState(context, state.errorMessage);
+          }
 
-                    // ── Vehicle section ────────────────────────────
-                    SectionHeader(
-                      icon: Icons.directions_car_outlined,
-                      title: 'Vehicle Information',
-                      color: AppColors.earning,
-                      surface: AppColors.earningSurface,
-                    ),
-                    SizedBox(height: AppSpacing.sm.h),
-                    DocField(
-                      controller: _vehiclePlateController,
-                      label: 'Vehicle Plate Number',
-                      hint: 'e.g. ABC 1234',
-                      icon: Icons.confirmation_number_outlined,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    DocField(
-                      controller: _insuranceController,
-                      label: 'Insurance Policy Number',
-                      hint: 'e.g. INS-2024-XXXXX',
-                      icon: Icons.shield_outlined,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    Row(
+          final allDocs = state.documents;
+          final filteredDocs = _filterDocuments(allDocs);
+
+          return RefreshIndicator(
+            color: AppColors.primaryColor,
+            onRefresh: () => context
+                .read<DriverDocumentsCubit>()
+                .fetchDocuments(isRefresh: true),
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 8.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: DocField(
-                            controller: _vehicleTypeController,
-                            label: 'Vehicle Type',
-                            hint: 'e.g. Sedan',
-                            icon: Icons.category_outlined,
-                          ),
-                        ),
-                        SizedBox(width: AppSpacing.sm.w),
-                        Expanded(
-                          child: DocField(
-                            controller: _vehicleModelController,
-                            label: 'Vehicle Model',
-                            hint: 'e.g. Camry',
-                            icon: Icons.time_to_leave_outlined,
-                          ),
-                        ),
+                        if (allDocs.isNotEmpty)
+                          DocumentsSummaryHeader(documents: allDocs),
+                        SizedBox(height: 16.h),
+                        if (allDocs.isNotEmpty)
+                          _buildFilterBar(context, isDark),
                       ],
                     ),
-                    SizedBox(height: AppSpacing.md.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DocField(
-                            controller: _vehicleColorController,
-                            label: 'Vehicle Color',
-                            hint: 'e.g. White',
-                            icon: Icons.palette_outlined,
-                          ),
-                        ),
-                        SizedBox(width: AppSpacing.sm.w),
-                        Expanded(
-                          child: DocField(
-                            controller: _vehicleYearController,
-                            label: 'Vehicle Year',
-                            hint: 'e.g. 2022',
-                            icon: Icons.calendar_today_outlined,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: AppSpacing.lg.h),
-
-                    // ── Photo upload ───────────────────────────────
-                    SectionHeader(
-                      icon: Icons.photo_camera_outlined,
-                      title: 'Vehicle Photo',
-                      color: AppColors.info,
-                      surface: AppColors.infoSurface,
-                    ),
-                    SizedBox(height: AppSpacing.sm.h),
-                    PhotoPicker(imagePath: _imagePath, onPickImage: _pickImage),
-                    SizedBox(height: AppSpacing.xxl.h),
-                  ],
+                  ),
                 ),
+                if (allDocs.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: _buildEmptyState(context),
+                  )
+                else if (filteredDocs.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: _buildNoMatchingFilterState(context),
+                  )
+                else
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 24.h),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final doc = filteredDocs[index];
+                        return DriverDocumentCard(
+                          key: ValueKey(doc.id),
+                          document: doc,
+                        );
+                      }, childCount: filteredDocs.length),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildFilterBar(BuildContext context, bool isDark) {
+    final filters = [
+      {'key': 'all', 'label': 'All Documents'},
+      {'key': 'verified', 'label': 'Verified'},
+      {'key': 'pending', 'label': 'Pending'},
+      {'key': 'rejected', 'label': 'Rejected'},
+      {'key': 'expired', 'label': 'Expired'},
+    ];
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: filters.map((f) {
+          final isSelected = _selectedFilter == f['key'];
+          return Padding(
+            padding: EdgeInsets.only(right: 8.w),
+            child: ChoiceChip(
+              label: Text(f['label']!),
+              selected: isSelected,
+              onSelected: (_) {
+                setState(() {
+                  _selectedFilter = f['key']!;
+                });
+              },
+              selectedColor: AppColors.primaryColor,
+              backgroundColor: isDark
+                  ? AppColors.cardDark
+                  : AppColors.cardLight,
+              labelStyle: AppTextStyles.w500_12.copyWith(
+                color: isSelected
+                    ? Colors.white
+                    : (isDark
+                          ? AppColors.onSurfaceDark
+                          : AppColors.onSurfaceVariant),
+              ),
+              side: BorderSide(
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : (isDark
+                          ? AppColors.borderColorDark
+                          : AppColors.borderColor.withValues(alpha: 0.4)),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r),
               ),
             ),
-          ),
+          );
+        }).toList(),
+      ),
+    );
+  }
 
-          // ── Footer Submit Button ───────────────────────────────────
-          SubmitFooter(isActive: _isDirty, onSubmit: _submit),
-        ],
+  Widget _buildEmptyState(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(32.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(24.r),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withValues(alpha: 0.08),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.folder_off_rounded,
+                size: 64.r,
+                color: AppColors.primaryColor,
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Text(
+              'No Documents Found',
+              style: AppTextStyles.w700_18.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              'You have no uploaded driver documents registered at this time.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
+            ),
+            SizedBox(height: 24.h),
+            ElevatedButton.icon(
+              onPressed: () => context
+                  .read<DriverDocumentsCubit>()
+                  .fetchDocuments(isRefresh: true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Reload Documents'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoMatchingFilterState(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(32.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.filter_alt_off_rounded,
+              size: 48.r,
+              color: AppColors.textGrey,
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              'No documents match this filter',
+              style: AppTextStyles.w600_16.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
+            ),
+            SizedBox(height: 12.h),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _selectedFilter = 'all';
+                });
+              },
+              child: const Text('Reset Filter to All'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorState(BuildContext context, String? errorMessage) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(32.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(20.r),
+              decoration: BoxDecoration(
+                color: AppColors.dangerSurface,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.error_outline_rounded,
+                size: 48.r,
+                color: AppColors.danger,
+              ),
+            ),
+            SizedBox(height: 16.h),
+            Text(
+              'Failed to Load Documents',
+              style: AppTextStyles.w700_18.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              errorMessage ??
+                  'An unexpected error occurred while fetching your documents.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
+            ),
+            SizedBox(height: 24.h),
+            ElevatedButton.icon(
+              onPressed: () =>
+                  context.read<DriverDocumentsCubit>().fetchDocuments(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryColor,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Try Again'),
+            ),
+          ],
+        ),
       ),
     );
   }

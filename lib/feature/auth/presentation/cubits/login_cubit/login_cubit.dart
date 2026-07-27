@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
@@ -27,6 +29,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     await result.fold(
       (failure) async {
+        log(failure.rawMessage ?? '');
         // 1- when response 401 and message is "Your account is not verified"
         if (failure.statusCode == 401 &&
             (failure.rawMessage?.contains('not verified') == true ||

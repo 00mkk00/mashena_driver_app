@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/constants/app_constants.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
 import 'package:mashena_driver_app/core/network/api_exception.dart';
 import 'package:mashena_driver_app/core/network/api_failure_mapper.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/driver_mapper.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/login_mapper.dart';
@@ -21,11 +23,13 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final ApiClient _apiClient;
   final TokenManager _tokenManager;
+  final LocalStorage _localStorage;
 
   AuthRepositoryImpl(
     this._remoteDataSource,
     this._apiClient,
     this._tokenManager,
+    this._localStorage,
   );
 
   @override
@@ -74,6 +78,12 @@ class AuthRepositoryImpl implements AuthRepository {
         accessToken: model.accessToken,
         refreshToken: model.refreshToken,
       );
+      try {
+        await _localStorage.setString(
+          AppConstants.driverUserKey,
+          jsonEncode(model.user.toJson()),
+        );
+      } catch (_) {}
 
       return Right(model.toEntity());
     } on ApiException catch (e) {
@@ -100,8 +110,12 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, Unit>> logout() async {
     try {
-      await _remoteDataSource.logout();
-      await getIt<TokenManager>().clearTokens(); // clear stored token
+      final refreshToken = _tokenManager.refreshToken;
+      await _remoteDataSource.logout(refreshToken: refreshToken ?? "");
+      await _tokenManager.clearTokens(); // clear stored token
+      await _localStorage.remove(
+        AppConstants.driverUserKey,
+      ); // clear stored user
 
       return const Right(unit);
     } on ApiException catch (e) {

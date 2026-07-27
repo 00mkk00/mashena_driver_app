@@ -4,11 +4,13 @@ import 'package:mashena_driver_app/feature/home/data/params/arrive_trip_params.d
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_ride_request_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/start_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/arrive_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/cancel_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/complete_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/get_ride_request_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/rate_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/start_trip_use_case.dart';
 import 'ride_request_state.dart';
 
@@ -18,6 +20,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   final CancelTripUseCase _cancelTripUseCase;
   final StartTripUseCase _startTripUseCase;
   final CompleteTripUseCase _completeTripUseCase;
+  final RateTripUseCase _rateTripUseCase;
 
   Timer? _countdownTimer;
   Timer? _resetTimer;
@@ -30,11 +33,13 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     required CancelTripUseCase cancelTripUseCase,
     required StartTripUseCase startTripUseCase,
     required CompleteTripUseCase completeTripUseCase,
+    required RateTripUseCase rateTripUseCase,
   }) : _getRideRequestUseCase = getRideRequestUseCase,
        _arriveTripUseCase = arriveTripUseCase,
        _cancelTripUseCase = cancelTripUseCase,
        _startTripUseCase = startTripUseCase,
        _completeTripUseCase = completeTripUseCase,
+       _rateTripUseCase = rateTripUseCase,
        super(const RideRequestState());
 
   // ─── Called from SocketCubit when ride:offer arrives ──────────────────────
@@ -237,6 +242,44 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   /// Called by the UI after it has shown the trip summary bottom sheet.
   void clearCompletedTripSummary() {
     emit(state.copyWith(clearCompletedTripSummary: true));
+  }
+
+  // ─── Rate Trip ───────────────────────────────────────────────────────────────
+
+  Future<void> rateTrip({
+    required int tripId,
+    required int score,
+    String? comment,
+    List<int>? tagIds,
+  }) async {
+    emit(state.copyWith(isRatingTrip: true, clearErrorMessage: true));
+
+    final result = await _rateTripUseCase.call(
+      RateTripParams(
+        tripId: tripId,
+        score: score,
+        comment: comment,
+        tagIds: tagIds,
+      ),
+    );
+
+    if (isClosed) return;
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isRatingTrip: false,
+          errorMessage: failure.rawMessage ?? 'Failed to rate trip',
+        ),
+      ),
+      (entity) => emit(
+        state.copyWith(
+          isRatingTrip: false,
+          isTripRated: true,
+          clearErrorMessage: true,
+        ),
+      ),
+    );
   }
 
   // ─── Trip cancelled by server (rider or admin) ───────────────────────────────

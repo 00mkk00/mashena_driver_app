@@ -48,7 +48,7 @@ class DriverAppDrawer extends StatelessWidget {
             // Close loading dialog
             context.pop(context);
             // Show error snackbar
-            context.showErrorToast(S.of(context).errorsNetwork);
+            context.showErrorToast('Logout failed');
           },
         );
       },

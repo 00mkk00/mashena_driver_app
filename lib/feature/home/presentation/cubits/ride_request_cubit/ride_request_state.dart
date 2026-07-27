@@ -21,6 +21,8 @@ class RideRequestState {
   final bool isCancelingTrip;
   final bool isStartingTrip;
   final bool isCompletingTrip;
+  final bool isRatingTrip;
+  final bool isTripRated;
   final RideRequestEntity? rideRequestEntity;
   final CompleteTripEntity? completedTripSummary;
   final String? errorMessage;
@@ -42,6 +44,8 @@ class RideRequestState {
     this.isCancelingTrip = false,
     this.isStartingTrip = false,
     this.isCompletingTrip = false,
+    this.isRatingTrip = false,
+    this.isTripRated = false,
     this.rideRequestEntity,
     this.completedTripSummary,
     this.errorMessage,
@@ -66,6 +70,8 @@ class RideRequestState {
     bool? isCancelingTrip,
     bool? isStartingTrip,
     bool? isCompletingTrip,
+    bool? isRatingTrip,
+    bool? isTripRated,
     RideRequestEntity? rideRequest,
     CompleteTripEntity? completedTripSummary,
     bool clearCompletedTripSummary = false,
@@ -92,6 +98,8 @@ class RideRequestState {
     isCancelingTrip: isCancelingTrip ?? this.isCancelingTrip,
     isStartingTrip: isStartingTrip ?? this.isStartingTrip,
     isCompletingTrip: isCompletingTrip ?? this.isCompletingTrip,
+    isRatingTrip: isRatingTrip ?? this.isRatingTrip,
+    isTripRated: isTripRated ?? this.isTripRated,
     rideRequestEntity: clearTripDetails
         ? null
         : rideRequest ?? rideRequestEntity,

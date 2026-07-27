@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -74,7 +72,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             listener: (context, rideState) {
               context.read<DriverStatusCubit>().endTrip();
               context.read<MapCubit>().clearRoute();
-              log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
               _showTripSummarySheet(
                 context,
                 summary: rideState.completedTripSummary!,

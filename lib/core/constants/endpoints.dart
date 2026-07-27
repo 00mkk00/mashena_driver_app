@@ -18,4 +18,9 @@ class Endpoints {
   static const String completeTrip = '/trips/by-ride/{rideRequestId}/complete';
   static const String cancelTrip = '/trips/by-ride/{rideRequestId}/cancel';
   static const String driverTripHistory = '/trips/driver/history';
+  static const String driverWalletSummary = '/wallets/driver/summary';
+  static const String rateTrip = '/trips/{tripId}/rate';
+  static const String ratingTags = '/rating-tags';
+  static const String driverDocuments = '/driver-documents/me';
 }
+

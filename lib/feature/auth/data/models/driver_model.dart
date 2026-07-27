@@ -7,10 +7,10 @@ part 'driver_model.g.dart';
 @freezed
 class DriverModel with _$DriverModel {
   const factory DriverModel({
-    required int id,
-    required String fullName,
-    required String email,
-    required String phoneNumber,
+    @Default(0) int id,
+    @Default('') String fullName,
+    @Default('') String email,
+    @Default('') String phoneNumber,
     @Default([]) List<RoleModel> roles,
     @Default('') String activeRole,
     @Default(DriverApprovalInfoModel())

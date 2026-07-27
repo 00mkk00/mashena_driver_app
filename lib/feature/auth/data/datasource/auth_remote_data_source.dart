@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
@@ -16,7 +18,7 @@ abstract class AuthRemoteDataSource {
 
   Future<void> verifyOtp(VerifyOtpParams params);
   Future<void> uploadDocuments(UploadDriverDocsParams params);
-  Future<void> logout();
+  Future<void> logout({required String refreshToken});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -74,7 +76,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> logout() async {
-    await apiClient.post(Endpoints.logout);
+  Future<void> logout({required String refreshToken}) async {
+    log(refreshToken);
+    await apiClient.post(
+      Endpoints.logout,
+      body: {'refreshToken': refreshToken},
+    );
   }
 }

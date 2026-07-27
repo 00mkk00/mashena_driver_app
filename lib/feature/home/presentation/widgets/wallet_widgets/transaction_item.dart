@@ -5,6 +5,7 @@ import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
 
 class TransactionItem extends StatelessWidget {
   final IconData icon;
@@ -12,6 +13,7 @@ class TransactionItem extends StatelessWidget {
   final String subtitle;
   final String amount;
   final bool isCredit;
+  final String? type;
 
   const TransactionItem({
     super.key,
@@ -20,7 +22,22 @@ class TransactionItem extends StatelessWidget {
     required this.subtitle,
     required this.amount,
     required this.isCredit,
+    this.type,
   });
+
+  factory TransactionItem.fromEntity(RecentTransactionEntity tx) {
+    final isPos = tx.isPositive;
+    return TransactionItem(
+      icon: isPos
+          ? Icons.directions_car_rounded
+          : Icons.account_balance_wallet_rounded,
+      title: tx.title,
+      subtitle: tx.subtitle,
+      amount: tx.formattedAmount,
+      isCredit: isPos,
+      type: tx.type,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +83,27 @@ class TransactionItem extends StatelessWidget {
                     color: AppColors.textGrey,
                   ),
                 ),
+                if (type != null && type!.isNotEmpty) ...[
+                  SizedBox(height: 4.h),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppSpacing.xs.w,
+                      vertical: 2.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(AppRadius.sm.r),
+                    ),
+                    child: Text(
+                      type!.replaceAll('_', ' '),
+                      style: AppTextStyles.w400_10.copyWith(color: color),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
-          Text(
-            'EGP $amount',
-            style: AppTextStyles.w700_14.copyWith(color: color),
-          ),
+          Text(amount, style: AppTextStyles.w700_14.copyWith(color: color)),
         ],
       ),
     );

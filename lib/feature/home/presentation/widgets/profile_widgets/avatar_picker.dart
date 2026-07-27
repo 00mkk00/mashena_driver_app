@@ -9,13 +9,13 @@ import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 class AvatarPicker extends StatelessWidget {
   final String? imagePath;
   final String initials;
-  final VoidCallback onPickImage;
+  final VoidCallback? onPickImage;
 
   const AvatarPicker({
     super.key,
     required this.imagePath,
     required this.initials,
-    required this.onPickImage,
+    this.onPickImage,
   });
 
   @override
@@ -48,28 +48,32 @@ class AvatarPicker extends StatelessWidget {
                     ),
                   ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: onPickImage,
-              child: Container(
-                width: 32.r,
-                height: 32.r,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.lightScaffold, width: 2),
-                  boxShadow: AppShadows.card,
-                ),
-                child: Icon(
-                  Icons.camera_alt_rounded,
-                  size: 16.r,
-                  color: Colors.white,
+          if (onPickImage != null)
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: onPickImage,
+                child: Container(
+                  width: 32.r,
+                  height: 32.r,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.lightScaffold,
+                      width: 2,
+                    ),
+                    boxShadow: AppShadows.card,
+                  ),
+                  child: Icon(
+                    Icons.camera_alt_rounded,
+                    size: 16.r,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

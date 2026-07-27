@@ -27,16 +27,23 @@ import 'package:mashena_driver_app/feature/home/domain/usecases/arrive_trip_use_
 import 'package:mashena_driver_app/feature/home/domain/usecases/cancel_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/complete_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/get_driver_trip_history_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_driver_documents_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_driver_wallet_summary_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/get_ride_request_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/go_offline_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/go_online_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_rating_tags_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/rate_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/start_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_wallet_cubit/driver_wallet_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/rating_tags_cubit/rating_tags_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/trip_history_cubit/trip_history_cubit.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/complete_onboarding_usecase.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
@@ -118,6 +125,7 @@ Future<void> configureDependencies() async {
       getIt<AuthRemoteDataSource>(),
       getIt<ApiClient>(),
       getIt<TokenManager>(),
+      getIt<LocalStorage>(),
     ),
   );
 
@@ -183,6 +191,18 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => GetDriverTripHistoryUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(
+    () => GetDriverWalletSummaryUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => RateTripUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetRatingTagsUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetDriverDocumentsUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
     () => RideRequestCubit(
@@ -191,11 +211,24 @@ Future<void> configureDependencies() async {
       cancelTripUseCase: getIt<CancelTripUseCase>(),
       startTripUseCase: getIt<StartTripUseCase>(),
       completeTripUseCase: getIt<CompleteTripUseCase>(),
+      rateTripUseCase: getIt<RateTripUseCase>(),
     ),
   );
   
   getIt.registerFactory<TripHistoryCubit>(
     () => TripHistoryCubit(getIt<GetDriverTripHistoryUseCase>()),
+  );
+
+  getIt.registerFactory<DriverWalletCubit>(
+    () => DriverWalletCubit(getIt<GetDriverWalletSummaryUseCase>()),
+  );
+
+  getIt.registerFactory<RatingTagsCubit>(
+    () => RatingTagsCubit(getIt<GetRatingTagsUseCase>()),
+  );
+
+  getIt.registerFactory<DriverDocumentsCubit>(
+    () => DriverDocumentsCubit(getIt<GetDriverDocumentsUseCase>()),
   );
 
   // ── Driver Status ────────────────────────────

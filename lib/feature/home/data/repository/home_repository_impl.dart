@@ -21,11 +21,21 @@ import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_en
 import 'package:mashena_driver_app/feature/home/data/params/complete_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/complete_trip_mapper.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/cancel_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/rate_trip_mapper.dart';
 import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/rate_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/cancel_trip_mapper.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_trip_history_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/driver_trip_history_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/driver_wallet_summary_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/driver_document_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/rating_tag_mapper.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/rating_tag_entity.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource _remoteDataSource;
@@ -171,4 +181,59 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, DriverWalletSummaryEntity>> getDriverWalletSummary() async {
+    try {
+      final model = await _remoteDataSource.getDriverWalletSummary();
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, RateTripEntity>> rateTrip(
+    RateTripParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.rateTrip(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<RatingTagEntity>>> getRatingTags(
+    GetRatingTagsParams params,
+  ) async {
+    try {
+      final models = await _remoteDataSource.getRatingTags(params);
+      final entities = models.map((m) => m.toEntity()).toList();
+      return Right(entities);
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments() async {
+    try {
+      final models = await _remoteDataSource.getDriverDocuments();
+      final entities = models.map((m) => m.toEntity()).toList();
+      return Right(entities);
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
 }
+

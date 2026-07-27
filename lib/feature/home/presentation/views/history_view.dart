@@ -166,8 +166,16 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                   ratingAvg: (trip.rider?.ratingAvg ?? 0).toDouble(),
                   myComment: trip.myRating?.comment,
                   myScore: trip.myRating?.score?.toDouble(),
+                  myTags: trip.myRating?.tags
+                      ?.map((t) => t.code ?? '')
+                      .where((c) => c.isNotEmpty)
+                      .toList(),
                   receivedComment: trip.receivedRating?.comment,
                   receivedScore: trip.receivedRating?.score?.toDouble(),
+                  receivedTags: trip.receivedRating?.tags
+                      ?.map((t) => t.code ?? '')
+                      .where((c) => c.isNotEmpty)
+                      .toList(),
                 );
               },
             ),

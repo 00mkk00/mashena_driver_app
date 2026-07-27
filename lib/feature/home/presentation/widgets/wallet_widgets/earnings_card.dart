@@ -5,12 +5,30 @@ import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
 
 class EarningsSummaryCard extends StatelessWidget {
-  const EarningsSummaryCard({super.key});
+  final EarningsSummaryEntity? summary;
+  final String? currency;
+
+  const EarningsSummaryCard({
+    super.key,
+    this.summary,
+    this.currency,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final curr = currency ?? 'SYR';
+    final todayAmount = summary?.today.amount.toString() ?? '0';
+    final todayTrips = summary?.today.tripsCount ?? 0;
+
+    final weekAmount = summary?.thisWeek.amount.toString() ?? '0';
+    final weekTrips = summary?.thisWeek.tripsCount ?? 0;
+
+    final monthAmount = summary?.thisMonth.amount.toString() ?? '0';
+    final monthTrips = summary?.thisMonth.tripsCount ?? 0;
+
     return Container(
       padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
@@ -20,11 +38,23 @@ class EarningsSummaryCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _SummaryRow(label: 'Today', value: '320.00', trips: 4),
+          _SummaryRow(
+            label: 'Today',
+            value: '$curr $todayAmount',
+            trips: todayTrips,
+          ),
           Divider(color: AppColors.divider, height: AppSpacing.lg.h),
-          _SummaryRow(label: 'This Week', value: '1,750.00', trips: 21),
+          _SummaryRow(
+            label: 'This Week',
+            value: '$curr $weekAmount',
+            trips: weekTrips,
+          ),
           Divider(color: AppColors.divider, height: AppSpacing.lg.h),
-          _SummaryRow(label: 'This Month', value: '6,420.00', trips: 87),
+          _SummaryRow(
+            label: 'This Month',
+            value: '$curr $monthAmount',
+            trips: monthTrips,
+          ),
         ],
       ),
     );
@@ -63,7 +93,7 @@ class _SummaryRow extends StatelessWidget {
           ],
         ),
         Text(
-          'EGP $value',
+          value,
           style: AppTextStyles.w700_16.copyWith(color: AppColors.earning),
         ),
       ],

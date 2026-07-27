@@ -12,6 +12,7 @@ class ProfileField extends StatelessWidget {
   final IconData icon;
   final TextInputType keyboardType;
   final FormFieldValidator<String>? validator;
+  final bool readOnly;
 
   const ProfileField({
     super.key,
@@ -21,6 +22,7 @@ class ProfileField extends StatelessWidget {
     required this.icon,
     required this.keyboardType,
     this.validator,
+    this.readOnly = false,
   });
 
   @override
@@ -37,6 +39,7 @@ class ProfileField extends StatelessWidget {
         SizedBox(height: AppSpacing.xs.h),
         TextFormField(
           controller: controller,
+          readOnly: readOnly,
           keyboardType: keyboardType,
           validator: validator,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -82,5 +85,3 @@ class ProfileField extends StatelessWidget {
     );
   }
 }
-
-//

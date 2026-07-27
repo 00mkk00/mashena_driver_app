@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/constants/app_constants.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/feature/auth/data/models/driver_model.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/profile_widgets/avatar_picker.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/profile_widgets/profile_field.dart';
-import 'package:mashena_driver_app/feature/home/presentation/widgets/profile_widgets/save_footer.dart';
 
-// ─── Profile View ─────────────────────────────────────────────────────────────
+// ─── Profile View (Read-Only) ──────────────────────────────────────────────────
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
@@ -16,48 +20,49 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final _formKey = GlobalKey<FormState>();
-
-  // Initial (unchanged) values — used to detect dirty state
-  final String _initialName = 'Ahmed Hassan';
-  final String _initialEmail = 'ahmed@example.com';
-  final String _initialPhone = '+201012345678';
-  final String _initialCity = 'Cairo';
+  String _initialName = '';
+  String _initialEmail = '';
+  String _initialPhone = '';
+  final String _initialCity = '';
+  String _initials = '';
 
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
   late final TextEditingController _phoneController;
   late final TextEditingController _cityController;
 
-  String? _imagePath;
-  bool _isDirty = false;
-
   @override
   void initState() {
     super.initState();
+    _loadCachedUserData();
+
     _nameController = TextEditingController(text: _initialName);
     _emailController = TextEditingController(text: _initialEmail);
     _phoneController = TextEditingController(text: _initialPhone);
     _cityController = TextEditingController(text: _initialCity);
-
-    for (final c in [
-      _nameController,
-      _emailController,
-      _phoneController,
-      _cityController,
-    ]) {
-      c.addListener(_checkDirty);
-    }
   }
 
-  void _checkDirty() {
-    final dirty =
-        _nameController.text != _initialName ||
-        _emailController.text != _initialEmail ||
-        _phoneController.text != _initialPhone ||
-        _cityController.text != _initialCity ||
-        _imagePath != null;
-    if (dirty != _isDirty) setState(() => _isDirty = dirty);
+  void _loadCachedUserData() {
+    final userJson = getIt<LocalStorage>().getString(
+      AppConstants.driverUserKey,
+    );
+    if (userJson != null && userJson.isNotEmpty) {
+      try {
+        final driver = DriverModel.fromJson(
+          jsonDecode(userJson) as Map<String, dynamic>,
+        );
+        _initialName = driver.fullName;
+        _initialEmail = driver.email;
+        _initialPhone = driver.phoneNumber;
+
+        final nameParts = driver.fullName.trim().split(RegExp(r'\s+'));
+        if (nameParts.length >= 2) {
+          _initials = '${nameParts[0][0]}${nameParts[1][0]}'.toUpperCase();
+        } else if (nameParts.isNotEmpty && nameParts[0].isNotEmpty) {
+          _initials = nameParts[0][0].toUpperCase();
+        }
+      } catch (_) {}
+    }
   }
 
   @override
@@ -67,24 +72,6 @@ class _ProfileViewState extends State<ProfileView> {
     _phoneController.dispose();
     _cityController.dispose();
     super.dispose();
-  }
-
-  void _pickAvatar() async {
-    // In real implementation: use ImagePickerService from getIt
-    // For now just mark dirty
-    setState(() {
-      _imagePath = 'picked';
-      _isDirty = true;
-    });
-  }
-
-  void _saveProfile() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Profile saved!')));
-      setState(() => _isDirty = false);
-    }
   }
 
   @override
@@ -108,78 +95,59 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          // ── Scrollable content ─────────────────────────────────────
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    SizedBox(height: AppSpacing.lg.h),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+        child: Column(
+          children: [
+            SizedBox(height: AppSpacing.lg.h),
 
-                    // ── Avatar ──────────────────────────────────────
-                    AvatarPicker(
-                      imagePath: _imagePath,
-                      initials: 'AH',
-                      onPickImage: _pickAvatar,
-                    ),
-                    SizedBox(height: AppSpacing.xl.h),
+            // ── Avatar ──────────────────────────────────────
+            AvatarPicker(imagePath: null, initials: _initials),
+            SizedBox(height: AppSpacing.xl.h),
 
-                    // ── Fields ──────────────────────────────────────
-                    ProfileField(
-                      controller: _nameController,
-                      label: 'Full Name',
-                      hint: 'Enter your full name',
-                      icon: Icons.person_outline_rounded,
-                      keyboardType: TextInputType.name,
-                      validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? 'Required' : null,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    ProfileField(
-                      controller: _emailController,
-                      label: 'Email',
-                      hint: 'Enter your email',
-                      icon: Icons.email_outlined,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (v) => (v == null || !v.contains('@'))
-                          ? 'Invalid email'
-                          : null,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    ProfileField(
-                      controller: _phoneController,
-                      label: 'Phone Number',
-                      hint: 'Enter your phone number',
-                      icon: Icons.phone_outlined,
-                      keyboardType: TextInputType.phone,
-                      validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? 'Required' : null,
-                    ),
-                    SizedBox(height: AppSpacing.md.h),
-                    ProfileField(
-                      controller: _cityController,
-                      label: 'City',
-                      hint: 'Enter your city',
-                      icon: Icons.location_city_outlined,
-                      keyboardType: TextInputType.text,
-                      validator: (v) =>
-                          (v == null || v.trim().isEmpty) ? 'Required' : null,
-                    ),
-                    SizedBox(height: AppSpacing.xxl.h),
-                  ],
-                ),
-              ),
+            // ── Read-only Fields ────────────────────────────
+            ProfileField(
+              controller: _nameController,
+              label: 'Full Name',
+              hint: '',
+              icon: Icons.person_outline_rounded,
+              keyboardType: TextInputType.name,
+              readOnly: true,
             ),
-          ),
-
-          // ── Footer Save Button ─────────────────────────────────────
-          SaveFooter(isActive: _isDirty, onSave: _saveProfile),
-        ],
+            SizedBox(height: AppSpacing.md.h),
+            ProfileField(
+              controller: _emailController,
+              label: 'Email',
+              hint: '',
+              icon: Icons.email_outlined,
+              keyboardType: TextInputType.emailAddress,
+              readOnly: true,
+            ),
+            SizedBox(height: AppSpacing.md.h),
+            ProfileField(
+              controller: _phoneController,
+              label: 'Phone Number',
+              hint: '',
+              icon: Icons.phone_outlined,
+              keyboardType: TextInputType.phone,
+              readOnly: true,
+            ),
+            SizedBox(height: AppSpacing.md.h),
+            if (_initialCity.isNotEmpty) ...[
+              ProfileField(
+                controller: _cityController,
+                label: 'City',
+                hint: '',
+                icon: Icons.location_city_outlined,
+                keyboardType: TextInputType.text,
+                readOnly: true,
+              ),
+              SizedBox(height: AppSpacing.md.h),
+            ],
+            SizedBox(height: AppSpacing.xxl.h),
+          ],
+        ),
       ),
     );
   }

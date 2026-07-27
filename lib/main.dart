@@ -24,3 +24,4 @@ Future<void> main() async {
 
   runApp(ScreenUtilInit(designSize: Size(428, 926), child: const App()));
 }
+  
