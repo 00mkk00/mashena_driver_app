@@ -222,9 +222,11 @@ class _PopupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.xl.r),
         boxShadow: [
           ...AppShadows.card,
@@ -267,7 +269,10 @@ class _PopupCard extends StatelessWidget {
                   _MetaChipsRow(ride: ride),
 
                   SizedBox(height: AppSpacing.md.h),
-                  Divider(color: AppColors.divider, height: 1),
+                  Divider(
+                    color: isDark ? AppColors.dividerDark : AppColors.divider,
+                    height: 1,
+                  ),
                   SizedBox(height: AppSpacing.md.h),
 
                   // Route
@@ -483,6 +488,7 @@ class _RouteSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -499,7 +505,11 @@ class _RouteSection extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              Container(width: 2.w, height: 30.h, color: AppColors.divider),
+              Container(
+                width: 2.w,
+                height: 30.h,
+                color: isDark ? AppColors.dividerDark : AppColors.divider,
+              ),
               Container(
                 width: 10.r,
                 height: 10.r,
@@ -540,19 +550,24 @@ class _AddressItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: AppTextStyles.w400_12.copyWith(
-            color: AppColors.onSurfaceVariant,
+            color: isDark
+                ? AppColors.onSurfaceVariantDark
+                : AppColors.onSurfaceVariant,
           ),
         ),
         SizedBox(height: 2.h),
         Text(
           address,
-          style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
+          style: AppTextStyles.w500_12.copyWith(
+            color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+          ),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),

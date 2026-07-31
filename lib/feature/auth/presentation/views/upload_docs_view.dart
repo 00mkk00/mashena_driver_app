@@ -19,9 +19,7 @@ class UploadDocsView extends StatelessWidget {
         child: BlocListener<UploadDocsCubit, UploadDocsState>(
           listener: (context, state) {
             state.whenOrNull(
-              loading: () {
-                
-              },
+              loading: () {},
               success: () {
                 context.showSuccessToast(S.of(context).uploadedSuccessfully);
                 context.go(AppRoutes.loginPath);

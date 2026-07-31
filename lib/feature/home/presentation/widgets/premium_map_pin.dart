@@ -31,7 +31,7 @@ class PremiumMapPin extends StatelessWidget {
         boxShadow: [
           // A colored drop shadow looks significantly more premium than a black one
           BoxShadow(
-            color: gradientColors.last.withValues(alpha:  0.4),
+            color: gradientColors.last.withValues(alpha: 0.4),
             blurRadius: 10.r,
             spreadRadius: 2.r,
             offset: Offset(0, 4.r),

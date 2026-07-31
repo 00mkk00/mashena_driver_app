@@ -86,8 +86,7 @@ class _RatingDialogState extends State<RatingDialog> {
 
     if (_score <= 2 && !hasTags && !hasComment) {
       setState(() {
-        _errorMessage =
-            S.of(context).ratingCommentRequiredError;
+        _errorMessage = S.of(context).ratingCommentRequiredError;
       });
       return;
     }
@@ -102,6 +101,8 @@ class _RatingDialogState extends State<RatingDialog> {
   }
 
   Widget _buildTagSection() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<RatingTagsCubit, RatingTagsState>(
       builder: (context, state) {
         if (state.isLoading && state.tags.isEmpty) {
@@ -111,7 +112,7 @@ class _RatingDialogState extends State<RatingDialog> {
               Text(
                 S.of(context).ratingWhatStoodOut,
                 style: AppTextStyles.w600_12.copyWith(
-                  color: AppColors.darkScaffold,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
               ),
               SizedBox(height: AppSpacing.xs.h),
@@ -143,7 +144,7 @@ class _RatingDialogState extends State<RatingDialog> {
                   ? S.of(context).ratingWhatWentWrong
                   : S.of(context).ratingWhatStoodOut,
               style: AppTextStyles.w600_12.copyWith(
-                color: AppColors.darkScaffold,
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
               ),
             ),
             SizedBox(height: AppSpacing.xs.h),
@@ -158,8 +159,12 @@ class _RatingDialogState extends State<RatingDialog> {
                       ? AppColors.success
                       : AppColors.danger;
                   final surfaceColor = isPositive
-                      ? AppColors.successSurface
-                      : AppColors.dangerSurface;
+                      ? (isDark
+                            ? AppColors.success.withValues(alpha: 0.15)
+                            : AppColors.successSurface)
+                      : (isDark
+                            ? AppColors.danger.withValues(alpha: 0.15)
+                            : AppColors.dangerSurface);
 
                   return GestureDetector(
                     onTap: () => _toggleTag(tag.id),
@@ -212,10 +217,14 @@ class _RatingDialogState extends State<RatingDialog> {
                         vertical: 6.h,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceVariant,
+                        color: isDark
+                            ? AppColors.surfaceVariantDark
+                            : AppColors.surfaceVariant,
                         borderRadius: BorderRadius.circular(AppRadius.full.r),
                         border: Border.all(
-                          color: AppColors.borderColor.withValues(alpha: 0.4),
+                          color: isDark
+                              ? AppColors.borderColorDark
+                              : AppColors.borderColor.withValues(alpha: 0.4),
                         ),
                       ),
                       child: state.isLoadingMore
@@ -230,7 +239,9 @@ class _RatingDialogState extends State<RatingDialog> {
                           : Text(
                               S.of(context).ratingMore,
                               style: AppTextStyles.w600_12.copyWith(
-                                color: AppColors.textGrey,
+                                color: isDark
+                                    ? AppColors.textGreyDark
+                                    : AppColors.textGrey,
                               ),
                             ),
                     ),
@@ -245,6 +256,7 @@ class _RatingDialogState extends State<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Padding(
@@ -257,7 +269,7 @@ class _RatingDialogState extends State<RatingDialog> {
           AppSpacing.lg.r,
         ),
         decoration: BoxDecoration(
-          color: AppColors.cardLight,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(AppRadius.xl.r),
             topRight: Radius.circular(AppRadius.xl.r),
@@ -274,7 +286,9 @@ class _RatingDialogState extends State<RatingDialog> {
                   height: 4.h,
                   margin: EdgeInsets.only(bottom: AppSpacing.md.h),
                   decoration: BoxDecoration(
-                    color: AppColors.textGrey.withValues(alpha: 0.3),
+                    color: isDark
+                        ? AppColors.dividerDark
+                        : AppColors.textGrey.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(AppRadius.full.r),
                   ),
                 ),
@@ -284,14 +298,14 @@ class _RatingDialogState extends State<RatingDialog> {
                     ? S.of(context).ratingRateRiderName(widget.riderName)
                     : S.of(context).ratingRateRider,
                 style: AppTextStyles.w700_18.copyWith(
-                  color: AppColors.darkScaffold,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
               ),
               SizedBox(height: AppSpacing.xs.h),
               Text(
                 S.of(context).ratingSelectScore,
                 style: AppTextStyles.w400_12.copyWith(
-                  color: AppColors.textGrey,
+                  color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
                 ),
               ),
               SizedBox(height: AppSpacing.lg.h),
@@ -306,7 +320,9 @@ class _RatingDialogState extends State<RatingDialog> {
                       ? S.of(context).ratingCommentRequiredLabel
                       : S.of(context).ratingCommentOptional,
                   style: AppTextStyles.w600_12.copyWith(
-                    color: AppColors.darkScaffold,
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
                   ),
                 ),
               ),
@@ -321,26 +337,32 @@ class _RatingDialogState extends State<RatingDialog> {
                 maxLines: 3,
                 maxLength: 300,
                 style: AppTextStyles.w400_14.copyWith(
-                  color: AppColors.darkScaffold,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
                 decoration: InputDecoration(
                   hintText: S.of(context).ratingCommentHint,
                   hintStyle: AppTextStyles.w400_12.copyWith(
-                    color: AppColors.textGrey,
+                    color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
                   ),
                   filled: true,
-                  fillColor: AppColors.surfaceVariant.withValues(alpha: 0.6),
+                  fillColor: isDark
+                      ? AppColors.surfaceVariantDark
+                      : AppColors.surfaceVariant.withValues(alpha: 0.6),
                   contentPadding: EdgeInsets.all(AppSpacing.sm.r),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(AppRadius.md.r),
                     borderSide: BorderSide(
-                      color: AppColors.borderColor.withValues(alpha: 0.4),
+                      color: isDark
+                          ? AppColors.borderColorDark
+                          : AppColors.borderColor.withValues(alpha: 0.4),
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(AppRadius.md.r),
                     borderSide: BorderSide(
-                      color: AppColors.borderColor.withValues(alpha: 0.4),
+                      color: isDark
+                          ? AppColors.borderColorDark
+                          : AppColors.borderColor.withValues(alpha: 0.4),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(

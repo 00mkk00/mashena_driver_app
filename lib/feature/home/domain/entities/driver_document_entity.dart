@@ -2,20 +2,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'driver_document_entity.freezed.dart';
 
-enum DriverDocType {
-  license,
-  insurance,
-  mechanic,
-  identity,
-  other,
-}
+enum DriverDocType { license, insurance, mechanic, identity, other }
 
-enum DriverDocStatus {
-  pending,
-  approved,
-  rejected,
-  expired,
-}
+enum DriverDocStatus { pending, approved, rejected, expired }
 
 @freezed
 class DriverDocumentEntity with _$DriverDocumentEntity {

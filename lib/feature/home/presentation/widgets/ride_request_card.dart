@@ -7,6 +7,7 @@ import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/core/utils/app_toast.dart';
 import 'package:mashena_driver_app/core/widgets/shimmer.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
@@ -56,6 +57,8 @@ class _RideRequestCardState extends State<RideRequestCard>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<RideRequestCubit, RideRequestState>(
       builder: (context, state) {
         return SlideTransition(
@@ -65,7 +68,7 @@ class _RideRequestCardState extends State<RideRequestCard>
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
               decoration: BoxDecoration(
-                color: AppColors.cardLight,
+                color: isDark ? AppColors.cardDark : AppColors.cardLight,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(AppRadius.xl.r),
                   bottom: Radius.circular(AppRadius.lg.r),
@@ -96,7 +99,9 @@ class _RideRequestCardState extends State<RideRequestCard>
                         : state.rideRequestEntity != null
                         ? _TripDetailsContent(ride: state.rideRequestEntity!)
                         : _TripDetailsError(
-                            message: state.errorMessage ?? S.of(context).rideRequestFailedToLoad,
+                            message:
+                                state.errorMessage ??
+                                S.of(context).rideRequestFailedToLoad,
                           ),
                   ),
                   // ── Action buttons always visible ──────────────────
@@ -113,18 +118,38 @@ class _RideRequestCardState extends State<RideRequestCard>
                             .read<RideRequestCubit>()
                             .state
                             .rideRequestId!;
-                        context.read<RideRequestCubit>().acceptRequest();
-                        context.read<SocketCubit>().acceptOffer(id);
-                        context.read<DriverStatusCubit>().acceptRide();
+                        final sent = context.read<SocketCubit>().acceptOffer(
+                          id,
+                        );
+                        if (sent) {
+                          context.read<RideRequestCubit>().acceptRequest();
+                          context.read<DriverStatusCubit>().acceptRide();
+                        } else {
+                          AppToast.show(
+                            context,
+                            message: S.of(context).commonError,
+                            type: AppToastType.error,
+                          );
+                        }
                       },
-                      onReject: () {
+                      onReject: () async {
                         final id = context
                             .read<RideRequestCubit>()
                             .state
                             .rideRequestId!;
-                        context.read<RideRequestCubit>().rejectRequest();
-                        context.read<SocketCubit>().rejectOffer(id);
-                        context.read<DriverStatusCubit>().rejectRide();
+                        final sent = context.read<SocketCubit>().rejectOffer(
+                          id,
+                        );
+                        if (sent) {
+                          context.read<RideRequestCubit>().rejectRequest();
+                          context.read<DriverStatusCubit>().rejectRide();
+                        } else {
+                          AppToast.show(
+                            context,
+                            message: S.of(context).commonError,
+                            type: AppToastType.error,
+                          );
+                        }
                       },
                     ),
                   ),
@@ -236,6 +261,7 @@ class _DragHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -246,7 +272,7 @@ class _DragHandle extends StatelessWidget {
             width: 36.w,
             height: 4.h,
             decoration: BoxDecoration(
-              color: AppColors.divider,
+              color: isDark ? AppColors.dividerDark : AppColors.divider,
               borderRadius: BorderRadius.circular(AppRadius.full.r),
             ),
           ),
@@ -271,14 +297,12 @@ class _CountdownBar extends StatelessWidget {
     final ratio = seconds / total;
     if (ratio > 0.5) return AppColors.online;
     if (ratio > 0.25) return AppColors.warning;
-    if (ratio == 0) {
-      context.read<DriverStatusCubit>.call().rejectRide();
-    }
     return AppColors.danger;
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
       child: Column(
@@ -289,7 +313,7 @@ class _CountdownBar extends StatelessWidget {
               Text(
                 S.of(context).rideRequestNew,
                 style: AppTextStyles.w600_16.copyWith(
-                  color: AppColors.borderColorDark,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
               ),
               Container(
@@ -313,7 +337,9 @@ class _CountdownBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.full.r),
             child: LinearProgressIndicator(
               value: seconds / total,
-              backgroundColor: AppColors.divider,
+              backgroundColor: isDark
+                  ? AppColors.dividerDark
+                  : AppColors.divider,
               valueColor: AlwaysStoppedAnimation<Color>(_barColor),
               minHeight: 5.h,
             ),

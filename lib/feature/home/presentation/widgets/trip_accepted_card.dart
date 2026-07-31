@@ -50,11 +50,13 @@ class TripAcceptedCard extends StatelessWidget {
         final isCanceling = rideState.isCancelingTrip;
         final isStarting = rideState.isStartingTrip;
 
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+
         return Container(
           margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           padding: EdgeInsets.all(AppSpacing.md.r),
           decoration: BoxDecoration(
-            color: AppColors.cardLight,
+            color: isDark ? AppColors.cardDark : AppColors.cardLight,
             borderRadius: BorderRadius.circular(AppRadius.lg.r),
             boxShadow: AppShadows.card,
             border: Border.all(
@@ -64,42 +66,50 @@ class TripAcceptedCard extends StatelessWidget {
           child: Column(
             children: [
               // ── Header ──────────────────────────────────────────
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm.w,
-                      vertical: AppSpacing.xs.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primarySurface,
-                      borderRadius: BorderRadius.circular(AppRadius.full.r),
-                    ),
-                    child: Text(
-                      isArrived ? S.of(context).tripArrivedCheck : S.of(context).tripAcceptedCheck,
-                      style: AppTextStyles.w700_12.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  if (trip != null)
-                    Text(
-                      S.of(context).tripId(trip.id),
-                      style: AppTextStyles.w600_12.copyWith(
-                        color: AppColors.cardDark,
-                      ),
-                    ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       padding: EdgeInsets.symmetric(
+              //         horizontal: AppSpacing.sm.w,
+              //         vertical: AppSpacing.xs.h,
+              //       ),
+              //       decoration: BoxDecoration(
+              //         color: AppColors.primarySurface,
+              //         borderRadius: BorderRadius.circular(AppRadius.full.r),
+              //       ),
+              //       child: Text(
+              //         isArrived ? S.of(context).tripArrivedCheck : S.of(context).tripAcceptedCheck,
+              //         style: AppTextStyles.w700_12.copyWith(
+              //           color: AppColors.primaryColor,
+              //         ),
+              //       ),
+              //     ),
+              //     const Spacer(),
+              //     if (trip != null)
+              //       Text(
+              //         S.of(context).tripId(trip.id),
+              //         style: AppTextStyles.w600_12.copyWith(
+              //           color: AppColors.cardDark,
+              //         ),
+              //       ),
+              //   ],
+              // ),
 
-              SizedBox(height: AppSpacing.sm.h),
-              Divider(color: AppColors.divider, height: 1),
-              SizedBox(height: AppSpacing.sm.h),
+              // SizedBox(height: AppSpacing.sm.h),
+              // Divider(color: AppColors.divider, height: 1),
+              // SizedBox(height: AppSpacing.sm.h),
 
               // ── Route ───────────────────────────────────────────
               if (trip != null) ...[
                 TripMetaRow(ride: trip),
+                SizedBox(height: AppSpacing.sm.h),
+
+                Divider(
+                  color: isDark ? AppColors.dividerDark : AppColors.divider,
+                  height: 1,
+                ),
+                SizedBox(height: AppSpacing.sm.h),
+
                 SizedBox(height: AppSpacing.sm.h),
                 RouteRow(trip: trip),
                 if (trip.stops.isNotEmpty) ...[

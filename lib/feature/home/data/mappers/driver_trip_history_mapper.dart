@@ -71,8 +71,6 @@ extension TripRatingMapper on TripRatingModel {
 
 extension TripRatingTagMapper on TripRatingTagModel {
   TripRatingTagEntity toEntity() {
-    return TripRatingTagEntity(
-      code: code,
-    );
+    return TripRatingTagEntity(code: code);
   }
 }

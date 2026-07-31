@@ -78,8 +78,8 @@ class RideHistoryCard extends StatelessWidget {
     if (m < 60) return S.of(context).historyDurationMins(m);
     final h = m ~/ 60;
     final rem = m % 60;
-    return rem == 0 
-        ? S.of(context).historyDurationHours(h) 
+    return rem == 0
+        ? S.of(context).historyDurationHours(h)
         : S.of(context).historyDurationHoursMins(h, rem);
   }
 
@@ -177,6 +177,8 @@ class _StatusAndFareRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -216,20 +218,22 @@ class _StatusAndFareRow extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: S.of(context).commonCurrencySyria,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-              TextSpan(
                 text: finalFare.toStringAsFixed(2),
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.onSurface,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                   letterSpacing: -0.5,
+                ),
+              ),
+              TextSpan(
+                text: ' ${S.of(context).commonCurrencySyria}',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                  color: isDark
+                      ? AppColors.primaryLight
+                      : AppColors.primaryColor,
                 ),
               ),
             ],
@@ -249,6 +253,8 @@ class _RouteBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -267,7 +273,7 @@ class _RouteBlock extends StatelessWidget {
               width: 1.r,
               height: 24.r,
               margin: EdgeInsets.symmetric(vertical: 2.r),
-              color: AppColors.divider,
+              color: isDark ? AppColors.dividerDark : AppColors.divider,
             ),
             Container(
               width: 8.r,
@@ -291,7 +297,7 @@ class _RouteBlock extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.onSurface,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
               ),
               SizedBox(height: 12.r),
@@ -302,7 +308,9 @@ class _RouteBlock extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.onSurfaceVariant,
+                  color: isDark
+                      ? AppColors.onSurfaceVariantDark
+                      : AppColors.onSurfaceVariant,
                 ),
               ),
             ],
@@ -343,26 +351,36 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: AppSpacing.xs.r,
         vertical: (AppSpacing.xs / 2).r,
       ),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant,
+        color: isDark ? AppColors.surfaceVariantDark : AppColors.surfaceVariant,
         borderRadius: BorderRadius.circular(AppRadius.sm.r),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12.r, color: AppColors.onSurfaceVariant),
+          Icon(
+            icon,
+            size: 12.r,
+            color: isDark
+                ? AppColors.onSurfaceVariantDark
+                : AppColors.onSurfaceVariant,
+          ),
           SizedBox(width: 4.r),
           Text(
             text,
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
-              color: AppColors.onSurfaceVariant,
+              color: isDark
+                  ? AppColors.onSurfaceVariantDark
+                  : AppColors.onSurfaceVariant,
             ),
           ),
         ],
@@ -385,23 +403,29 @@ class _RiderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.all(AppSpacing.sm.r),
       decoration: BoxDecoration(
-        color: AppColors.surfaceVariant.withValues(alpha: 0.5),
+        color: isDark
+            ? AppColors.surfaceVariantDark.withValues(alpha: 0.5)
+            : AppColors.surfaceVariant.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(AppRadius.md.r),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 16.r,
-            backgroundColor: AppColors.primarySurface,
+            backgroundColor: isDark
+                ? AppColors.primaryLight.withValues(alpha: 0.15)
+                : AppColors.primarySurface,
             child: Text(
               fullName.isNotEmpty ? fullName[0].toUpperCase() : '?',
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
-                color: AppColors.primaryColor,
+                color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
               ),
             ),
           ),
@@ -417,12 +441,17 @@ class _RiderRow extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.onSurface,
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
                   ),
                 ),
                 Text(
                   phoneNumber,
-                  style: TextStyle(fontSize: 12.sp, color: AppColors.textGrey),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
+                  ),
                 ),
               ],
             ),
@@ -436,7 +465,7 @@ class _RiderRow extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.onSurface,
+                  color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
               ),
             ],
@@ -500,7 +529,9 @@ class __ExpandableRatingSectionState extends State<_ExpandableRatingSection> {
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primaryColor,
+                        color: isDark
+                            ? AppColors.primaryLight
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ],
@@ -510,7 +541,9 @@ class __ExpandableRatingSectionState extends State<_ExpandableRatingSection> {
                       ? Icons.keyboard_arrow_up_rounded
                       : Icons.keyboard_arrow_down_rounded,
                   size: 20.r,
-                  color: AppColors.primaryColor,
+                  color: isDark
+                      ? AppColors.primaryLight
+                      : AppColors.primaryColor,
                 ),
               ],
             ),
@@ -571,6 +604,8 @@ class _RatingExchange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -583,7 +618,11 @@ class _RatingExchange extends StatelessWidget {
           ),
         ),
         SizedBox(width: AppSpacing.md.r),
-        Container(width: 1, height: 36.r, color: AppColors.divider),
+        Container(
+          width: 1,
+          height: 36.r,
+          color: isDark ? AppColors.dividerDark : AppColors.divider,
+        ),
         SizedBox(width: AppSpacing.md.r),
         Expanded(
           child: _ExchangeSide(
@@ -613,6 +652,7 @@ class _ExchangeSide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final hasTags = tags != null && tags!.isNotEmpty;
     final hasData = score != null || (comment?.isNotEmpty ?? false) || hasTags;
 
@@ -624,7 +664,7 @@ class _ExchangeSide extends StatelessWidget {
           style: TextStyle(
             fontSize: 11.sp,
             fontWeight: FontWeight.w500,
-            color: AppColors.textGrey,
+            color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
           ),
         ),
         SizedBox(height: 2.r),
@@ -648,7 +688,9 @@ class _ExchangeSide extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.onSurface,
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
                   ),
                 ),
               ],
@@ -661,7 +703,9 @@ class _ExchangeSide extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 12.sp,
-                color: AppColors.onSurfaceVariant,
+                color: isDark
+                    ? AppColors.onSurfaceVariantDark
+                    : AppColors.onSurfaceVariant,
                 height: 1.3,
               ),
             ),
@@ -676,10 +720,16 @@ class _ExchangeSide extends StatelessWidget {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.r, vertical: 2.r),
                   decoration: BoxDecoration(
-                    color: AppColors.primarySurface,
+                    color: isDark
+                        ? AppColors.primaryLight.withValues(alpha: 0.15)
+                        : AppColors.primarySurface,
                     borderRadius: BorderRadius.circular(AppRadius.full.r),
                     border: Border.all(
-                      color: AppColors.primaryColor.withValues(alpha: 0.25),
+                      color:
+                          (isDark
+                                  ? AppColors.primaryLight
+                                  : AppColors.primaryColor)
+                              .withValues(alpha: 0.25),
                     ),
                   ),
                   child: Row(
@@ -688,7 +738,9 @@ class _ExchangeSide extends StatelessWidget {
                       Icon(
                         Icons.local_offer_rounded,
                         size: 9.r,
-                        color: AppColors.primaryColor,
+                        color: isDark
+                            ? AppColors.primaryLight
+                            : AppColors.primaryColor,
                       ),
                       SizedBox(width: 3.r),
                       Text(
@@ -696,7 +748,9 @@ class _ExchangeSide extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.primaryColor,
+                          color: isDark
+                              ? AppColors.primaryLight
+                              : AppColors.primaryColor,
                         ),
                       ),
                     ],

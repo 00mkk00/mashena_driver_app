@@ -218,7 +218,6 @@ class RideRequestCubit extends Cubit<RideRequestState> {
 
     result.fold(
       (failure) {
-        
         emit(
           state.copyWith(
             isCompletingTrip: false,
@@ -227,7 +226,6 @@ class RideRequestCubit extends Cubit<RideRequestState> {
         );
       },
       (entity) {
-        
         emit(
           state.copyWith(
             isCompletingTrip: false,

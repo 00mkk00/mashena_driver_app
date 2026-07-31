@@ -15,7 +15,12 @@ class DriverDocumentsCubit extends Cubit<DriverDocumentsState> {
 
   Future<void> fetchDocuments({bool isRefresh = false}) async {
     if (!isRefresh) {
-      emit(state.copyWith(status: DriverDocumentsStatus.loading, errorMessage: null));
+      emit(
+        state.copyWith(
+          status: DriverDocumentsStatus.loading,
+          errorMessage: null,
+        ),
+      );
     }
 
     final result = await _getDriverDocumentsUseCase();
@@ -25,7 +30,8 @@ class DriverDocumentsCubit extends Cubit<DriverDocumentsState> {
         emit(
           state.copyWith(
             status: DriverDocumentsStatus.failure,
-            errorMessage: failure.rawMessage ?? 'Failed to load driver documents',
+            errorMessage:
+                failure.rawMessage ?? 'Failed to load driver documents',
           ),
         );
       },

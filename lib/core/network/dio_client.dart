@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 
 import 'api_exception.dart';
@@ -58,6 +59,15 @@ final class ApiClient {
             }
           }
           options.headers.remove('noAuth');
+
+          if (!options.headers.containsKey('Accept-Language')) {
+            final savedLocale = getIt<LocalStorage>().getString('app_locale');
+            options.headers['Accept-Language'] =
+                (savedLocale != null && savedLocale.isNotEmpty)
+                ? savedLocale
+                : PlatformDispatcher.instance.locale.languageCode;
+          }
+
           handler.next(options);
         },
         onError: (error, handler) async {
@@ -146,9 +156,17 @@ final class ApiClient {
     }
   }
 
-  Future<dynamic> get(String path, {Map<String, dynamic>? query}) async {
+  Future<dynamic> get(
+    String path, {
+    Map<String, dynamic>? query,
+    Options? options,
+  }) async {
     try {
-      final res = await _dio.get(path, queryParameters: query);
+      final res = await _dio.get(
+        path,
+        queryParameters: query,
+        options: options,
+      );
       return _handle(res);
     } on DioException catch (e) {
       throw _map(e);
@@ -159,9 +177,15 @@ final class ApiClient {
     String path, {
     dynamic body,
     Map<String, dynamic>? query,
+    Options? options,
   }) async {
     try {
-      final res = await _dio.post(path, data: body, queryParameters: query);
+      final res = await _dio.post(
+        path,
+        data: body,
+        queryParameters: query,
+        options: options,
+      );
       return _handle(res);
     } on DioException catch (e) {
       throw _map(e);
@@ -172,9 +196,15 @@ final class ApiClient {
     String path, {
     dynamic body,
     Map<String, dynamic>? query,
+    Options? options,
   }) async {
     try {
-      final res = await _dio.put(path, data: body, queryParameters: query);
+      final res = await _dio.put(
+        path,
+        data: body,
+        queryParameters: query,
+        options: options,
+      );
       return _handle(res);
     } on DioException catch (e) {
       throw _map(e);
@@ -185,9 +215,15 @@ final class ApiClient {
     String path, {
     dynamic body,
     Map<String, dynamic>? query,
+    Options? options,
   }) async {
     try {
-      final res = await _dio.patch(path, data: body, queryParameters: query);
+      final res = await _dio.patch(
+        path,
+        data: body,
+        queryParameters: query,
+        options: options,
+      );
       return _handle(res);
     } on DioException catch (e) {
       throw _map(e);
@@ -198,9 +234,15 @@ final class ApiClient {
     String path, {
     dynamic body,
     Map<String, dynamic>? query,
+    Options? options,
   }) async {
     try {
-      final res = await _dio.delete(path, data: body, queryParameters: query);
+      final res = await _dio.delete(
+        path,
+        data: body,
+        queryParameters: query,
+        options: options,
+      );
       return _handle(res);
     } on DioException catch (e) {
       throw _map(e);

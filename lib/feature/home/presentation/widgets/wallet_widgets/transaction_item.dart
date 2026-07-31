@@ -41,16 +41,21 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isCredit ? AppColors.online : AppColors.danger;
     final surface = isCredit
-        ? AppColors.onlineSurface
-        : AppColors.dangerSurface;
+        ? (isDark
+              ? AppColors.online.withValues(alpha: 0.15)
+              : AppColors.onlineSurface)
+        : (isDark
+              ? AppColors.danger.withValues(alpha: 0.15)
+              : AppColors.dangerSurface);
 
     return Container(
       margin: EdgeInsets.only(bottom: AppSpacing.sm.h),
       padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.md.r),
         boxShadow: AppShadows.card,
       ),
@@ -73,14 +78,16 @@ class TransactionItem extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.w600_14.copyWith(
-                    color: AppColors.onSurface,
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
                   ),
                 ),
                 SizedBox(height: 2.h),
                 Text(
                   subtitle,
                   style: AppTextStyles.w400_12.copyWith(
-                    color: AppColors.textGrey,
+                    color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
                   ),
                 ),
                 if (type != null && type!.isNotEmpty) ...[

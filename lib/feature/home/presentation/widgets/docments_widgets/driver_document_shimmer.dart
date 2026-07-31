@@ -23,7 +23,9 @@ class DriverDocumentShimmer extends StatelessWidget {
             color: isDark ? AppColors.cardDark : AppColors.cardLight,
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
-              color: isDark ? AppColors.borderColorDark : AppColors.borderColor.withValues(alpha: 0.3),
+              color: isDark
+                  ? AppColors.borderColorDark
+                  : AppColors.borderColor.withValues(alpha: 0.3),
             ),
           ),
           padding: EdgeInsets.all(16.r),

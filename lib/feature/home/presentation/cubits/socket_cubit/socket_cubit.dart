@@ -16,6 +16,9 @@ class SocketCubit extends Cubit<SocketState> {
 
   StreamSubscription<DriverStatusState>? _driverStatusSubscription;
 
+  /// Survives state resets (e.g., disconnect()); allows accept/reject after reconnect.
+  int? _cachedDriverId;
+
   SocketCubit({
     required SocketService service,
     required RideRequestCubit rideRequestCubit,
@@ -30,6 +33,7 @@ class SocketCubit extends Cubit<SocketState> {
     // ✅ Wire auto-reject callback — no circular dependency
     rideRequestCubit.onAutoReject = (rideRequestId) {
       rejectOffer(rideRequestId);
+      _driverStatusCubit.rejectRide();
     };
 
     // ✅ Listen to driver status changes
@@ -85,6 +89,9 @@ class SocketCubit extends Cubit<SocketState> {
 
     _service.onDriverRegistered((data) {
       final driverId = data['driverId'] as int?;
+      if (driverId != null) {
+        _cachedDriverId = driverId;
+      } // persist across reconnects
       emit(state.copyWith(status: SocketStatus.registered, driverId: driverId));
     });
 
@@ -133,20 +140,21 @@ class SocketCubit extends Cubit<SocketState> {
 
   // ─── Offer response ────────────────────────────────────────────────────────
 
-  void acceptOffer(int rideRequestId) {
-    final driverId = state.driverId;
-    if (driverId == null) return;
-    _service.respondToOffer(
+  bool acceptOffer(int rideRequestId) {
+    // Prefer live state; fall back to cached value that survives disconnect()
+    final driverId = state.driverId ?? _cachedDriverId;
+    if (driverId == null) return false;
+    return _service.respondToOffer(
       rideRequestId: rideRequestId,
       driverId: driverId,
       accepted: true,
     );
   }
 
-  void rejectOffer(int rideRequestId) {
-    final driverId = state.driverId;
-    if (driverId == null) return;
-    _service.respondToOffer(
+  bool rejectOffer(int rideRequestId) {
+    final driverId = state.driverId ?? _cachedDriverId;
+    if (driverId == null) return false;
+    return _service.respondToOffer(
       rideRequestId: rideRequestId,
       driverId: driverId,
       accepted: false,

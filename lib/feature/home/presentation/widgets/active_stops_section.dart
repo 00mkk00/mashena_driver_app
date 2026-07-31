@@ -45,9 +45,13 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.warningSurface,
+        color: isDark
+            ? AppColors.warning.withValues(alpha: 0.15)
+            : AppColors.warningSurface,
         borderRadius: BorderRadius.circular(AppRadius.md.r),
         border: Border.all(color: AppColors.warning.withValues(alpha: 0.25)),
       ),
@@ -82,7 +86,12 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
                   ),
                   SizedBox(width: AppSpacing.xs.w),
                   Text(
-                    S.of(context).rideRequestStopsAlongTheWay(widget.stops.length, widget.stops.length > 1 ? 's' : ''),
+                    S
+                        .of(context)
+                        .rideRequestStopsAlongTheWay(
+                          widget.stops.length,
+                          widget.stops.length > 1 ? 's' : '',
+                        ),
                     style: AppTextStyles.w600_12.copyWith(
                       color: AppColors.warningDark,
                     ),
@@ -117,7 +126,7 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
                 ),
                 padding: EdgeInsets.all(AppSpacing.sm.r),
                 decoration: BoxDecoration(
-                  color: AppColors.cardLight,
+                  color: isDark ? AppColors.cardDark : AppColors.cardLight,
                   borderRadius: BorderRadius.circular(AppRadius.sm.r),
                 ),
                 child: Column(
@@ -188,7 +197,9 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
                                   Text(
                                     stop.address,
                                     style: AppTextStyles.w400_12.copyWith(
-                                      color: AppColors.onSurface,
+                                      color: isDark
+                                          ? AppColors.onSurfaceDark
+                                          : AppColors.onSurface,
                                       height: 1.4,
                                     ),
                                     maxLines: 2,

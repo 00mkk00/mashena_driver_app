@@ -16,7 +16,8 @@ class ImageUrlHelper {
     if (origin.isEmpty && Env.baseUrl.isNotEmpty) {
       final uri = Uri.tryParse(Env.baseUrl);
       if (uri != null) {
-        origin = '${uri.scheme}://${uri.host}${uri.hasPort ? ':${uri.port}' : ''}';
+        origin =
+            '${uri.scheme}://${uri.host}${uri.hasPort ? ':${uri.port}' : ''}';
       }
     }
 

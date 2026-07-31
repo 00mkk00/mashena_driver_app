@@ -21,6 +21,7 @@ class DriverStatusToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isOnline = state.isOnline;
     final isTransitioning = state.status == DriverStatus.goingOnline;
 
@@ -31,20 +32,17 @@ class DriverStatusToggle extends StatelessWidget {
         curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
-          vertical: AppSpacing
-              .sm, // ✅ was: AppSpacing.sm + 2 — no hardcoded arithmetic
+          vertical: AppSpacing.sm,
         ),
         decoration: BoxDecoration(
           color: isOnline
               ? AppColors.primaryColor
-              : AppColors
-                    .cardLight, // ✅ was: theme.colorScheme.onPrimary — use card token for off state bg
+              : (isDark ? AppColors.cardDark : AppColors.cardLight),
           borderRadius: BorderRadius.circular(AppRadius.full),
           border: Border.all(
             color: isOnline
                 ? AppColors.primaryColor
-                : AppColors
-                      .borderColor, // ✅ was: AppColors.divider — border uses borderColor token
+                : (isDark ? AppColors.borderColorDark : AppColors.borderColor),
             width: 1.5,
           ),
           boxShadow: isOnline ? AppShadows.button : AppShadows.card,
@@ -67,20 +65,22 @@ class DriverStatusToggle extends StatelessWidget {
                           height: 16,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppColors
-                                .onSurfaceDark, // ✅ was: theme.colorScheme.onPrimary — use explicit token
+                            color: AppColors.onSurfaceDark,
                           ),
                         ),
                       ),
                     )
                   : Text(
                       key: ValueKey(isOnline),
-                      isOnline ? S.of(context).homeStatusOnline : S.of(context).homeStatusGoOnline,
+                      isOnline
+                          ? S.of(context).homeStatusOnline
+                          : S.of(context).homeStatusGoOnline,
                       style: AppTextStyles.w700_12.copyWith(
                         color: isOnline
-                            ? AppColors
-                                  .onSurfaceDark // ✅ was: AppColors.surfaceVariant — text on dark bg uses onSurfaceDark
-                            : AppColors.onSurface,
+                            ? AppColors.onSurfaceDark
+                            : (isDark
+                                  ? AppColors.onSurfaceDark
+                                  : AppColors.onSurface),
                       ),
                     ),
             ),

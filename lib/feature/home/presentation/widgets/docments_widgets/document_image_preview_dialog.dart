@@ -15,12 +15,17 @@ class DocumentImagePreviewDialog extends StatelessWidget {
     required this.title,
   });
 
-  static void show(BuildContext context, {required String imageUrl, required String title}) {
+  static void show(
+    BuildContext context, {
+    required String imageUrl,
+    required String title,
+  }) {
     final formattedUrl = ImageUrlHelper.formatImageUrl(imageUrl);
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (context) => DocumentImagePreviewDialog(imageUrl: formattedUrl, title: title),
+      builder: (context) =>
+          DocumentImagePreviewDialog(imageUrl: formattedUrl, title: title),
     );
   }
 
@@ -57,7 +62,9 @@ class DocumentImagePreviewDialog extends StatelessWidget {
                     child: Text(
                       title,
                       style: AppTextStyles.w600_16.copyWith(
-                        color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+                        color: isDark
+                            ? AppColors.onSurfaceDark
+                            : AppColors.onSurface,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -67,7 +74,9 @@ class DocumentImagePreviewDialog extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                     icon: Icon(
                       Icons.close_rounded,
-                      color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+                      color: isDark
+                          ? AppColors.onSurfaceDark
+                          : AppColors.onSurface,
                       size: 24.r,
                     ),
                   ),
@@ -92,7 +101,7 @@ class DocumentImagePreviewDialog extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
+                                    loadingProgress.expectedTotalBytes!
                               : null,
                           color: AppColors.primaryColor,
                         ),

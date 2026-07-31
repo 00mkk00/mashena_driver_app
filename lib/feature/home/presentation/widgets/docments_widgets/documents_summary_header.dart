@@ -14,9 +14,15 @@ class DocumentsSummaryHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final verified = documents.where((d) => d.status == DriverDocStatus.approved).length;
-    final pending = documents.where((d) => d.status == DriverDocStatus.pending).length;
-    final rejected = documents.where((d) => d.status == DriverDocStatus.rejected).length;
+    final verified = documents
+        .where((d) => d.status == DriverDocStatus.approved)
+        .length;
+    final pending = documents
+        .where((d) => d.status == DriverDocStatus.pending)
+        .length;
+    final rejected = documents
+        .where((d) => d.status == DriverDocStatus.rejected)
+        .length;
 
     return Container(
       width: double.infinity,
@@ -25,7 +31,9 @@ class DocumentsSummaryHeader extends StatelessWidget {
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? AppColors.borderColorDark : AppColors.borderColor.withValues(alpha: 0.3),
+          color: isDark
+              ? AppColors.borderColorDark
+              : AppColors.borderColor.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
@@ -115,9 +123,7 @@ class DocumentsSummaryHeader extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark ? color.withValues(alpha: 0.12) : bgColor,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(
-            color: color.withValues(alpha: 0.25),
-          ),
+          border: Border.all(color: color.withValues(alpha: 0.25)),
         ),
         child: Column(
           children: [
@@ -136,7 +142,9 @@ class DocumentsSummaryHeader extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.w500_12.copyWith(
-                color: isDark ? AppColors.onSurfaceDark.withValues(alpha: 0.8) : AppColors.onSurfaceVariant,
+                color: isDark
+                    ? AppColors.onSurfaceDark.withValues(alpha: 0.8)
+                    : AppColors.onSurfaceVariant,
               ),
             ),
           ],

@@ -64,7 +64,7 @@ class SocketService {
     _emit('driver:update-location', {'lat': lat, 'lng': lng});
   }
 
-  void respondToOffer({
+  bool respondToOffer({
     required int rideRequestId,
     required int driverId,
     required bool accepted,
@@ -72,7 +72,7 @@ class SocketService {
     _log(
       'Emitting → driver:offer:response { rideRequestId: $rideRequestId, driverId: $driverId, accepted: $accepted }',
     );
-    _emit('driver:offer:response', {
+    return _emit('driver:offer:response', {
       'rideRequestId': rideRequestId,
       'driverId': driverId,
       'accepted': accepted,
@@ -150,11 +150,13 @@ class SocketService {
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
 
-  void _emit(String event, [dynamic data]) {
+  bool _emit(String event, [dynamic data]) {
     if (_socket?.connected == true) {
       data != null ? _socket!.emit(event, data) : _socket!.emit(event);
+      return true;
     } else {
       _log('⚠️ Cannot emit "$event" — socket not connected');
+      return false;
     }
   }
 

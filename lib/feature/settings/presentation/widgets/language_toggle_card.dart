@@ -26,7 +26,9 @@ class LanguageToggleCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(AppRadius.full.r),
-          border: Border.all(color: AppColors.borderColor.withValues(alpha: 0.5)),
+          border: Border.all(
+            color: AppColors.borderColor.withValues(alpha: 0.5),
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

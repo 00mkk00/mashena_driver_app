@@ -18,10 +18,7 @@ class RatingTagsCubit extends Cubit<RatingTagsState> {
       emit(state.copyWith(isLoadingMore: true));
     } else {
       emit(
-        state.copyWith(
-          status: RatingTagsStatus.loading,
-          errorMessage: null,
-        ),
+        state.copyWith(status: RatingTagsStatus.loading, errorMessage: null),
       );
     }
 
@@ -41,10 +38,9 @@ class RatingTagsCubit extends Cubit<RatingTagsState> {
         );
       },
       (newTags) {
-        final currentTags =
-            loadMore
-                ? List<RatingTagEntity>.from(state.tags)
-                : <RatingTagEntity>[];
+        final currentTags = loadMore
+            ? List<RatingTagEntity>.from(state.tags)
+            : <RatingTagEntity>[];
         currentTags.addAll(newTags);
         final hasMore = newTags.length >= _limit;
 

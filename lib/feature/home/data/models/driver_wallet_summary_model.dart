@@ -32,10 +32,8 @@ class EarningsSummaryModel with _$EarningsSummaryModel {
 
 @freezed
 class EarningPeriodModel with _$EarningPeriodModel {
-  const factory EarningPeriodModel({
-    num? amount,
-    int? tripsCount,
-  }) = _EarningPeriodModel;
+  const factory EarningPeriodModel({num? amount, int? tripsCount}) =
+      _EarningPeriodModel;
 
   factory EarningPeriodModel.fromJson(Map<String, dynamic> json) =>
       _$EarningPeriodModelFromJson(json);

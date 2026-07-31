@@ -68,7 +68,5 @@ class TripRatingEntity with _$TripRatingEntity {
 
 @freezed
 class TripRatingTagEntity with _$TripRatingTagEntity {
-  const factory TripRatingTagEntity({
-    String? code,
-  }) = _TripRatingTagEntity;
+  const factory TripRatingTagEntity({String? code}) = _TripRatingTagEntity;
 }

@@ -18,6 +18,7 @@ class FabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Tooltip(
       message: tooltip,
       child: GestureDetector(
@@ -26,11 +27,15 @@ class FabButton extends StatelessWidget {
           width: 44.r,
           height: 44.r,
           decoration: BoxDecoration(
-            color: AppColors.cardLight,
+            color: isDark ? AppColors.cardDark : AppColors.cardLight,
             shape: BoxShape.circle,
             boxShadow: AppShadows.card,
           ),
-          child: Icon(icon, size: 20.r, color: AppColors.onSurface),
+          child: Icon(
+            icon,
+            size: 20.r,
+            color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+          ),
         ),
       ),
     );

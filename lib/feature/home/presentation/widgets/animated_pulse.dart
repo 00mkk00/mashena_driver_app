@@ -28,7 +28,7 @@ class AnimatedPulse extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: pulseColor.withValues(
-                 alpha:  1 - value,
+                  alpha: 1 - value,
                 ), // Fades out as it expands
               ),
             ),

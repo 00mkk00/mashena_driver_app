@@ -35,8 +35,10 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Dialog(
-      backgroundColor: AppColors.surfaceVariant,
+      backgroundColor: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.xl.r),
       ),
@@ -48,7 +50,7 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
           AppSpacing.xl.h,
         ),
         decoration: BoxDecoration(
-          color: AppColors.surfaceVariant,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: BorderRadius.circular(AppRadius.xl.r),
           boxShadow: AppShadows.card,
         ),
@@ -61,12 +63,16 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                 Container(
                   padding: EdgeInsets.all(AppSpacing.sm.r),
                   decoration: BoxDecoration(
-                    color: AppColors.primarySurface,
+                    color: isDark
+                        ? AppColors.primaryLight.withValues(alpha: 0.15)
+                        : AppColors.primarySurface,
                     borderRadius: BorderRadius.circular(AppRadius.sm.r),
                   ),
                   child: Icon(
                     Icons.radar_rounded,
-                    color: AppColors.primaryColor,
+                    color: isDark
+                        ? AppColors.primaryLight
+                        : AppColors.primaryColor,
                     size: 20.r,
                   ),
                 ),
@@ -76,7 +82,7 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                   children: [
                     Text(
                       S.of(context).radiusTitle,
-                      style: AppTextStyles.w700_18.copyWith(
+                      style: AppTextStyles.w700_16.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
@@ -84,7 +90,9 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                     Text(
                       S.of(context).radiusSubtitle,
                       style: AppTextStyles.w400_12.copyWith(
-                        color: AppColors.textGrey,
+                        color: isDark
+                            ? AppColors.textGreyDark
+                            : AppColors.textGrey,
                       ),
                     ),
                   ],
@@ -92,18 +100,19 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                 const Spacer(),
                 // Live km badge
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md.w,
-                    vertical: AppSpacing.sm.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.primarySurface,
+                    color: isDark
+                        ? AppColors.primaryLight.withValues(alpha: 0.15)
+                        : AppColors.primarySurface,
                     borderRadius: BorderRadius.circular(AppRadius.md.r),
                   ),
                   child: Text(
                     S.of(context).radiusKm(_selected),
-                    style: AppTextStyles.w700_20.copyWith(
-                      color: AppColors.primaryColor,
+                    style: AppTextStyles.w700_16.copyWith(
+                      color: isDark
+                          ? AppColors.primaryLight
+                          : AppColors.primaryColor,
                     ),
                   ),
                 ),
@@ -134,13 +143,21 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                         ),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? AppColors.primaryColor
-                              : AppColors.primarySurface,
+                              ? (isDark
+                                    ? AppColors.primaryLight
+                                    : AppColors.primaryColor)
+                              : (isDark
+                                    ? AppColors.surfaceVariantDark
+                                    : AppColors.primarySurface),
                           borderRadius: BorderRadius.circular(AppRadius.full.r),
                           border: Border.all(
                             color: isSelected
-                                ? AppColors.primaryColor
-                                : AppColors.borderColor,
+                                ? (isDark
+                                      ? AppColors.primaryLight
+                                      : AppColors.primaryColor)
+                                : (isDark
+                                      ? AppColors.borderColorDark
+                                      : AppColors.borderColor),
                           ),
                         ),
                         child: Text(
@@ -148,7 +165,9 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                           style: AppTextStyles.w600_14.copyWith(
                             color: isSelected
                                 ? Colors.white
-                                : AppColors.onSurface,
+                                : (isDark
+                                      ? AppColors.onSurfaceDark
+                                      : AppColors.onSurface),
                           ),
                         ),
                       ),
@@ -217,9 +236,17 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
 class _RadiusShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark
+        ? AppColors.borderColorDark
+        : AppColors.borderColor;
+    final highlightColor = isDark
+        ? AppColors.surfaceVariantDark
+        : AppColors.primarySurface;
+
     return Shimmer.fromColors(
-      baseColor: AppColors.borderColor,
-      highlightColor: AppColors.primarySurface,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Wrap(
         spacing: AppSpacing.sm.w,
         runSpacing: AppSpacing.sm.h,
@@ -231,7 +258,7 @@ class _RadiusShimmer extends StatelessWidget {
             width: width,
             height: 36.h,
             decoration: BoxDecoration(
-              color: AppColors.borderColor,
+              color: baseColor,
               borderRadius: BorderRadius.circular(AppRadius.full.r),
             ),
           );

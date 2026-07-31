@@ -67,11 +67,13 @@ class TripSummarySheet extends StatelessWidget {
   // }
 
   Widget _buildBreakdownRow(
+    BuildContext context,
     String title,
     double amount, {
     bool isDiscount = false,
     bool isTotal = false,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
@@ -80,17 +82,29 @@ class TripSummarySheet extends StatelessWidget {
           Text(
             title,
             style: isTotal
-                ? AppTextStyles.w600_14.copyWith(color: AppColors.darkScaffold)
-                : AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
+                ? AppTextStyles.w600_14.copyWith(
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
+                  )
+                : AppTextStyles.w400_12.copyWith(
+                    color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
+                  ),
           ),
           Text(
             '${isDiscount ? '-' : ''}${_formatFare(amount.abs())}',
             style: isTotal
-                ? AppTextStyles.w700_16.copyWith(color: AppColors.primaryColor)
+                ? AppTextStyles.w700_16.copyWith(
+                    color: isDark
+                        ? AppColors.primaryLight
+                        : AppColors.primaryColor,
+                  )
                 : AppTextStyles.w600_12.copyWith(
                     color: isDiscount
                         ? AppColors.danger
-                        : AppColors.darkScaffold,
+                        : (isDark
+                              ? AppColors.onSurfaceDark
+                              : AppColors.onSurface),
                   ),
           ),
         ],
@@ -100,7 +114,7 @@ class TripSummarySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final completedTime = _formatCompletedTime(summary.completedAt);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocProvider(
       create: (context) => getIt.get<RideRequestCubit>(),
@@ -111,7 +125,7 @@ class TripSummarySheet extends StatelessWidget {
         ),
         padding: EdgeInsets.all(AppSpacing.lg.r),
         decoration: BoxDecoration(
-          color: AppColors.cardLight,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: BorderRadius.circular(AppRadius.xl.r),
           boxShadow: AppShadows.card,
         ),
@@ -120,87 +134,19 @@ class TripSummarySheet extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  // mainAxisSize: MainAxisSize.max,
                   children: [
                     // ── Bottom Sheet Drag Handle ─────────────────────────
                     Container(
                       width: 40.w,
                       height: 4.h,
                       decoration: BoxDecoration(
-                        color: AppColors.textGrey.withValues(alpha: 0.3),
+                        color: isDark
+                            ? AppColors.dividerDark
+                            : AppColors.textGrey.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(AppRadius.full.r),
                       ),
                     ),
                     SizedBox(height: AppSpacing.md.h),
-
-                    // // ── Header Icon & Title ─────────────────────────────
-                    // Container(
-                    //   width: 64.r,
-                    //   height: 64.r,
-                    //   decoration: BoxDecoration(
-                    //     color: AppColors.onlineSurface,
-                    //     shape: BoxShape.circle,
-                    //     boxShadow: [
-                    //       BoxShadow(
-                    //         color: AppColors.online.withValues(alpha: 0.2),
-                    //         blurRadius: 16,
-                    //         spreadRadius: 2,
-                    //       ),
-                    //     ],
-                    //   ),
-                    //   child: Icon(
-                    //     Icons.check_circle_rounded,
-                    //     color: AppColors.online,
-                    //     size: 36.r,
-                    //   ),
-                    // ),
-                    // SizedBox(height: AppSpacing.sm.h),
-
-                    // Text(
-                    //   'Trip Completed!',
-                    //   style: AppTextStyles.w700_18.copyWith(
-                    //     color: AppColors.darkScaffold,
-                    //   ),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // if (completedTime.isNotEmpty) ...[
-                    //   SizedBox(height: AppSpacing.xs.h),
-                    //   Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       // if (summary.tripId != null)
-                    //       //   Container(
-                    //       //     padding: EdgeInsets.symmetric(
-                    //       //       horizontal: AppSpacing.xs.w * 1.5,
-                    //       //       vertical: 2.h,
-                    //       //     ),
-                    //       //     decoration: BoxDecoration(
-                    //       //       color: AppColors.primarySurface,
-                    //       //       borderRadius: BorderRadius.circular(AppRadius.sm.r),
-                    //       //     ),
-                    //       //     child: Text(
-                    //       //       'Trip #${summary.tripId}',
-                    //       //       style: AppTextStyles.w600_12.copyWith(
-                    //       //         color: AppColors.primaryColor,
-                    //       //       ),
-                    //       //     ),
-                    //       //   ),
-                    //       if (summary.tripId != null && completedTime.isNotEmpty)
-                    //         // SizedBox(width: AppSpacing.xs.w * 1.5),
-                    //         if (completedTime.isNotEmpty)
-                    //           Text(
-                    //             'at $completedTime',
-                    //             style: AppTextStyles.w400_12.copyWith(
-                    //               color: AppColors.textGrey,
-                    //             ),
-                    //           ),
-                    //     ],
-                    //   ),
-                    // ],
-
-                    // SizedBox(height: AppSpacing.lg.h),
-                    // Divider(color: AppColors.divider, height: 1),
-                    // SizedBox(height: AppSpacing.lg.h),
 
                     // ── Total Fare Banner ────────────────────────────────
                     Container(
@@ -259,16 +205,20 @@ class TripSummarySheet extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.all(AppSpacing.md.r),
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceVariant.withValues(
-                                alpha: 0.6,
-                              ),
+                              color: isDark
+                                  ? AppColors.surfaceVariantDark
+                                  : AppColors.surfaceVariant.withValues(
+                                      alpha: 0.6,
+                                    ),
                               borderRadius: BorderRadius.circular(
                                 AppRadius.md.r,
                               ),
                               border: Border.all(
-                                color: AppColors.borderColor.withValues(
-                                  alpha: 0.4,
-                                ),
+                                color: isDark
+                                    ? AppColors.borderColorDark
+                                    : AppColors.borderColor.withValues(
+                                        alpha: 0.4,
+                                      ),
                               ),
                             ),
                             child: Row(
@@ -277,14 +227,20 @@ class TripSummarySheet extends StatelessWidget {
                                   width: 36.r,
                                   height: 36.r,
                                   decoration: BoxDecoration(
-                                    color: AppColors.primarySurface,
+                                    color: isDark
+                                        ? AppColors.primaryLight.withValues(
+                                            alpha: 0.15,
+                                          )
+                                        : AppColors.primarySurface,
                                     borderRadius: BorderRadius.circular(
                                       AppRadius.sm.r,
                                     ),
                                   ),
                                   child: Icon(
                                     Icons.route_rounded,
-                                    color: AppColors.primaryColor,
+                                    color: isDark
+                                        ? AppColors.primaryLight
+                                        : AppColors.primaryColor,
                                     size: 20.r,
                                   ),
                                 ),
@@ -297,14 +253,21 @@ class TripSummarySheet extends StatelessWidget {
                                       Text(
                                         S.of(context).tripSummaryDistance,
                                         style: AppTextStyles.w400_10.copyWith(
-                                          color: AppColors.textGrey,
+                                          color: isDark
+                                              ? AppColors.textGreyDark
+                                              : AppColors.textGrey,
                                         ),
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
-                                        _formatDistance(context, summary.distanceKm),
+                                        _formatDistance(
+                                          context,
+                                          summary.distanceKm,
+                                        ),
                                         style: AppTextStyles.w600_14.copyWith(
-                                          color: AppColors.darkScaffold,
+                                          color: isDark
+                                              ? AppColors.onSurfaceDark
+                                              : AppColors.onSurface,
                                         ),
                                       ),
                                     ],
@@ -322,16 +285,20 @@ class TripSummarySheet extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.all(AppSpacing.md.r),
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceVariant.withValues(
-                                alpha: 0.6,
-                              ),
+                              color: isDark
+                                  ? AppColors.surfaceVariantDark
+                                  : AppColors.surfaceVariant.withValues(
+                                      alpha: 0.6,
+                                    ),
                               borderRadius: BorderRadius.circular(
                                 AppRadius.md.r,
                               ),
                               border: Border.all(
-                                color: AppColors.borderColor.withValues(
-                                  alpha: 0.4,
-                                ),
+                                color: isDark
+                                    ? AppColors.borderColorDark
+                                    : AppColors.borderColor.withValues(
+                                        alpha: 0.4,
+                                      ),
                               ),
                             ),
                             child: Row(
@@ -340,7 +307,11 @@ class TripSummarySheet extends StatelessWidget {
                                   width: 36.r,
                                   height: 36.r,
                                   decoration: BoxDecoration(
-                                    color: AppColors.warningSurface,
+                                    color: isDark
+                                        ? AppColors.warning.withValues(
+                                            alpha: 0.15,
+                                          )
+                                        : AppColors.warningSurface,
                                     borderRadius: BorderRadius.circular(
                                       AppRadius.sm.r,
                                     ),
@@ -360,14 +331,21 @@ class TripSummarySheet extends StatelessWidget {
                                       Text(
                                         S.of(context).tripSummaryDuration,
                                         style: AppTextStyles.w400_10.copyWith(
-                                          color: AppColors.textGrey,
+                                          color: isDark
+                                              ? AppColors.textGreyDark
+                                              : AppColors.textGrey,
                                         ),
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
-                                        _formatDuration(context, summary.durationSec),
+                                        _formatDuration(
+                                          context,
+                                          summary.durationSec,
+                                        ),
                                         style: AppTextStyles.w600_14.copyWith(
-                                          color: AppColors.darkScaffold,
+                                          color: isDark
+                                              ? AppColors.onSurfaceDark
+                                              : AppColors.onSurface,
                                         ),
                                       ),
                                     ],
@@ -387,24 +365,28 @@ class TripSummarySheet extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(AppSpacing.md.r),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceVariant.withValues(
-                            alpha: 0.6,
-                          ),
+                          color: isDark
+                              ? AppColors.surfaceVariantDark
+                              : AppColors.surfaceVariant.withValues(alpha: 0.6),
                           borderRadius: BorderRadius.circular(AppRadius.md.r),
                           border: Border.all(
-                            color: AppColors.borderColor.withValues(alpha: 0.4),
+                            color: isDark
+                                ? AppColors.borderColorDark
+                                : AppColors.borderColor.withValues(alpha: 0.4),
                           ),
                         ),
                         child: Column(
                           children: [
                             if (summary.originalFare != null)
                               _buildBreakdownRow(
+                                context,
                                 S.of(context).tripSummaryOriginalFare,
                                 summary.originalFare!,
                               ),
                             if (summary.discountAmount != null &&
                                 summary.discountAmount! > 0)
                               _buildBreakdownRow(
+                                context,
                                 '${S.of(context).tripSummaryDiscount}${summary.appliedCoupon == true ? S.of(context).tripSummaryCoupon : ''}',
                                 summary.discountAmount!,
                                 isDiscount: true,
@@ -412,6 +394,7 @@ class TripSummarySheet extends StatelessWidget {
                             if (summary.platformCommission != null &&
                                 summary.platformCommission! > 0)
                               _buildBreakdownRow(
+                                context,
                                 S.of(context).tripSummaryCommission,
                                 summary.platformCommission!,
                                 isDiscount: true,
@@ -419,10 +402,13 @@ class TripSummarySheet extends StatelessWidget {
                             if (summary.finalFare != null &&
                                 summary.platformCommission != null) ...[
                               Divider(
-                                color: AppColors.divider,
+                                color: isDark
+                                    ? AppColors.dividerDark
+                                    : AppColors.divider,
                                 height: AppSpacing.md.h * 2,
                               ),
                               _buildBreakdownRow(
+                                context,
                                 S.of(context).tripSummaryEarnings,
                                 summary.finalFare! -
                                     summary.platformCommission!,
@@ -525,7 +511,9 @@ class TripSummarySheet extends StatelessWidget {
                           )
                         : Icon(Icons.star_rounded, size: 20.r),
                     label: Text(
-                      state.isRatingTrip ? S.of(context).commonSubmitting : S.of(context).ratingRateRider,
+                      state.isRatingTrip
+                          ? S.of(context).commonSubmitting
+                          : S.of(context).ratingRateRider,
                       style: AppTextStyles.w600_14.copyWith(
                         color: AppColors.primaryColor,
                       ),

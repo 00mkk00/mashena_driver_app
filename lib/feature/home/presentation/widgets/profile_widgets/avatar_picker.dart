@@ -20,6 +20,8 @@ class AvatarPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Center(
       child: Stack(
         children: [
@@ -28,9 +30,13 @@ class AvatarPicker extends StatelessWidget {
             height: 100.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.primarySurface,
+              color: isDark
+                  ? AppColors.primaryLight.withValues(alpha: 0.15)
+                  : AppColors.primarySurface,
               border: Border.all(
-                color: AppColors.primaryColor.withValues(alpha: 0.3),
+                color:
+                    (isDark ? AppColors.primaryLight : AppColors.primaryColor)
+                        .withValues(alpha: 0.3),
                 width: 2.5,
               ),
               boxShadow: AppShadows.card,
@@ -43,7 +49,9 @@ class AvatarPicker extends StatelessWidget {
                     child: Text(
                       initials,
                       style: AppTextStyles.w700_24.copyWith(
-                        color: AppColors.primaryColor,
+                        color: isDark
+                            ? AppColors.primaryLight
+                            : AppColors.primaryColor,
                       ),
                     ),
                   ),
@@ -58,10 +66,14 @@ class AvatarPicker extends StatelessWidget {
                   width: 32.r,
                   height: 32.r,
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
+                    color: isDark
+                        ? AppColors.primaryLight
+                        : AppColors.primaryColor,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppColors.lightScaffold,
+                      color: isDark
+                          ? AppColors.darkScaffold
+                          : AppColors.lightScaffold,
                       width: 2,
                     ),
                     boxShadow: AppShadows.card,
@@ -69,7 +81,7 @@ class AvatarPicker extends StatelessWidget {
                   child: Icon(
                     Icons.camera_alt_rounded,
                     size: 16.r,
-                    color: Colors.white,
+                    color: isDark ? AppColors.darkScaffold : Colors.white,
                   ),
                 ),
               ),

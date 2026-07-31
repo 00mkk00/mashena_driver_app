@@ -6,11 +6,13 @@ class DriverWalletCubit extends Cubit<DriverWalletState> {
   final GetDriverWalletSummaryUseCase _getDriverWalletSummaryUseCase;
 
   DriverWalletCubit(this._getDriverWalletSummaryUseCase)
-      : super(const DriverWalletState());
+    : super(const DriverWalletState());
 
   Future<void> getWalletSummary({bool isRefresh = false}) async {
     if (!isRefresh) {
-      emit(state.copyWith(status: DriverWalletStatus.loading, errorMessage: null));
+      emit(
+        state.copyWith(status: DriverWalletStatus.loading, errorMessage: null),
+      );
     }
 
     final result = await _getDriverWalletSummaryUseCase();

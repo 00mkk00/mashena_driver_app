@@ -9,13 +9,15 @@ import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 
 void showCancelTripDialog(BuildContext context) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
   showDialog(
     context: context,
     builder: (dialogCtx) => Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg.r),
       ),
-      backgroundColor: AppColors.cardLight,
+      backgroundColor: isDark ? AppColors.cardDark : AppColors.cardLight,
       elevation: 0,
       child: Padding(
         padding: EdgeInsets.all(AppSpacing.lg.r),
@@ -40,7 +42,9 @@ void showCancelTripDialog(BuildContext context) {
             // Title
             Text(
               S.of(context).tripCancelTitle,
-              style: AppTextStyles.w700_18.copyWith(color: AppColors.onSurface),
+              style: AppTextStyles.w700_18.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
             ),
             SizedBox(height: AppSpacing.sm.h),
 
@@ -49,7 +53,7 @@ void showCancelTripDialog(BuildContext context) {
               S.of(context).tripCancelConfirm,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_14.copyWith(
-                color: AppColors.textGrey,
+                color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
                 height: 1.5,
               ),
             ),
@@ -63,7 +67,11 @@ void showCancelTripDialog(BuildContext context) {
                     onPressed: () => Navigator.pop(dialogCtx),
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 12.h),
-                      side: const BorderSide(color: AppColors.borderColor),
+                      side: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.md.r),
                       ),
@@ -71,7 +79,9 @@ void showCancelTripDialog(BuildContext context) {
                     child: Text(
                       S.of(context).tripCancelNo,
                       style: AppTextStyles.w600_14.copyWith(
-                        color: AppColors.onSurface,
+                        color: isDark
+                            ? AppColors.onSurfaceDark
+                            : AppColors.onSurface,
                       ),
                     ),
                   ),

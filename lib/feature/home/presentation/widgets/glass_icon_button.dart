@@ -19,6 +19,7 @@ class GlassIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final buttonSize = size ?? 44.r;
 
     return GestureDetector(
@@ -27,11 +28,17 @@ class GlassIconButton extends StatelessWidget {
         width: buttonSize,
         height: buttonSize,
         decoration: BoxDecoration(
-          color: AppColors.cardLight,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           shape: BoxShape.circle,
           boxShadow: AppShadows.card,
         ),
-        child: Icon(icon, size: 22.r, color: iconColor ?? AppColors.onSurface),
+        child: Icon(
+          icon,
+          size: 22.r,
+          color:
+              iconColor ??
+              (isDark ? AppColors.onSurfaceDark : AppColors.onSurface),
+        ),
       ),
     );
   }

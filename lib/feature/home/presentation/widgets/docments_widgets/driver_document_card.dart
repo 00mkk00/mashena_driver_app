@@ -105,7 +105,9 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? AppColors.borderColorDark : AppColors.borderColor.withValues(alpha: 0.3),
+          color: isDark
+              ? AppColors.borderColorDark
+              : AppColors.borderColor.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
@@ -144,23 +146,36 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                       Text(
                         title,
                         style: AppTextStyles.w600_16.copyWith(
-                          color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+                          color: isDark
+                              ? AppColors.onSurfaceDark
+                              : AppColors.onSurface,
                         ),
                       ),
                       SizedBox(height: 4.h),
                       Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 4.h,
+                            ),
                             decoration: BoxDecoration(
-                              color: isDark ? statusColor.withValues(alpha: 0.15) : statusBgColor,
+                              color: isDark
+                                  ? statusColor.withValues(alpha: 0.15)
+                                  : statusBgColor,
                               borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(color: statusColor.withValues(alpha: 0.3)),
+                              border: Border.all(
+                                color: statusColor.withValues(alpha: 0.3),
+                              ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(statusIcon, size: 12.r, color: statusColor),
+                                Icon(
+                                  statusIcon,
+                                  size: 12.r,
+                                  color: statusColor,
+                                ),
                                 SizedBox(width: 4.w),
                                 Text(
                                   statusText,
@@ -188,7 +203,9 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                       height: 50.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
-                        border: Border.all(color: AppColors.primaryColor.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppColors.primaryColor.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(9.r),
@@ -209,20 +226,29 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
           ),
 
           // Rejection Reason callout if rejected
-          if (doc.status == DriverDocStatus.rejected && doc.rejectionReason.isNotEmpty)
+          if (doc.status == DriverDocStatus.rejected &&
+              doc.rejectionReason.isNotEmpty)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
               child: Container(
                 padding: EdgeInsets.all(12.r),
                 decoration: BoxDecoration(
-                  color: AppColors.dangerSurface,
+                  color: isDark
+                      ? AppColors.danger.withValues(alpha: 0.15)
+                      : AppColors.dangerSurface,
                   borderRadius: BorderRadius.circular(12.r),
-                  border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: AppColors.danger.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.warning_amber_rounded, color: AppColors.danger, size: 18.r),
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      color: AppColors.danger,
+                      size: 18.r,
+                    ),
                     SizedBox(width: 8.w),
                     Expanded(
                       child: Column(
@@ -230,7 +256,9 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                         children: [
                           Text(
                             S.of(context).docsRejectionReasonLabel,
-                            style: AppTextStyles.w700_12.copyWith(color: AppColors.danger),
+                            style: AppTextStyles.w700_12.copyWith(
+                              color: AppColors.danger,
+                            ),
                           ),
                           SizedBox(height: 2.h),
                           Text(
@@ -248,7 +276,10 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
             ),
 
           SizedBox(height: 8.h),
-          const Divider(height: 1),
+          Divider(
+            height: 1,
+            color: isDark ? AppColors.dividerDark : AppColors.divider,
+          ),
 
           // Dates Grid
           Padding(
@@ -291,7 +322,9 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceVariantDark.withValues(alpha: 0.5) : AppColors.surfaceVariant,
+                color: isDark
+                    ? AppColors.surfaceVariantDark.withValues(alpha: 0.5)
+                    : AppColors.surfaceVariant,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(16.r),
                   bottomRight: Radius.circular(16.r),
@@ -301,14 +334,22 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _isExpanded ? S.of(context).docsHideTechDetails : S.of(context).docsViewDetails,
+                    _isExpanded
+                        ? S.of(context).docsHideTechDetails
+                        : S.of(context).docsViewDetails,
                     style: AppTextStyles.w500_12.copyWith(
-                      color: AppColors.primaryColor,
+                      color: isDark
+                          ? AppColors.primaryLight
+                          : AppColors.primaryColor,
                     ),
                   ),
                   Icon(
-                    _isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.primaryColor,
+                    _isExpanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded,
+                    color: isDark
+                        ? AppColors.primaryLight
+                        : AppColors.primaryColor,
                     size: 20.r,
                   ),
                 ],
@@ -319,19 +360,51 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
           if (_isExpanded)
             Container(
               padding: EdgeInsets.all(16.r),
-              color: isDark ? AppColors.surfaceVariantDark : AppColors.surfaceVariant.withValues(alpha: 0.4),
+              color: isDark
+                  ? AppColors.surfaceVariantDark
+                  : AppColors.surfaceVariant.withValues(alpha: 0.4),
               child: Column(
                 children: [
-                  _buildDetailRow(context, label: S.of(context).docsDetailId, value: '#${doc.id}', isDark: isDark),
-                  _buildDetailRow(context, label: S.of(context).docsDetailProfileId, value: '#${doc.driverProfileId}', isDark: isDark),
+                  _buildDetailRow(
+                    context,
+                    label: S.of(context).docsDetailId,
+                    value: '#${doc.id}',
+                    isDark: isDark,
+                  ),
+                  _buildDetailRow(
+                    context,
+                    label: S.of(context).docsDetailProfileId,
+                    value: '#${doc.driverProfileId}',
+                    isDark: isDark,
+                  ),
                   if (doc.verifiedBy > 0)
-                    _buildDetailRow(context, label: S.of(context).docsDetailAdminId, value: '#${doc.verifiedBy}', isDark: isDark),
+                    _buildDetailRow(
+                      context,
+                      label: S.of(context).docsDetailAdminId,
+                      value: '#${doc.verifiedBy}',
+                      isDark: isDark,
+                    ),
                   if (doc.verifiedAt.isNotEmpty)
-                    _buildDetailRow(context, label: S.of(context).docsDetailVerifiedAt, value: _formatDate(doc.verifiedAt), isDark: isDark),
+                    _buildDetailRow(
+                      context,
+                      label: S.of(context).docsDetailVerifiedAt,
+                      value: _formatDate(doc.verifiedAt),
+                      isDark: isDark,
+                    ),
                   if (doc.createdAt.isNotEmpty)
-                    _buildDetailRow(context, label: S.of(context).docsDetailUploadedAt, value: _formatDate(doc.createdAt), isDark: isDark),
+                    _buildDetailRow(
+                      context,
+                      label: S.of(context).docsDetailUploadedAt,
+                      value: _formatDate(doc.createdAt),
+                      isDark: isDark,
+                    ),
                   if (doc.metaJson.isNotEmpty)
-                    _buildDetailRow(context, label: S.of(context).docsDetailMeta, value: doc.metaJson.toString(), isDark: isDark),
+                    _buildDetailRow(
+                      context,
+                      label: S.of(context).docsDetailMeta,
+                      value: doc.metaJson.toString(),
+                      isDark: isDark,
+                    ),
                 ],
               ),
             ),
@@ -356,9 +429,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
           children: [
             Text(
               label,
-              style: AppTextStyles.w400_10.copyWith(
-                color: AppColors.textGrey,
-              ),
+              style: AppTextStyles.w400_10.copyWith(color: AppColors.textGrey),
             ),
             SizedBox(height: 2.h),
             Text(
@@ -386,9 +457,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
         children: [
           Text(
             label,
-            style: AppTextStyles.w400_12.copyWith(
-              color: AppColors.textGrey,
-            ),
+            style: AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
           ),
           Text(
             value,

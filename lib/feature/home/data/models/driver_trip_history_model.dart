@@ -81,9 +81,7 @@ class TripRatingModel with _$TripRatingModel {
 
 @freezed
 class TripRatingTagModel with _$TripRatingTagModel {
-  const factory TripRatingTagModel({
-    String? code,
-  }) = _TripRatingTagModel;
+  const factory TripRatingTagModel({String? code}) = _TripRatingTagModel;
 
   factory TripRatingTagModel.fromJson(Map<String, dynamic> json) =>
       _$TripRatingTagModelFromJson(json);

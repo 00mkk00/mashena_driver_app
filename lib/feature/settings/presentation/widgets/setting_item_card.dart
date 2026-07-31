@@ -51,11 +51,7 @@ class SettingItemCard extends StatelessWidget {
                     color: AppColors.primarySurface,
                     borderRadius: BorderRadius.circular(AppRadius.md.r),
                   ),
-                  child: Icon(
-                    icon,
-                    color: AppColors.primaryColor,
-                    size: 24.r,
-                  ),
+                  child: Icon(icon, color: AppColors.primaryColor, size: 24.r),
                 ),
                 SizedBox(width: AppSpacing.md.w),
                 Expanded(

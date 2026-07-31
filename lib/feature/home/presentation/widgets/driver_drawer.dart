@@ -21,6 +21,8 @@ class DriverAppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocListener<LogoutCubit, LogoutState>(
       listener: (context, state) {
         state.when(
@@ -53,14 +55,18 @@ class DriverAppDrawer extends StatelessWidget {
         );
       },
       child: Drawer(
-        backgroundColor: AppColors
-            .lightScaffold, // ✅ was: AppColors.surfaceVariant (wrong usage — surfaceVariant is for inputs)
+        backgroundColor: isDark
+            ? AppColors.darkScaffold
+            : AppColors.lightScaffold,
         child: SafeArea(
           child: Column(
             children: [
               Image.asset(Assets.logo, height: 150), // Profile header
               // _DrawerHeader(driver: driver),
-              const Divider(height: 1, color: AppColors.divider),
+              Divider(
+                height: 1,
+                color: isDark ? AppColors.dividerDark : AppColors.divider,
+              ),
 
               // Navigation items
               Expanded(
@@ -118,12 +124,16 @@ class DriverAppDrawer extends StatelessWidget {
                     //   label: 'Help & Support',
                     //   onTap: () => Navigator.pop(context),
                     // ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.md,
                         vertical: AppSpacing.sm,
                       ),
-                      child: Divider(color: AppColors.divider),
+                      child: Divider(
+                        color: isDark
+                            ? AppColors.dividerDark
+                            : AppColors.divider,
+                      ),
                     ),
 
                     _DrawerItem(
@@ -240,13 +250,15 @@ class DriverAppDrawer extends StatelessWidget {
 
 // ─── Logout Dialog ────────────────────────────────────────────────────────────
 void _showLogoutDialog(BuildContext context) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
   showDialog(
     context: context,
     builder: (dialogCtx) => Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg),
       ),
-      backgroundColor: AppColors.cardLight,
+      backgroundColor: isDark ? AppColors.cardDark : AppColors.cardLight,
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -271,7 +283,9 @@ void _showLogoutDialog(BuildContext context) {
             // Title
             Text(
               S.of(context).drawerLogout,
-              style: AppTextStyles.w700_18.copyWith(color: AppColors.onSurface),
+              style: AppTextStyles.w700_18.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
 
@@ -280,7 +294,7 @@ void _showLogoutDialog(BuildContext context) {
               S.of(context).drawerLogoutConfirm,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_14.copyWith(
-                color: AppColors.textGrey,
+                color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
                 height: 1.5,
               ),
             ),
@@ -294,7 +308,11 @@ void _showLogoutDialog(BuildContext context) {
                     onPressed: () => Navigator.pop(dialogCtx),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      side: const BorderSide(color: AppColors.borderColor),
+                      side: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.md),
                       ),
@@ -302,7 +320,9 @@ void _showLogoutDialog(BuildContext context) {
                     child: Text(
                       S.of(context).commonCancel,
                       style: AppTextStyles.w600_14.copyWith(
-                        color: AppColors.onSurface,
+                        color: isDark
+                            ? AppColors.onSurfaceDark
+                            : AppColors.onSurface,
                       ),
                     ),
                   ),
@@ -359,16 +379,21 @@ class _DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveIconColor = iconColor ?? AppColors.primaryColor;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final effectiveIconColor =
+        iconColor ?? (isDark ? AppColors.primaryLight : AppColors.primaryColor);
     return ListTile(
       leading: Container(
         width: 38,
         height: 38,
         decoration: BoxDecoration(
           color: iconColor != null
-              ? AppColors
-                    .dangerSurface // ✅ was: .withOpacity(0.08) — use surface token for danger; primary uses primarySurface
-              : AppColors.primarySurface,
+              ? (isDark
+                    ? AppColors.danger.withValues(alpha: 0.15)
+                    : AppColors.dangerSurface)
+              : (isDark
+                    ? AppColors.primaryLight.withValues(alpha: 0.15)
+                    : AppColors.primarySurface),
           borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
         child: Icon(icon, size: 20, color: effectiveIconColor),
@@ -376,16 +401,19 @@ class _DrawerItem extends StatelessWidget {
       title: Text(
         label,
         style: AppTextStyles.w500_14.copyWith(
-          // ✅ was: w600_12 + manual w500 override — use correct style directly
-          color: labelColor ?? AppColors.onSurface,
+          color:
+              labelColor ??
+              (isDark ? AppColors.onSurfaceDark : AppColors.onSurface),
         ),
       ),
       trailing:
           trailing ??
-          const Icon(
+          Icon(
             Icons.chevron_right_rounded,
             size: 18,
-            color: AppColors.onSurfaceVariant,
+            color: isDark
+                ? AppColors.onSurfaceVariantDark
+                : AppColors.onSurfaceVariant,
           ),
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(

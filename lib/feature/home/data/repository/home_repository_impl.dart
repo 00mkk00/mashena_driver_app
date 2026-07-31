@@ -184,7 +184,8 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<Failure, DriverWalletSummaryEntity>> getDriverWalletSummary() async {
+  Future<Either<Failure, DriverWalletSummaryEntity>>
+  getDriverWalletSummary() async {
     try {
       final model = await _remoteDataSource.getDriverWalletSummary();
       return Right(model.toEntity());
@@ -225,7 +226,8 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments() async {
+  Future<Either<Failure, List<DriverDocumentEntity>>>
+  getDriverDocuments() async {
     try {
       final models = await _remoteDataSource.getDriverDocuments();
       final entities = models.map((m) => m.toEntity()).toList();
@@ -251,4 +253,3 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 }
-

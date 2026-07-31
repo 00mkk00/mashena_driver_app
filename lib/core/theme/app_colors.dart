@@ -15,6 +15,7 @@ class AppColors {
   static const Color borderColor = Color(0xFFD1D1D1);
   static const Color borderColorDark = Color(0xFF2C2C2E);
   static const Color textGrey = Color(0xFF93969F);
+  static const Color textGreyDark = Color(0xFFA5A5A5);
   static const Color textfieldHintGrey = Color(0xFFA5A5A5);
 
   // ── Scaffolds ──────────────────────────────────────────────────────────────
@@ -31,6 +32,7 @@ class AppColors {
   static const Color onSurface = Color(0xFF212121);
   static const Color onSurfaceDark = Color(0xFFF2F2F7);
   static const Color onSurfaceVariant = Color(0xFF757575);
+  static const Color onSurfaceVariantDark = Color(0xFFA0A0A5);
 
   // ── Divider ────────────────────────────────────────────────────────────────
   static const Color divider = Color(0xFFE0E0E0);

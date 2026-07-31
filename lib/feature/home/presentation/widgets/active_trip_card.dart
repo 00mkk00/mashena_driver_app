@@ -33,10 +33,11 @@ class ActiveTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.xl.r),
         boxShadow: AppShadows.card,
       ),

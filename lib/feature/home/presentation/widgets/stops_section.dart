@@ -87,7 +87,12 @@ class _StopsSectionState extends State<StopsSection>
                 ),
                 SizedBox(width: AppSpacing.xs.w),
                 Text(
-                  S.of(context).rideRequestStopsAlongTheWay(widget.stops.length, widget.stops.length > 1 ? 's' : ''),
+                  S
+                      .of(context)
+                      .rideRequestStopsAlongTheWay(
+                        widget.stops.length,
+                        widget.stops.length > 1 ? 's' : '',
+                      ),
                   style: AppTextStyles.w600_12.copyWith(
                     color: AppColors.warningDark,
                   ),
@@ -131,12 +136,16 @@ class _StopsTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.all(AppSpacing.sm.r),
       decoration: BoxDecoration(
         color: AppColors.warningSurface.withValues(alpha: .5),
         borderRadius: BorderRadius.circular(AppRadius.md.r),
-        border: Border.all(color: AppColors.warning.withValues(alpha: .2), width: 1),
+        border: Border.all(
+          color: AppColors.warning.withValues(alpha: .2),
+          width: 1,
+        ),
       ),
       child: Column(
         children: List.generate(stops.length, (index) {
@@ -188,7 +197,7 @@ class _StopsTimeline extends StatelessWidget {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   AppColors.warning.withValues(alpha: .6),
-                                  AppColors.warning.withValues(alpha:0.1),
+                                  AppColors.warning.withValues(alpha: 0.1),
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(1.r),
@@ -226,7 +235,9 @@ class _StopsTimeline extends StatelessWidget {
                               Text(
                                 stop.address,
                                 style: AppTextStyles.w400_12.copyWith(
-                                  color: AppColors.onSurface,
+                                  color: isDark
+                                      ? AppColors.onSurfaceDark
+                                      : AppColors.onSurface,
                                   height: 1.4,
                                 ),
                                 maxLines: 2,

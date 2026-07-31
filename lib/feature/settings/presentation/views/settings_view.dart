@@ -5,22 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/cubits/locale_cubit.dart';
+import 'package:mashena_driver_app/feature/settings/presentation/cubits/theme_cubit.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/widgets/language_toggle_card.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/widgets/theme_toggle_card.dart';
 
-class SettingsView extends StatefulWidget {
+class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
-}
-
-class _SettingsViewState extends State<SettingsView> {
-  // Temporary state for UI demonstration
-  bool _isDarkMode = false;
-
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocBuilder<LocaleCubit, Locale>(
       builder: (context, locale) {
         final isArabic = locale.languageCode == 'ar';
@@ -36,7 +30,9 @@ class _SettingsViewState extends State<SettingsView> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+            iconTheme: IconThemeData(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           body: SafeArea(
             child: ListView(
@@ -52,14 +48,20 @@ class _SettingsViewState extends State<SettingsView> {
                 LanguageToggleCard(
                   isArabic: isArabic,
                   onChanged: (val) {
-                    context.read<LocaleCubit>().changeLanguage(val ? 'ar' : 'en');
+                    context.read<LocaleCubit>().changeLanguage(
+                      val ? 'ar' : 'en',
+                    );
                   },
                 ),
-                ThemeToggleCard(
-                  isDarkMode: _isDarkMode,
-                  onChanged: (val) {
-                    setState(() => _isDarkMode = val);
-                    // Call your ThemeCubit to update the state here
+                BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, mode) {
+                    final isDarkMode = isDark;
+                    return ThemeToggleCard(
+                      isDarkMode: isDarkMode,
+                      onChanged: (val) {
+                        context.read<ThemeCubit>().toggleTheme(val);
+                      },
+                    );
                   },
                 ),
               ],

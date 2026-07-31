@@ -12,14 +12,11 @@ class EarningsSummaryCard extends StatelessWidget {
   final EarningsSummaryEntity? summary;
   final String? currency;
 
-  const EarningsSummaryCard({
-    super.key,
-    this.summary,
-    this.currency,
-  });
+  const EarningsSummaryCard({super.key, this.summary, this.currency});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final curr = currency ?? S.of(context).commonCurrencySyria;
     final todayAmount = summary?.today.amount.toString() ?? '0';
     final todayTrips = summary?.today.tripsCount ?? 0;
@@ -33,7 +30,7 @@ class EarningsSummaryCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.lg.r),
         boxShadow: AppShadows.card,
       ),
@@ -44,13 +41,19 @@ class EarningsSummaryCard extends StatelessWidget {
             value: '$curr $todayAmount',
             trips: todayTrips,
           ),
-          Divider(color: AppColors.divider, height: AppSpacing.lg.h),
+          Divider(
+            color: isDark ? AppColors.dividerDark : AppColors.divider,
+            height: AppSpacing.lg.h,
+          ),
           _SummaryRow(
             label: S.of(context).walletThisWeek,
             value: '$curr $weekAmount',
             trips: weekTrips,
           ),
-          Divider(color: AppColors.divider, height: AppSpacing.lg.h),
+          Divider(
+            color: isDark ? AppColors.dividerDark : AppColors.divider,
+            height: AppSpacing.lg.h,
+          ),
           _SummaryRow(
             label: S.of(context).walletThisMonth,
             value: '$curr $monthAmount',
@@ -74,6 +77,7 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -83,13 +87,17 @@ class _SummaryRow extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.w500_12.copyWith(
-                color: AppColors.onSurfaceVariant,
+                color: isDark
+                    ? AppColors.onSurfaceVariantDark
+                    : AppColors.onSurfaceVariant,
               ),
             ),
             SizedBox(height: 2.h),
             Text(
               S.of(context).walletTripsCount(trips),
-              style: AppTextStyles.w400_10.copyWith(color: AppColors.textGrey),
+              style: AppTextStyles.w400_10.copyWith(
+                color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
+              ),
             ),
           ],
         ),

@@ -14,21 +14,27 @@ class TripMetaRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         _MetaChip(
           icon: Icons.attach_money_rounded,
           iconColor: AppColors.earning,
-          backgroundColor: AppColors.earningSurface,
+          backgroundColor: isDark
+              ? AppColors.earning.withValues(alpha: 0.15)
+              : AppColors.earningSurface,
           label: ride.estimatedFare != null
-              ? '${ride.estimatedFare} ${ride.currency ?? ''}'.trim()
+              ? '${ride.estimatedFare} ${ride.currency ?? S.of(context).commonCurrencySyria}'
+                    .trim()
               : '—',
         ),
         SizedBox(width: AppSpacing.sm.w),
         _MetaChip(
           icon: Icons.route_rounded,
-          iconColor: AppColors.primaryColor,
-          backgroundColor: AppColors.primarySurface,
+          iconColor: isDark ? AppColors.primaryLight : AppColors.primaryColor,
+          backgroundColor: isDark
+              ? AppColors.primaryLight.withValues(alpha: 0.15)
+              : AppColors.primarySurface,
           label: ride.distanceKm != null
               ? S.of(context).radiusKm(ride.distanceKm!.floor())
               : '—',
@@ -37,8 +43,12 @@ class TripMetaRow extends StatelessWidget {
         _MetaChip(
           icon: Icons.timelapse_rounded,
           iconColor: AppColors.danger,
-          backgroundColor: AppColors.dangerSurface,
-          label: '${ride.durationMin.toString()} ${S.of(context).commonMin}',
+          backgroundColor: isDark
+              ? AppColors.danger.withValues(alpha: 0.15)
+              : AppColors.dangerSurface,
+          label:
+              '${ride.durationMin.toString().split('.')[0]} ${S.of(context).commonMin}'
+                  .substring(0),
         ),
       ],
     );

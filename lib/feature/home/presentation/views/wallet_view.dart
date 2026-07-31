@@ -32,15 +32,13 @@ class WalletViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightScaffold,
       appBar: AppBar(
-        backgroundColor: AppColors.lightScaffold,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             size: 20.r,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -82,7 +80,7 @@ class WalletViewBody extends StatelessWidget {
                       S.of(context).walletFailedToLoad,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.w500_14.copyWith(
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     SizedBox(height: AppSpacing.md.h),

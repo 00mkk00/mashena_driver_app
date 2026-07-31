@@ -226,7 +226,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       return MapPlaceholder(message: S.of(context).homeGettingLocation);
     }
     if (mapState.status == MapLoadStatus.permissionDenied) {
-      return MapPlaceholder(message: S.of(context).homeEnableLocationPermission);
+      return MapPlaceholder(
+        message: S.of(context).homeEnableLocationPermission,
+      );
     }
     if (mapState.status == MapLoadStatus.error) {
       return MapPlaceholder(
@@ -298,7 +300,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget _buildRightFabs(BuildContext context, DriverStatusState driverState) {
     return Positioned(
       right: AppSpacing.md.w,
-      bottom: 350.h,
+      bottom: 380.h,
       child: SafeArea(
         child: Column(
           children: [
@@ -312,7 +314,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               icon: Icons.radar_rounded,
               onTap: () =>
                   showRadiusSelectorDialog(context, driverState.radiusKm),
-              tooltip: '${S.of(context).radiusTitle} (${S.of(context).radiusKm(driverState.radiusKm)})',
+              tooltip:
+                  '${S.of(context).radiusTitle} (${S.of(context).radiusKm(driverState.radiusKm)})',
             ),
             // SizedBox(height: AppSpacing.sm.h),
             // if (driverState.isOnline)
@@ -333,13 +336,15 @@ class _OfflineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<DriverStatusCubit, DriverStatusState>(
       builder: (context, state) {
         return Container(
           margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           padding: EdgeInsets.all(AppSpacing.md.r),
           decoration: BoxDecoration(
-            color: AppColors.cardLight,
+            color: isDark ? AppColors.cardDark : AppColors.cardLight,
             borderRadius: BorderRadius.circular(AppRadius.lg.r),
             boxShadow: AppShadows.card,
           ),
@@ -349,7 +354,9 @@ class _OfflineCard extends StatelessWidget {
                 width: 44.r,
                 height: 44.r,
                 decoration: BoxDecoration(
-                  color: AppColors.offlineSurface,
+                  color: isDark
+                      ? AppColors.surfaceVariantDark
+                      : AppColors.offlineSurface,
                   borderRadius: BorderRadius.circular(AppRadius.sm.r),
                 ),
                 child: Icon(
@@ -366,14 +373,18 @@ class _OfflineCard extends StatelessWidget {
                     Text(
                       S.of(context).homeOffline,
                       style: AppTextStyles.w600_14.copyWith(
-                        color: AppColors.darkScaffold,
+                        color: isDark
+                            ? AppColors.onSurfaceDark
+                            : AppColors.onSurface,
                       ),
                     ),
                     SizedBox(height: 2.h),
                     Text(
                       S.of(context).homeGoOnlineHint,
                       style: AppTextStyles.w400_12.copyWith(
-                        color: AppColors.textGrey,
+                        color: isDark
+                            ? AppColors.textGreyDark
+                            : AppColors.textGrey,
                       ),
                     ),
                   ],
@@ -396,6 +407,7 @@ class _TripCancelledSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final color = isAdmin ? AppColors.danger : AppColors.warning;
     final icon = isAdmin
         ? Icons.admin_panel_settings_rounded
@@ -414,7 +426,7 @@ class _TripCancelledSheet extends StatelessWidget {
       ),
       padding: EdgeInsets.all(AppSpacing.lg.r),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.xl.r),
         boxShadow: AppShadows.card,
       ),
@@ -426,7 +438,9 @@ class _TripCancelledSheet extends StatelessWidget {
             width: 40.w,
             height: 4.h,
             decoration: BoxDecoration(
-              color: AppColors.textGrey.withValues(alpha: 0.3),
+              color: isDark
+                  ? AppColors.dividerDark
+                  : AppColors.textGrey.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(AppRadius.full.r),
             ),
           ),
@@ -448,7 +462,7 @@ class _TripCancelledSheet extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.w700_16.copyWith(
-              color: AppColors.darkScaffold,
+              color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -458,7 +472,7 @@ class _TripCancelledSheet extends StatelessWidget {
           Text(
             subtitle,
             style: AppTextStyles.w400_12.copyWith(
-              color: AppColors.textGrey,
+              color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
               height: 1.5,
             ),
             textAlign: TextAlign.center,

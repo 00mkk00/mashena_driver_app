@@ -26,7 +26,8 @@ class DriverModel with _$DriverModel {
 
 @freezed
 class RoleModel with _$RoleModel {
-  const factory RoleModel({required int id, @Default('') String name}) = _RoleModel;
+  const factory RoleModel({required int id, @Default('') String name}) =
+      _RoleModel;
 
   factory RoleModel.fromJson(Map<String, dynamic> json) =>
       _$RoleModelFromJson(json);

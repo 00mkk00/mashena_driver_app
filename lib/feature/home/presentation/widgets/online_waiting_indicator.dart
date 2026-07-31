@@ -35,11 +35,13 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
       padding: EdgeInsets.all(AppSpacing.md.r),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: BorderRadius.circular(AppRadius.lg.r),
         boxShadow: AppShadows.card,
       ),
@@ -50,12 +52,14 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
             width: 44.r,
             height: 44.r,
             decoration: BoxDecoration(
-              color: AppColors.primarySurface,
+              color: isDark
+                  ? AppColors.primaryLight.withValues(alpha: 0.15)
+                  : AppColors.primarySurface,
               borderRadius: BorderRadius.circular(AppRadius.sm.r),
             ),
             child: Icon(
               Icons.search_rounded,
-              color: AppColors.primaryColor,
+              color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
               size: 22.r,
             ),
           ),
@@ -70,7 +74,9 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
                 Text(
                   S.of(context).homeLookingForPassengers,
                   style: AppTextStyles.w500_12.copyWith(
-                    color: AppColors.borderColorDark,
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
                   ),
                 ),
                 SizedBox(height: 4.h),
@@ -82,7 +88,9 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
                     return Text(
                       '${S.of(context).homeSearching}$dots',
                       style: AppTextStyles.w400_10.copyWith(
-                        color: AppColors.primaryColor,
+                        color: isDark
+                            ? AppColors.primaryLight
+                            : AppColors.primaryColor,
                       ),
                     );
                   },

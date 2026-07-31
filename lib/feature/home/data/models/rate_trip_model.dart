@@ -42,10 +42,8 @@ class RateTripTagModel with _$RateTripTagModel {
 
 @freezed
 class RateTripUserModel with _$RateTripUserModel {
-  const factory RateTripUserModel({
-    int? id,
-    String? fullName,
-  }) = _RateTripUserModel;
+  const factory RateTripUserModel({int? id, String? fullName}) =
+      _RateTripUserModel;
 
   factory RateTripUserModel.fromJson(Map<String, dynamic> json) =>
       _$RateTripUserModelFromJson(json);

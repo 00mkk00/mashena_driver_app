@@ -65,6 +65,14 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final effectiveColor = isDark && color == AppColors.primaryColor
+        ? AppColors.primaryLight
+        : color;
+    final effectiveSurface = isDark
+        ? effectiveColor.withValues(alpha: 0.15)
+        : surface;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -73,7 +81,7 @@ class _ActionButton extends StatelessWidget {
           horizontal: AppSpacing.sm.w,
         ),
         decoration: BoxDecoration(
-          color: AppColors.cardLight,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           borderRadius: BorderRadius.circular(AppRadius.md.r),
           boxShadow: AppShadows.card,
         ),
@@ -83,15 +91,17 @@ class _ActionButton extends StatelessWidget {
               width: 44.r,
               height: 44.r,
               decoration: BoxDecoration(
-                color: surface,
+                color: effectiveSurface,
                 borderRadius: BorderRadius.circular(AppRadius.sm.r),
               ),
-              child: Icon(icon, color: color, size: 22.r),
+              child: Icon(icon, color: effectiveColor, size: 22.r),
             ),
             SizedBox(height: AppSpacing.xs.h),
             Text(
               label,
-              style: AppTextStyles.w500_12.copyWith(color: AppColors.onSurface),
+              style: AppTextStyles.w500_12.copyWith(
+                color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+              ),
             ),
           ],
         ),

@@ -12,6 +12,8 @@ class WaitTimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: totalSeconds.toDouble(), end: 0),
       duration: Duration(seconds: totalSeconds),
@@ -21,6 +23,19 @@ class WaitTimerView extends StatelessWidget {
         final seconds = (remaining % 60).toString().padLeft(2, '0');
 
         final isPositive = remaining > 0;
+        final bg = isPositive
+            ? (isDark
+                  ? Colors.green.shade900.withValues(alpha: 0.3)
+                  : Colors.green.shade50)
+            : (isDark
+                  ? Colors.red.shade900.withValues(alpha: 0.3)
+                  : Colors.red.shade50);
+        final border = isPositive
+            ? (isDark ? Colors.green.shade700 : Colors.green.shade200)
+            : (isDark ? Colors.red.shade700 : Colors.red.shade200);
+        final textColor = isPositive
+            ? (isDark ? Colors.green.shade300 : Colors.green.shade700)
+            : (isDark ? Colors.red.shade300 : Colors.red.shade700);
 
         return Container(
           padding: EdgeInsets.symmetric(
@@ -28,30 +43,20 @@ class WaitTimerView extends StatelessWidget {
             horizontal: AppSpacing.md.w,
           ),
           decoration: BoxDecoration(
-            color: isPositive ? Colors.green.shade50 : Colors.red.shade50,
+            color: bg,
             borderRadius: BorderRadius.circular(AppRadius.md.r),
-            border: Border.all(
-              color: isPositive ? Colors.green.shade200 : Colors.red.shade200,
-            ),
+            border: Border.all(color: border),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.timer_outlined,
-                color: isPositive ? Colors.green.shade700 : Colors.red.shade700,
-                size: 20.r,
-              ),
+              Icon(Icons.timer_outlined, color: textColor, size: 20.r),
               SizedBox(width: AppSpacing.sm.w),
               Text(
                 isPositive
                     ? S.of(context).tripFreeWaitTime('$minutes:$seconds')
                     : S.of(context).tripWaitTimeExceeded,
-                style: AppTextStyles.w700_14.copyWith(
-                  color: isPositive
-                      ? Colors.green.shade700
-                      : Colors.red.shade700,
-                ),
+                style: AppTextStyles.w700_14.copyWith(color: textColor),
               ),
             ],
           ),

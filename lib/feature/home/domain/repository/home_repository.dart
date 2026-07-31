@@ -53,4 +53,3 @@ abstract class HomeRepository {
   Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments();
   Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params);
 }
-

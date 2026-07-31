@@ -14,6 +14,8 @@ class SaveFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: EdgeInsets.fromLTRB(
         AppSpacing.md.w,
@@ -22,10 +24,10 @@ class SaveFooter extends StatelessWidget {
         AppSpacing.md.h + MediaQuery.of(context).padding.bottom,
       ),
       decoration: BoxDecoration(
-        color: AppColors.cardLight,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 16,
             offset: const Offset(0, -4),
           ),

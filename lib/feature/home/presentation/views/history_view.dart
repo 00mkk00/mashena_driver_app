@@ -74,7 +74,12 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
           ? AppColors.darkScaffold
           : AppColors.lightScaffold,
       appBar: AppBar(
-        title: Text(S.of(context).historyTitle, style: AppTextStyles.w600_18),
+        title: Text(
+          S.of(context).historyTitle,
+          style: AppTextStyles.w600_18.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -111,7 +116,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                     Text(
                       state.errorMessage ?? S.of(context).historyFailedToLoad,
                       style: AppTextStyles.w500_14.copyWith(
-                        color: AppColors.onSurfaceVariant,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     SizedBox(height: AppSpacing.lg.h),
@@ -157,12 +162,16 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                 final trip = state.trips[index];
                 return RideHistoryCard(
                   status: _mapStatus(trip.status),
-                  pickupAddress: trip.pickupAddress ?? S.of(context).historyUnknownPickup,
-                  destAddress: trip.destAddress ?? S.of(context).historyUnknownDestination,
+                  pickupAddress:
+                      trip.pickupAddress ?? S.of(context).historyUnknownPickup,
+                  destAddress:
+                      trip.destAddress ??
+                      S.of(context).historyUnknownDestination,
                   finalFare: (trip.finalFare ?? 0).toDouble(),
                   distanceKm: (trip.distanceKm ?? 0).toDouble(),
                   durationSec: trip.durationSec ?? 0,
-                  fullName: trip.rider?.fullName ?? S.of(context).historyUnknownRider,
+                  fullName:
+                      trip.rider?.fullName ?? S.of(context).historyUnknownRider,
                   phoneNumber: trip.rider?.phoneNumber ?? '',
                   ratingAvg: (trip.rider?.ratingAvg ?? 0).toDouble(),
                   myComment: trip.myRating?.comment,
@@ -177,7 +186,6 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                       ?.map((t) => t.code ?? '')
                       .where((c) => c.isNotEmpty)
                       .toList(),
-                      
                 );
               },
             ),

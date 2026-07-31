@@ -34,9 +34,6 @@ extension RateTripTagMapper on RateTripTagModel {
 
 extension RateTripUserMapper on RateTripUserModel {
   RateTripUserEntity toEntity() {
-    return RateTripUserEntity(
-      id: id ?? 0,
-      fullName: fullName ?? '',
-    );
+    return RateTripUserEntity(id: id ?? 0, fullName: fullName ?? '');
   }
 }

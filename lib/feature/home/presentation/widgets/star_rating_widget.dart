@@ -10,6 +10,7 @@ class StarRatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (i) {
@@ -18,7 +19,9 @@ class StarRatingWidget extends StatelessWidget {
         return Icon(
           partial ? Icons.star_half_rounded : Icons.star_rounded,
           size: size.r,
-          color: filled || partial ? AppColors.warning : AppColors.divider,
+          color: filled || partial
+              ? AppColors.warning
+              : (isDark ? AppColors.dividerDark : AppColors.divider),
         );
       }),
     );

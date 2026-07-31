@@ -43,6 +43,8 @@ class _ShimmerCardState extends State<ShimmerCard>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _shimmer,
       builder: (_, _) => Container(
@@ -53,11 +55,17 @@ class _ShimmerCardState extends State<ShimmerCard>
           gradient: LinearGradient(
             begin: Alignment(_shimmer.value - 1, 0),
             end: Alignment(_shimmer.value, 0),
-            colors: const [
-              Color(0xFFF0F0F0),
-              Color(0xFFE0E0E0),
-              Color(0xFFF0F0F0),
-            ],
+            colors: isDark
+                ? const [
+                    Color(0xFF1E1F28),
+                    Color(0xFF2E303E),
+                    Color(0xFF1E1F28),
+                  ]
+                : const [
+                    Color(0xFFF0F0F0),
+                    Color(0xFFE0E0E0),
+                    Color(0xFFF0F0F0),
+                  ],
           ),
         ),
       ),

@@ -37,7 +37,8 @@ import 'package:mashena_driver_app/feature/home/domain/usecases/rate_trip_use_ca
 import 'package:mashena_driver_app/feature/home/domain/usecases/start_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
-import 'package:mashena_driver_app/feature/home/domain/usecases/upload_driver_docs_use_case.dart' as home_doc_usecase;
+import 'package:mashena_driver_app/feature/home/domain/usecases/upload_driver_docs_use_case.dart'
+    as home_doc_usecase;
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_wallet_cubit/driver_wallet_cubit.dart';
@@ -53,14 +54,18 @@ import 'package:mashena_driver_app/feature/shared/domain/repository/shared_repo.
 import 'package:mashena_driver_app/feature/shared/domain/use_cases/app_settings_use_case.dart';
 import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/cubits/locale_cubit.dart';
+import 'package:mashena_driver_app/feature/settings/presentation/cubits/theme_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
-  // LocaleCubit
+  // LocaleCubit & ThemeCubit
   getIt.registerLazySingleton<LocaleCubit>(
     () => LocaleCubit(getIt<LocalStorage>()),
+  );
+  getIt.registerLazySingleton<ThemeCubit>(
+    () => ThemeCubit(getIt<LocalStorage>()),
   );
   // ======================
   // External
@@ -200,9 +205,7 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => GetDriverWalletSummaryUseCase(getIt<HomeRepository>()),
   );
-  getIt.registerLazySingleton(
-    () => RateTripUseCase(getIt<HomeRepository>()),
-  );
+  getIt.registerLazySingleton(() => RateTripUseCase(getIt<HomeRepository>()));
   getIt.registerLazySingleton(
     () => GetRatingTagsUseCase(getIt<HomeRepository>()),
   );
@@ -223,7 +226,7 @@ Future<void> configureDependencies() async {
       rateTripUseCase: getIt<RateTripUseCase>(),
     ),
   );
-  
+
   getIt.registerFactory<TripHistoryCubit>(
     () => TripHistoryCubit(getIt<GetDriverTripHistoryUseCase>()),
   );

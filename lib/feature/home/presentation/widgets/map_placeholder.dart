@@ -35,6 +35,8 @@ class _MapPlaceholderState extends State<MapPlaceholder>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AnimatedBuilder(
       animation: _shimmer,
       builder: (_, _) {
@@ -43,11 +45,17 @@ class _MapPlaceholderState extends State<MapPlaceholder>
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                AppColors.primarySurface,
-                AppColors.lightScaffold,
-                AppColors.primarySurface,
-              ],
+              colors: isDark
+                  ? [
+                      AppColors.darkScaffold,
+                      AppColors.cardDark,
+                      AppColors.darkScaffold,
+                    ]
+                  : [
+                      AppColors.primarySurface,
+                      AppColors.lightScaffold,
+                      AppColors.primarySurface,
+                    ],
               stops: [
                 (_shimmer.value - 0.3).clamp(0.0, 1.0),
                 (_shimmer.value).clamp(0.0, 1.0),
@@ -58,7 +66,10 @@ class _MapPlaceholderState extends State<MapPlaceholder>
           child: Stack(
             children: [
               // ── Map grid pattern ───────────────────────────────
-              CustomPaint(size: Size.infinite, painter: _MapGridPainter()),
+              CustomPaint(
+                size: Size.infinite,
+                painter: _MapGridPainter(isDark: isDark),
+              ),
 
               // ── Loading message ────────────────────────────────
               if (widget.message != null)
@@ -69,7 +80,7 @@ class _MapPlaceholderState extends State<MapPlaceholder>
                       vertical: AppSpacing.sm.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.cardLight,
+                      color: isDark ? AppColors.cardDark : AppColors.cardLight,
                       borderRadius: BorderRadius.circular(AppRadius.md.r),
                       boxShadow: AppShadows.card,
                     ),
@@ -81,14 +92,18 @@ class _MapPlaceholderState extends State<MapPlaceholder>
                           height: 18.r,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppColors.primaryColor,
+                            color: isDark
+                                ? AppColors.primaryLight
+                                : AppColors.primaryColor,
                           ),
                         ),
                         SizedBox(width: AppSpacing.sm.w),
                         Text(
                           widget.message!,
                           style: AppTextStyles.w500_14.copyWith(
-                            color: AppColors.onSurfaceVariant,
+                            color: isDark
+                                ? AppColors.onSurfaceVariantDark
+                                : AppColors.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -104,10 +119,15 @@ class _MapPlaceholderState extends State<MapPlaceholder>
 }
 
 class _MapGridPainter extends CustomPainter {
+  final bool isDark;
+
+  _MapGridPainter({required this.isDark});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.borderColor.withValues(alpha: 0.2)
+      ..color = (isDark ? AppColors.borderColorDark : AppColors.borderColor)
+          .withValues(alpha: 0.2)
       ..strokeWidth = 1;
 
     const spacing = 40.0;

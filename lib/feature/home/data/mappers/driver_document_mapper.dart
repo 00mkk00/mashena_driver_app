@@ -26,7 +26,8 @@ extension DriverDocumentModelMapper on DriverDocumentModel {
     if (t.contains('license')) return DriverDocType.license;
     if (t.contains('insurance')) return DriverDocType.insurance;
     if (t.contains('mechanic')) return DriverDocType.mechanic;
-    if (t.contains('identity') || t.contains('id') || t.contains('national')) return DriverDocType.identity;
+    if (t.contains('identity') || t.contains('id') || t.contains('national'))
+      return DriverDocType.identity;
     return DriverDocType.other;
   }
 

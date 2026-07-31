@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/home/data/models/ride_request_model.dart';
 import 'package:mashena_driver_app/feature/home/data/models/start_trip_model.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_ride_request_params.dart';
@@ -161,9 +164,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     if (params.skip != null) queryParams['skip'] = params.skip;
     if (params.limit != null) queryParams['limit'] = params.limit;
 
+    final savedLocale = getIt<LocalStorage>().getString('app_locale');
+    final language = (savedLocale != null && savedLocale.isNotEmpty)
+        ? savedLocale
+        : PlatformDispatcher.instance.locale.languageCode;
+
     final response = await apiClient.get(
       Endpoints.ratingTags,
       query: queryParams,
+      options: Options(headers: {'Accept-Language': language}),
     );
     final list = response['data'] as List;
     return list
@@ -174,7 +183,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<DriverDocumentModel>> getDriverDocuments() async {
     final response = await apiClient.get(Endpoints.driverDocuments);
-    final list = (response is List) ? response : (response['data'] as List? ?? []);
+    final list = (response is List)
+        ? response
+        : (response['data'] as List? ?? []);
     return list
         .map((e) => DriverDocumentModel.fromJson(e as Map<String, dynamic>))
         .toList();
@@ -200,4 +211,3 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     await apiClient.post(Endpoints.uploadNewDoc, body: formData);
   }
 }
-

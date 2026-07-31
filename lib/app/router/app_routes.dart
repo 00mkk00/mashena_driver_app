@@ -1,4 +1,3 @@
-
 class AppRoutes {
   // route names (للتنقل)
   static const onboarding = 'onboarding';

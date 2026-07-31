@@ -19,8 +19,9 @@ class BalanceCard extends StatelessWidget {
         ? summary!.availableBalance.toStringAsFixed(2)
         : '0.00';
     final totalEarned = summary != null ? summary!.totalEarned.toString() : '0';
-    final totalWithdrawn =
-        summary != null ? summary!.totalWithdrawn.toString() : '0';
+    final totalWithdrawn = summary != null
+        ? summary!.totalWithdrawn.toString()
+        : '0';
 
     return Container(
       width: double.infinity,
@@ -81,14 +82,20 @@ class BalanceCard extends StatelessWidget {
           SizedBox(height: AppSpacing.md.h),
           Row(
             children: [
-              _CardStat(label: S.of(context).walletTotalEarned, value: totalEarned),
+              _CardStat(
+                label: S.of(context).walletTotalEarned,
+                value: totalEarned,
+              ),
               Container(
                 width: 1,
                 height: 32.h,
                 color: Colors.white.withValues(alpha: 0.25),
                 margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
               ),
-              _CardStat(label: S.of(context).walletTotalWithdrawn, value: totalWithdrawn),
+              _CardStat(
+                label: S.of(context).walletTotalWithdrawn,
+                value: totalWithdrawn,
+              ),
             ],
           ),
         ],
