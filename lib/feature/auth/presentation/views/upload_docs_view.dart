@@ -20,19 +20,13 @@ class UploadDocsView extends StatelessWidget {
           listener: (context, state) {
             state.whenOrNull(
               loading: () {
-                showDialog(
-                  context: context,
-                  builder: (_) =>
-                      const Center(child: CircularProgressIndicator()),
-                );
+                
               },
               success: () {
-                context.pop();
                 context.showSuccessToast(S.of(context).uploadedSuccessfully);
                 context.go(AppRoutes.loginPath);
               },
               error: (msg) {
-                context.pop();
                 context.showErrorToast(msg);
               },
             );

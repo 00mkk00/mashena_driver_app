@@ -17,26 +17,13 @@ class SignupView extends StatelessWidget {
         child: BlocListener<SignupCubit, SignupState>(
           listener: (context, state) {
             state.whenOrNull(
-              loading: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (_) =>
-                      const Center(child: CircularProgressIndicator()),
-                );
-              },
-
               requireOtp: (email, userId) {
-                context.pop(); // close loader
-
-                context.goNamed(
+                context.pushNamed(
                   AppRoutes.verification,
                   extra: {"email": email, 'userId': userId},
                 );
               },
-
               error: (message) {
-                context.pop();
                 context.showErrorToast(message);
               },
             );

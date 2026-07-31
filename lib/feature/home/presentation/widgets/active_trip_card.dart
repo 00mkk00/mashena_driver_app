@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -124,7 +125,7 @@ class _TripHeader extends StatelessWidget {
               ),
               SizedBox(width: AppSpacing.xs.w),
               Text(
-                'On Trip',
+                S.of(context).tripOnTrip,
                 style: AppTextStyles.w700_14.copyWith(color: Colors.white),
               ),
             ],
@@ -145,7 +146,7 @@ class _TripHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'elapsed',
+                S.of(context).tripElapsed,
                 style: AppTextStyles.w400_10.copyWith(
                   color: Colors.white.withValues(alpha: .6),
                 ),

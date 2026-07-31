@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
-import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/utils/toast_helper.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_state.dart';
@@ -21,39 +20,33 @@ class LoginView extends StatelessWidget {
               initial: () {},
 
               /// ⏳ Loading
-              loading: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (_) =>
-                      const Center(child: CircularProgressIndicator()),
-                );
-              },
+              loading: () {},
 
               /// ✅ Success
               success: (auth) {
-                context.pop();
-                context.showSuccessToast(S.of(context).authLogin);
                 context.go(AppRoutes.homeViewPath); // Navigate to home
               },
 
               /// 📤 Needs Upload
               needsUpload: (auth) {
-                context.pop();
                 context.go(
                   AppRoutes.uploadDocsPath,
-                  extra: {"userId": auth.user.id},
+                  extra: {"userId": auth.user.driverProfile.id},
                 );
               },
 
               /// ℹ️ Approval Status
               approvalStatus: (status) {
-                context.pop();
-                context.showInfoToast("Account Status: $status");
+                if (status == 'no_approval_request') {
+                  context.showInfoToast(
+                    "You don't have an approval request yet.",
+                  );
+                } else {
+                  context.showInfoToast("Account approval status: $status");
+                }
               },
 
               requireOtp: (userId, email) {
-                context.pop(); // close loader
                 context.pushNamed(
                   AppRoutes.verification,
                   extra: {"userId": userId, "email": email},
@@ -62,8 +55,6 @@ class LoginView extends StatelessWidget {
 
               /// ❌ Error
               error: (message) {
-                context.pop();
-
                 context.showErrorToast(message);
               },
             );

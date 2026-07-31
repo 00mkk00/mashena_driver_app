@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
@@ -86,7 +87,7 @@ class _RatingDialogState extends State<RatingDialog> {
     if (_score <= 2 && !hasTags && !hasComment) {
       setState(() {
         _errorMessage =
-            'A comment or at least one tag is required for ratings of 2 stars or below.';
+            S.of(context).ratingCommentRequiredError;
       });
       return;
     }
@@ -108,7 +109,7 @@ class _RatingDialogState extends State<RatingDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'What stood out? (optional)',
+                S.of(context).ratingWhatStoodOut,
                 style: AppTextStyles.w600_12.copyWith(
                   color: AppColors.darkScaffold,
                 ),
@@ -139,8 +140,8 @@ class _RatingDialogState extends State<RatingDialog> {
           children: [
             Text(
               _score > 0 && _score <= 2
-                  ? 'What went wrong? (Tag or comment required)'
-                  : 'What stood out? (optional)',
+                  ? S.of(context).ratingWhatWentWrong
+                  : S.of(context).ratingWhatStoodOut,
               style: AppTextStyles.w600_12.copyWith(
                 color: AppColors.darkScaffold,
               ),
@@ -227,7 +228,7 @@ class _RatingDialogState extends State<RatingDialog> {
                               ),
                             )
                           : Text(
-                              'More...',
+                              S.of(context).ratingMore,
                               style: AppTextStyles.w600_12.copyWith(
                                 color: AppColors.textGrey,
                               ),
@@ -280,15 +281,15 @@ class _RatingDialogState extends State<RatingDialog> {
               ),
               Text(
                 widget.riderName.isNotEmpty
-                    ? 'Rate ${widget.riderName}'
-                    : 'Rate Rider',
+                    ? S.of(context).ratingRateRiderName(widget.riderName)
+                    : S.of(context).ratingRateRider,
                 style: AppTextStyles.w700_18.copyWith(
                   color: AppColors.darkScaffold,
                 ),
               ),
               SizedBox(height: AppSpacing.xs.h),
               Text(
-                'Select a rating score for this trip',
+                S.of(context).ratingSelectScore,
                 style: AppTextStyles.w400_12.copyWith(
                   color: AppColors.textGrey,
                 ),
@@ -302,8 +303,8 @@ class _RatingDialogState extends State<RatingDialog> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   _score > 0 && _score <= 2
-                      ? 'Comment (Tag or comment required)'
-                      : 'Comment (optional)',
+                      ? S.of(context).ratingCommentRequiredLabel
+                      : S.of(context).ratingCommentOptional,
                   style: AppTextStyles.w600_12.copyWith(
                     color: AppColors.darkScaffold,
                   ),
@@ -323,7 +324,7 @@ class _RatingDialogState extends State<RatingDialog> {
                   color: AppColors.darkScaffold,
                 ),
                 decoration: InputDecoration(
-                  hintText: 'Add a note about this trip…',
+                  hintText: S.of(context).ratingCommentHint,
                   hintStyle: AppTextStyles.w400_12.copyWith(
                     color: AppColors.textGrey,
                   ),
@@ -375,7 +376,7 @@ class _RatingDialogState extends State<RatingDialog> {
                     elevation: 0,
                   ),
                   child: Text(
-                    'Submit Rating',
+                    S.of(context).ratingSubmit,
                     style: AppTextStyles.w600_14.copyWith(color: Colors.white),
                   ),
                 ),

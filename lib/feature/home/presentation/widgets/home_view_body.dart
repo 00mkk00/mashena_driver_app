@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -222,19 +223,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   // ─── Map Layer ─────────────────────────────────────────────────────────────
   Widget _buildMapLayer(MapState mapState) {
     if (mapState.status == MapLoadStatus.loading) {
-      return const MapPlaceholder(message: 'Getting your location...');
+      return MapPlaceholder(message: S.of(context).homeGettingLocation);
     }
     if (mapState.status == MapLoadStatus.permissionDenied) {
-      return const MapPlaceholder(message: 'Enable location permission');
+      return MapPlaceholder(message: S.of(context).homeEnableLocationPermission);
     }
     if (mapState.status == MapLoadStatus.error) {
       return MapPlaceholder(
-        message: mapState.errorMessage ?? 'Something went wrong',
+        message: mapState.errorMessage ?? S.of(context).commonError,
       );
     }
     final position = mapState.currentPosition;
     if (position == null || mapState.controller == null) {
-      return const MapPlaceholder(message: 'Waiting for location...');
+      return MapPlaceholder(message: S.of(context).homeWaitingForLocation);
     }
 
     return FlutterMap(
@@ -304,14 +305,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             FabButton(
               icon: Icons.my_location_rounded,
               onTap: () => context.read<MapCubit>().recenterOnDriver(),
-              tooltip: 'My Location',
+              tooltip: S.of(context).homeMyLocation,
             ),
             SizedBox(height: AppSpacing.sm.h),
             FabButton(
               icon: Icons.radar_rounded,
               onTap: () =>
                   showRadiusSelectorDialog(context, driverState.radiusKm),
-              tooltip: 'Ride Radius (${driverState.radiusKm} km)',
+              tooltip: '${S.of(context).radiusTitle} (${S.of(context).radiusKm(driverState.radiusKm)})',
             ),
             // SizedBox(height: AppSpacing.sm.h),
             // if (driverState.isOnline)
@@ -363,14 +364,14 @@ class _OfflineCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "You're Offline",
+                      S.of(context).homeOffline,
                       style: AppTextStyles.w600_14.copyWith(
                         color: AppColors.darkScaffold,
                       ),
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      'Go online to start accepting rides',
+                      S.of(context).homeGoOnlineHint,
                       style: AppTextStyles.w400_12.copyWith(
                         color: AppColors.textGrey,
                       ),
@@ -400,11 +401,11 @@ class _TripCancelledSheet extends StatelessWidget {
         ? Icons.admin_panel_settings_rounded
         : Icons.person_off_rounded;
     final title = isAdmin
-        ? 'Trip Cancelled by Admin'
-        : 'Trip Cancelled by Rider';
+        ? S.of(context).tripCancelledByAdmin
+        : S.of(context).tripCancelledByRider;
     final subtitle = isAdmin
-        ? 'An administrator has ended this trip. You are now available for new rides.'
-        : 'The rider has cancelled the trip. You are now available for new rides.';
+        ? S.of(context).tripCancelledByAdminSubtitle
+        : S.of(context).tripCancelledByRiderSubtitle;
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -479,7 +480,7 @@ class _TripCancelledSheet extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Got it',
+                S.of(context).commonGotIt,
                 style: AppTextStyles.w600_14.copyWith(color: Colors.white),
               ),
             ),

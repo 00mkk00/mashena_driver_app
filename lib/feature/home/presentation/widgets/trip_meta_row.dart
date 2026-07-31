@@ -1,5 +1,6 @@
 // ─── Trip Meta Row (Fare + Distance) ─────────────────────────────────────────
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -29,7 +30,7 @@ class TripMetaRow extends StatelessWidget {
           iconColor: AppColors.primaryColor,
           backgroundColor: AppColors.primarySurface,
           label: ride.distanceKm != null
-              ? '${ride.distanceKm!.floor()} km'
+              ? S.of(context).radiusKm(ride.distanceKm!.floor())
               : '—',
         ),
         SizedBox(width: AppSpacing.sm.w),
@@ -37,7 +38,7 @@ class TripMetaRow extends StatelessWidget {
           icon: Icons.timelapse_rounded,
           iconColor: AppColors.danger,
           backgroundColor: AppColors.dangerSurface,
-          label: '${ride.durationMin.toString()} Min',
+          label: '${ride.durationMin.toString()} ${S.of(context).commonMin}',
         ),
       ],
     );

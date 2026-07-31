@@ -97,41 +97,23 @@ abstract class S {
     Locale('en'),
   ];
 
-  /// No description provided for @appName.
-  ///
-  /// In en, this message translates to:
-  /// **'Mashena'**
-  String get appName;
-
-  /// No description provided for @appDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome to Mashena'**
-  String get appDescription;
-
-  /// No description provided for @commonOk.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get commonOk;
-
   /// No description provided for @commonCancel.
   ///
   /// In en, this message translates to:
   /// **'Cancel'**
   String get commonCancel;
 
-  /// No description provided for @commonYes.
+  /// No description provided for @commonReject.
   ///
   /// In en, this message translates to:
-  /// **'Yes'**
-  String get commonYes;
+  /// **'Reject'**
+  String get commonReject;
 
-  /// No description provided for @commonNo.
+  /// No description provided for @commonAccept.
   ///
   /// In en, this message translates to:
-  /// **'No'**
-  String get commonNo;
+  /// **'Accept'**
+  String get commonAccept;
 
   /// No description provided for @commonNext.
   ///
@@ -139,47 +121,11 @@ abstract class S {
   /// **'Next'**
   String get commonNext;
 
-  /// No description provided for @commonBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Back'**
-  String get commonBack;
-
-  /// No description provided for @commonSkip.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip'**
-  String get commonSkip;
-
-  /// No description provided for @commonConfirm.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm'**
-  String get commonConfirm;
-
-  /// No description provided for @commonSave.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get commonSave;
-
-  /// No description provided for @commonLoading.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading...'**
-  String get commonLoading;
-
   /// No description provided for @commonError.
   ///
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get commonError;
-
-  /// No description provided for @commonRetry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get commonRetry;
 
   /// No description provided for @onboardingTitle1.
   ///
@@ -223,36 +169,6 @@ abstract class S {
   /// **'Login'**
   String get authLogin;
 
-  /// No description provided for @enterYourNumberLogin.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your number to login'**
-  String get enterYourNumberLogin;
-
-  /// No description provided for @enterYourNumberRegister.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your number to sign up'**
-  String get enterYourNumberRegister;
-
-  /// No description provided for @enterYourEmailLogin.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your email to login'**
-  String get enterYourEmailLogin;
-
-  /// No description provided for @enterYourEmailRegister.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your email to sign up'**
-  String get enterYourEmailRegister;
-
-  /// No description provided for @authRegister.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Account'**
-  String get authRegister;
-
   /// No description provided for @authLogout.
   ///
   /// In en, this message translates to:
@@ -264,18 +180,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'city'**
   String get authCity;
-
-  /// No description provided for @authSendCode.
-  ///
-  /// In en, this message translates to:
-  /// **'Send Code'**
-  String get authSendCode;
-
-  /// No description provided for @authDontHaveAnAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account?'**
-  String get authDontHaveAnAccount;
 
   /// No description provided for @authFullName.
   ///
@@ -300,30 +204,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Password'**
   String get authPassword;
-
-  /// No description provided for @authForgotPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot password?'**
-  String get authForgotPassword;
-
-  /// No description provided for @authOtpTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Verification Code'**
-  String get authOtpTitle;
-
-  /// No description provided for @authOtpSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the code sent to your phone'**
-  String get authOtpSubtitle;
-
-  /// No description provided for @authResendOtp.
-  ///
-  /// In en, this message translates to:
-  /// **'Resend Code'**
-  String get authResendOtp;
 
   /// No description provided for @authOtpSuccess.
   ///
@@ -415,317 +295,17 @@ abstract class S {
   /// **'Image is required'**
   String get imageIsRequired;
 
-  /// No description provided for @otpResendSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Code sent successfully'**
-  String get otpResendSuccess;
-
-  /// No description provided for @homeWhereTo.
-  ///
-  /// In en, this message translates to:
-  /// **'Where to?'**
-  String get homeWhereTo;
-
-  /// No description provided for @homeCurrentLocation.
-  ///
-  /// In en, this message translates to:
-  /// **'Current location'**
-  String get homeCurrentLocation;
-
-  /// No description provided for @homeSearchDestination.
-  ///
-  /// In en, this message translates to:
-  /// **'Search destination'**
-  String get homeSearchDestination;
-
-  /// No description provided for @rideRequestRide.
-  ///
-  /// In en, this message translates to:
-  /// **'Request Ride'**
-  String get rideRequestRide;
-
-  /// No description provided for @rideFindingDriver.
-  ///
-  /// In en, this message translates to:
-  /// **'Finding a driver...'**
-  String get rideFindingDriver;
-
-  /// No description provided for @rideDriverOnWay.
-  ///
-  /// In en, this message translates to:
-  /// **'Driver is on the way'**
-  String get rideDriverOnWay;
-
-  /// No description provided for @rideDriverArrived.
-  ///
-  /// In en, this message translates to:
-  /// **'Driver arrived'**
-  String get rideDriverArrived;
-
-  /// No description provided for @rideTripStarted.
-  ///
-  /// In en, this message translates to:
-  /// **'Trip started'**
-  String get rideTripStarted;
-
-  /// No description provided for @rideTripEnded.
-  ///
-  /// In en, this message translates to:
-  /// **'Trip ended'**
-  String get rideTripEnded;
-
-  /// No description provided for @rideCancelRide.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel Ride'**
-  String get rideCancelRide;
-
-  /// No description provided for @rideEstimatedTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Estimated time'**
-  String get rideEstimatedTime;
-
-  /// No description provided for @rideEstimatedPrice.
-  ///
-  /// In en, this message translates to:
-  /// **'Estimated price'**
-  String get rideEstimatedPrice;
-
-  /// No description provided for @paymentPaymentMethod.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment Method'**
-  String get paymentPaymentMethod;
-
-  /// No description provided for @paymentCash.
-  ///
-  /// In en, this message translates to:
-  /// **'Cash'**
-  String get paymentCash;
-
-  /// No description provided for @paymentOnline.
-  ///
-  /// In en, this message translates to:
-  /// **'Online Payment'**
-  String get paymentOnline;
-
-  /// No description provided for @paymentTotal.
-  ///
-  /// In en, this message translates to:
-  /// **'Total'**
-  String get paymentTotal;
-
-  /// No description provided for @paymentPayNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Pay Now'**
-  String get paymentPayNow;
-
-  /// No description provided for @paymentSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment successful'**
-  String get paymentSuccess;
-
-  /// No description provided for @paymentFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Payment failed'**
-  String get paymentFailed;
-
-  /// No description provided for @ratingRateDriver.
-  ///
-  /// In en, this message translates to:
-  /// **'Rate Driver'**
-  String get ratingRateDriver;
-
-  /// No description provided for @ratingLeaveComment.
-  ///
-  /// In en, this message translates to:
-  /// **'Leave a comment (optional)'**
-  String get ratingLeaveComment;
-
-  /// No description provided for @ratingSubmitRating.
-  ///
-  /// In en, this message translates to:
-  /// **'Submit Rating'**
-  String get ratingSubmitRating;
-
   /// No description provided for @profileProfile.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get profileProfile;
 
-  /// No description provided for @profileEditProfile.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit Profile'**
-  String get profileEditProfile;
-
-  /// No description provided for @profileName.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get profileName;
-
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
   /// **'Email'**
   String get email;
-
-  /// No description provided for @profileLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Language'**
-  String get profileLanguage;
-
-  /// No description provided for @profileNotifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get profileNotifications;
-
-  /// No description provided for @profilePrivacy.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy'**
-  String get profilePrivacy;
-
-  /// No description provided for @settingsSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settingsSettings;
-
-  /// No description provided for @settingsDarkMode.
-  ///
-  /// In en, this message translates to:
-  /// **'Dark Mode'**
-  String get settingsDarkMode;
-
-  /// No description provided for @settingsChangeLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Change Language'**
-  String get settingsChangeLanguage;
-
-  /// No description provided for @settingsAboutApp.
-  ///
-  /// In en, this message translates to:
-  /// **'About App'**
-  String get settingsAboutApp;
-
-  /// No description provided for @errorsNetwork.
-  ///
-  /// In en, this message translates to:
-  /// **'Check your internet connection'**
-  String get errorsNetwork;
-
-  /// No description provided for @errorsUnauthorized.
-  ///
-  /// In en, this message translates to:
-  /// **'Unauthorized access'**
-  String get errorsUnauthorized;
-
-  /// No description provided for @errorsLocationPermission.
-  ///
-  /// In en, this message translates to:
-  /// **'Please allow location access'**
-  String get errorsLocationPermission;
-
-  /// No description provided for @apiConnectionTimeout.
-  ///
-  /// In en, this message translates to:
-  /// **'Connection timeout'**
-  String get apiConnectionTimeout;
-
-  /// No description provided for @apiSendTimeout.
-  ///
-  /// In en, this message translates to:
-  /// **'Send timeout'**
-  String get apiSendTimeout;
-
-  /// No description provided for @apiReceiveTimeout.
-  ///
-  /// In en, this message translates to:
-  /// **'Receive timeout'**
-  String get apiReceiveTimeout;
-
-  /// No description provided for @apiRequestCancelled.
-  ///
-  /// In en, this message translates to:
-  /// **'Request cancelled'**
-  String get apiRequestCancelled;
-
-  /// No description provided for @apiConnectionError.
-  ///
-  /// In en, this message translates to:
-  /// **'Connection error'**
-  String get apiConnectionError;
-
-  /// No description provided for @apiCertificateError.
-  ///
-  /// In en, this message translates to:
-  /// **'Certificate error'**
-  String get apiCertificateError;
-
-  /// No description provided for @apiBadRequest.
-  ///
-  /// In en, this message translates to:
-  /// **'Bad request'**
-  String get apiBadRequest;
-
-  /// No description provided for @apiUnauthorized.
-  ///
-  /// In en, this message translates to:
-  /// **'Unauthorized'**
-  String get apiUnauthorized;
-
-  /// No description provided for @apiForbidden.
-  ///
-  /// In en, this message translates to:
-  /// **'Forbidden'**
-  String get apiForbidden;
-
-  /// No description provided for @apiNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Not found'**
-  String get apiNotFound;
-
-  /// No description provided for @apiValidationError.
-  ///
-  /// In en, this message translates to:
-  /// **'Validation error'**
-  String get apiValidationError;
-
-  /// No description provided for @apiServerError.
-  ///
-  /// In en, this message translates to:
-  /// **'Server error'**
-  String get apiServerError;
-
-  /// No description provided for @apiBadGateway.
-  ///
-  /// In en, this message translates to:
-  /// **'Bad gateway'**
-  String get apiBadGateway;
-
-  /// No description provided for @apiServiceUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Service unavailable'**
-  String get apiServiceUnavailable;
-
-  /// No description provided for @apiRequestFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Request failed ({code})'**
-  String apiRequestFailed(Object code);
 
   /// No description provided for @otpTitle.
   ///
@@ -751,12 +331,6 @@ abstract class S {
   /// **'A code has been sent to {phone}'**
   String otpSubtitle(Object phone);
 
-  /// No description provided for @otpDidNotReceive.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t receive a code?'**
-  String get otpDidNotReceive;
-
   /// No description provided for @otpResend.
   ///
   /// In en, this message translates to:
@@ -769,53 +343,11 @@ abstract class S {
   /// **'Verify Now'**
   String get otpVerifyNow;
 
-  /// No description provided for @apiUnknownError.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown error'**
-  String get apiUnknownError;
-
-  /// No description provided for @cacheError.
-  ///
-  /// In en, this message translates to:
-  /// **'Cache error'**
-  String get cacheError;
-
   /// No description provided for @validationRequired.
   ///
   /// In en, this message translates to:
   /// **'This field is required'**
   String get validationRequired;
-
-  /// No description provided for @validationInvalidEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid email'**
-  String get validationInvalidEmail;
-
-  /// No description provided for @validationInvalidPhone.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid phone number'**
-  String get validationInvalidPhone;
-
-  /// No description provided for @validationWeakPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Weak password (uppercase, lowercase, number, symbol)'**
-  String get validationWeakPassword;
-
-  /// No description provided for @validationOtpInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid code'**
-  String get validationOtpInvalid;
-
-  /// No description provided for @validationMinLength.
-  ///
-  /// In en, this message translates to:
-  /// **'Minimum {min} characters'**
-  String validationMinLength(int min);
 
   /// No description provided for @validationPasswordsNotMatch.
   ///
@@ -823,11 +355,965 @@ abstract class S {
   /// **'Passwords do not match'**
   String get validationPasswordsNotMatch;
 
-  /// No description provided for @validationMaxLength.
+  /// No description provided for @homeGettingLocation.
   ///
   /// In en, this message translates to:
-  /// **'Maximum {max} characters'**
-  String validationMaxLength(int max);
+  /// **'Getting your location...'**
+  String get homeGettingLocation;
+
+  /// No description provided for @homeEnableLocationPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable location permission'**
+  String get homeEnableLocationPermission;
+
+  /// No description provided for @homeWaitingForLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for location...'**
+  String get homeWaitingForLocation;
+
+  /// No description provided for @homeMyLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'My Location'**
+  String get homeMyLocation;
+
+  /// No description provided for @homeOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re Offline'**
+  String get homeOffline;
+
+  /// No description provided for @homeGoOnlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Go online to start accepting rides'**
+  String get homeGoOnlineHint;
+
+  /// No description provided for @homeStatusOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get homeStatusOnline;
+
+  /// No description provided for @homeStatusGoOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Online'**
+  String get homeStatusGoOnline;
+
+  /// No description provided for @homeLookingForPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for passengers'**
+  String get homeLookingForPassengers;
+
+  /// No description provided for @homeSearching.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching'**
+  String get homeSearching;
+
+  /// No description provided for @homeSos.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS'**
+  String get homeSos;
+
+  /// No description provided for @commonGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get commonGotIt;
+
+  /// No description provided for @commonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
+  /// No description provided for @commonSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting...'**
+  String get commonSubmitting;
+
+  /// No description provided for @commonMin.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get commonMin;
+
+  /// No description provided for @commonCurrencySyria.
+  ///
+  /// In en, this message translates to:
+  /// **'S.P'**
+  String get commonCurrencySyria;
+
+  /// No description provided for @radiusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride Radius'**
+  String get radiusTitle;
+
+  /// No description provided for @radiusSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How far will you accept rides?'**
+  String get radiusSubtitle;
+
+  /// No description provided for @radiusConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Radius'**
+  String get radiusConfirm;
+
+  /// No description provided for @radiusKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} km'**
+  String radiusKm(Object count);
+
+  /// No description provided for @rideRequestNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New Ride Request'**
+  String get rideRequestNew;
+
+  /// No description provided for @rideRequestFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load'**
+  String get rideRequestFailedToLoad;
+
+  /// No description provided for @rideRequestSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String rideRequestSeconds(Object seconds);
+
+  /// No description provided for @rideRequestNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get rideRequestNight;
+
+  /// No description provided for @rideRequestPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup'**
+  String get rideRequestPickup;
+
+  /// No description provided for @rideRequestDropOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop-off'**
+  String get rideRequestDropOff;
+
+  /// No description provided for @rideRequestAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Ride'**
+  String get rideRequestAccept;
+
+  /// No description provided for @rideRequestStopsAlongTheWay.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} stop{suffix} along the way'**
+  String rideRequestStopsAlongTheWay(Object count, Object suffix);
+
+  /// No description provided for @tripArrivedCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived ✓'**
+  String get tripArrivedCheck;
+
+  /// No description provided for @tripAcceptedCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Accepted ✓'**
+  String get tripAcceptedCheck;
+
+  /// No description provided for @tripId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID #{id}'**
+  String tripId(Object id);
+
+  /// No description provided for @tripMarkAsArrived.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Arrived'**
+  String get tripMarkAsArrived;
+
+  /// No description provided for @tripSlideToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide to start trip'**
+  String get tripSlideToStart;
+
+  /// No description provided for @tripOnTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'On Trip'**
+  String get tripOnTrip;
+
+  /// No description provided for @tripElapsed.
+  ///
+  /// In en, this message translates to:
+  /// **'elapsed'**
+  String get tripElapsed;
+
+  /// No description provided for @tripSlideToEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide to end trip'**
+  String get tripSlideToEnd;
+
+  /// No description provided for @tripStopLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'STOP {order}'**
+  String tripStopLabel(Object order);
+
+  /// No description provided for @tripCancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Trip'**
+  String get tripCancelTitle;
+
+  /// No description provided for @tripCancelConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this trip? This action cannot be undone.'**
+  String get tripCancelConfirm;
+
+  /// No description provided for @tripCancelNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No, Keep it'**
+  String get tripCancelNo;
+
+  /// No description provided for @tripCancelYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Cancel'**
+  String get tripCancelYes;
+
+  /// No description provided for @tripFreeWaitTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Free wait time: {time}'**
+  String tripFreeWaitTime(Object time);
+
+  /// No description provided for @tripWaitTimeExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait time exceeded'**
+  String get tripWaitTimeExceeded;
+
+  /// No description provided for @tripSummaryTotalFare.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Fare'**
+  String get tripSummaryTotalFare;
+
+  /// No description provided for @tripSummaryDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get tripSummaryDistance;
+
+  /// No description provided for @tripSummaryDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get tripSummaryDuration;
+
+  /// No description provided for @tripSummaryOriginalFare.
+  ///
+  /// In en, this message translates to:
+  /// **'Original Fare'**
+  String get tripSummaryOriginalFare;
+
+  /// No description provided for @tripSummaryDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get tripSummaryDiscount;
+
+  /// No description provided for @tripSummaryCoupon.
+  ///
+  /// In en, this message translates to:
+  /// **' (Coupon)'**
+  String get tripSummaryCoupon;
+
+  /// No description provided for @tripSummaryCommission.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Commission'**
+  String get tripSummaryCommission;
+
+  /// No description provided for @tripSummaryEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Earnings'**
+  String get tripSummaryEarnings;
+
+  /// No description provided for @tripSummaryTripRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Rated'**
+  String get tripSummaryTripRated;
+
+  /// No description provided for @tripSummaryDurationFormatMinsSecs.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins}m {secs}s'**
+  String tripSummaryDurationFormatMinsSecs(Object mins, Object secs);
+
+  /// No description provided for @tripSummaryDurationFormatMins.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins} min'**
+  String tripSummaryDurationFormatMins(Object mins);
+
+  /// No description provided for @tripSummaryDurationFormatSecs.
+  ///
+  /// In en, this message translates to:
+  /// **'{secs} sec'**
+  String tripSummaryDurationFormatSecs(Object secs);
+
+  /// No description provided for @tripCancelledByAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Cancelled by Admin'**
+  String get tripCancelledByAdmin;
+
+  /// No description provided for @tripCancelledByRider.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Cancelled by Rider'**
+  String get tripCancelledByRider;
+
+  /// No description provided for @tripCancelledByAdminSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'An administrator has ended this trip. You are now available for new rides.'**
+  String get tripCancelledByAdminSubtitle;
+
+  /// No description provided for @tripCancelledByRiderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider has cancelled the trip. You are now available for new rides.'**
+  String get tripCancelledByRiderSubtitle;
+
+  /// No description provided for @drawerMyProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get drawerMyProfile;
+
+  /// No description provided for @drawerWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get drawerWallet;
+
+  /// No description provided for @drawerRideHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride History'**
+  String get drawerRideHistory;
+
+  /// No description provided for @drawerDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get drawerDocuments;
+
+  /// No description provided for @drawerSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get drawerSettings;
+
+  /// No description provided for @drawerLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get drawerLogout;
+
+  /// No description provided for @drawerLogoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get drawerLogoutConfirm;
+
+  /// No description provided for @drawerLogoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout failed'**
+  String get drawerLogoutFailed;
+
+  /// No description provided for @docsUploadDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Document'**
+  String get docsUploadDocument;
+
+  /// No description provided for @docsFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All Documents'**
+  String get docsFilterAll;
+
+  /// No description provided for @docsFilterVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get docsFilterVerified;
+
+  /// No description provided for @docsFilterPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get docsFilterPending;
+
+  /// No description provided for @docsFilterRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get docsFilterRejected;
+
+  /// No description provided for @docsFilterExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get docsFilterExpired;
+
+  /// No description provided for @docsNoDocumentsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Documents Found'**
+  String get docsNoDocumentsFound;
+
+  /// No description provided for @docsNoDocumentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no uploaded driver documents registered at this time.'**
+  String get docsNoDocumentsSubtitle;
+
+  /// No description provided for @docsReloadDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Reload Documents'**
+  String get docsReloadDocuments;
+
+  /// No description provided for @docsNoMatchFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No documents match this filter'**
+  String get docsNoMatchFilter;
+
+  /// No description provided for @docsResetFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Filter to All'**
+  String get docsResetFilter;
+
+  /// No description provided for @docsFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to Load Documents'**
+  String get docsFailedToLoad;
+
+  /// No description provided for @docsFailedToLoadSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred while fetching your documents.'**
+  String get docsFailedToLoadSubtitle;
+
+  /// No description provided for @docsTypeLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver License'**
+  String get docsTypeLicense;
+
+  /// No description provided for @docsTypeInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Insurance'**
+  String get docsTypeInsurance;
+
+  /// No description provided for @docsTypeMechanic.
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic Card'**
+  String get docsTypeMechanic;
+
+  /// No description provided for @docsTypeIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'National Identity Card'**
+  String get docsTypeIdentity;
+
+  /// No description provided for @docsTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Document'**
+  String get docsTypeOther;
+
+  /// No description provided for @docsImageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Document image file is required'**
+  String get docsImageRequired;
+
+  /// No description provided for @docsUploadSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Document uploaded successfully!'**
+  String get docsUploadSuccess;
+
+  /// No description provided for @docsUploadNewHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload New Document'**
+  String get docsUploadNewHeader;
+
+  /// No description provided for @docsUploadNewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit document for verification'**
+  String get docsUploadNewSubtitle;
+
+  /// No description provided for @docsTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Type'**
+  String get docsTypeLabel;
+
+  /// No description provided for @docsIssuedDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued Date (Optional)'**
+  String get docsIssuedDateLabel;
+
+  /// No description provided for @docsExpirationDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiration Date (Optional)'**
+  String get docsExpirationDateLabel;
+
+  /// No description provided for @docsTapToChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to choose document image'**
+  String get docsTapToChoose;
+
+  /// No description provided for @docsStatusOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Status Overview'**
+  String get docsStatusOverview;
+
+  /// No description provided for @docsFailedToLoadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load image'**
+  String get docsFailedToLoadImage;
+
+  /// No description provided for @docsZoomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use tow fingers to zoom'**
+  String get docsZoomHint;
+
+  /// No description provided for @docsStatusPendingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
+  String get docsStatusPendingApproval;
+
+  /// No description provided for @docsRejectionReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Reason'**
+  String get docsRejectionReasonLabel;
+
+  /// No description provided for @docsIssuedDateStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued Date'**
+  String get docsIssuedDateStat;
+
+  /// No description provided for @docsExpiryDateStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date'**
+  String get docsExpiryDateStat;
+
+  /// No description provided for @docsHideTechDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Technical Details'**
+  String get docsHideTechDetails;
+
+  /// No description provided for @docsViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get docsViewDetails;
+
+  /// No description provided for @docsDetailId.
+  ///
+  /// In en, this message translates to:
+  /// **'Document ID'**
+  String get docsDetailId;
+
+  /// No description provided for @docsDetailProfileId.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver Profile ID'**
+  String get docsDetailProfileId;
+
+  /// No description provided for @docsDetailAdminId.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified By Admin ID'**
+  String get docsDetailAdminId;
+
+  /// No description provided for @docsDetailVerifiedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified At'**
+  String get docsDetailVerifiedAt;
+
+  /// No description provided for @docsDetailUploadedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded At'**
+  String get docsDetailUploadedAt;
+
+  /// No description provided for @docsDetailMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'Meta JSON'**
+  String get docsDetailMeta;
+
+  /// No description provided for @profileCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get profileCity;
+
+  /// No description provided for @profileSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get profileSaveChanges;
+
+  /// No description provided for @walletFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load wallet data'**
+  String get walletFailedToLoad;
+
+  /// No description provided for @walletEarningsSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Earnings Summary'**
+  String get walletEarningsSummary;
+
+  /// No description provided for @walletRecentTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get walletRecentTransactions;
+
+  /// No description provided for @walletNoTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent transactions'**
+  String get walletNoTransactions;
+
+  /// No description provided for @walletAvailableBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Balance'**
+  String get walletAvailableBalance;
+
+  /// No description provided for @walletTotalEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earned'**
+  String get walletTotalEarned;
+
+  /// No description provided for @walletTotalWithdrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Withdrawn'**
+  String get walletTotalWithdrawn;
+
+  /// No description provided for @walletToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get walletToday;
+
+  /// No description provided for @walletThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get walletThisWeek;
+
+  /// No description provided for @walletThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get walletThisMonth;
+
+  /// No description provided for @walletTripsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trips'**
+  String walletTripsCount(Object count);
+
+  /// No description provided for @walletWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get walletWithdraw;
+
+  /// No description provided for @walletHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get walletHistory;
+
+  /// No description provided for @walletStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement'**
+  String get walletStatement;
+
+  /// No description provided for @ratingCommentRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'A comment or at least one tag is required for ratings of 2 stars or below.'**
+  String get ratingCommentRequiredError;
+
+  /// No description provided for @ratingWhatStoodOut.
+  ///
+  /// In en, this message translates to:
+  /// **'What stood out? (optional)'**
+  String get ratingWhatStoodOut;
+
+  /// No description provided for @ratingWhatWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'What went wrong? (Tag or comment required)'**
+  String get ratingWhatWentWrong;
+
+  /// No description provided for @ratingMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More...'**
+  String get ratingMore;
+
+  /// No description provided for @ratingRateRiderName.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate {name}'**
+  String ratingRateRiderName(Object name);
+
+  /// No description provided for @ratingRateRider.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Rider'**
+  String get ratingRateRider;
+
+  /// No description provided for @ratingSelectScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a rating score for this trip'**
+  String get ratingSelectScore;
+
+  /// No description provided for @ratingCommentRequiredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (Tag or comment required)'**
+  String get ratingCommentRequiredLabel;
+
+  /// No description provided for @ratingCommentOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (optional)'**
+  String get ratingCommentOptional;
+
+  /// No description provided for @ratingCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note about this trip…'**
+  String get ratingCommentHint;
+
+  /// No description provided for @ratingSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Rating'**
+  String get ratingSubmit;
+
+  /// No description provided for @settingsPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsPreferences;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsDarkThemeEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark theme enabled'**
+  String get settingsDarkThemeEnabled;
+
+  /// No description provided for @settingsLightThemeEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Light theme enabled'**
+  String get settingsLightThemeEnabled;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride History'**
+  String get historyTitle;
+
+  /// No description provided for @historyFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load history'**
+  String get historyFailedToLoad;
+
+  /// No description provided for @historyNoRides.
+  ///
+  /// In en, this message translates to:
+  /// **'No rides found'**
+  String get historyNoRides;
+
+  /// No description provided for @historyUnknownPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Pickup'**
+  String get historyUnknownPickup;
+
+  /// No description provided for @historyUnknownDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Destination'**
+  String get historyUnknownDestination;
+
+  /// No description provided for @historyUnknownRider.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Rider'**
+  String get historyUnknownRider;
+
+  /// No description provided for @historyStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get historyStatusCompleted;
+
+  /// No description provided for @historyStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get historyStatusCancelled;
+
+  /// No description provided for @historyStatusDriverCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled by you'**
+  String get historyStatusDriverCancelled;
+
+  /// No description provided for @historyStatusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get historyStatusInProgress;
+
+  /// No description provided for @historyDurationMins.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins}m'**
+  String historyDurationMins(Object mins);
+
+  /// No description provided for @historyDurationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String historyDurationHours(Object hours);
+
+  /// No description provided for @historyDurationHoursMins.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {mins}m'**
+  String historyDurationHoursMins(Object hours, Object mins);
+
+  /// No description provided for @historyRatingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating Details'**
+  String get historyRatingDetails;
+
+  /// No description provided for @historyYouRated.
+  ///
+  /// In en, this message translates to:
+  /// **'You rated'**
+  String get historyYouRated;
+
+  /// No description provided for @historyRiderRatedYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider rated you'**
+  String get historyRiderRatedYou;
+
+  /// No description provided for @historyNoRatingYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No rating yet'**
+  String get historyNoRatingYet;
+
+  /// No description provided for @settingsSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsSettings;
+
+  /// No description provided for @settingsDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get settingsDarkMode;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commonRetry;
+
+  /// No description provided for @docsMyDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'My Documents'**
+  String get docsMyDocuments;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

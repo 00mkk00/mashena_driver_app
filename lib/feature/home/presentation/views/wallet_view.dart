@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
@@ -44,8 +45,10 @@ class WalletViewBody extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Wallet',
-          style: AppTextStyles.w600_18.copyWith(color: AppColors.onSurface),
+          S.of(context).drawerWallet,
+          style: AppTextStyles.w700_18.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         centerTitle: true,
       ),
@@ -76,7 +79,7 @@ class WalletViewBody extends StatelessWidget {
                     ),
                     SizedBox(height: AppSpacing.sm.h),
                     Text(
-                      state.errorMessage ?? 'Failed to load wallet data',
+                      S.of(context).walletFailedToLoad,
                       textAlign: TextAlign.center,
                       style: AppTextStyles.w500_14.copyWith(
                         color: AppColors.onSurface,
@@ -132,9 +135,9 @@ class WalletViewBody extends StatelessWidget {
 
                   // ── Earnings Summary ───────────────────────────────────────
                   Text(
-                    'Earnings Summary',
+                    S.of(context).walletEarningsSummary,
                     style: AppTextStyles.w600_16.copyWith(
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   SizedBox(height: AppSpacing.sm.h),
@@ -149,20 +152,11 @@ class WalletViewBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Recent Transactions',
+                        S.of(context).walletRecentTransactions,
                         style: AppTextStyles.w600_16.copyWith(
-                          color: AppColors.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
-                      // TextButton(
-                      //   onPressed: () {},
-                      //   child: Text(
-                      //     'See all',
-                      //     style: AppTextStyles.w500_12.copyWith(
-                      //       color: AppColors.primaryColor,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                   SizedBox(height: AppSpacing.xs.h),
@@ -171,8 +165,8 @@ class WalletViewBody extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: AppSpacing.lg.h),
                       child: Center(
                         child: Text(
-                          'No recent transactions',
-                          style: AppTextStyles.w400_14.copyWith(
+                          S.of(context).walletNoTransactions,
+                          style: AppTextStyles.w500_14.copyWith(
                             color: AppColors.textGrey,
                           ),
                         ),

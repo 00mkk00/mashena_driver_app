@@ -1,10 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/constants/app_constants.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/core/utils/image_picker.dart';
+import 'package:mashena_driver_app/core/utils/toast_helper.dart';
+import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
+import 'package:mashena_driver_app/feature/auth/data/models/driver_model.dart';
+import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_state.dart';
@@ -53,12 +64,52 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
     }).toList();
   }
 
+  void _showUploadDocumentBottomSheet(BuildContext context) {
+    int profileId = 0;
+    final cubit = context.read<DriverDocumentsCubit>();
+    if (cubit.state.documents.isNotEmpty) {
+      profileId = cubit.state.documents.first.driverProfileId;
+    } else {
+      final userJson = getIt<LocalStorage>().getString(
+        AppConstants.driverUserKey,
+      );
+      if (userJson != null && userJson.isNotEmpty) {
+        try {
+          final driver = DriverModel.fromJson(
+            jsonDecode(userJson) as Map<String, dynamic>,
+          );
+          profileId = driver.id;
+        } catch (_) {}
+      }
+    }
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (bottomSheetContext) =>
+          _UploadDocumentBottomSheet(cubit: cubit, driverProfileId: profileId),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.darkScaffold : AppColors.lightScaffold,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showUploadDocumentBottomSheet(context),
+        backgroundColor: AppColors.primaryColor,
+        elevation: 4,
+        icon: const Icon(Icons.add_a_photo_rounded, color: Colors.white),
+        label: Text(
+          S.of(context).docsUploadDocument,
+          style: AppTextStyles.w600_14.copyWith(color: Colors.white),
+        ),
+      ),
+      backgroundColor: isDark
+          ? AppColors.darkScaffold
+          : AppColors.lightScaffold,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.darkScaffold : AppColors.cardLight,
         elevation: 0,
@@ -73,7 +124,7 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
           ),
         ),
         title: Text(
-          'My Documents',
+          S.of(context).docsMyDocuments,
           style: AppTextStyles.w700_18.copyWith(
             color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
           ),
@@ -129,7 +180,7 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
                   )
                 else
                   SliverPadding(
-                    padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 24.h),
+                    padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 80.h),
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final doc = filteredDocs[index];
@@ -150,11 +201,11 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
 
   Widget _buildFilterBar(BuildContext context, bool isDark) {
     final filters = [
-      {'key': 'all', 'label': 'All Documents'},
-      {'key': 'verified', 'label': 'Verified'},
-      {'key': 'pending', 'label': 'Pending'},
-      {'key': 'rejected', 'label': 'Rejected'},
-      {'key': 'expired', 'label': 'Expired'},
+      {'key': 'all', 'label': S.of(context).docsFilterAll},
+      {'key': 'verified', 'label': S.of(context).docsFilterVerified},
+      {'key': 'pending', 'label': S.of(context).docsFilterPending},
+      {'key': 'rejected', 'label': S.of(context).docsFilterRejected},
+      {'key': 'expired', 'label': S.of(context).docsFilterExpired},
     ];
 
     return SingleChildScrollView(
@@ -224,14 +275,14 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
             ),
             SizedBox(height: 20.h),
             Text(
-              'No Documents Found',
+              S.of(context).docsNoDocumentsFound,
               style: AppTextStyles.w700_18.copyWith(
                 color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
               ),
             ),
             SizedBox(height: 8.h),
             Text(
-              'You have no uploaded driver documents registered at this time.',
+              S.of(context).docsNoDocumentsSubtitle,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
             ),
@@ -249,7 +300,7 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
                 ),
               ),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Reload Documents'),
+              label: Text(S.of(context).docsReloadDocuments),
             ),
           ],
         ),
@@ -273,7 +324,7 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
             ),
             SizedBox(height: 16.h),
             Text(
-              'No documents match this filter',
+              S.of(context).docsNoMatchFilter,
               style: AppTextStyles.w600_16.copyWith(
                 color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
               ),
@@ -285,7 +336,7 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
                   _selectedFilter = 'all';
                 });
               },
-              child: const Text('Reset Filter to All'),
+              child: Text(S.of(context).docsResetFilter),
             ),
           ],
         ),
@@ -316,15 +367,14 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
             ),
             SizedBox(height: 16.h),
             Text(
-              'Failed to Load Documents',
+              S.of(context).docsFailedToLoad,
               style: AppTextStyles.w700_18.copyWith(
                 color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
               ),
             ),
             SizedBox(height: 8.h),
             Text(
-              errorMessage ??
-                  'An unexpected error occurred while fetching your documents.',
+              errorMessage ?? S.of(context).docsFailedToLoadSubtitle,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_12.copyWith(color: AppColors.textGrey),
             ),
@@ -341,9 +391,535 @@ class _DocumentsViewBodyState extends State<_DocumentsViewBody> {
                 ),
               ),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Try Again'),
+              label: Text(S.of(context).docsReloadDocuments),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Upload Document Bottom Sheet ─────────────────────────────────────────────
+class _UploadDocumentBottomSheet extends StatefulWidget {
+  final DriverDocumentsCubit cubit;
+  final int driverProfileId;
+
+  const _UploadDocumentBottomSheet({
+    required this.cubit,
+    required this.driverProfileId,
+  });
+
+  @override
+  State<_UploadDocumentBottomSheet> createState() =>
+      __UploadDocumentBottomSheetState();
+}
+
+class __UploadDocumentBottomSheetState
+    extends State<_UploadDocumentBottomSheet> {
+  final _formKey = GlobalKey<FormState>();
+  final _issuedAtController = TextEditingController();
+  final _expiresAtController = TextEditingController();
+
+  DriverDocType _selectedDocType = DriverDocType.license;
+  String? _imagePath;
+  bool _isLoading = false;
+
+  final _imageService = getIt<ImagePickerService>();
+
+  @override
+  void dispose() {
+    _issuedAtController.dispose();
+    _expiresAtController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    final path = await _imageService.pickImage();
+    if (path != null) {
+      setState(() {
+        _imagePath = path;
+      });
+    }
+  }
+
+  Future<void> _selectDate(
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: isDark
+                ? const ColorScheme.dark(
+                    primary: AppColors.primaryColor,
+                    onPrimary: Colors.white,
+                    surface: AppColors.cardDark,
+                    onSurface: AppColors.onSurfaceDark,
+                  )
+                : const ColorScheme.light(
+                    primary: AppColors.primaryColor,
+                    onPrimary: Colors.white,
+                    surface: AppColors.cardLight,
+                    onSurface: AppColors.onSurface,
+                  ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        controller.text = picked.toIso8601String().split('T').first;
+      });
+    }
+  }
+
+  String _getDocTypeName(DriverDocType type) {
+    switch (type) {
+      case DriverDocType.license:
+        return S.of(context).docsTypeLicense;
+      case DriverDocType.insurance:
+        return S.of(context).docsTypeInsurance;
+      case DriverDocType.mechanic:
+        return S.of(context).docsTypeMechanic;
+      case DriverDocType.identity:
+        return S.of(context).docsTypeIdentity;
+      case DriverDocType.other:
+        return S.of(context).docsTypeOther;
+    }
+  }
+
+  IconData _getDocTypeIcon(DriverDocType type) {
+    switch (type) {
+      case DriverDocType.license:
+        return Icons.badge_rounded;
+      case DriverDocType.insurance:
+        return Icons.shield_rounded;
+      case DriverDocType.mechanic:
+        return Icons.car_repair_rounded;
+      case DriverDocType.identity:
+        return Icons.credit_card_rounded;
+      case DriverDocType.other:
+        return Icons.description_rounded;
+    }
+  }
+
+  Future<void> _submit() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
+    if (_imagePath == null) {
+      context.showErrorToast(S.of(context).docsImageRequired);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final errorMsg = await widget.cubit.uploadDocument(
+      UploadDriverDocsParams(
+        driverProfileId: widget.driverProfileId,
+        docType: _selectedDocType,
+        issuedAt: _issuedAtController.text.isEmpty
+            ? null
+            : _issuedAtController.text,
+        expiresAt: _expiresAtController.text.isEmpty
+            ? null
+            : _expiresAtController.text,
+        filePath: _imagePath!,
+      ),
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (errorMsg != null) {
+      context.showErrorToast(errorMsg);
+    } else {
+      context.showSuccessToast(S.of(context).docsUploadSuccess);
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkScaffold : AppColors.lightScaffold,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+      ),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24.h,
+      ),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Drag Handle
+                Center(
+                  child: Container(
+                    width: 40.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.grey[700] : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2.r),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+
+                /// Title Header
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10.r),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.cloud_upload_rounded,
+                        color: AppColors.primaryColor,
+                        size: 24.r,
+                      ),
+                    ),
+                    SizedBox(width: 12.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          S.of(context).docsUploadNewHeader,
+                          style: AppTextStyles.w700_18.copyWith(
+                            color: isDark
+                                ? AppColors.onSurfaceDark
+                                : AppColors.onSurface,
+                          ),
+                        ),
+                        Text(
+                          S.of(context).docsUploadNewSubtitle,
+                          style: AppTextStyles.w400_12.copyWith(
+                            color: AppColors.textGrey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+
+                /// Document Type Dropdown
+                DropdownButtonFormField<DriverDocType>(
+                  initialValue: _selectedDocType,
+                  isExpanded: true,
+                  dropdownColor: isDark
+                      ? AppColors.cardDark
+                      : AppColors.cardLight,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).docsTypeLabel,
+                    labelStyle: AppTextStyles.w400_14.copyWith(
+                      color: AppColors.textfieldHintGrey,
+                    ),
+                    prefixIcon: Icon(
+                      _getDocTypeIcon(_selectedDocType),
+                      color: AppColors.primaryColor,
+                      size: 22.r,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 14.h,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryColor,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                  items: DriverDocType.values.map((type) {
+                    return DropdownMenuItem<DriverDocType>(
+                      value: type,
+                      child: Text(
+                        _getDocTypeName(type),
+                        style: AppTextStyles.w500_14.copyWith(
+                          color: isDark
+                              ? AppColors.onSurfaceDark
+                              : AppColors.onSurface,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (val) {
+                    if (val != null) {
+                      setState(() {
+                        _selectedDocType = val;
+                      });
+                    }
+                  },
+                ),
+                SizedBox(height: 14.h),
+
+                /// Issued At
+                TextFormField(
+                  controller: _issuedAtController,
+                  readOnly: true,
+                  onTap: () => _selectDate(context, _issuedAtController),
+                  style: AppTextStyles.w500_14.copyWith(
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: S.of(context).docsIssuedDateLabel,
+                    labelStyle: AppTextStyles.w400_14.copyWith(
+                      color: AppColors.textfieldHintGrey,
+                    ),
+                    hintText: 'YYYY-MM-DD',
+                    prefixIcon: Icon(
+                      Icons.calendar_today_rounded,
+                      size: 20.r,
+                      color: _issuedAtController.text.isNotEmpty
+                          ? AppColors.primaryColor
+                          : AppColors.textGrey,
+                    ),
+                    suffixIcon: _issuedAtController.text.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.close_rounded,
+                              size: 18.r,
+                              color: AppColors.textGrey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _issuedAtController.clear();
+                              });
+                            },
+                          )
+                        : null,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 14.h,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryColor,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 14.h),
+
+                /// Expires At
+                TextFormField(
+                  controller: _expiresAtController,
+                  readOnly: true,
+                  onTap: () => _selectDate(context, _expiresAtController),
+                  style: AppTextStyles.w500_14.copyWith(
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: S.of(context).docsExpirationDateLabel,
+                    labelStyle: AppTextStyles.w400_14.copyWith(
+                      color: AppColors.textfieldHintGrey,
+                    ),
+                    hintText: 'YYYY-MM-DD',
+                    prefixIcon: Icon(
+                      Icons.event_busy_rounded,
+                      size: 20.r,
+                      color: _expiresAtController.text.isNotEmpty
+                          ? AppColors.primaryColor
+                          : AppColors.textGrey,
+                    ),
+                    suffixIcon: _expiresAtController.text.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.close_rounded,
+                              size: 18.r,
+                              color: AppColors.textGrey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _expiresAtController.clear();
+                              });
+                            },
+                          )
+                        : null,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 14.h,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? AppColors.borderColorDark
+                            : AppColors.borderColor.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryColor,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+
+                /// Image Picker Area
+                InkWell(
+                  onTap: _pickImage,
+                  borderRadius: BorderRadius.circular(14.r),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: 150.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: _imagePath == null
+                          ? (isDark
+                                ? AppColors.surfaceVariantDark
+                                : AppColors.primarySurface.withValues(
+                                    alpha: 0.4,
+                                  ))
+                          : Colors.black,
+                      borderRadius: BorderRadius.circular(14.r),
+                      border: Border.all(
+                        color: _imagePath == null
+                            ? AppColors.primaryColor.withValues(alpha: 0.5)
+                            : Colors.transparent,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: _imagePath == null
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add_a_photo_rounded,
+                                size: 36.r,
+                                color: AppColors.primaryColor,
+                              ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                S.of(context).docsTapToChoose,
+                                style: AppTextStyles.w600_14.copyWith(
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(14.r),
+                                child: Image.file(
+                                  File(_imagePath!),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8.r,
+                                right: 8.r,
+                                child: IconButton.filledTonal(
+                                  onPressed: () {
+                                    setState(() {
+                                      _imagePath = null;
+                                    });
+                                  },
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: AppColors.danger,
+                                  ),
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    color: Colors.white,
+                                    size: 18.r,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+
+                /// Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomElevatedButton(
+                    title: S.of(context).docsUploadDocument,
+                    isLoading: _isLoading,
+                    onPressed: _submit,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

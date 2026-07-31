@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -19,7 +20,7 @@ class EarningsSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final curr = currency ?? 'SYR';
+    final curr = currency ?? S.of(context).commonCurrencySyria;
     final todayAmount = summary?.today.amount.toString() ?? '0';
     final todayTrips = summary?.today.tripsCount ?? 0;
 
@@ -39,19 +40,19 @@ class EarningsSummaryCard extends StatelessWidget {
       child: Column(
         children: [
           _SummaryRow(
-            label: 'Today',
+            label: S.of(context).walletToday,
             value: '$curr $todayAmount',
             trips: todayTrips,
           ),
           Divider(color: AppColors.divider, height: AppSpacing.lg.h),
           _SummaryRow(
-            label: 'This Week',
+            label: S.of(context).walletThisWeek,
             value: '$curr $weekAmount',
             trips: weekTrips,
           ),
           Divider(color: AppColors.divider, height: AppSpacing.lg.h),
           _SummaryRow(
-            label: 'This Month',
+            label: S.of(context).walletThisMonth,
             value: '$curr $monthAmount',
             trips: monthTrips,
           ),
@@ -87,7 +88,7 @@ class _SummaryRow extends StatelessWidget {
             ),
             SizedBox(height: 2.h),
             Text(
-              '$trips trips',
+              S.of(context).walletTripsCount(trips),
               style: AppTextStyles.w400_10.copyWith(color: AppColors.textGrey),
             ),
           ],

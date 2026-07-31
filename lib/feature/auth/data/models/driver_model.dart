@@ -11,10 +11,13 @@ class DriverModel with _$DriverModel {
     @Default('') String fullName,
     @Default('') String email,
     @Default('') String phoneNumber,
+    String? createdAt,
+    String? updatedAt,
     @Default([]) List<RoleModel> roles,
     @Default('') String activeRole,
     @Default(DriverApprovalInfoModel())
     DriverApprovalInfoModel driverApprovalInfo,
+    DriverProfileModel? driverProfile,
   }) = _DriverModel;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) =>
@@ -23,7 +26,7 @@ class DriverModel with _$DriverModel {
 
 @freezed
 class RoleModel with _$RoleModel {
-  const factory RoleModel({required int id, required String name}) = _RoleModel;
+  const factory RoleModel({required int id, @Default('') String name}) = _RoleModel;
 
   factory RoleModel.fromJson(Map<String, dynamic> json) =>
       _$RoleModelFromJson(json);
@@ -39,4 +42,23 @@ class DriverApprovalInfoModel with _$DriverApprovalInfoModel {
 
   factory DriverApprovalInfoModel.fromJson(Map<String, dynamic> json) =>
       _$DriverApprovalInfoModelFromJson(json);
+}
+
+@freezed
+class DriverProfileModel with _$DriverProfileModel {
+  const factory DriverProfileModel({
+    @Default(0) int id,
+    @Default(0) int userId,
+    String? city,
+    String? approvalStatus,
+    @Default(false) bool isOnline,
+    String? emailVerifiedAt,
+    String? phoneVerifiedAt,
+    String? lastLoginAt,
+    String? createdAt,
+    String? updatedAt,
+  }) = _DriverProfileModel;
+
+  factory DriverProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$DriverProfileModelFromJson(json);
 }

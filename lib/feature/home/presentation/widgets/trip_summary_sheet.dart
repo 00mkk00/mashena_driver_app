@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
@@ -23,22 +24,22 @@ class TripSummarySheet extends StatelessWidget {
     required this.onDismiss,
   });
 
-  String _formatDuration(int? seconds) {
+  String _formatDuration(BuildContext context, int? seconds) {
     if (seconds == null) return '--';
     final mins = seconds ~/ 60;
     final secs = seconds % 60;
     if (mins > 0 && secs > 0) {
-      return '${mins}m ${secs}s';
+      return S.of(context).tripSummaryDurationFormatMinsSecs(mins, secs);
     } else if (mins > 0) {
-      return '$mins min';
+      return S.of(context).tripSummaryDurationFormatMins(mins);
     } else {
-      return '$secs sec';
+      return S.of(context).tripSummaryDurationFormatSecs(secs);
     }
   }
 
-  String _formatDistance(double? distanceKm) {
+  String _formatDistance(BuildContext context, double? distanceKm) {
     if (distanceKm == null) return '--';
-    return '${distanceKm.toStringAsFixed(2)} km';
+    return S.of(context).radiusKm(distanceKm.toStringAsFixed(2));
   }
 
   String _formatFare(double? fareTotal) {
@@ -231,14 +232,14 @@ class TripSummarySheet extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Total Fare',
+                            S.of(context).tripSummaryTotalFare,
                             style: AppTextStyles.w400_12.copyWith(
                               color: Colors.white.withValues(alpha: 0.8),
                             ),
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            '${_formatFare(summary.fareTotal)} S.P',
+                            '${_formatFare(summary.fareTotal)} ${S.of(context).commonCurrencySyria}',
                             style: AppTextStyles.w700_24.copyWith(
                               color: Colors.white,
                               letterSpacing: -0.5,
@@ -294,14 +295,14 @@ class TripSummarySheet extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Distance',
+                                        S.of(context).tripSummaryDistance,
                                         style: AppTextStyles.w400_10.copyWith(
                                           color: AppColors.textGrey,
                                         ),
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
-                                        _formatDistance(summary.distanceKm),
+                                        _formatDistance(context, summary.distanceKm),
                                         style: AppTextStyles.w600_14.copyWith(
                                           color: AppColors.darkScaffold,
                                         ),
@@ -357,14 +358,14 @@ class TripSummarySheet extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Duration',
+                                        S.of(context).tripSummaryDuration,
                                         style: AppTextStyles.w400_10.copyWith(
                                           color: AppColors.textGrey,
                                         ),
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
-                                        _formatDuration(summary.durationSec),
+                                        _formatDuration(context, summary.durationSec),
                                         style: AppTextStyles.w600_14.copyWith(
                                           color: AppColors.darkScaffold,
                                         ),
@@ -398,20 +399,20 @@ class TripSummarySheet extends StatelessWidget {
                           children: [
                             if (summary.originalFare != null)
                               _buildBreakdownRow(
-                                'Original Fare',
+                                S.of(context).tripSummaryOriginalFare,
                                 summary.originalFare!,
                               ),
                             if (summary.discountAmount != null &&
                                 summary.discountAmount! > 0)
                               _buildBreakdownRow(
-                                'Discount${summary.appliedCoupon == true ? ' (Coupon)' : ''}',
+                                '${S.of(context).tripSummaryDiscount}${summary.appliedCoupon == true ? S.of(context).tripSummaryCoupon : ''}',
                                 summary.discountAmount!,
                                 isDiscount: true,
                               ),
                             if (summary.platformCommission != null &&
                                 summary.platformCommission! > 0)
                               _buildBreakdownRow(
-                                'Platform Commission',
+                                S.of(context).tripSummaryCommission,
                                 summary.platformCommission!,
                                 isDiscount: true,
                               ),
@@ -422,7 +423,7 @@ class TripSummarySheet extends StatelessWidget {
                                 height: AppSpacing.md.h * 2,
                               ),
                               _buildBreakdownRow(
-                                'Your Earnings',
+                                S.of(context).tripSummaryEarnings,
                                 summary.finalFare! -
                                     summary.platformCommission!,
                                 isTotal: true,
@@ -469,7 +470,7 @@ class TripSummarySheet extends StatelessWidget {
                         ),
                         SizedBox(width: AppSpacing.xs.w),
                         Text(
-                          'Trip Rated',
+                          S.of(context).tripSummaryTripRated,
                           style: AppTextStyles.w600_14.copyWith(
                             color: AppColors.success,
                           ),
@@ -524,7 +525,7 @@ class TripSummarySheet extends StatelessWidget {
                           )
                         : Icon(Icons.star_rounded, size: 20.r),
                     label: Text(
-                      state.isRatingTrip ? 'Submitting...' : 'Rate Rider',
+                      state.isRatingTrip ? S.of(context).commonSubmitting : S.of(context).ratingRateRider,
                       style: AppTextStyles.w600_14.copyWith(
                         color: AppColors.primaryColor,
                       ),
@@ -550,7 +551,7 @@ class TripSummarySheet extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Done',
+                  S.of(context).commonDone,
                   style: AppTextStyles.w600_14.copyWith(color: Colors.white),
                 ),
               ),

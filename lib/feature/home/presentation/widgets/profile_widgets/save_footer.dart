@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -51,8 +52,10 @@ class SaveFooter extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Save Changes',
-            style: AppTextStyles.w600_16.copyWith(color: Colors.white),
+            S.of(context).profileSaveChanges,
+            style: AppTextStyles.w700_14.copyWith(
+              color: isActive ? Colors.white : AppColors.textGrey,
+            ),
           ),
         ),
       ),

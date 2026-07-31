@@ -8,6 +8,7 @@ import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/auth/data/datasource/auth_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/auth/data/enums/approval_status_enum.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/driver_mapper.dart';
 import 'package:mashena_driver_app/feature/auth/data/mappers/login_mapper.dart';
 import 'package:mashena_driver_app/feature/auth/domain/entities/driver_entity.dart';
@@ -74,16 +75,19 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, LoginEntity>> login(LoginParams params) async {
     try {
       final model = await _remoteDataSource.login(params);
-      await _tokenManager.saveTokens(
-        accessToken: model.accessToken,
-        refreshToken: model.refreshToken,
-      );
-      try {
-        await _localStorage.setString(
-          AppConstants.driverUserKey,
-          jsonEncode(model.user.toJson()),
+      if (model.user.driverApprovalInfo.approvalRequestStatus ==
+          DriverApprovalRequestStatus.approved) {
+        await _tokenManager.saveTokens(
+          accessToken: model.accessToken,
+          refreshToken: model.refreshToken,
         );
-      } catch (_) {}
+        try {
+          await _localStorage.setString(
+            AppConstants.driverUserKey,
+            jsonEncode(model.user.toJson()),
+          );
+        } catch (_) {}
+      }
 
       return Right(model.toEntity());
     } on ApiException catch (e) {

@@ -1,19 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 
 class CustomElevatedButton extends StatelessWidget {
-  const CustomElevatedButton({super.key, required this.title, this.onPressed});
+  const CustomElevatedButton({
+    super.key,
+    required this.title,
+    this.onPressed,
+    this.isLoading = false,
+  });
 
   final String title;
   final VoidCallback? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    final bool isEnabled = onPressed != null;
+    final bool isEnabled = onPressed != null && !isLoading;
 
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isEnabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: isEnabled
             ? AppColors.primaryColor
@@ -23,12 +30,14 @@ class CustomElevatedButton extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 36),
-        child: Text(
-          title,
-          style: AppTextStyles.w600_18.copyWith(
-            color: Colors.white.withValues(alpha: isEnabled ? 1 : 0.7),
-          ),
-        ),
+        child: isLoading
+            ? const CupertinoActivityIndicator(color: Colors.white)
+            : Text(
+                title,
+                style: AppTextStyles.w600_18.copyWith(
+                  color: Colors.white.withValues(alpha: isEnabled ? 1 : 0.7),
+                ),
+              ),
       ),
     );
   }

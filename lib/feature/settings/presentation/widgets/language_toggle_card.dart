@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -18,7 +19,7 @@ class LanguageToggleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingItemCard(
-      title: 'Language',
+      title: S.of(context).settingsLanguage,
       subtitle: isArabic ? 'العربية' : 'English',
       icon: Icons.language_rounded,
       trailing: Container(

@@ -15,6 +15,8 @@ class CustomFormField extends StatelessWidget {
     this.autofillHints,
     this.controller,
     this.obscureText = false,
+    this.readOnly = false,
+    this.onTap,
   });
   final Widget? prefix, sufix;
   final String hint;
@@ -25,6 +27,8 @@ class CustomFormField extends StatelessWidget {
   final TextEditingController? controller;
   final Iterable<String>? autofillHints;
   final bool obscureText;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,8 @@ class CustomFormField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       obscureText: obscureText,
+      readOnly: readOnly,
+      onTap: onTap,
       autofillHints: autofillHints,
       onChanged: onChanged,
       onSaved: onSaved,
@@ -39,12 +45,10 @@ class CustomFormField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         prefix: prefix,
-        suffix: sufix,
-        hint: Text(
-          hint,
-          style: AppTextStyles.w400_14.copyWith(
-            color: AppColors.textfieldHintGrey,
-          ),
+        suffixIcon: sufix,
+        hintText: hint,
+        hintStyle: AppTextStyles.w400_14.copyWith(
+          color: AppColors.textfieldHintGrey,
         ),
         focusedBorder: _buildBorder(),
         border: _buildBorder(),

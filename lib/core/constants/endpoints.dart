@@ -22,5 +22,5 @@ class Endpoints {
   static const String rateTrip = '/trips/{tripId}/rate';
   static const String ratingTags = '/rating-tags';
   static const String driverDocuments = '/driver-documents/me';
+  static const String uploadNewDoc = '/driver-documents';
 }
-

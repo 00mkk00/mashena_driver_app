@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -137,7 +138,7 @@ class _EndTripButtonState extends State<EndTripButton>
                           ),
                           SizedBox(width: AppSpacing.xs.w),
                           Text(
-                            'Slide to end trip',
+                            S.of(context).tripSlideToEnd,
                             style: AppTextStyles.w600_14.copyWith(
                               color: AppColors.danger,
                             ),

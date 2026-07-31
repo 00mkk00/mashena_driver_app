@@ -21,7 +21,7 @@ class RideRequestEntity with _$RideRequestEntity {
     required List<RideRequestStopEntity> stops,
     int? rideRequestId,
     double? distanceKm,
-    int? durationMin,
+    double? durationMin,
     bool? isNight,
     String? estimatedFare,
     String? currency,

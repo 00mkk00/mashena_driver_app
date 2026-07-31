@@ -1,5 +1,6 @@
 // presentation/widgets/radius_selector_dialog.dart
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -73,9 +74,15 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Ride Radius', style: AppTextStyles.w700_14),
                     Text(
-                      'How far will you accept rides?',
+                      S.of(context).radiusTitle,
+                      style: AppTextStyles.w700_18.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    SizedBox(height: AppSpacing.xs.h),
+                    Text(
+                      S.of(context).radiusSubtitle,
                       style: AppTextStyles.w400_12.copyWith(
                         color: AppColors.textGrey,
                       ),
@@ -86,16 +93,16 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                 // Live km badge
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm.w,
-                    vertical: AppSpacing.xs.h,
+                    horizontal: AppSpacing.md.w,
+                    vertical: AppSpacing.sm.h,
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.primarySurface,
-                    borderRadius: BorderRadius.circular(AppRadius.full.r),
+                    borderRadius: BorderRadius.circular(AppRadius.md.r),
                   ),
                   child: Text(
-                    '$_selected km',
-                    style: AppTextStyles.w700_14.copyWith(
+                    S.of(context).radiusKm(_selected),
+                    style: AppTextStyles.w700_20.copyWith(
                       color: AppColors.primaryColor,
                     ),
                   ),
@@ -137,11 +144,11 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                           ),
                         ),
                         child: Text(
-                          '$km km',
+                          S.of(context).radiusKm(km),
                           style: AppTextStyles.w600_14.copyWith(
                             color: isSelected
                                 ? Colors.white
-                                : AppColors.primaryColor,
+                                : AppColors.onSurface,
                           ),
                         ),
                       ),
@@ -189,7 +196,7 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                             ),
                           )
                         : Text(
-                            'Confirm Radius',
+                            S.of(context).radiusConfirm,
                             style: AppTextStyles.w700_14.copyWith(
                               color: Colors.white,
                             ),

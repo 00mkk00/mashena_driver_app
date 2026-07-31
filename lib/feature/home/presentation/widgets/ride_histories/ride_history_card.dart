@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 
-/// ---------------------------------------------------------------------
-/// UX RULES APPLIED (read before editing)
-/// ---------------------------------------------------------------------
-/// 1. Progressive disclosure: status + fare + route + rider are the
-///    "scan" layer (always visible). The comment/rating EXCHANGE is
-///    a "read" layer, tucked below a divider so the card doesn't
-///    read as a wall of text in a history list of 20+ items.
-/// 2. One primary number per card: `finalFare` gets the largest,
-///    boldest treatment. Everything else is secondary — a history
-///    list is a fare ledger first, a trip log second.
-/// 3. Status is color, not just text — a colored dot + chip using
-///    *Surface tokens, never raw hex, so success/danger/warning
-///    stay consistent app-wide.
-/// 4. Rating symmetry: "you rated / they rated" are shown as a
-///    mirrored pair, not stacked paragraphs — the eye should compare
-///    them in one glance, not read two separate blocks.
-/// 5. Truncation over wrap: names/addresses use ellipsis + maxLines,
-///    never let one long address blow out card height in a scrolling
-///    list — that breaks scroll-performance predictability.
-/// 6. Tap target: the whole card is one InkWell for "view trip
-///    detail" — don't bury the tap target in a single row.
-/// 7. No nested cards / no double shadows: inner sections use
-///    dividers and color blocks, never their own boxShadow.
-/// ---------------------------------------------------------------------
-
 enum RideStatus { completed, cancelled, driverCancelled, inProgress }
 
 extension RideStatusX on RideStatus {
-  String get label => switch (this) {
-    RideStatus.completed => 'Completed',
-    RideStatus.cancelled => 'Cancelled',
-    RideStatus.driverCancelled => 'Cancelled by you',
-    RideStatus.inProgress => 'In progress',
+  String getLabel(BuildContext context) => switch (this) {
+    RideStatus.completed => S.of(context).historyStatusCompleted,
+    RideStatus.cancelled => S.of(context).historyStatusCancelled,
+    RideStatus.driverCancelled => S.of(context).historyStatusDriverCancelled,
+    RideStatus.inProgress => S.of(context).historyStatusInProgress,
   };
 
   Color color(BuildContext context) => switch (this) {
@@ -97,12 +73,14 @@ class RideHistoryCard extends StatelessWidget {
 
   final VoidCallback? onTap;
 
-  String get _durationLabel {
+  String _durationLabel(BuildContext context) {
     final m = (durationSec / 60).round();
-    if (m < 60) return '${m}m';
+    if (m < 60) return S.of(context).historyDurationMins(m);
     final h = m ~/ 60;
     final rem = m % 60;
-    return rem == 0 ? '${h}h' : '${h}h ${rem}m';
+    return rem == 0 
+        ? S.of(context).historyDurationHours(h) 
+        : S.of(context).historyDurationHoursMins(h, rem);
   }
 
   bool get _hasExchange =>
@@ -153,7 +131,7 @@ class RideHistoryCard extends StatelessWidget {
               SizedBox(height: AppSpacing.sm.r),
               _MetaChipsRow(
                 distanceKm: distanceKm,
-                durationLabel: _durationLabel,
+                durationLabel: _durationLabel(context),
               ),
               SizedBox(height: AppSpacing.md.r),
               Divider(
@@ -224,7 +202,7 @@ class _StatusAndFareRow extends StatelessWidget {
               ),
               SizedBox(width: AppSpacing.xs.r),
               Text(
-                status.label,
+                status.getLabel(context),
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
@@ -238,7 +216,7 @@ class _StatusAndFareRow extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'EGP ',
+                text: S.of(context).commonCurrencySyria,
                 style: TextStyle(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
@@ -348,7 +326,7 @@ class _MetaChipsRow extends StatelessWidget {
       children: [
         _Chip(
           icon: Icons.straighten_rounded,
-          text: '${distanceKm.toStringAsFixed(1)} km',
+          text: S.of(context).radiusKm(distanceKm.toStringAsFixed(1)),
         ),
         SizedBox(width: AppSpacing.xs.r),
         _Chip(icon: Icons.access_time_rounded, text: durationLabel),
@@ -518,7 +496,7 @@ class __ExpandableRatingSectionState extends State<_ExpandableRatingSection> {
                     ),
                     SizedBox(width: 4.r),
                     Text(
-                      'Rating Details',
+                      S.of(context).historyRatingDetails,
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
@@ -598,7 +576,7 @@ class _RatingExchange extends StatelessWidget {
       children: [
         Expanded(
           child: _ExchangeSide(
-            label: 'You rated',
+            label: S.of(context).historyYouRated,
             score: myScore,
             comment: myComment,
             tags: myTags,
@@ -609,7 +587,7 @@ class _RatingExchange extends StatelessWidget {
         SizedBox(width: AppSpacing.md.r),
         Expanded(
           child: _ExchangeSide(
-            label: 'Rider rated you',
+            label: S.of(context).historyRiderRatedYou,
             score: receivedScore,
             comment: receivedComment,
             tags: receivedTags,
@@ -652,7 +630,7 @@ class _ExchangeSide extends StatelessWidget {
         SizedBox(height: 2.r),
         if (!hasData)
           Text(
-            'No rating yet',
+            S.of(context).historyNoRatingYet,
             style: TextStyle(
               fontSize: 12.sp,
               fontStyle: FontStyle.italic,

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/feature/home/data/models/ride_request_model.dart';
@@ -22,6 +23,7 @@ import 'package:mashena_driver_app/feature/home/data/models/rating_tag_model.dar
 import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
 
 abstract class HomeRemoteDataSource {
   Future<void> goOnline(GoOnlineParams params);
@@ -40,6 +42,7 @@ abstract class HomeRemoteDataSource {
   Future<RateTripModel> rateTrip(RateTripParams params);
   Future<List<RatingTagModel>> getRatingTags(GetRatingTagsParams params);
   Future<List<DriverDocumentModel>> getDriverDocuments();
+  Future<void> uploadDocuments(UploadDriverDocsParams params);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -175,6 +178,26 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     return list
         .map((e) => DriverDocumentModel.fromJson(e as Map<String, dynamic>))
         .toList();
+  }
+
+  @override
+  Future<void> uploadDocuments(UploadDriverDocsParams params) async {
+    final Map<String, dynamic> map = {
+      "driverProfileId": params.driverProfileId,
+      "docType": params.docType.name,
+      "file": await MultipartFile.fromFile(params.filePath),
+    };
+
+    if (params.issuedAt != null && params.issuedAt!.isNotEmpty) {
+      map["issuedAt"] = params.issuedAt;
+    }
+    if (params.expiresAt != null && params.expiresAt!.isNotEmpty) {
+      map["expiresAt"] = params.expiresAt;
+    }
+
+    final formData = FormData.fromMap(map);
+
+    await apiClient.post(Endpoints.uploadNewDoc, body: formData);
   }
 }
 

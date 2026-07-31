@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -46,9 +47,9 @@ class BalanceCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Available Balance',
-                style: AppTextStyles.w400_12.copyWith(
-                  color: Colors.white.withValues(alpha: 0.8),
+                S.of(context).walletAvailableBalance,
+                style: AppTextStyles.w500_12.copyWith(
+                  color: Colors.white.withValues(alpha: .75),
                 ),
               ),
               Container(
@@ -80,14 +81,14 @@ class BalanceCard extends StatelessWidget {
           SizedBox(height: AppSpacing.md.h),
           Row(
             children: [
-              _CardStat(label: 'Total Earned', value: totalEarned),
+              _CardStat(label: S.of(context).walletTotalEarned, value: totalEarned),
               Container(
                 width: 1,
                 height: 32.h,
                 color: Colors.white.withValues(alpha: 0.25),
                 margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
               ),
-              _CardStat(label: 'Total Withdrawn', value: totalWithdrawn),
+              _CardStat(label: S.of(context).walletTotalWithdrawn, value: totalWithdrawn),
             ],
           ),
         ],

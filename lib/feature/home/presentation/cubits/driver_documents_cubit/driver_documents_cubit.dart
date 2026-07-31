@@ -1,12 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/get_driver_documents_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/upload_driver_docs_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_state.dart';
 
 class DriverDocumentsCubit extends Cubit<DriverDocumentsState> {
   final GetDriverDocumentsUseCase _getDriverDocumentsUseCase;
+  final UploadDriverDocsUseCase _uploadDriverDocsUseCase;
 
-  DriverDocumentsCubit(this._getDriverDocumentsUseCase)
-      : super(const DriverDocumentsState());
+  DriverDocumentsCubit(
+    this._getDriverDocumentsUseCase,
+    this._uploadDriverDocsUseCase,
+  ) : super(const DriverDocumentsState());
 
   Future<void> fetchDocuments({bool isRefresh = false}) async {
     if (!isRefresh) {
@@ -32,6 +37,17 @@ class DriverDocumentsCubit extends Cubit<DriverDocumentsState> {
             errorMessage: null,
           ),
         );
+      },
+    );
+  }
+
+  Future<String?> uploadDocument(UploadDriverDocsParams params) async {
+    final result = await _uploadDriverDocsUseCase(params);
+    return result.fold(
+      (failure) => failure.rawMessage ?? 'Failed to upload document',
+      (_) {
+        fetchDocuments(isRefresh: true);
+        return null;
       },
     );
   }

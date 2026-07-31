@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
@@ -73,7 +74,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
           ? AppColors.darkScaffold
           : AppColors.lightScaffold,
       appBar: AppBar(
-        title: Text('Ride History', style: AppTextStyles.w600_18),
+        title: Text(S.of(context).historyTitle, style: AppTextStyles.w600_18),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -108,7 +109,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                     ),
                     SizedBox(height: AppSpacing.md.h),
                     Text(
-                      state.errorMessage ?? 'Failed to load history',
+                      state.errorMessage ?? S.of(context).historyFailedToLoad,
                       style: AppTextStyles.w500_14.copyWith(
                         color: AppColors.onSurfaceVariant,
                       ),
@@ -118,7 +119,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                       onPressed: () => context
                           .read<TripHistoryCubit>()
                           .getTrips(isRefresh: true),
-                      child: const Text('Retry'),
+                      child: Text(S.of(context).commonRetry),
                     ),
                   ],
                 ),
@@ -129,7 +130,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
           if (state.trips.isEmpty) {
             return Center(
               child: Text(
-                'No rides found',
+                S.of(context).historyNoRides,
                 style: AppTextStyles.w500_16.copyWith(
                   color: AppColors.textGrey,
                 ),
@@ -156,12 +157,12 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                 final trip = state.trips[index];
                 return RideHistoryCard(
                   status: _mapStatus(trip.status),
-                  pickupAddress: trip.pickupAddress ?? 'Unknown Pickup',
-                  destAddress: trip.destAddress ?? 'Unknown Destination',
+                  pickupAddress: trip.pickupAddress ?? S.of(context).historyUnknownPickup,
+                  destAddress: trip.destAddress ?? S.of(context).historyUnknownDestination,
                   finalFare: (trip.finalFare ?? 0).toDouble(),
                   distanceKm: (trip.distanceKm ?? 0).toDouble(),
                   durationSec: trip.durationSec ?? 0,
-                  fullName: trip.rider?.fullName ?? 'Unknown Rider',
+                  fullName: trip.rider?.fullName ?? S.of(context).historyUnknownRider,
                   phoneNumber: trip.rider?.phoneNumber ?? '',
                   ratingAvg: (trip.rider?.ratingAvg ?? 0).toDouble(),
                   myComment: trip.myRating?.comment,
@@ -176,6 +177,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
                       ?.map((t) => t.code ?? '')
                       .where((c) => c.isNotEmpty)
                       .toList(),
+                      
                 );
               },
             ),

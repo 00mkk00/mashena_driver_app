@@ -17,6 +17,7 @@ import 'package:mashena_driver_app/feature/home/data/params/cancel_trip_params.d
 import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_trip_history_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_summary_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/rate_trip_entity.dart';
@@ -50,5 +51,6 @@ abstract class HomeRepository {
     GetRatingTagsParams params,
   );
   Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments();
+  Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params);
 }
 

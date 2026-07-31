@@ -48,7 +48,7 @@ class DriverAppDrawer extends StatelessWidget {
             // Close loading dialog
             context.pop(context);
             // Show error snackbar
-            context.showErrorToast('Logout failed');
+            context.showErrorToast(S.of(context).drawerLogoutFailed);
           },
         );
       },
@@ -69,7 +69,7 @@ class DriverAppDrawer extends StatelessWidget {
                   children: [
                     _DrawerItem(
                       icon: Icons.account_circle_outlined,
-                      label: 'My Profile',
+                      label: S.of(context).drawerMyProfile,
                       onTap: () {
                         context.pop();
 
@@ -78,7 +78,7 @@ class DriverAppDrawer extends StatelessWidget {
                     ),
                     _DrawerItem(
                       icon: Icons.account_balance_wallet_outlined,
-                      label: 'Wallet',
+                      label: S.of(context).drawerWallet,
 
                       onTap: () {
                         context.pop();
@@ -88,7 +88,7 @@ class DriverAppDrawer extends StatelessWidget {
                     ),
                     _DrawerItem(
                       icon: Icons.history_rounded,
-                      label: 'Ride History',
+                      label: S.of(context).drawerRideHistory,
                       onTap: () {
                         context.pop();
 
@@ -97,7 +97,7 @@ class DriverAppDrawer extends StatelessWidget {
                     ),
                     _DrawerItem(
                       icon: Icons.description_outlined,
-                      label: 'Documents',
+                      label: S.of(context).drawerDocuments,
                       onTap: () {
                         context.pop();
 
@@ -106,7 +106,7 @@ class DriverAppDrawer extends StatelessWidget {
                     ),
                     _DrawerItem(
                       icon: Icons.settings_outlined,
-                      label: 'Settings',
+                      label: S.of(context).drawerSettings,
                       onTap: () {
                         context.pop();
                         context.push(AppRoutes.settingsViewPath);
@@ -129,7 +129,7 @@ class DriverAppDrawer extends StatelessWidget {
                     _DrawerItem(
                       trailing: null,
                       icon: Icons.logout_rounded,
-                      label: 'Logout',
+                      label: S.of(context).drawerLogout,
                       iconColor: AppColors.danger,
                       labelColor: AppColors.danger,
                       onTap: () => _showLogoutDialog(context),
@@ -270,14 +270,14 @@ void _showLogoutDialog(BuildContext context) {
 
             // Title
             Text(
-              'Logout',
+              S.of(context).drawerLogout,
               style: AppTextStyles.w700_18.copyWith(color: AppColors.onSurface),
             ),
             const SizedBox(height: AppSpacing.sm),
 
             // Description
             Text(
-              'Are you sure you want to log out?',
+              S.of(context).drawerLogoutConfirm,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_14.copyWith(
                 color: AppColors.textGrey,
@@ -300,7 +300,7 @@ void _showLogoutDialog(BuildContext context) {
                       ),
                     ),
                     child: Text(
-                      'Cancel',
+                      S.of(context).commonCancel,
                       style: AppTextStyles.w600_14.copyWith(
                         color: AppColors.onSurface,
                       ),
@@ -323,7 +323,7 @@ void _showLogoutDialog(BuildContext context) {
                       ),
                     ),
                     child: Text(
-                      'Logout',
+                      S.of(context).drawerLogout,
                       style: AppTextStyles.w600_14.copyWith(
                         color: Colors.white,
                       ),

@@ -7,6 +7,7 @@ import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/utils/validators.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_state.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_footer.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
@@ -59,20 +60,29 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
             const SizedBox(height: 20),
 
-            SizedBox(
-              width: context.screenWidth * 0.8,
-              child: CustomElevatedButton(
-                title: S.of(context).commonNext,
-                onPressed: () {
-                  if (_key.currentState!.validate()) {
-                    context.read<LoginCubit>().login(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      fcmToken: "testfcmtoken",
-                    );
-                  }
-                },
-              ),
+            BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) {
+                final isLoading = state.maybeWhen(
+                  loading: () => true,
+                  orElse: () => false,
+                );
+                return SizedBox(
+                  width: context.screenWidth * 0.8,
+                  child: CustomElevatedButton(
+                    title: S.of(context).authLogin,
+                    isLoading: isLoading,
+                    onPressed: () {
+                      if (_key.currentState!.validate()) {
+                        context.read<LoginCubit>().login(
+                          email: emailController.text,
+                          password: passwordController.text,
+                          fcmToken: "testfcmtoken",
+                        );
+                      }
+                    },
+                  ),
+                );
+              },
             ),
 
             const SizedBox(height: 20),

@@ -12,6 +12,7 @@ import 'package:mashena_driver_app/core/utils/responsive_utils.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/core/widgets/custom_header_button.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/verify_cubit/verify_cubit.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/verify_cubit/verify_state.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationViewBody extends StatefulWidget {
@@ -159,18 +160,28 @@ class _VerificationViewBodyState extends State<VerificationViewBody> {
                   ValueListenableBuilder<bool>(
                     valueListenable: _isOtpValid,
                     builder: (context, valid, _) {
-                      return CustomElevatedButton(
-                        title: S.of(context).otpVerifyNow,
-                        onPressed: valid
-                            ? () {
-                                final otp = _otpController.text.trim();
+                      return BlocBuilder<VerifyOtpCubit, VerifyOtpState>(
+                        builder: (context, state) {
+                          final isLoading = state.maybeWhen(
+                            loading: () => true,
+                            orElse: () => false,
+                          );
 
-                                context.read<VerifyOtpCubit>().verify(
-                                  email: email,
-                                  code: otp,
-                                );
-                              }
-                            : null,
+                          return CustomElevatedButton(
+                            isLoading: isLoading,
+                            title: S.of(context).otpVerifyNow,
+                            onPressed: valid
+                                ? () {
+                                    final otp = _otpController.text.trim();
+
+                                    context.read<VerifyOtpCubit>().verify(
+                                      email: email,
+                                      code: otp,
+                                    );
+                                  }
+                                : null,
+                          );
+                        },
                       );
                     },
                   ),

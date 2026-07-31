@@ -54,28 +54,34 @@ class LoginCubit extends Cubit<LoginState> {
         final user = data.user;
         final info = user.driverApprovalInfo;
 
-        if (info.isVerified) {
-          // 3- when user hasApprovalRequest
-          if (info.hasApprovalRequest) {
-            if (info.approvalRequestStatus ==
-                DriverApprovalRequestStatus.approved) {
-              // when state is approved navigate user to home page
-              emit(LoginState.success(data));
-            } else {
-              // give him toast whit message depending on approvalRequestStatus
-              emit(
-                LoginState.approvalStatus(
-                  info.approvalRequestStatus?.name ?? 'pending',
-                ),
-              );
-            }
-          } else {
-            // 2- when user is verified and no approval request, navigate user to upload page
-            emit(LoginState.needsUpload(data));
-          }
+        // 1. Not verified → send OTP
+        if (!info.isVerified) {
+          final otpResult = await sendOtpUseCase(SendOtpParams(email: email));
+          otpResult.fold(
+            (failure) => emit(LoginState.error(_mapFailureToMessage(failure))),
+            (_) => emit(LoginState.requireOtp(userId: user.id, email: email)),
+          );
+          return;
+        }
+
+        // 2. Verified but no approval request → show info snackbar
+        if (!info.hasApprovalRequest) {
+          emit(LoginState.needsUpload(data));
+          // emit(
+          //   const LoginState.approvalStatus('no_approval_request'),
+          // );
+          return;
+        }
+
+        // 3. Has approval request → check approvalStatus
+        if (info.approvalRequestStatus ==
+            DriverApprovalRequestStatus.approved) {
+          emit(LoginState.success(data));
         } else {
-          // Fallback to OTP if not verified (though usually handled by 401)
-          emit(LoginState.requireOtp(userId: user.id, email: email));
+          // 3b. Pending / rejected / other → show status snackbar
+          emit(
+            LoginState.approvalStatus(info.approvalRequestStatus?.name ?? ''),
+          );
         }
       },
     );

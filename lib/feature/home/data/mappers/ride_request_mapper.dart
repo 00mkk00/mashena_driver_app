@@ -47,7 +47,7 @@ extension RideRequestMapper on RideRequestModel {
       stops: stops?.map((s) => s.toEntity()).toList() ?? [],
       rideRequestId: rideRequestId,
       distanceKm: estimatedDistanceKm,
-      durationMin: estimatedDurationSec,
+      durationMin: (estimatedDurationSec ?? 0) / 60,
       isNight: isNight,
       estimatedFare: estimatedFare,
       currency: currency,

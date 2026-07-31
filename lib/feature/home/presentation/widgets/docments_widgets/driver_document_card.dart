@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
@@ -18,18 +19,18 @@ class DriverDocumentCard extends StatefulWidget {
 class _DriverDocumentCardState extends State<DriverDocumentCard> {
   bool _isExpanded = false;
 
-  String _getDocTitle(DriverDocType docType) {
+  String _getDocTitle(BuildContext context, DriverDocType docType) {
     switch (docType) {
       case DriverDocType.license:
-        return 'Driver License';
+        return S.of(context).docsTypeLicense;
       case DriverDocType.insurance:
-        return 'Vehicle Insurance';
+        return S.of(context).docsTypeInsurance;
       case DriverDocType.mechanic:
-        return 'Mechanic Card';
+        return S.of(context).docsTypeMechanic;
       case DriverDocType.identity:
-        return 'National Identity Card';
+        return S.of(context).docsTypeIdentity;
       case DriverDocType.other:
-        return 'Other Document';
+        return S.of(context).docsTypeOther;
     }
   }
 
@@ -62,7 +63,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final doc = widget.document;
-    final title = _getDocTitle(doc.docType);
+    final title = _getDocTitle(context, doc.docType);
 
     Color statusColor;
     Color statusBgColor;
@@ -74,25 +75,25 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
         statusColor = AppColors.success;
         statusBgColor = AppColors.successSurface;
         statusIcon = Icons.check_circle_rounded;
-        statusText = 'Verified';
+        statusText = S.of(context).docsFilterVerified;
         break;
       case DriverDocStatus.rejected:
         statusColor = AppColors.danger;
         statusBgColor = AppColors.dangerSurface;
         statusIcon = Icons.cancel_rounded;
-        statusText = 'Rejected';
+        statusText = S.of(context).docsFilterRejected;
         break;
       case DriverDocStatus.expired:
         statusColor = AppColors.warningDark;
         statusBgColor = AppColors.warningSurface;
         statusIcon = Icons.event_busy_rounded;
-        statusText = 'Expired';
+        statusText = S.of(context).docsFilterExpired;
         break;
       case DriverDocStatus.pending:
         statusColor = AppColors.warningDark;
         statusBgColor = AppColors.warningSurface;
         statusIcon = Icons.hourglass_top_rounded;
-        statusText = 'Pending Approval';
+        statusText = S.of(context).docsStatusPendingApproval;
         break;
     }
 
@@ -228,7 +229,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Rejection Reason',
+                            S.of(context).docsRejectionReasonLabel,
                             style: AppTextStyles.w700_12.copyWith(color: AppColors.danger),
                           ),
                           SizedBox(height: 2.h),
@@ -257,7 +258,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                 Expanded(
                   child: _buildInfoItem(
                     context,
-                    label: 'Issued Date',
+                    label: S.of(context).docsIssuedDateStat,
                     value: _formatDate(doc.issuedAt),
                     icon: Icons.calendar_today_rounded,
                     isDark: isDark,
@@ -266,7 +267,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                 Expanded(
                   child: _buildInfoItem(
                     context,
-                    label: 'Expiry Date',
+                    label: S.of(context).docsExpiryDateStat,
                     value: _formatDate(doc.expiresAt),
                     icon: Icons.event_repeat_rounded,
                     isDark: isDark,
@@ -300,7 +301,7 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _isExpanded ? 'Hide Technical Details' : 'View Details',
+                    _isExpanded ? S.of(context).docsHideTechDetails : S.of(context).docsViewDetails,
                     style: AppTextStyles.w500_12.copyWith(
                       color: AppColors.primaryColor,
                     ),
@@ -321,16 +322,16 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
               color: isDark ? AppColors.surfaceVariantDark : AppColors.surfaceVariant.withValues(alpha: 0.4),
               child: Column(
                 children: [
-                  _buildDetailRow(context, label: 'Document ID', value: '#${doc.id}', isDark: isDark),
-                  _buildDetailRow(context, label: 'Driver Profile ID', value: '#${doc.driverProfileId}', isDark: isDark),
+                  _buildDetailRow(context, label: S.of(context).docsDetailId, value: '#${doc.id}', isDark: isDark),
+                  _buildDetailRow(context, label: S.of(context).docsDetailProfileId, value: '#${doc.driverProfileId}', isDark: isDark),
                   if (doc.verifiedBy > 0)
-                    _buildDetailRow(context, label: 'Verified By Admin ID', value: '#${doc.verifiedBy}', isDark: isDark),
+                    _buildDetailRow(context, label: S.of(context).docsDetailAdminId, value: '#${doc.verifiedBy}', isDark: isDark),
                   if (doc.verifiedAt.isNotEmpty)
-                    _buildDetailRow(context, label: 'Verified At', value: _formatDate(doc.verifiedAt), isDark: isDark),
+                    _buildDetailRow(context, label: S.of(context).docsDetailVerifiedAt, value: _formatDate(doc.verifiedAt), isDark: isDark),
                   if (doc.createdAt.isNotEmpty)
-                    _buildDetailRow(context, label: 'Uploaded At', value: _formatDate(doc.createdAt), isDark: isDark),
+                    _buildDetailRow(context, label: S.of(context).docsDetailUploadedAt, value: _formatDate(doc.createdAt), isDark: isDark),
                   if (doc.metaJson.isNotEmpty)
-                    _buildDetailRow(context, label: 'Meta JSON', value: doc.metaJson.toString(), isDark: isDark),
+                    _buildDetailRow(context, label: S.of(context).docsDetailMeta, value: doc.metaJson.toString(), isDark: isDark),
                 ],
               ),
             ),

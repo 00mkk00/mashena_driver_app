@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'setting_item_card.dart';
 
 class ThemeToggleCard extends StatelessWidget {
@@ -14,8 +15,10 @@ class ThemeToggleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingItemCard(
-      title: 'Dark Mode',
-      subtitle: isDarkMode ? 'Dark theme enabled' : 'Light theme enabled',
+      title: S.of(context).settingsDarkMode,
+      subtitle: isDarkMode
+          ? S.of(context).settingsDarkThemeEnabled
+          : S.of(context).settingsLightThemeEnabled,
       icon: isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
       trailing: Switch.adaptive(
         value: isDarkMode,

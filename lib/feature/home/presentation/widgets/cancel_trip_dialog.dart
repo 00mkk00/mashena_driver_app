@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -38,14 +39,14 @@ void showCancelTripDialog(BuildContext context) {
 
             // Title
             Text(
-              'Cancel Trip',
+              S.of(context).tripCancelTitle,
               style: AppTextStyles.w700_18.copyWith(color: AppColors.onSurface),
             ),
             SizedBox(height: AppSpacing.sm.h),
 
             // Description
             Text(
-              'Are you sure you want to cancel this trip? This action cannot be undone.',
+              S.of(context).tripCancelConfirm,
               textAlign: TextAlign.center,
               style: AppTextStyles.w400_14.copyWith(
                 color: AppColors.textGrey,
@@ -68,7 +69,7 @@ void showCancelTripDialog(BuildContext context) {
                       ),
                     ),
                     child: Text(
-                      'No, Keep it',
+                      S.of(context).tripCancelNo,
                       style: AppTextStyles.w600_14.copyWith(
                         color: AppColors.onSurface,
                       ),
@@ -91,7 +92,7 @@ void showCancelTripDialog(BuildContext context) {
                       ),
                     ),
                     child: Text(
-                      'Yes, Cancel',
+                      S.of(context).tripCancelYes,
                       style: AppTextStyles.w600_14.copyWith(
                         color: Colors.white,
                       ),

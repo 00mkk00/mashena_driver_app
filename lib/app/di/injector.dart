@@ -37,6 +37,7 @@ import 'package:mashena_driver_app/feature/home/domain/usecases/rate_trip_use_ca
 import 'package:mashena_driver_app/feature/home/domain/usecases/start_trip_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_location_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/upload_driver_docs_use_case.dart' as home_doc_usecase;
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_wallet_cubit/driver_wallet_cubit.dart';
@@ -51,11 +52,16 @@ import 'package:mashena_driver_app/feature/shared/data/data_source/shared_remote
 import 'package:mashena_driver_app/feature/shared/domain/repository/shared_repo.dart';
 import 'package:mashena_driver_app/feature/shared/domain/use_cases/app_settings_use_case.dart';
 import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
+import 'package:mashena_driver_app/feature/settings/presentation/cubits/locale_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
+  // LocaleCubit
+  getIt.registerLazySingleton<LocaleCubit>(
+    () => LocaleCubit(getIt<LocalStorage>()),
+  );
   // ======================
   // External
   // ======================
@@ -203,6 +209,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => GetDriverDocumentsUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(
+    () => home_doc_usecase.UploadDriverDocsUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
     () => RideRequestCubit(
@@ -228,7 +237,10 @@ Future<void> configureDependencies() async {
   );
 
   getIt.registerFactory<DriverDocumentsCubit>(
-    () => DriverDocumentsCubit(getIt<GetDriverDocumentsUseCase>()),
+    () => DriverDocumentsCubit(
+      getIt<GetDriverDocumentsUseCase>(),
+      getIt<home_doc_usecase.UploadDriverDocsUseCase>(),
+    ),
   );
 
   // ── Driver Status ────────────────────────────

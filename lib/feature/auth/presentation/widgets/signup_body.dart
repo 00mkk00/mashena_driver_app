@@ -8,6 +8,7 @@ import 'package:mashena_driver_app/core/utils/validators.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/create_driver_params.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
+import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_state.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/fields.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_footer.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/widgets/auth_header.dart';
@@ -25,7 +26,20 @@ class _SignupViewBodyState extends State<SignupViewBody> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final cityController = TextEditingController();
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    cityController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -73,6 +87,23 @@ class _SignupViewBodyState extends State<SignupViewBody> {
             ),
             const SizedBox(height: 20),
             Field(
+              obscureText: true,
+              hint: S.of(context).confirmPassword,
+              autofillHints: const [AutofillHints.password],
+              keyboardType: TextInputType.visiblePassword,
+              controller: confirmPasswordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return S.of(context).validationRequired;
+                }
+                if (value != passwordController.text) {
+                  return S.of(context).validationPasswordsNotMatch;
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 20),
+            Field(
               hint: S.of(context).authCity,
               autofillHints: const [AutofillHints.addressCity],
               keyboardType: TextInputType.text,
@@ -83,23 +114,32 @@ class _SignupViewBodyState extends State<SignupViewBody> {
               ),
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              width: context.screenWidth * 0.8,
-              child: CustomElevatedButton(
-                title: S.of(context).commonNext,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    final params = CreateDriverParams(
-                      fullName: fullNameController.text,
-                      email: emailController.text,
-                      phoneNumber: phoneController.text,
-                      password: passwordController.text,
-                      city: cityController.text,
-                    );
-                    await context.read<SignupCubit>().signup(params);
-                  }
-                },
-              ),
+            BlocBuilder<SignupCubit, SignupState>(
+              builder: (context, state) {
+                final isLoading = state.maybeWhen(
+                  loading: () => true,
+                  orElse: () => false,
+                );
+                return SizedBox(
+                  width: context.screenWidth * 0.8,
+                  child: CustomElevatedButton(
+                    title: S.of(context).authSignUp,
+                    isLoading: isLoading,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final params = CreateDriverParams(
+                          fullName: fullNameController.text,
+                          email: emailController.text,
+                          phoneNumber: phoneController.text,
+                          password: passwordController.text,
+                          city: cityController.text,
+                        );
+                        await context.read<SignupCubit>().signup(params);
+                      }
+                    },
+                  ),
+                );
+              },
             ),
 
             const SizedBox(height: 20),

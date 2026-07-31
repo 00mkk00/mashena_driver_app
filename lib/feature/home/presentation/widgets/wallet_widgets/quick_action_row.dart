@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -16,7 +17,7 @@ class QuickActionsRow extends StatelessWidget {
         Expanded(
           child: _ActionButton(
             icon: Icons.arrow_upward_rounded,
-            label: 'Withdraw',
+            label: S.of(context).walletWithdraw,
             color: AppColors.earning,
             surface: AppColors.earningSurface,
             onTap: () {},
@@ -26,7 +27,7 @@ class QuickActionsRow extends StatelessWidget {
         Expanded(
           child: _ActionButton(
             icon: Icons.history_rounded,
-            label: 'History',
+            label: S.of(context).walletHistory,
             color: AppColors.primaryColor,
             surface: AppColors.primarySurface,
             onTap: () {},
@@ -36,7 +37,7 @@ class QuickActionsRow extends StatelessWidget {
         Expanded(
           child: _ActionButton(
             icon: Icons.receipt_long_rounded,
-            label: 'Statement',
+            label: S.of(context).walletStatement,
             color: AppColors.info,
             surface: AppColors.infoSurface,
             onTap: () {},

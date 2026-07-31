@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
@@ -44,8 +45,8 @@ class WaitTimerView extends StatelessWidget {
               SizedBox(width: AppSpacing.sm.w),
               Text(
                 isPositive
-                    ? 'Free wait time: $minutes:$seconds'
-                    : 'Wait time exceeded',
+                    ? S.of(context).tripFreeWaitTime('$minutes:$seconds')
+                    : S.of(context).tripWaitTimeExceeded,
                 style: AppTextStyles.w700_14.copyWith(
                   color: isPositive
                       ? Colors.green.shade700

@@ -27,14 +27,7 @@ class VerificationView extends StatelessWidget {
           listener: (context, state) {
             state.whenOrNull(
               /// ⏳ Loading
-              loading: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (_) =>
-                      const Center(child: CircularProgressIndicator()),
-                );
-              },
+              loading: () {},
 
               /// ✅ Success
               success: () {
@@ -45,8 +38,6 @@ class VerificationView extends StatelessWidget {
 
               /// ❌ Error
               error: (message) {
-                if (Navigator.canPop(context)) context.pop();
-
                 context.showErrorToast(message);
               },
             );

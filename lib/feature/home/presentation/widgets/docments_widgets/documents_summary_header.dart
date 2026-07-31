@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
@@ -53,7 +54,7 @@ class DocumentsSummaryHeader extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'Document Status Overview',
+                S.of(context).docsStatusOverview,
                 style: AppTextStyles.w600_16.copyWith(
                   color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
                 ),
@@ -65,7 +66,7 @@ class DocumentsSummaryHeader extends StatelessWidget {
             children: [
               _buildStatChip(
                 context: context,
-                label: 'Verified',
+                label: S.of(context).docsFilterVerified,
                 count: verified,
                 color: AppColors.success,
                 bgColor: AppColors.successSurface,
@@ -75,7 +76,7 @@ class DocumentsSummaryHeader extends StatelessWidget {
               SizedBox(width: 8.w),
               _buildStatChip(
                 context: context,
-                label: 'Pending',
+                label: S.of(context).docsFilterPending,
                 count: pending,
                 color: AppColors.warningDark,
                 bgColor: AppColors.warningSurface,
@@ -85,7 +86,7 @@ class DocumentsSummaryHeader extends StatelessWidget {
               SizedBox(width: 8.w),
               _buildStatChip(
                 context: context,
-                label: 'Rejected',
+                label: S.of(context).docsFilterRejected,
                 count: rejected,
                 color: AppColors.danger,
                 bgColor: AppColors.dangerSurface,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -81,7 +82,7 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
                   ),
                   SizedBox(width: AppSpacing.xs.w),
                   Text(
-                    'stop${widget.stops.length > 1 ? 's' : ''} along the way',
+                    S.of(context).rideRequestStopsAlongTheWay(widget.stops.length, widget.stops.length > 1 ? 's' : ''),
                     style: AppTextStyles.w600_12.copyWith(
                       color: AppColors.warningDark,
                     ),
@@ -177,7 +178,7 @@ class _ActiveStopsSectionState extends State<ActiveStopsSection>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'STOP ${stop.order}',
+                                    S.of(context).tripStopLabel(stop.order),
                                     style: AppTextStyles.w700_12.copyWith(
                                       color: AppColors.warningDark,
                                       letterSpacing: 0.8,

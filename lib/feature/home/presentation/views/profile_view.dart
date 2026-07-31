@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/constants/app_constants.dart';
@@ -90,8 +91,10 @@ class _ProfileViewState extends State<ProfileView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'My Profile',
-          style: AppTextStyles.w600_18.copyWith(color: AppColors.onSurface),
+          S.of(context).profileProfile,
+          style: AppTextStyles.w700_18.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         centerTitle: true,
       ),
@@ -109,7 +112,7 @@ class _ProfileViewState extends State<ProfileView> {
             // ── Read-only Fields ────────────────────────────
             ProfileField(
               controller: _nameController,
-              label: 'Full Name',
+              label: S.of(context).authFullName,
               hint: '',
               icon: Icons.person_outline_rounded,
               keyboardType: TextInputType.name,
@@ -118,7 +121,7 @@ class _ProfileViewState extends State<ProfileView> {
             SizedBox(height: AppSpacing.md.h),
             ProfileField(
               controller: _emailController,
-              label: 'Email',
+              label: S.of(context).email,
               hint: '',
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
@@ -127,7 +130,7 @@ class _ProfileViewState extends State<ProfileView> {
             SizedBox(height: AppSpacing.md.h),
             ProfileField(
               controller: _phoneController,
-              label: 'Phone Number',
+              label: S.of(context).authPhone,
               hint: '',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
@@ -137,7 +140,7 @@ class _ProfileViewState extends State<ProfileView> {
             if (_initialCity.isNotEmpty) ...[
               ProfileField(
                 controller: _cityController,
-                label: 'City',
+                label: S.of(context).profileCity,
                 hint: '',
                 icon: Icons.location_city_outlined,
                 keyboardType: TextInputType.text,

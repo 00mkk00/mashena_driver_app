@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
@@ -48,12 +49,12 @@ class RouteRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AddressItem(
-                label: 'Pickup',
+                label: S.of(context).rideRequestPickup,
                 address: trip.pickupAddress, // ✅ real address from API
               ),
               SizedBox(height: AppSpacing.sm.h),
               _AddressItem(
-                label: 'Drop-off',
+                label: S.of(context).rideRequestDropOff,
                 address: trip.destAddress, // ✅ real address from API
               ),
             ],

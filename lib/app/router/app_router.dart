@@ -125,10 +125,11 @@ final class AppRouter {
         name: AppRoutes.uploadDocs,
 
         builder: (context, state) {
-          final data = state.extra as Map<String, dynamic>;
+          final data = state.extra as Map<String, dynamic>?;
+          final userId = data?['userId'] ?? 0;
           return BlocProvider(
             create: (_) => UploadDocsCubit(getIt<UploadDriverDocsUseCase>()),
-            child: UploadDocsView(userId: data['userId']),
+            child: UploadDocsView(userId: userId),
           );
         },
       ),
@@ -159,7 +160,7 @@ final class AppRouter {
         name: AppRoutes.settingsView,
         builder: (context, state) => const SettingsView(),
       ),
-       GoRoute(
+      GoRoute(
         path: AppRoutes.historyViewPath,
         name: AppRoutes.historyViewPath,
         builder: (context, state) => HistoryView(),

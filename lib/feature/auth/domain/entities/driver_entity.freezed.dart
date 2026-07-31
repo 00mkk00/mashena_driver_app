@@ -21,10 +21,13 @@ mixin _$DriverEntity {
   String get fullName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
   List<RoleEntity> get roles => throw _privateConstructorUsedError;
   String get activeRole => throw _privateConstructorUsedError;
   DriverApprovalInfoEntity get driverApprovalInfo =>
       throw _privateConstructorUsedError;
+  DriverProfileEntity get driverProfile => throw _privateConstructorUsedError;
 
   /// Create a copy of DriverEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -45,12 +48,16 @@ abstract class $DriverEntityCopyWith<$Res> {
     String fullName,
     String email,
     String phoneNumber,
+    String? createdAt,
+    String? updatedAt,
     List<RoleEntity> roles,
     String activeRole,
     DriverApprovalInfoEntity driverApprovalInfo,
+    DriverProfileEntity driverProfile,
   });
 
   $DriverApprovalInfoEntityCopyWith<$Res> get driverApprovalInfo;
+  $DriverProfileEntityCopyWith<$Res> get driverProfile;
 }
 
 /// @nodoc
@@ -72,9 +79,12 @@ class _$DriverEntityCopyWithImpl<$Res, $Val extends DriverEntity>
     Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? roles = null,
     Object? activeRole = null,
     Object? driverApprovalInfo = null,
+    Object? driverProfile = null,
   }) {
     return _then(
       _value.copyWith(
@@ -94,6 +104,14 @@ class _$DriverEntityCopyWithImpl<$Res, $Val extends DriverEntity>
                 ? _value.phoneNumber
                 : phoneNumber // ignore: cast_nullable_to_non_nullable
                       as String,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
             roles: null == roles
                 ? _value.roles
                 : roles // ignore: cast_nullable_to_non_nullable
@@ -106,6 +124,10 @@ class _$DriverEntityCopyWithImpl<$Res, $Val extends DriverEntity>
                 ? _value.driverApprovalInfo
                 : driverApprovalInfo // ignore: cast_nullable_to_non_nullable
                       as DriverApprovalInfoEntity,
+            driverProfile: null == driverProfile
+                ? _value.driverProfile
+                : driverProfile // ignore: cast_nullable_to_non_nullable
+                      as DriverProfileEntity,
           )
           as $Val,
     );
@@ -120,6 +142,16 @@ class _$DriverEntityCopyWithImpl<$Res, $Val extends DriverEntity>
       value,
     ) {
       return _then(_value.copyWith(driverApprovalInfo: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DriverEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DriverProfileEntityCopyWith<$Res> get driverProfile {
+    return $DriverProfileEntityCopyWith<$Res>(_value.driverProfile, (value) {
+      return _then(_value.copyWith(driverProfile: value) as $Val);
     });
   }
 }
@@ -138,13 +170,18 @@ abstract class _$$DriverEntityImplCopyWith<$Res>
     String fullName,
     String email,
     String phoneNumber,
+    String? createdAt,
+    String? updatedAt,
     List<RoleEntity> roles,
     String activeRole,
     DriverApprovalInfoEntity driverApprovalInfo,
+    DriverProfileEntity driverProfile,
   });
 
   @override
   $DriverApprovalInfoEntityCopyWith<$Res> get driverApprovalInfo;
+  @override
+  $DriverProfileEntityCopyWith<$Res> get driverProfile;
 }
 
 /// @nodoc
@@ -165,9 +202,12 @@ class __$$DriverEntityImplCopyWithImpl<$Res>
     Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? roles = null,
     Object? activeRole = null,
     Object? driverApprovalInfo = null,
+    Object? driverProfile = null,
   }) {
     return _then(
       _$DriverEntityImpl(
@@ -187,6 +227,14 @@ class __$$DriverEntityImplCopyWithImpl<$Res>
             ? _value.phoneNumber
             : phoneNumber // ignore: cast_nullable_to_non_nullable
                   as String,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
         roles: null == roles
             ? _value._roles
             : roles // ignore: cast_nullable_to_non_nullable
@@ -199,6 +247,10 @@ class __$$DriverEntityImplCopyWithImpl<$Res>
             ? _value.driverApprovalInfo
             : driverApprovalInfo // ignore: cast_nullable_to_non_nullable
                   as DriverApprovalInfoEntity,
+        driverProfile: null == driverProfile
+            ? _value.driverProfile
+            : driverProfile // ignore: cast_nullable_to_non_nullable
+                  as DriverProfileEntity,
       ),
     );
   }
@@ -212,9 +264,12 @@ class _$DriverEntityImpl implements _DriverEntity {
     required this.fullName,
     required this.email,
     required this.phoneNumber,
+    this.createdAt,
+    this.updatedAt,
     final List<RoleEntity> roles = const [],
     this.activeRole = '',
     this.driverApprovalInfo = const DriverApprovalInfoEntity(),
+    this.driverProfile = const DriverProfileEntity(),
   }) : _roles = roles;
 
   @override
@@ -225,6 +280,10 @@ class _$DriverEntityImpl implements _DriverEntity {
   final String email;
   @override
   final String phoneNumber;
+  @override
+  final String? createdAt;
+  @override
+  final String? updatedAt;
   final List<RoleEntity> _roles;
   @override
   @JsonKey()
@@ -240,10 +299,13 @@ class _$DriverEntityImpl implements _DriverEntity {
   @override
   @JsonKey()
   final DriverApprovalInfoEntity driverApprovalInfo;
+  @override
+  @JsonKey()
+  final DriverProfileEntity driverProfile;
 
   @override
   String toString() {
-    return 'DriverEntity(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, roles: $roles, activeRole: $activeRole, driverApprovalInfo: $driverApprovalInfo)';
+    return 'DriverEntity(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt, roles: $roles, activeRole: $activeRole, driverApprovalInfo: $driverApprovalInfo, driverProfile: $driverProfile)';
   }
 
   @override
@@ -257,11 +319,17 @@ class _$DriverEntityImpl implements _DriverEntity {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             const DeepCollectionEquality().equals(other._roles, _roles) &&
             (identical(other.activeRole, activeRole) ||
                 other.activeRole == activeRole) &&
             (identical(other.driverApprovalInfo, driverApprovalInfo) ||
-                other.driverApprovalInfo == driverApprovalInfo));
+                other.driverApprovalInfo == driverApprovalInfo) &&
+            (identical(other.driverProfile, driverProfile) ||
+                other.driverProfile == driverProfile));
   }
 
   @override
@@ -271,9 +339,12 @@ class _$DriverEntityImpl implements _DriverEntity {
     fullName,
     email,
     phoneNumber,
+    createdAt,
+    updatedAt,
     const DeepCollectionEquality().hash(_roles),
     activeRole,
     driverApprovalInfo,
+    driverProfile,
   );
 
   /// Create a copy of DriverEntity
@@ -291,9 +362,12 @@ abstract class _DriverEntity implements DriverEntity {
     required final String fullName,
     required final String email,
     required final String phoneNumber,
+    final String? createdAt,
+    final String? updatedAt,
     final List<RoleEntity> roles,
     final String activeRole,
     final DriverApprovalInfoEntity driverApprovalInfo,
+    final DriverProfileEntity driverProfile,
   }) = _$DriverEntityImpl;
 
   @override
@@ -305,11 +379,17 @@ abstract class _DriverEntity implements DriverEntity {
   @override
   String get phoneNumber;
   @override
+  String? get createdAt;
+  @override
+  String? get updatedAt;
+  @override
   List<RoleEntity> get roles;
   @override
   String get activeRole;
   @override
   DriverApprovalInfoEntity get driverApprovalInfo;
+  @override
+  DriverProfileEntity get driverProfile;
 
   /// Create a copy of DriverEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -416,11 +496,12 @@ class __$$RoleEntityImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RoleEntityImpl implements _RoleEntity {
-  const _$RoleEntityImpl({required this.id, required this.name});
+  const _$RoleEntityImpl({required this.id, this.name = ''});
 
   @override
   final int id;
   @override
+  @JsonKey()
   final String name;
 
   @override
@@ -450,10 +531,8 @@ class _$RoleEntityImpl implements _RoleEntity {
 }
 
 abstract class _RoleEntity implements RoleEntity {
-  const factory _RoleEntity({
-    required final int id,
-    required final String name,
-  }) = _$RoleEntityImpl;
+  const factory _RoleEntity({required final int id, final String name}) =
+      _$RoleEntityImpl;
 
   @override
   int get id;
@@ -671,4 +750,353 @@ abstract class _DriverApprovalInfoEntity implements DriverApprovalInfoEntity {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DriverApprovalInfoEntityImplCopyWith<_$DriverApprovalInfoEntityImpl>
   get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$DriverProfileEntity {
+  int get id => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
+  String? get approvalStatus => throw _privateConstructorUsedError;
+  bool get isOnline => throw _privateConstructorUsedError;
+  String? get emailVerifiedAt => throw _privateConstructorUsedError;
+  String? get phoneVerifiedAt => throw _privateConstructorUsedError;
+  String? get lastLoginAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+
+  /// Create a copy of DriverProfileEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DriverProfileEntityCopyWith<DriverProfileEntity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DriverProfileEntityCopyWith<$Res> {
+  factory $DriverProfileEntityCopyWith(
+    DriverProfileEntity value,
+    $Res Function(DriverProfileEntity) then,
+  ) = _$DriverProfileEntityCopyWithImpl<$Res, DriverProfileEntity>;
+  @useResult
+  $Res call({
+    int id,
+    int userId,
+    String? city,
+    String? approvalStatus,
+    bool isOnline,
+    String? emailVerifiedAt,
+    String? phoneVerifiedAt,
+    String? lastLoginAt,
+    String? createdAt,
+    String? updatedAt,
+  });
+}
+
+/// @nodoc
+class _$DriverProfileEntityCopyWithImpl<$Res, $Val extends DriverProfileEntity>
+    implements $DriverProfileEntityCopyWith<$Res> {
+  _$DriverProfileEntityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DriverProfileEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? city = freezed,
+    Object? approvalStatus = freezed,
+    Object? isOnline = null,
+    Object? emailVerifiedAt = freezed,
+    Object? phoneVerifiedAt = freezed,
+    Object? lastLoginAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int,
+            userId: null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            city: freezed == city
+                ? _value.city
+                : city // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            approvalStatus: freezed == approvalStatus
+                ? _value.approvalStatus
+                : approvalStatus // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isOnline: null == isOnline
+                ? _value.isOnline
+                : isOnline // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            emailVerifiedAt: freezed == emailVerifiedAt
+                ? _value.emailVerifiedAt
+                : emailVerifiedAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            phoneVerifiedAt: freezed == phoneVerifiedAt
+                ? _value.phoneVerifiedAt
+                : phoneVerifiedAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            lastLoginAt: freezed == lastLoginAt
+                ? _value.lastLoginAt
+                : lastLoginAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$DriverProfileEntityImplCopyWith<$Res>
+    implements $DriverProfileEntityCopyWith<$Res> {
+  factory _$$DriverProfileEntityImplCopyWith(
+    _$DriverProfileEntityImpl value,
+    $Res Function(_$DriverProfileEntityImpl) then,
+  ) = __$$DriverProfileEntityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    int id,
+    int userId,
+    String? city,
+    String? approvalStatus,
+    bool isOnline,
+    String? emailVerifiedAt,
+    String? phoneVerifiedAt,
+    String? lastLoginAt,
+    String? createdAt,
+    String? updatedAt,
+  });
+}
+
+/// @nodoc
+class __$$DriverProfileEntityImplCopyWithImpl<$Res>
+    extends _$DriverProfileEntityCopyWithImpl<$Res, _$DriverProfileEntityImpl>
+    implements _$$DriverProfileEntityImplCopyWith<$Res> {
+  __$$DriverProfileEntityImplCopyWithImpl(
+    _$DriverProfileEntityImpl _value,
+    $Res Function(_$DriverProfileEntityImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DriverProfileEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? city = freezed,
+    Object? approvalStatus = freezed,
+    Object? isOnline = null,
+    Object? emailVerifiedAt = freezed,
+    Object? phoneVerifiedAt = freezed,
+    Object? lastLoginAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(
+      _$DriverProfileEntityImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int,
+        userId: null == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        city: freezed == city
+            ? _value.city
+            : city // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        approvalStatus: freezed == approvalStatus
+            ? _value.approvalStatus
+            : approvalStatus // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isOnline: null == isOnline
+            ? _value.isOnline
+            : isOnline // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        emailVerifiedAt: freezed == emailVerifiedAt
+            ? _value.emailVerifiedAt
+            : emailVerifiedAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        phoneVerifiedAt: freezed == phoneVerifiedAt
+            ? _value.phoneVerifiedAt
+            : phoneVerifiedAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        lastLoginAt: freezed == lastLoginAt
+            ? _value.lastLoginAt
+            : lastLoginAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$DriverProfileEntityImpl implements _DriverProfileEntity {
+  const _$DriverProfileEntityImpl({
+    this.id = 0,
+    this.userId = 0,
+    this.city,
+    this.approvalStatus,
+    this.isOnline = false,
+    this.emailVerifiedAt,
+    this.phoneVerifiedAt,
+    this.lastLoginAt,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  @override
+  @JsonKey()
+  final int id;
+  @override
+  @JsonKey()
+  final int userId;
+  @override
+  final String? city;
+  @override
+  final String? approvalStatus;
+  @override
+  @JsonKey()
+  final bool isOnline;
+  @override
+  final String? emailVerifiedAt;
+  @override
+  final String? phoneVerifiedAt;
+  @override
+  final String? lastLoginAt;
+  @override
+  final String? createdAt;
+  @override
+  final String? updatedAt;
+
+  @override
+  String toString() {
+    return 'DriverProfileEntity(id: $id, userId: $userId, city: $city, approvalStatus: $approvalStatus, isOnline: $isOnline, emailVerifiedAt: $emailVerifiedAt, phoneVerifiedAt: $phoneVerifiedAt, lastLoginAt: $lastLoginAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DriverProfileEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.approvalStatus, approvalStatus) ||
+                other.approvalStatus == approvalStatus) &&
+            (identical(other.isOnline, isOnline) ||
+                other.isOnline == isOnline) &&
+            (identical(other.emailVerifiedAt, emailVerifiedAt) ||
+                other.emailVerifiedAt == emailVerifiedAt) &&
+            (identical(other.phoneVerifiedAt, phoneVerifiedAt) ||
+                other.phoneVerifiedAt == phoneVerifiedAt) &&
+            (identical(other.lastLoginAt, lastLoginAt) ||
+                other.lastLoginAt == lastLoginAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    userId,
+    city,
+    approvalStatus,
+    isOnline,
+    emailVerifiedAt,
+    phoneVerifiedAt,
+    lastLoginAt,
+    createdAt,
+    updatedAt,
+  );
+
+  /// Create a copy of DriverProfileEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DriverProfileEntityImplCopyWith<_$DriverProfileEntityImpl> get copyWith =>
+      __$$DriverProfileEntityImplCopyWithImpl<_$DriverProfileEntityImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _DriverProfileEntity implements DriverProfileEntity {
+  const factory _DriverProfileEntity({
+    final int id,
+    final int userId,
+    final String? city,
+    final String? approvalStatus,
+    final bool isOnline,
+    final String? emailVerifiedAt,
+    final String? phoneVerifiedAt,
+    final String? lastLoginAt,
+    final String? createdAt,
+    final String? updatedAt,
+  }) = _$DriverProfileEntityImpl;
+
+  @override
+  int get id;
+  @override
+  int get userId;
+  @override
+  String? get city;
+  @override
+  String? get approvalStatus;
+  @override
+  bool get isOnline;
+  @override
+  String? get emailVerifiedAt;
+  @override
+  String? get phoneVerifiedAt;
+  @override
+  String? get lastLoginAt;
+  @override
+  String? get createdAt;
+  @override
+  String? get updatedAt;
+
+  /// Create a copy of DriverProfileEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DriverProfileEntityImplCopyWith<_$DriverProfileEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

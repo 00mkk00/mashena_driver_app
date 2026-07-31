@@ -39,10 +39,25 @@ final class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await _tokenManager.getAccessToken();
-          if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $token';
+          final path = options.path;
+          final isNoAuthPath =
+              path.contains(Endpoints.login) ||
+              path.contains(Endpoints.signup) ||
+              path.contains(Endpoints.sendOtp) ||
+              path.contains(Endpoints.verifyOtp) ||
+              path.contains(Endpoints.uploadDocs);
+
+          final isExplicitNoAuth =
+              options.extra['requiresToken'] == false ||
+              options.headers['noAuth'] == true;
+
+          if (!isNoAuthPath && !isExplicitNoAuth) {
+            final token = await _tokenManager.getAccessToken();
+            if (token != null && token.isNotEmpty) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
           }
+          options.headers.remove('noAuth');
           handler.next(options);
         },
         onError: (error, handler) async {

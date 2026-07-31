@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
@@ -111,7 +112,7 @@ class DocumentImagePreviewDialog extends StatelessWidget {
                               ),
                               SizedBox(height: 12.h),
                               Text(
-                                'Failed to load image',
+                                S.of(context).docsFailedToLoadImage,
                                 style: AppTextStyles.w500_14.copyWith(
                                   color: Colors.white,
                                 ),
@@ -130,7 +131,7 @@ class DocumentImagePreviewDialog extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(12.r),
               child: Text(
-                'Pinch or double tap to zoom',
+                S.of(context).docsZoomHint,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.w400_12.copyWith(
                   color: AppColors.textGrey,

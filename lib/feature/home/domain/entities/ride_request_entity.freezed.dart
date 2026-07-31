@@ -33,7 +33,7 @@ mixin _$RideRequestEntity {
   List<RideRequestStopEntity> get stops => throw _privateConstructorUsedError;
   int? get rideRequestId => throw _privateConstructorUsedError;
   double? get distanceKm => throw _privateConstructorUsedError;
-  int? get durationMin => throw _privateConstructorUsedError;
+  double? get durationMin => throw _privateConstructorUsedError;
   bool? get isNight => throw _privateConstructorUsedError;
   String? get estimatedFare => throw _privateConstructorUsedError;
   String? get currency => throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ abstract class $RideRequestEntityCopyWith<$Res> {
     List<RideRequestStopEntity> stops,
     int? rideRequestId,
     double? distanceKm,
-    int? durationMin,
+    double? durationMin,
     bool? isNight,
     String? estimatedFare,
     String? currency,
@@ -186,7 +186,7 @@ class _$RideRequestEntityCopyWithImpl<$Res, $Val extends RideRequestEntity>
             durationMin: freezed == durationMin
                 ? _value.durationMin
                 : durationMin // ignore: cast_nullable_to_non_nullable
-                      as int?,
+                      as double?,
             isNight: freezed == isNight
                 ? _value.isNight
                 : isNight // ignore: cast_nullable_to_non_nullable
@@ -249,7 +249,7 @@ abstract class _$$RideRequestEntityImplCopyWith<$Res>
     List<RideRequestStopEntity> stops,
     int? rideRequestId,
     double? distanceKm,
-    int? durationMin,
+    double? durationMin,
     bool? isNight,
     String? estimatedFare,
     String? currency,
@@ -365,7 +365,7 @@ class __$$RideRequestEntityImplCopyWithImpl<$Res>
         durationMin: freezed == durationMin
             ? _value.durationMin
             : durationMin // ignore: cast_nullable_to_non_nullable
-                  as int?,
+                  as double?,
         isNight: freezed == isNight
             ? _value.isNight
             : isNight // ignore: cast_nullable_to_non_nullable
@@ -453,7 +453,7 @@ class _$RideRequestEntityImpl implements _RideRequestEntity {
   @override
   final double? distanceKm;
   @override
-  final int? durationMin;
+  final double? durationMin;
   @override
   final bool? isNight;
   @override
@@ -567,7 +567,7 @@ abstract class _RideRequestEntity implements RideRequestEntity {
     required final List<RideRequestStopEntity> stops,
     final int? rideRequestId,
     final double? distanceKm,
-    final int? durationMin,
+    final double? durationMin,
     final bool? isNight,
     final String? estimatedFare,
     final String? currency,
@@ -607,7 +607,7 @@ abstract class _RideRequestEntity implements RideRequestEntity {
   @override
   double? get distanceKm;
   @override
-  int? get durationMin;
+  double? get durationMin;
   @override
   bool? get isNight;
   @override

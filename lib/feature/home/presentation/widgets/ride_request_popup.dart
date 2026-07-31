@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -164,7 +165,7 @@ class _RidePopupOverlayState extends State<_RidePopupOverlay>
             child: AnimatedBuilder(
               animation: _fadeAnim,
               builder: (_, _) => Container(
-                color: Colors.black.withValues(alpha:  0.55 * _fadeAnim.value),
+                color: Colors.black.withValues(alpha: 0.55 * _fadeAnim.value),
               ),
             ),
           ),
@@ -334,7 +335,7 @@ class _TopBand extends StatelessWidget {
               ),
               SizedBox(width: AppSpacing.xs.w),
               Text(
-                'New Ride Request',
+                S.of(context).rideRequestNew,
                 style: AppTextStyles.w700_16.copyWith(color: Colors.white),
               ),
               const Spacer(),
@@ -346,10 +347,10 @@ class _TopBand extends StatelessWidget {
                   vertical: 3.h,
                 ),
                 decoration: BoxDecoration(
-                  color: timerColor.withValues(alpha:0.18),
+                  color: timerColor.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(AppRadius.full.r),
                   border: Border.all(
-                    color: timerColor.withValues(alpha:0.5),
+                    color: timerColor.withValues(alpha: 0.5),
                     width: 1.2,
                   ),
                 ),
@@ -359,7 +360,7 @@ class _TopBand extends StatelessWidget {
                     Icon(Icons.timer_rounded, size: 12.r, color: timerColor),
                     SizedBox(width: 3.w),
                     Text(
-                      '${secondsLeft}s',
+                      S.of(context).rideRequestSeconds(secondsLeft),
                       style: AppTextStyles.w700_12.copyWith(color: timerColor),
                     ),
                   ],
@@ -416,7 +417,7 @@ class _MetaChipsRow extends StatelessWidget {
           iconColor: AppColors.primaryColor,
           bg: AppColors.primarySurface,
           label: ride.distanceKm != null
-              ? '${ride.distanceKm!.floor()} km'
+              ? S.of(context).radiusKm(ride.distanceKm!.floor())
               : '—',
         ),
         SizedBox(width: AppSpacing.sm.w),
@@ -424,7 +425,7 @@ class _MetaChipsRow extends StatelessWidget {
           icon: Icons.timelapse_rounded,
           iconColor: AppColors.danger,
           bg: AppColors.dangerSurface,
-          label: '${ride.durationMin ?? '—'} min',
+          label: '${ride.durationMin ?? '—'} ${S.of(context).commonMin}',
         ),
         if (ride.isNight == true) ...[
           SizedBox(width: AppSpacing.sm.w),
@@ -432,7 +433,7 @@ class _MetaChipsRow extends StatelessWidget {
             icon: Icons.nights_stay_rounded,
             iconColor: AppColors.info,
             bg: AppColors.infoSurface,
-            label: 'Night',
+            label: S.of(context).rideRequestNight,
           ),
         ],
       ],
@@ -515,9 +516,15 @@ class _RouteSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _AddressItem(label: 'Pickup', address: ride.pickupAddress),
+              _AddressItem(
+                label: S.of(context).rideRequestPickup,
+                address: ride.pickupAddress,
+              ),
               SizedBox(height: AppSpacing.sm.h),
-              _AddressItem(label: 'Drop-off', address: ride.destAddress),
+              _AddressItem(
+                label: S.of(context).rideRequestDropOff,
+                address: ride.destAddress,
+              ),
             ],
           ),
         ),
@@ -592,7 +599,9 @@ class _StopsChip extends StatelessWidget {
           ),
           SizedBox(width: AppSpacing.xs.w),
           Text(
-            '$count stop${count > 1 ? 's' : ''} along the way',
+            S
+                .of(context)
+                .rideRequestStopsAlongTheWay(count, count > 1 ? 's' : ''),
             style: AppTextStyles.w600_12.copyWith(color: AppColors.warningDark),
           ),
         ],
@@ -624,7 +633,7 @@ class _ActionRow extends StatelessWidget {
             ),
             icon: Icon(Icons.close_rounded, size: 17.r),
             label: Text(
-              'Reject',
+              S.of(context).commonReject,
               style: AppTextStyles.w600_14.copyWith(color: AppColors.danger),
             ),
           ),
@@ -646,7 +655,7 @@ class _ActionRow extends StatelessWidget {
             ),
             icon: Icon(Icons.check_rounded, size: 17.r),
             label: Text(
-              'Accept Ride',
+              S.of(context).rideRequestAccept,
               style: AppTextStyles.w700_14.copyWith(color: Colors.white),
             ),
           ),

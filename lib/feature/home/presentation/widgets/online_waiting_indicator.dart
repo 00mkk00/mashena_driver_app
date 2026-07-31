@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
@@ -67,7 +68,7 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Looking for passengers',
+                  S.of(context).homeLookingForPassengers,
                   style: AppTextStyles.w500_12.copyWith(
                     color: AppColors.borderColorDark,
                   ),
@@ -79,7 +80,7 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
                     final dots =
                         '.' * ((_dotController.value * 4).floor().clamp(1, 3));
                     return Text(
-                      'Searching$dots',
+                      '${S.of(context).homeSearching}$dots',
                       style: AppTextStyles.w400_10.copyWith(
                         color: AppColors.primaryColor,
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -95,7 +96,7 @@ class _RideRequestCardState extends State<RideRequestCard>
                         : state.rideRequestEntity != null
                         ? _TripDetailsContent(ride: state.rideRequestEntity!)
                         : _TripDetailsError(
-                            message: state.errorMessage ?? 'Failed to load',
+                            message: state.errorMessage ?? S.of(context).rideRequestFailedToLoad,
                           ),
                   ),
                   // ── Action buttons always visible ──────────────────
@@ -286,7 +287,7 @@ class _CountdownBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'New Ride Request',
+                S.of(context).rideRequestNew,
                 style: AppTextStyles.w600_16.copyWith(
                   color: AppColors.borderColorDark,
                 ),
@@ -301,7 +302,7 @@ class _CountdownBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.full.r),
                 ),
                 child: Text(
-                  '${seconds}s',
+                  S.of(context).rideRequestSeconds(seconds),
                   style: AppTextStyles.w600_12.copyWith(color: _barColor),
                 ),
               ),
@@ -346,7 +347,7 @@ class _ActionButtons extends StatelessWidget {
             ),
             icon: Icon(Icons.close_rounded, size: 17.r),
             label: Text(
-              'Reject',
+              S.of(context).commonReject,
               style: AppTextStyles.w600_14.copyWith(color: AppColors.danger),
             ),
           ),
@@ -367,7 +368,7 @@ class _ActionButtons extends StatelessWidget {
             ),
             icon: Icon(Icons.check_rounded, size: 17.r),
             label: Text(
-              'Accept',
+              S.of(context).commonAccept,
               style: AppTextStyles.w700_14.copyWith(color: Colors.white),
             ),
           ),

@@ -34,6 +34,7 @@ import 'package:mashena_driver_app/feature/home/data/mappers/driver_wallet_summa
 import 'package:mashena_driver_app/feature/home/data/mappers/driver_document_mapper.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/rating_tag_mapper.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/driver_document_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/rating_tag_entity.dart';
 
@@ -229,6 +230,20 @@ class HomeRepositoryImpl implements HomeRepository {
       final models = await _remoteDataSource.getDriverDocuments();
       final entities = models.map((m) => m.toEntity()).toList();
       return Right(entities);
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> uploadDocuments(
+    UploadDriverDocsParams params,
+  ) async {
+    try {
+      await _remoteDataSource.uploadDocuments(params);
+      return const Right(null);
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));
     } catch (e) {

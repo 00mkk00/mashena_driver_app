@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
@@ -75,7 +76,7 @@ class TripAcceptedCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.full.r),
                     ),
                     child: Text(
-                      isArrived ? 'Arrived ✓' : 'Trip Accepted ✓',
+                      isArrived ? S.of(context).tripArrivedCheck : S.of(context).tripAcceptedCheck,
                       style: AppTextStyles.w700_12.copyWith(
                         color: AppColors.primaryColor,
                       ),
@@ -84,7 +85,7 @@ class TripAcceptedCard extends StatelessWidget {
                   const Spacer(),
                   if (trip != null)
                     Text(
-                      'ID #${trip.id}',
+                      S.of(context).tripId(trip.id),
                       style: AppTextStyles.w600_12.copyWith(
                         color: AppColors.cardDark,
                       ),
@@ -140,7 +141,7 @@ class TripAcceptedCard extends StatelessWidget {
                         ),
                         icon: Icon(Icons.cancel_outlined, size: 18.r),
                         label: Text(
-                          'Cancel',
+                          S.of(context).commonCancel,
                           style: AppTextStyles.w700_14.copyWith(
                             color: Colors.white,
                           ),
@@ -175,7 +176,7 @@ class TripAcceptedCard extends StatelessWidget {
                         ),
                         icon: Icon(Icons.cancel_outlined, size: 18.r),
                         label: Text(
-                          'Cancel',
+                          S.of(context).commonCancel,
                           style: AppTextStyles.w700_14.copyWith(
                             color: Colors.white,
                           ),
@@ -203,7 +204,7 @@ class TripAcceptedCard extends StatelessWidget {
                         ),
                         icon: Icon(Icons.location_on_rounded, size: 18.r),
                         label: Text(
-                          'Mark as Arrived',
+                          S.of(context).tripMarkAsArrived,
                           style: AppTextStyles.w700_14.copyWith(
                             color: Colors.white,
                           ),
