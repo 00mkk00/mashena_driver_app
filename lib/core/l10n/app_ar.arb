@@ -275,5 +275,7 @@
   "settingsSettings": "الإعدادات",
   "settingsDarkMode": "المظهر الداكن",
   "commonRetry": "إعادة المحاولة",
-  "docsMyDocuments": "مستنداتي"
+  "docsMyDocuments": "مستنداتي",
+  "tapToCaptureVehiclePhoto": "اضغط لالتقاط أو اختيار صورة المركبة",
+  "photoAttached": "تم إرفاق الصورة"
 }

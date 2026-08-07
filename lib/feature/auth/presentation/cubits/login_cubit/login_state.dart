@@ -10,7 +10,7 @@ class LoginState with _$LoginState {
 
   /// ✅ Navigation states
   const factory LoginState.success(LoginEntity auth) = _Success;
-  const factory LoginState.needsUpload(LoginEntity auth) = _NeedsUpload;
+  const factory LoginState.needsUpload(LoginEntity? auth) = _NeedsUpload;
   const factory LoginState.requireOtp({
     required int userId,
     required String email,

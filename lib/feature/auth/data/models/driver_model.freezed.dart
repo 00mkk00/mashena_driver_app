@@ -25,6 +25,7 @@ mixin _$DriverModel {
   String get fullName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
   List<RoleModel> get roles => throw _privateConstructorUsedError;
@@ -55,6 +56,7 @@ abstract class $DriverModelCopyWith<$Res> {
     String fullName,
     String email,
     String phoneNumber,
+    String avatarUrl,
     String? createdAt,
     String? updatedAt,
     List<RoleModel> roles,
@@ -86,6 +88,7 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
     Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
+    Object? avatarUrl = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? roles = null,
@@ -110,6 +113,10 @@ class _$DriverModelCopyWithImpl<$Res, $Val extends DriverModel>
             phoneNumber: null == phoneNumber
                 ? _value.phoneNumber
                 : phoneNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            avatarUrl: null == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
                       as String,
             createdAt: freezed == createdAt
                 ? _value.createdAt
@@ -181,6 +188,7 @@ abstract class _$$DriverModelImplCopyWith<$Res>
     String fullName,
     String email,
     String phoneNumber,
+    String avatarUrl,
     String? createdAt,
     String? updatedAt,
     List<RoleModel> roles,
@@ -213,6 +221,7 @@ class __$$DriverModelImplCopyWithImpl<$Res>
     Object? fullName = null,
     Object? email = null,
     Object? phoneNumber = null,
+    Object? avatarUrl = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? roles = null,
@@ -237,6 +246,10 @@ class __$$DriverModelImplCopyWithImpl<$Res>
         phoneNumber: null == phoneNumber
             ? _value.phoneNumber
             : phoneNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        avatarUrl: null == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
                   as String,
         createdAt: freezed == createdAt
             ? _value.createdAt
@@ -275,6 +288,7 @@ class _$DriverModelImpl implements _DriverModel {
     this.fullName = '',
     this.email = '',
     this.phoneNumber = '',
+    this.avatarUrl = '',
     this.createdAt,
     this.updatedAt,
     final List<RoleModel> roles = const [],
@@ -299,6 +313,9 @@ class _$DriverModelImpl implements _DriverModel {
   @JsonKey()
   final String phoneNumber;
   @override
+  @JsonKey()
+  final String avatarUrl;
+  @override
   final String? createdAt;
   @override
   final String? updatedAt;
@@ -322,7 +339,7 @@ class _$DriverModelImpl implements _DriverModel {
 
   @override
   String toString() {
-    return 'DriverModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, createdAt: $createdAt, updatedAt: $updatedAt, roles: $roles, activeRole: $activeRole, driverApprovalInfo: $driverApprovalInfo, driverProfile: $driverProfile)';
+    return 'DriverModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt, roles: $roles, activeRole: $activeRole, driverApprovalInfo: $driverApprovalInfo, driverProfile: $driverProfile)';
   }
 
   @override
@@ -336,6 +353,8 @@ class _$DriverModelImpl implements _DriverModel {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -357,6 +376,7 @@ class _$DriverModelImpl implements _DriverModel {
     fullName,
     email,
     phoneNumber,
+    avatarUrl,
     createdAt,
     updatedAt,
     const DeepCollectionEquality().hash(_roles),
@@ -385,6 +405,7 @@ abstract class _DriverModel implements DriverModel {
     final String fullName,
     final String email,
     final String phoneNumber,
+    final String avatarUrl,
     final String? createdAt,
     final String? updatedAt,
     final List<RoleModel> roles,
@@ -404,6 +425,8 @@ abstract class _DriverModel implements DriverModel {
   String get email;
   @override
   String get phoneNumber;
+  @override
+  String get avatarUrl;
   @override
   String? get createdAt;
   @override

@@ -656,4 +656,11 @@ class SEn extends S {
 
   @override
   String get docsMyDocuments => 'My Documents';
+
+  @override
+  String get tapToCaptureVehiclePhoto =>
+      'Tap to capture or choose Vehicle photo';
+
+  @override
+  String get photoAttached => 'Photo Attached';
 }

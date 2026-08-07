@@ -26,6 +26,7 @@ mixin _$CreateDriverParams {
   String get phoneNumber => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
+  String? get file => throw _privateConstructorUsedError;
 
   /// Serializes this CreateDriverParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,6 +51,7 @@ abstract class $CreateDriverParamsCopyWith<$Res> {
     String phoneNumber,
     String password,
     String city,
+    String? file,
   });
 }
 
@@ -73,6 +75,7 @@ class _$CreateDriverParamsCopyWithImpl<$Res, $Val extends CreateDriverParams>
     Object? phoneNumber = null,
     Object? password = null,
     Object? city = null,
+    Object? file = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -96,6 +99,10 @@ class _$CreateDriverParamsCopyWithImpl<$Res, $Val extends CreateDriverParams>
                 ? _value.city
                 : city // ignore: cast_nullable_to_non_nullable
                       as String,
+            file: freezed == file
+                ? _value.file
+                : file // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -117,6 +124,7 @@ abstract class _$$CreateDriverParamsImplCopyWith<$Res>
     String phoneNumber,
     String password,
     String city,
+    String? file,
   });
 }
 
@@ -139,6 +147,7 @@ class __$$CreateDriverParamsImplCopyWithImpl<$Res>
     Object? phoneNumber = null,
     Object? password = null,
     Object? city = null,
+    Object? file = freezed,
   }) {
     return _then(
       _$CreateDriverParamsImpl(
@@ -162,6 +171,10 @@ class __$$CreateDriverParamsImplCopyWithImpl<$Res>
             ? _value.city
             : city // ignore: cast_nullable_to_non_nullable
                   as String,
+        file: freezed == file
+            ? _value.file
+            : file // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -176,6 +189,7 @@ class _$CreateDriverParamsImpl implements _CreateDriverParams {
     required this.phoneNumber,
     required this.password,
     required this.city,
+    this.file,
   });
 
   factory _$CreateDriverParamsImpl.fromJson(Map<String, dynamic> json) =>
@@ -191,10 +205,12 @@ class _$CreateDriverParamsImpl implements _CreateDriverParams {
   final String password;
   @override
   final String city;
+  @override
+  final String? file;
 
   @override
   String toString() {
-    return 'CreateDriverParams(fullName: $fullName, email: $email, phoneNumber: $phoneNumber, password: $password, city: $city)';
+    return 'CreateDriverParams(fullName: $fullName, email: $email, phoneNumber: $phoneNumber, password: $password, city: $city, file: $file)';
   }
 
   @override
@@ -209,13 +225,21 @@ class _$CreateDriverParamsImpl implements _CreateDriverParams {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.city, city) || other.city == city));
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.file, file) || other.file == file));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, fullName, email, phoneNumber, password, city);
+  int get hashCode => Object.hash(
+    runtimeType,
+    fullName,
+    email,
+    phoneNumber,
+    password,
+    city,
+    file,
+  );
 
   /// Create a copy of CreateDriverParams
   /// with the given fields replaced by the non-null parameter values.
@@ -241,6 +265,7 @@ abstract class _CreateDriverParams implements CreateDriverParams {
     required final String phoneNumber,
     required final String password,
     required final String city,
+    final String? file,
   }) = _$CreateDriverParamsImpl;
 
   factory _CreateDriverParams.fromJson(Map<String, dynamic> json) =
@@ -256,6 +281,8 @@ abstract class _CreateDriverParams implements CreateDriverParams {
   String get password;
   @override
   String get city;
+  @override
+  String? get file;
 
   /// Create a copy of CreateDriverParams
   /// with the given fields replaced by the non-null parameter values.

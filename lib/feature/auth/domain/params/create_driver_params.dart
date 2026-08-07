@@ -11,6 +11,7 @@ class CreateDriverParams with _$CreateDriverParams {
     required String phoneNumber,
     required String password,
     required String city,
+    String? file,
   }) = _CreateDriverParams;
 
   factory CreateDriverParams.fromJson(Map<String, dynamic> json) =>

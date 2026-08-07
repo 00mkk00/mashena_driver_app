@@ -31,7 +31,7 @@ class LoginView extends StatelessWidget {
               needsUpload: (auth) {
                 context.go(
                   AppRoutes.uploadDocsPath,
-                  extra: {"userId": auth.user.driverProfile.id},
+                  extra: {"userId": auth?.user.driverProfile.id ?? 0},
                 );
               },
 

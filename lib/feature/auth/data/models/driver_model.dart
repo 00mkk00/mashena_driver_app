@@ -11,6 +11,7 @@ class DriverModel with _$DriverModel {
     @Default('') String fullName,
     @Default('') String email,
     @Default('') String phoneNumber,
+    @Default('') String avatarUrl,
     String? createdAt,
     String? updatedAt,
     @Default([]) List<RoleModel> roles,

@@ -12,6 +12,7 @@ _$DriverModelImpl _$$DriverModelImplFromJson(Map<String, dynamic> json) =>
       fullName: json['fullName'] as String? ?? '',
       email: json['email'] as String? ?? '',
       phoneNumber: json['phoneNumber'] as String? ?? '',
+      avatarUrl: json['avatarUrl'] as String? ?? '',
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
       roles:
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$DriverModelImplToJson(_$DriverModelImpl instance) =>
       'fullName': instance.fullName,
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
+      'avatarUrl': instance.avatarUrl,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'roles': instance.roles,

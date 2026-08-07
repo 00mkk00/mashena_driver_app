@@ -1314,6 +1314,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'My Documents'**
   String get docsMyDocuments;
+
+  /// No description provided for @tapToCaptureVehiclePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to capture or choose Vehicle photo'**
+  String get tapToCaptureVehiclePhoto;
+
+  /// No description provided for @photoAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Attached'**
+  String get photoAttached;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

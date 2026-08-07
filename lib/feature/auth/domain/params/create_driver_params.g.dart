@@ -14,6 +14,7 @@ _$CreateDriverParamsImpl _$$CreateDriverParamsImplFromJson(
   phoneNumber: json['phoneNumber'] as String,
   password: json['password'] as String,
   city: json['city'] as String,
+  file: json['file'] as String?,
 );
 
 Map<String, dynamic> _$$CreateDriverParamsImplToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$CreateDriverParamsImplToJson(
   'phoneNumber': instance.phoneNumber,
   'password': instance.password,
   'city': instance.city,
+  'file': instance.file,
 };

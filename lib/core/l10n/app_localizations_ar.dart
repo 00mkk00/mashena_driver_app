@@ -656,4 +656,10 @@ class SAr extends S {
 
   @override
   String get docsMyDocuments => 'مستنداتي';
+
+  @override
+  String get tapToCaptureVehiclePhoto => 'اضغط لالتقاط أو اختيار صورة المركبة';
+
+  @override
+  String get photoAttached => 'تم إرفاق الصورة';
 }

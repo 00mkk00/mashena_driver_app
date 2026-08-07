@@ -22,7 +22,7 @@ mixin _$LoginState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -32,7 +32,7 @@ mixin _$LoginState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -42,7 +42,7 @@ mixin _$LoginState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -149,7 +149,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -163,7 +163,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -177,7 +177,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -286,7 +286,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -300,7 +300,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -314,7 +314,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -462,7 +462,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -476,7 +476,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -490,7 +490,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -568,9 +568,9 @@ abstract class _$$NeedsUploadImplCopyWith<$Res> {
     $Res Function(_$NeedsUploadImpl) then,
   ) = __$$NeedsUploadImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({LoginEntity auth});
+  $Res call({LoginEntity? auth});
 
-  $LoginEntityCopyWith<$Res> get auth;
+  $LoginEntityCopyWith<$Res>? get auth;
 }
 
 /// @nodoc
@@ -586,13 +586,13 @@ class __$$NeedsUploadImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? auth = null}) {
+  $Res call({Object? auth = freezed}) {
     return _then(
       _$NeedsUploadImpl(
-        null == auth
+        freezed == auth
             ? _value.auth
             : auth // ignore: cast_nullable_to_non_nullable
-                  as LoginEntity,
+                  as LoginEntity?,
       ),
     );
   }
@@ -601,8 +601,12 @@ class __$$NeedsUploadImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LoginEntityCopyWith<$Res> get auth {
-    return $LoginEntityCopyWith<$Res>(_value.auth, (value) {
+  $LoginEntityCopyWith<$Res>? get auth {
+    if (_value.auth == null) {
+      return null;
+    }
+
+    return $LoginEntityCopyWith<$Res>(_value.auth!, (value) {
       return _then(_value.copyWith(auth: value));
     });
   }
@@ -614,7 +618,7 @@ class _$NeedsUploadImpl implements _NeedsUpload {
   const _$NeedsUploadImpl(this.auth);
 
   @override
-  final LoginEntity auth;
+  final LoginEntity? auth;
 
   @override
   String toString() {
@@ -646,7 +650,7 @@ class _$NeedsUploadImpl implements _NeedsUpload {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -660,7 +664,7 @@ class _$NeedsUploadImpl implements _NeedsUpload {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -674,7 +678,7 @@ class _$NeedsUploadImpl implements _NeedsUpload {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -734,9 +738,9 @@ class _$NeedsUploadImpl implements _NeedsUpload {
 }
 
 abstract class _NeedsUpload implements LoginState {
-  const factory _NeedsUpload(final LoginEntity auth) = _$NeedsUploadImpl;
+  const factory _NeedsUpload(final LoginEntity? auth) = _$NeedsUploadImpl;
 
-  LoginEntity get auth;
+  LoginEntity? get auth;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -825,7 +829,7 @@ class _$RequireOtpImpl implements _RequireOtp {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -839,7 +843,7 @@ class _$RequireOtpImpl implements _RequireOtp {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -853,7 +857,7 @@ class _$RequireOtpImpl implements _RequireOtp {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -1004,7 +1008,7 @@ class _$ApprovalStatusImpl implements _ApprovalStatus {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -1018,7 +1022,7 @@ class _$ApprovalStatusImpl implements _ApprovalStatus {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -1032,7 +1036,7 @@ class _$ApprovalStatusImpl implements _ApprovalStatus {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,
@@ -1176,7 +1180,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(LoginEntity auth) success,
-    required TResult Function(LoginEntity auth) needsUpload,
+    required TResult Function(LoginEntity? auth) needsUpload,
     required TResult Function(int userId, String email) requireOtp,
     required TResult Function(String status) approvalStatus,
     required TResult Function(String message) error,
@@ -1190,7 +1194,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(LoginEntity auth)? success,
-    TResult? Function(LoginEntity auth)? needsUpload,
+    TResult? Function(LoginEntity? auth)? needsUpload,
     TResult? Function(int userId, String email)? requireOtp,
     TResult? Function(String status)? approvalStatus,
     TResult? Function(String message)? error,
@@ -1204,7 +1208,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(LoginEntity auth)? success,
-    TResult Function(LoginEntity auth)? needsUpload,
+    TResult Function(LoginEntity? auth)? needsUpload,
     TResult Function(int userId, String email)? requireOtp,
     TResult Function(String status)? approvalStatus,
     TResult Function(String message)? error,

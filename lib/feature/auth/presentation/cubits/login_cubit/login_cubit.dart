@@ -30,55 +30,45 @@ class LoginCubit extends Cubit<LoginState> {
     await result.fold(
       (failure) async {
         log(failure.rawMessage ?? '');
-        // 1- when response 401 and message is "Your account is not verified"
-        if (failure.statusCode == 401 &&
-            (failure.rawMessage?.contains('not verified') == true ||
-                failure.data?['errorCode'] == 'NOT_VERIFIED')) {
-          final userId = failure.data?['userId'] as int?;
 
-          final otpResult = await sendOtpUseCase(SendOtpParams(email: email));
+        // Handle 401 responses that carry approval/verification info in the body
+        if (failure.statusCode == 401 && failure.data != null) {
+          final data = failure.data!;
+          final isContactVerified = data['isContactVerified'] as bool? ?? false;
+          final hasApprovalRequest =
+              data['hasApprovalRequest'] as bool? ?? false;
+          final approvalRequestStatus =
+              data['approvalRequestStatus'] as String?;
+          final userId = data['userId'] as int? ?? 0;
 
-          otpResult.fold(
-            (failure) {
-              emit(LoginState.error(_mapFailureToMessage(failure)));
-            },
-            (_) {
-              emit(LoginState.requireOtp(userId: userId ?? 0, email: email));
-            },
-          );
-        } else {
-          emit(LoginState.error(_mapFailureToMessage(failure)));
+          if (!isContactVerified) {
+            // Contact not verified → trigger OTP flow
+            final otpResult = await sendOtpUseCase(SendOtpParams(email: email));
+            otpResult.fold(
+              (f) => emit(LoginState.error(_mapFailureToMessage(f))),
+              (_) => emit(LoginState.requireOtp(userId: userId, email: email)),
+            );
+          } else if (!hasApprovalRequest) {
+            // Verified but no documents uploaded → needs upload
+            emit(LoginState.needsUpload(null));
+          } else {
+            // Has a request → show approval status (pending / rejected / etc.)
+            emit(LoginState.approvalStatus(approvalRequestStatus ?? ''));
+          }
+          return;
         }
+
+        emit(LoginState.error(_mapFailureToMessage(failure)));
       },
       (data) async {
-        final user = data.user;
-        final info = user.driverApprovalInfo;
+        final info = data.user.driverApprovalInfo;
 
-        // 1. Not verified → send OTP
-        if (!info.isVerified) {
-          final otpResult = await sendOtpUseCase(SendOtpParams(email: email));
-          otpResult.fold(
-            (failure) => emit(LoginState.error(_mapFailureToMessage(failure))),
-            (_) => emit(LoginState.requireOtp(userId: user.id, email: email)),
-          );
-          return;
-        }
-
-        // 2. Verified but no approval request → show info snackbar
-        if (!info.hasApprovalRequest) {
-          emit(LoginState.needsUpload(data));
-          // emit(
-          //   const LoginState.approvalStatus('no_approval_request'),
-          // );
-          return;
-        }
-
-        // 3. Has approval request → check approvalStatus
+        // On success the account is verified & approved → go home
         if (info.approvalRequestStatus ==
             DriverApprovalRequestStatus.approved) {
           emit(LoginState.success(data));
         } else {
-          // 3b. Pending / rejected / other → show status snackbar
+          // Approved login but approval still pending/rejected → show status
           emit(
             LoginState.approvalStatus(info.approvalRequestStatus?.name ?? ''),
           );

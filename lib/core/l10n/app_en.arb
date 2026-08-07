@@ -275,5 +275,7 @@
   "settingsSettings": "Settings",
   "settingsDarkMode": "Dark Mode",
   "commonRetry": "Retry",
-  "docsMyDocuments": "My Documents"
+  "docsMyDocuments": "My Documents",
+  "tapToCaptureVehiclePhoto": "Tap to capture or choose Vehicle photo",
+  "photoAttached": "Photo Attached"
 }

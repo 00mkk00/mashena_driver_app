@@ -23,6 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
   String _initialName = '';
   String _initialEmail = '';
   String _initialPhone = '';
+  String _avatarUrl = '';
   final String _initialCity = '';
   String _initials = '';
 
@@ -54,6 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
         _initialName = driver.fullName;
         _initialEmail = driver.email;
         _initialPhone = driver.phoneNumber;
+        _avatarUrl = driver.avatarUrl;
 
         final nameParts = driver.fullName.trim().split(RegExp(r'\s+'));
         if (nameParts.length >= 2) {
@@ -103,7 +105,7 @@ class _ProfileViewState extends State<ProfileView> {
             SizedBox(height: AppSpacing.lg.h),
 
             // ── Avatar ──────────────────────────────────────
-            AvatarPicker(imagePath: null, initials: _initials),
+            AvatarPicker(imagePath: _avatarUrl, initials: _initials),
             SizedBox(height: AppSpacing.xl.h),
 
             // ── Read-only Fields ────────────────────────────
