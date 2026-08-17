@@ -7,4 +7,5 @@ enum DriverStatus {
   tripAccepted,
   onTrip,
   sos,
+  onSharedRide,
 }

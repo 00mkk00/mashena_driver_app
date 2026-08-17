@@ -23,6 +23,16 @@ import 'package:mashena_driver_app/feature/home/domain/entities/driver_wallet_su
 import 'package:mashena_driver_app/feature/home/domain/entities/rate_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/domain/entities/rating_tag_entity.dart';
 import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_history_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/create_shared_ride_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/shared_ride_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_ready_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_start_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_complete_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_cancel_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/remove_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/check_in_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/on_board_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/drop_off_shared_ride_passenger_params.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, Unit>> goOnline(GoOnlineParams params);
@@ -52,4 +62,31 @@ abstract class HomeRepository {
   );
   Future<Either<Failure, List<DriverDocumentEntity>>> getDriverDocuments();
   Future<Either<Failure, void>> uploadDocuments(UploadDriverDocsParams params);
+  Future<Either<Failure, SharedRideEntity>> createSharedRide(
+    CreateSharedRideParams params,
+  );
+  Future<Either<Failure, SharedRideEntity>> sharedRideReady(
+    SharedRideReadyParams params,
+  );
+  Future<Either<Failure, SharedRideEntity>> sharedRideStart(
+    SharedRideStartParams params,
+  );
+  Future<Either<Failure, SharedRideEntity>> sharedRideComplete(
+    SharedRideCompleteParams params,
+  );
+  Future<Either<Failure, SharedRideEntity>> sharedRideCancel(
+    SharedRideCancelParams params,
+  );
+  Future<Either<Failure, SharedRideEntity>> removeSharedRidePassenger(
+    RemoveSharedRidePassengerParams params,
+  );
+  Future<Either<Failure, SharedRidePassengerEntity>> checkInSharedRidePassenger(
+    CheckInSharedRidePassengerParams params,
+  );
+  Future<Either<Failure, SharedRidePassengerEntity>> onBoardSharedRidePassenger(
+    OnBoardSharedRidePassengerParams params,
+  );
+  Future<Either<Failure, SharedRidePassengerEntity>> dropOffSharedRidePassenger(
+    DropOffSharedRidePassengerParams params,
+  );
 }

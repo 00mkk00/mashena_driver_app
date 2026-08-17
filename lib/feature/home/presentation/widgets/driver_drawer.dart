@@ -44,7 +44,6 @@ class DriverAppDrawer extends StatelessWidget {
             // Navigate to login and clear navigation stack
             context.go(AppRoutes.loginPath);
             // Show success snackbar
-            context.showSuccessToast(S.of(context).authLogout);
           },
           failure: (error) {
             // Close loading dialog

@@ -1,0 +1,131 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'shared_ride_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$SharedRidePassengerModelImpl _$$SharedRidePassengerModelImplFromJson(
+  Map<String, dynamic> json,
+) => _$SharedRidePassengerModelImpl(
+  id: (json['id'] as num?)?.toInt(),
+  sharedRideId: (json['sharedRideId'] as num?)?.toInt(),
+  riderProfileId: (json['riderProfileId'] as num?)?.toInt(),
+  status: json['status'] as String?,
+  paymentStatus: json['paymentStatus'] as String?,
+  seatsNeeded: (json['seatsNeeded'] as num?)?.toInt(),
+  activeSeats: (json['activeSeats'] as num?)?.toInt(),
+  totalPaidFare: json['totalPaidFare'] as num?,
+  finalDistanceKm: json['finalDistanceKm'] as num?,
+  finalDurationSec: json['finalDurationSec'] as num?,
+  finalFare: json['finalFare'] as num?,
+  joinedAt: json['joinedAt'] as String?,
+  checkedInAt: json['checkedInAt'] as String?,
+  onBoardAt: json['onBoardAt'] as String?,
+  droppedOffAt: json['droppedOffAt'] as String?,
+  canceledAt: json['canceledAt'] as String?,
+  removedAt: json['removedAt'] as String?,
+  removeReason: json['removeReason'] as String?,
+);
+
+Map<String, dynamic> _$$SharedRidePassengerModelImplToJson(
+  _$SharedRidePassengerModelImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'sharedRideId': instance.sharedRideId,
+  'riderProfileId': instance.riderProfileId,
+  'status': instance.status,
+  'paymentStatus': instance.paymentStatus,
+  'seatsNeeded': instance.seatsNeeded,
+  'activeSeats': instance.activeSeats,
+  'totalPaidFare': instance.totalPaidFare,
+  'finalDistanceKm': instance.finalDistanceKm,
+  'finalDurationSec': instance.finalDurationSec,
+  'finalFare': instance.finalFare,
+  'joinedAt': instance.joinedAt,
+  'checkedInAt': instance.checkedInAt,
+  'onBoardAt': instance.onBoardAt,
+  'droppedOffAt': instance.droppedOffAt,
+  'canceledAt': instance.canceledAt,
+  'removedAt': instance.removedAt,
+  'removeReason': instance.removeReason,
+};
+
+_$SharedRideModelImpl _$$SharedRideModelImplFromJson(
+  Map<String, dynamic> json,
+) => _$SharedRideModelImpl(
+  id: (json['id'] as num?)?.toInt(),
+  driverProfileId: (json['driverProfileId'] as num?)?.toInt(),
+  vehicleId: (json['vehicleId'] as num?)?.toInt(),
+  status: json['status'] as String?,
+  endedBy: json['endedBy'] as String?,
+  notes: json['notes'] as String?,
+  originLat: (json['originLat'] as num?)?.toDouble(),
+  originLng: (json['originLng'] as num?)?.toDouble(),
+  originAddress: json['originAddress'] as String?,
+  destLat: (json['destLat'] as num?)?.toDouble(),
+  destLng: (json['destLng'] as num?)?.toDouble(),
+  destAddress: json['destAddress'] as String?,
+  departureTime: json['departureTime'] as String?,
+  maxPassengers: (json['maxPassengers'] as num?)?.toInt(),
+  occupiedSeats: (json['occupiedSeats'] as num?)?.toInt(),
+  totalDistanceKm: json['totalDistanceKm'] as num?,
+  totalDurationSec: json['totalDurationSec'] as num?,
+  routeGeometry: json['routeGeometry'],
+  actualDistanceKm: json['actualDistanceKm'] as num?,
+  actualDurationSec: json['actualDurationSec'] as num?,
+  actualRouteGeometry: json['actualRouteGeometry'],
+  baseTripFare: json['baseTripFare'] as num?,
+  remainingTripCost: json['remainingTripCost'] as num?,
+  occupiedSeatsAtStart: (json['occupiedSeatsAtStart'] as num?)?.toInt(),
+  fullRouteSeatFare: json['fullRouteSeatFare'] as num?,
+  minimumSeatFare: json['minimumSeatFare'] as num?,
+  startedAt: json['startedAt'] as String?,
+  completedAt: json['completedAt'] as String?,
+  canceledAt: json['canceledAt'] as String?,
+  cancellationReason: json['cancellationReason'] as String?,
+  endType: json['endType'] as String?,
+  createdAt: json['createdAt'] as String?,
+  passengers: (json['passengers'] as List<dynamic>?)
+      ?.map((e) => SharedRidePassengerModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
+
+Map<String, dynamic> _$$SharedRideModelImplToJson(
+  _$SharedRideModelImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'driverProfileId': instance.driverProfileId,
+  'vehicleId': instance.vehicleId,
+  'status': instance.status,
+  'endedBy': instance.endedBy,
+  'notes': instance.notes,
+  'originLat': instance.originLat,
+  'originLng': instance.originLng,
+  'originAddress': instance.originAddress,
+  'destLat': instance.destLat,
+  'destLng': instance.destLng,
+  'destAddress': instance.destAddress,
+  'departureTime': instance.departureTime,
+  'maxPassengers': instance.maxPassengers,
+  'occupiedSeats': instance.occupiedSeats,
+  'totalDistanceKm': instance.totalDistanceKm,
+  'totalDurationSec': instance.totalDurationSec,
+  'routeGeometry': instance.routeGeometry,
+  'actualDistanceKm': instance.actualDistanceKm,
+  'actualDurationSec': instance.actualDurationSec,
+  'actualRouteGeometry': instance.actualRouteGeometry,
+  'baseTripFare': instance.baseTripFare,
+  'remainingTripCost': instance.remainingTripCost,
+  'occupiedSeatsAtStart': instance.occupiedSeatsAtStart,
+  'fullRouteSeatFare': instance.fullRouteSeatFare,
+  'minimumSeatFare': instance.minimumSeatFare,
+  'startedAt': instance.startedAt,
+  'completedAt': instance.completedAt,
+  'canceledAt': instance.canceledAt,
+  'cancellationReason': instance.cancellationReason,
+  'endType': instance.endType,
+  'createdAt': instance.createdAt,
+  'passengers': instance.passengers,
+};

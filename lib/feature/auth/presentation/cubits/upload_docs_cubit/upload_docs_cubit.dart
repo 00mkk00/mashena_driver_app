@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/auth/domain/params/upload_driver_docs_param.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/upload_docs_cubit/upload_docs_state.dart';
@@ -15,8 +18,17 @@ class UploadDocsCubit extends Cubit<UploadDocsState> {
 
     result.fold(
       (failure) {
+        final savedLocale = getIt<LocalStorage>().getString('app_locale');
+        final lang = (savedLocale != null && savedLocale.isNotEmpty)
+            ? savedLocale
+            : PlatformDispatcher.instance.locale.languageCode;
+        final isAr = lang.startsWith('ar');
+
         emit(
-          UploadDocsState.error(failure.rawMessage ?? "Something went wrong"),
+          UploadDocsState.error(
+            failure.rawMessage ??
+                (isAr ? 'حدث خطأ ما' : 'Something went wrong'),
+          ),
         );
       },
 

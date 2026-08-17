@@ -27,7 +27,7 @@ mixin _$CompleteTripEntity {
   double? get finalFare => throw _privateConstructorUsedError;
   double? get fareTotal =>
       throw _privateConstructorUsedError; // parsed from String
-  bool? get appliedCoupon => throw _privateConstructorUsedError;
+  AppliedCouponEntity? get appliedCoupon => throw _privateConstructorUsedError;
   double? get platformCommission => throw _privateConstructorUsedError;
 
   /// Create a copy of CompleteTripEntity
@@ -54,9 +54,11 @@ abstract class $CompleteTripEntityCopyWith<$Res> {
     double? discountAmount,
     double? finalFare,
     double? fareTotal,
-    bool? appliedCoupon,
+    AppliedCouponEntity? appliedCoupon,
     double? platformCommission,
   });
+
+  $AppliedCouponEntityCopyWith<$Res>? get appliedCoupon;
 }
 
 /// @nodoc
@@ -127,7 +129,7 @@ class _$CompleteTripEntityCopyWithImpl<$Res, $Val extends CompleteTripEntity>
             appliedCoupon: freezed == appliedCoupon
                 ? _value.appliedCoupon
                 : appliedCoupon // ignore: cast_nullable_to_non_nullable
-                      as bool?,
+                      as AppliedCouponEntity?,
             platformCommission: freezed == platformCommission
                 ? _value.platformCommission
                 : platformCommission // ignore: cast_nullable_to_non_nullable
@@ -135,6 +137,20 @@ class _$CompleteTripEntityCopyWithImpl<$Res, $Val extends CompleteTripEntity>
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of CompleteTripEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AppliedCouponEntityCopyWith<$Res>? get appliedCoupon {
+    if (_value.appliedCoupon == null) {
+      return null;
+    }
+
+    return $AppliedCouponEntityCopyWith<$Res>(_value.appliedCoupon!, (value) {
+      return _then(_value.copyWith(appliedCoupon: value) as $Val);
+    });
   }
 }
 
@@ -157,9 +173,12 @@ abstract class _$$CompleteTripEntityImplCopyWith<$Res>
     double? discountAmount,
     double? finalFare,
     double? fareTotal,
-    bool? appliedCoupon,
+    AppliedCouponEntity? appliedCoupon,
     double? platformCommission,
   });
+
+  @override
+  $AppliedCouponEntityCopyWith<$Res>? get appliedCoupon;
 }
 
 /// @nodoc
@@ -229,7 +248,7 @@ class __$$CompleteTripEntityImplCopyWithImpl<$Res>
         appliedCoupon: freezed == appliedCoupon
             ? _value.appliedCoupon
             : appliedCoupon // ignore: cast_nullable_to_non_nullable
-                  as bool?,
+                  as AppliedCouponEntity?,
         platformCommission: freezed == platformCommission
             ? _value.platformCommission
             : platformCommission // ignore: cast_nullable_to_non_nullable
@@ -276,7 +295,7 @@ class _$CompleteTripEntityImpl implements _CompleteTripEntity {
   final double? fareTotal;
   // parsed from String
   @override
-  final bool? appliedCoupon;
+  final AppliedCouponEntity? appliedCoupon;
   @override
   final double? platformCommission;
 
@@ -351,7 +370,7 @@ abstract class _CompleteTripEntity implements CompleteTripEntity {
     final double? discountAmount,
     final double? finalFare,
     final double? fareTotal,
-    final bool? appliedCoupon,
+    final AppliedCouponEntity? appliedCoupon,
     final double? platformCommission,
   }) = _$CompleteTripEntityImpl;
 
@@ -374,7 +393,7 @@ abstract class _CompleteTripEntity implements CompleteTripEntity {
   @override
   double? get fareTotal; // parsed from String
   @override
-  bool? get appliedCoupon;
+  AppliedCouponEntity? get appliedCoupon;
   @override
   double? get platformCommission;
 
@@ -383,5 +402,262 @@ abstract class _CompleteTripEntity implements CompleteTripEntity {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteTripEntityImplCopyWith<_$CompleteTripEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AppliedCouponEntity {
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  num? get value => throw _privateConstructorUsedError;
+  int? get remainingUsages => throw _privateConstructorUsedError;
+  String? get expiresAt => throw _privateConstructorUsedError;
+
+  /// Create a copy of AppliedCouponEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AppliedCouponEntityCopyWith<AppliedCouponEntity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppliedCouponEntityCopyWith<$Res> {
+  factory $AppliedCouponEntityCopyWith(
+    AppliedCouponEntity value,
+    $Res Function(AppliedCouponEntity) then,
+  ) = _$AppliedCouponEntityCopyWithImpl<$Res, AppliedCouponEntity>;
+  @useResult
+  $Res call({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  });
+}
+
+/// @nodoc
+class _$AppliedCouponEntityCopyWithImpl<$Res, $Val extends AppliedCouponEntity>
+    implements $AppliedCouponEntityCopyWith<$Res> {
+  _$AppliedCouponEntityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of AppliedCouponEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? type = freezed,
+    Object? value = freezed,
+    Object? remainingUsages = freezed,
+    Object? expiresAt = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            code: freezed == code
+                ? _value.code
+                : code // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            value: freezed == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                      as num?,
+            remainingUsages: freezed == remainingUsages
+                ? _value.remainingUsages
+                : remainingUsages // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            expiresAt: freezed == expiresAt
+                ? _value.expiresAt
+                : expiresAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$AppliedCouponEntityImplCopyWith<$Res>
+    implements $AppliedCouponEntityCopyWith<$Res> {
+  factory _$$AppliedCouponEntityImplCopyWith(
+    _$AppliedCouponEntityImpl value,
+    $Res Function(_$AppliedCouponEntityImpl) then,
+  ) = __$$AppliedCouponEntityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  });
+}
+
+/// @nodoc
+class __$$AppliedCouponEntityImplCopyWithImpl<$Res>
+    extends _$AppliedCouponEntityCopyWithImpl<$Res, _$AppliedCouponEntityImpl>
+    implements _$$AppliedCouponEntityImplCopyWith<$Res> {
+  __$$AppliedCouponEntityImplCopyWithImpl(
+    _$AppliedCouponEntityImpl _value,
+    $Res Function(_$AppliedCouponEntityImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of AppliedCouponEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? type = freezed,
+    Object? value = freezed,
+    Object? remainingUsages = freezed,
+    Object? expiresAt = freezed,
+  }) {
+    return _then(
+      _$AppliedCouponEntityImpl(
+        id: freezed == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        code: freezed == code
+            ? _value.code
+            : code // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        value: freezed == value
+            ? _value.value
+            : value // ignore: cast_nullable_to_non_nullable
+                  as num?,
+        remainingUsages: freezed == remainingUsages
+            ? _value.remainingUsages
+            : remainingUsages // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        expiresAt: freezed == expiresAt
+            ? _value.expiresAt
+            : expiresAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$AppliedCouponEntityImpl implements _AppliedCouponEntity {
+  const _$AppliedCouponEntityImpl({
+    this.id,
+    this.code,
+    this.type,
+    this.value,
+    this.remainingUsages,
+    this.expiresAt,
+  });
+
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  final String? type;
+  @override
+  final num? value;
+  @override
+  final int? remainingUsages;
+  @override
+  final String? expiresAt;
+
+  @override
+  String toString() {
+    return 'AppliedCouponEntity(id: $id, code: $code, type: $type, value: $value, remainingUsages: $remainingUsages, expiresAt: $expiresAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AppliedCouponEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.remainingUsages, remainingUsages) ||
+                other.remainingUsages == remainingUsages) &&
+            (identical(other.expiresAt, expiresAt) ||
+                other.expiresAt == expiresAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    code,
+    type,
+    value,
+    remainingUsages,
+    expiresAt,
+  );
+
+  /// Create a copy of AppliedCouponEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AppliedCouponEntityImplCopyWith<_$AppliedCouponEntityImpl> get copyWith =>
+      __$$AppliedCouponEntityImplCopyWithImpl<_$AppliedCouponEntityImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _AppliedCouponEntity implements AppliedCouponEntity {
+  const factory _AppliedCouponEntity({
+    final int? id,
+    final String? code,
+    final String? type,
+    final num? value,
+    final int? remainingUsages,
+    final String? expiresAt,
+  }) = _$AppliedCouponEntityImpl;
+
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  String? get type;
+  @override
+  num? get value;
+  @override
+  int? get remainingUsages;
+  @override
+  String? get expiresAt;
+
+  /// Create a copy of AppliedCouponEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AppliedCouponEntityImplCopyWith<_$AppliedCouponEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

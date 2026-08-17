@@ -349,6 +349,42 @@ abstract class S {
   /// **'This field is required'**
   String get validationRequired;
 
+  /// No description provided for @validationEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get validationEmailRequired;
+
+  /// No description provided for @validationEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get validationEmailInvalid;
+
+  /// No description provided for @validationPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get validationPasswordRequired;
+
+  /// No description provided for @validationPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak password (uppercase, lowercase, number, symbol)'**
+  String get validationPasswordWeak;
+
+  /// No description provided for @validationPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get validationPhoneRequired;
+
+  /// No description provided for @validationPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number'**
+  String get validationPhoneInvalid;
+
   /// No description provided for @validationPasswordsNotMatch.
   ///
   /// In en, this message translates to:
@@ -1326,6 +1362,420 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Photo Attached'**
   String get photoAttached;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get notificationsAll;
+
+  /// No description provided for @notificationsUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get notificationsUnread;
+
+  /// No description provided for @notificationsMarkAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get notificationsMarkAllRead;
+
+  /// No description provided for @notificationsNoNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get notificationsNoNotifications;
+
+  /// No description provided for @notificationsYouAreCaughtUp.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up!'**
+  String get notificationsYouAreCaughtUp;
+
+  /// No description provided for @notificationsErrorFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load notifications'**
+  String get notificationsErrorFailed;
+
+  /// No description provided for @notificationsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get notificationsToday;
+
+  /// No description provided for @notificationsYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get notificationsYesterday;
+
+  /// No description provided for @notificationsEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get notificationsEarlier;
+
+  /// No description provided for @notificationsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get notificationsDelete;
+
+  /// No description provided for @mapPickOriginLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Origin Location'**
+  String get mapPickOriginLocation;
+
+  /// No description provided for @mapPickDestinationLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Destination Location'**
+  String get mapPickDestinationLocation;
+
+  /// No description provided for @mapConfirmLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Location'**
+  String get mapConfirmLocation;
+
+  /// No description provided for @homeCreateSharedRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Shared Ride'**
+  String get homeCreateSharedRide;
+
+  /// No description provided for @sharedTripCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Completed'**
+  String get sharedTripCompleted;
+
+  /// No description provided for @sharedPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Passengers'**
+  String get sharedPassengers;
+
+  /// No description provided for @sharedTotalDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Distance'**
+  String get sharedTotalDistance;
+
+  /// No description provided for @sharedTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get sharedTime;
+
+  /// No description provided for @sharedTotalEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Earnings'**
+  String get sharedTotalEarnings;
+
+  /// No description provided for @sharedClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get sharedClose;
+
+  /// No description provided for @sharedLobbyOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Lobby Open'**
+  String get sharedLobbyOpen;
+
+  /// No description provided for @sharedSeatsFilled.
+  ///
+  /// In en, this message translates to:
+  /// **'{occupied} / {max} Seats Filled'**
+  String sharedSeatsFilled(Object occupied, Object max);
+
+  /// No description provided for @sharedWaitingPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for passengers to join...'**
+  String get sharedWaitingPassengers;
+
+  /// No description provided for @sharedNoPassengersJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'No passengers joined yet.'**
+  String get sharedNoPassengersJoined;
+
+  /// No description provided for @sharedCancelRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Ride'**
+  String get sharedCancelRide;
+
+  /// No description provided for @sharedStartBoarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Boarding'**
+  String get sharedStartBoarding;
+
+  /// No description provided for @sharedBoardingPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Boarding Passengers'**
+  String get sharedBoardingPassengers;
+
+  /// No description provided for @sharedBoardedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{boarded}/{total} Boarded'**
+  String sharedBoardedCount(Object boarded, Object total);
+
+  /// No description provided for @sharedMarkPassengersInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark passengers as on board individually as they arrive.'**
+  String get sharedMarkPassengersInstruction;
+
+  /// No description provided for @sharedNoPassengersToBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'No passengers to board.'**
+  String get sharedNoPassengersToBoard;
+
+  /// No description provided for @sharedStartTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Trip'**
+  String get sharedStartTrip;
+
+  /// No description provided for @sharedTripInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip in Progress'**
+  String get sharedTripInProgress;
+
+  /// No description provided for @sharedEnRouteDestinations.
+  ///
+  /// In en, this message translates to:
+  /// **'En route to destinations'**
+  String get sharedEnRouteDestinations;
+
+  /// No description provided for @sharedNoActivePassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'No active passengers in trip.'**
+  String get sharedNoActivePassengers;
+
+  /// No description provided for @sharedEndTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'End Trip'**
+  String get sharedEndTrip;
+
+  /// No description provided for @sharedPassengerNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Passenger #{id}'**
+  String sharedPassengerNumber(Object id);
+
+  /// No description provided for @sharedSeatsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Seats: {count}'**
+  String sharedSeatsCount(Object count);
+
+  /// No description provided for @sharedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String sharedStatus(Object status);
+
+  /// No description provided for @sharedOnBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'On Board'**
+  String get sharedOnBoard;
+
+  /// No description provided for @sharedCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check In'**
+  String get sharedCheckIn;
+
+  /// No description provided for @sharedRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get sharedRemove;
+
+  /// No description provided for @sharedDropOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop Off'**
+  String get sharedDropOff;
+
+  /// No description provided for @sharedDroppedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Dropped Off'**
+  String get sharedDroppedOff;
+
+  /// No description provided for @sharedCreateSharedRideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Shared Ride'**
+  String get sharedCreateSharedRideTitle;
+
+  /// No description provided for @sharedOrigin.
+  ///
+  /// In en, this message translates to:
+  /// **'Origin'**
+  String get sharedOrigin;
+
+  /// No description provided for @sharedDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get sharedDestination;
+
+  /// No description provided for @sharedMaxPassengers.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Passengers'**
+  String get sharedMaxPassengers;
+
+  /// No description provided for @sharedDepartureTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Time'**
+  String get sharedDepartureTime;
+
+  /// No description provided for @sharedNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes / Details (Optional)'**
+  String get sharedNotes;
+
+  /// No description provided for @sharedCreateAndOpenLobby.
+  ///
+  /// In en, this message translates to:
+  /// **'Create & Open Lobby'**
+  String get sharedCreateAndOpenLobby;
+
+  /// No description provided for @errorNoInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get errorNoInternet;
+
+  /// No description provided for @errorServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error'**
+  String get errorServer;
+
+  /// No description provided for @errorValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error'**
+  String get errorValidation;
+
+  /// No description provided for @errorUnauthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized'**
+  String get errorUnauthorized;
+
+  /// No description provided for @errorSomethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorSomethingWentWrong;
+
+  /// No description provided for @authApprovalStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Account approval status: {status}'**
+  String authApprovalStatus(Object status);
+
+  /// No description provided for @sharedCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Location'**
+  String get sharedCurrentLocation;
+
+  /// No description provided for @sharedSelectOriginHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select origin location'**
+  String get sharedSelectOriginHint;
+
+  /// No description provided for @sharedCurrentGps.
+  ///
+  /// In en, this message translates to:
+  /// **'Current GPS'**
+  String get sharedCurrentGps;
+
+  /// No description provided for @sharedPickOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick on Map'**
+  String get sharedPickOnMap;
+
+  /// No description provided for @sharedSelectDestinationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select destination location'**
+  String get sharedSelectDestinationHint;
+
+  /// No description provided for @sharedMaxSeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Seats'**
+  String get sharedMaxSeats;
+
+  /// No description provided for @sharedSeatsOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Seats'**
+  String sharedSeatsOption(Object count);
+
+  /// No description provided for @sharedNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Leaving near gate 2'**
+  String get sharedNotesHint;
+
+  /// No description provided for @sharedRideCancelledToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared ride cancelled'**
+  String get sharedRideCancelledToast;
+
+  /// No description provided for @sharedDistanceKmFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} km'**
+  String sharedDistanceKmFormat(Object distance);
+
+  /// No description provided for @sharedDurationMinsFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins} mins'**
+  String sharedDurationMinsFormat(Object mins);
+
+  /// No description provided for @sharedFareAmountFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} {currency}'**
+  String sharedFareAmountFormat(Object amount, Object currency);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -6,7 +6,6 @@ import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
-import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 
 /// Animated online/offline toggle button with state-aware styling.
 class DriverStatusToggle extends StatelessWidget {
@@ -23,7 +22,7 @@ class DriverStatusToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isOnline = state.isOnline;
-    final isTransitioning = state.status == DriverStatus.goingOnline;
+    final isTransitioning = state.isLoading;
 
     return GestureDetector(
       onTap: isTransitioning ? null : onTap,

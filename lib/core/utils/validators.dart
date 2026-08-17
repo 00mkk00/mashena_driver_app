@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
+
 final class Validators {
   const Validators._();
 
@@ -167,37 +170,71 @@ final class Validators {
   /// Returns error message or null (for TextFormField.validator)
   static String? requiredField(
     String? value, {
-    String message = 'هذا الحقل مطلوب',
+    BuildContext? context,
+    String? message,
   }) {
-    return isNotEmpty(value) ? null : message;
+    final msg =
+        message ??
+        (context != null
+            ? S.of(context).validationRequired
+            : 'هذا الحقل مطلوب');
+    return isNotEmpty(value) ? null : msg;
   }
 
-  static String? emailField(String? value) {
-    if (!isNotEmpty(value)) return 'البريد الإلكتروني مطلوب';
-    if (!isEmail(value)) return 'بريد إلكتروني غير صالح';
-    return null;
-  }
-
-  static String? passwordField(String? value) {
-    if (!isNotEmpty(value)) return 'كلمة المرور مطلوبة';
-    if (!isStrongPassword(value)) {
-      return 'كلمة المرور ضعيفة (حرف كبير، صغير، رقم، رمز)';
+  static String? emailField(String? value, {BuildContext? context}) {
+    if (!isNotEmpty(value)) {
+      return context != null
+          ? S.of(context).validationEmailRequired
+          : 'البريد الإلكتروني مطلوب';
+    }
+    if (!isEmail(value)) {
+      return context != null
+          ? S.of(context).validationEmailInvalid
+          : 'بريد إلكتروني غير صالح';
     }
     return null;
   }
 
-  static String? phoneField(String? value) {
-    if (!isNotEmpty(value)) return 'رقم الهاتف مطلوب';
-    if (!isPhoneNumber(value)) return 'رقم هاتف غير صالح';
+  static String? passwordField(String? value, {BuildContext? context}) {
+    if (!isNotEmpty(value)) {
+      return context != null
+          ? S.of(context).validationPasswordRequired
+          : 'كلمة المرور مطلوبة';
+    }
+    if (!isStrongPassword(value)) {
+      return context != null
+          ? S.of(context).validationPasswordWeak
+          : 'كلمة المرور ضعيفة (حرف كبير، صغير، رقم، رمز)';
+    }
+    return null;
+  }
+
+  static String? phoneField(String? value, {BuildContext? context}) {
+    if (!isNotEmpty(value)) {
+      return context != null
+          ? S.of(context).validationPhoneRequired
+          : 'رقم الهاتف مطلوب';
+    }
+    if (!isPhoneNumber(value)) {
+      return context != null
+          ? S.of(context).validationPhoneInvalid
+          : 'رقم هاتف غير صالح';
+    }
     return null;
   }
 
   static String? requiredStringField(
     String? value, {
-    String message = 'هذا الحقل مطلوب',
+    BuildContext? context,
+    String? message,
   }) {
+    final msg =
+        message ??
+        (context != null
+            ? S.of(context).validationRequired
+            : 'هذا الحقل مطلوب');
     if (value == null || value.trim().isEmpty) {
-      return message;
+      return msg;
     }
     return null;
   }

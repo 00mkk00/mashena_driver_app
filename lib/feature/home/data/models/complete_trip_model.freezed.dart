@@ -30,7 +30,7 @@ mixin _$CompleteTripModel {
   num? get discountAmount => throw _privateConstructorUsedError;
   num? get finalFare => throw _privateConstructorUsedError;
   String? get fareTotal => throw _privateConstructorUsedError;
-  bool? get appliedCoupon => throw _privateConstructorUsedError;
+  AppliedCouponModel? get appliedCoupon => throw _privateConstructorUsedError;
   num? get platformCommission => throw _privateConstructorUsedError;
 
   /// Serializes this CompleteTripModel to a JSON map.
@@ -60,9 +60,11 @@ abstract class $CompleteTripModelCopyWith<$Res> {
     num? discountAmount,
     num? finalFare,
     String? fareTotal,
-    bool? appliedCoupon,
+    AppliedCouponModel? appliedCoupon,
     num? platformCommission,
   });
+
+  $AppliedCouponModelCopyWith<$Res>? get appliedCoupon;
 }
 
 /// @nodoc
@@ -133,7 +135,7 @@ class _$CompleteTripModelCopyWithImpl<$Res, $Val extends CompleteTripModel>
             appliedCoupon: freezed == appliedCoupon
                 ? _value.appliedCoupon
                 : appliedCoupon // ignore: cast_nullable_to_non_nullable
-                      as bool?,
+                      as AppliedCouponModel?,
             platformCommission: freezed == platformCommission
                 ? _value.platformCommission
                 : platformCommission // ignore: cast_nullable_to_non_nullable
@@ -141,6 +143,20 @@ class _$CompleteTripModelCopyWithImpl<$Res, $Val extends CompleteTripModel>
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of CompleteTripModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AppliedCouponModelCopyWith<$Res>? get appliedCoupon {
+    if (_value.appliedCoupon == null) {
+      return null;
+    }
+
+    return $AppliedCouponModelCopyWith<$Res>(_value.appliedCoupon!, (value) {
+      return _then(_value.copyWith(appliedCoupon: value) as $Val);
+    });
   }
 }
 
@@ -163,9 +179,12 @@ abstract class _$$CompleteTripModelImplCopyWith<$Res>
     num? discountAmount,
     num? finalFare,
     String? fareTotal,
-    bool? appliedCoupon,
+    AppliedCouponModel? appliedCoupon,
     num? platformCommission,
   });
+
+  @override
+  $AppliedCouponModelCopyWith<$Res>? get appliedCoupon;
 }
 
 /// @nodoc
@@ -235,7 +254,7 @@ class __$$CompleteTripModelImplCopyWithImpl<$Res>
         appliedCoupon: freezed == appliedCoupon
             ? _value.appliedCoupon
             : appliedCoupon // ignore: cast_nullable_to_non_nullable
-                  as bool?,
+                  as AppliedCouponModel?,
         platformCommission: freezed == platformCommission
             ? _value.platformCommission
             : platformCommission // ignore: cast_nullable_to_non_nullable
@@ -284,7 +303,7 @@ class _$CompleteTripModelImpl implements _CompleteTripModel {
   @override
   final String? fareTotal;
   @override
-  final bool? appliedCoupon;
+  final AppliedCouponModel? appliedCoupon;
   @override
   final num? platformCommission;
 
@@ -365,7 +384,7 @@ abstract class _CompleteTripModel implements CompleteTripModel {
     final num? discountAmount,
     final num? finalFare,
     final String? fareTotal,
-    final bool? appliedCoupon,
+    final AppliedCouponModel? appliedCoupon,
     final num? platformCommission,
   }) = _$CompleteTripModelImpl;
 
@@ -391,7 +410,7 @@ abstract class _CompleteTripModel implements CompleteTripModel {
   @override
   String? get fareTotal;
   @override
-  bool? get appliedCoupon;
+  AppliedCouponModel? get appliedCoupon;
   @override
   num? get platformCommission;
 
@@ -400,5 +419,281 @@ abstract class _CompleteTripModel implements CompleteTripModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CompleteTripModelImplCopyWith<_$CompleteTripModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AppliedCouponModel _$AppliedCouponModelFromJson(Map<String, dynamic> json) {
+  return _AppliedCouponModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AppliedCouponModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  num? get value => throw _privateConstructorUsedError;
+  int? get remainingUsages => throw _privateConstructorUsedError;
+  String? get expiresAt => throw _privateConstructorUsedError;
+
+  /// Serializes this AppliedCouponModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of AppliedCouponModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AppliedCouponModelCopyWith<AppliedCouponModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppliedCouponModelCopyWith<$Res> {
+  factory $AppliedCouponModelCopyWith(
+    AppliedCouponModel value,
+    $Res Function(AppliedCouponModel) then,
+  ) = _$AppliedCouponModelCopyWithImpl<$Res, AppliedCouponModel>;
+  @useResult
+  $Res call({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  });
+}
+
+/// @nodoc
+class _$AppliedCouponModelCopyWithImpl<$Res, $Val extends AppliedCouponModel>
+    implements $AppliedCouponModelCopyWith<$Res> {
+  _$AppliedCouponModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of AppliedCouponModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? type = freezed,
+    Object? value = freezed,
+    Object? remainingUsages = freezed,
+    Object? expiresAt = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            code: freezed == code
+                ? _value.code
+                : code // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            value: freezed == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                      as num?,
+            remainingUsages: freezed == remainingUsages
+                ? _value.remainingUsages
+                : remainingUsages // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            expiresAt: freezed == expiresAt
+                ? _value.expiresAt
+                : expiresAt // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$AppliedCouponModelImplCopyWith<$Res>
+    implements $AppliedCouponModelCopyWith<$Res> {
+  factory _$$AppliedCouponModelImplCopyWith(
+    _$AppliedCouponModelImpl value,
+    $Res Function(_$AppliedCouponModelImpl) then,
+  ) = __$$AppliedCouponModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  });
+}
+
+/// @nodoc
+class __$$AppliedCouponModelImplCopyWithImpl<$Res>
+    extends _$AppliedCouponModelCopyWithImpl<$Res, _$AppliedCouponModelImpl>
+    implements _$$AppliedCouponModelImplCopyWith<$Res> {
+  __$$AppliedCouponModelImplCopyWithImpl(
+    _$AppliedCouponModelImpl _value,
+    $Res Function(_$AppliedCouponModelImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of AppliedCouponModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? type = freezed,
+    Object? value = freezed,
+    Object? remainingUsages = freezed,
+    Object? expiresAt = freezed,
+  }) {
+    return _then(
+      _$AppliedCouponModelImpl(
+        id: freezed == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        code: freezed == code
+            ? _value.code
+            : code // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        value: freezed == value
+            ? _value.value
+            : value // ignore: cast_nullable_to_non_nullable
+                  as num?,
+        remainingUsages: freezed == remainingUsages
+            ? _value.remainingUsages
+            : remainingUsages // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        expiresAt: freezed == expiresAt
+            ? _value.expiresAt
+            : expiresAt // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AppliedCouponModelImpl implements _AppliedCouponModel {
+  const _$AppliedCouponModelImpl({
+    this.id,
+    this.code,
+    this.type,
+    this.value,
+    this.remainingUsages,
+    this.expiresAt,
+  });
+
+  factory _$AppliedCouponModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AppliedCouponModelImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  final String? type;
+  @override
+  final num? value;
+  @override
+  final int? remainingUsages;
+  @override
+  final String? expiresAt;
+
+  @override
+  String toString() {
+    return 'AppliedCouponModel(id: $id, code: $code, type: $type, value: $value, remainingUsages: $remainingUsages, expiresAt: $expiresAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AppliedCouponModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.remainingUsages, remainingUsages) ||
+                other.remainingUsages == remainingUsages) &&
+            (identical(other.expiresAt, expiresAt) ||
+                other.expiresAt == expiresAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    code,
+    type,
+    value,
+    remainingUsages,
+    expiresAt,
+  );
+
+  /// Create a copy of AppliedCouponModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AppliedCouponModelImplCopyWith<_$AppliedCouponModelImpl> get copyWith =>
+      __$$AppliedCouponModelImplCopyWithImpl<_$AppliedCouponModelImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AppliedCouponModelImplToJson(this);
+  }
+}
+
+abstract class _AppliedCouponModel implements AppliedCouponModel {
+  const factory _AppliedCouponModel({
+    final int? id,
+    final String? code,
+    final String? type,
+    final num? value,
+    final int? remainingUsages,
+    final String? expiresAt,
+  }) = _$AppliedCouponModelImpl;
+
+  factory _AppliedCouponModel.fromJson(Map<String, dynamic> json) =
+      _$AppliedCouponModelImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  String? get type;
+  @override
+  num? get value;
+  @override
+  int? get remainingUsages;
+  @override
+  String? get expiresAt;
+
+  /// Create a copy of AppliedCouponModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AppliedCouponModelImplCopyWith<_$AppliedCouponModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

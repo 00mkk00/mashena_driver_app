@@ -28,7 +28,13 @@
   "otpResend": "إعادة الإرسال",
   "otpVerifyNow": "تحقق الآن",
   "validationRequired": "هذا الحقل مطلوب",
-  "validationPasswordsNotMatch": "كلمات المرور غير متطابقة",
+  "validationEmailRequired": "البريد الإلكتروني مطلوب",
+  "validationEmailInvalid": "بريد إلكتروني غير صالح",
+  "validationPasswordRequired": "كلمة المرور مطلوبة",
+  "validationPasswordWeak": "كلمة المرور ضعيفة (حرف كبير، صغير، رقم، رمز)",
+  "validationPhoneRequired": "رقم الهاتف مطلوب",
+  "validationPhoneInvalid": "رقم هاتف غير صالح",
+  "validationPasswordsNotMatch": "كلمتان المرور غير متطابقتين",
   "homeGettingLocation": "جاري الحصول على موقعك...",
   "homeEnableLocationPermission": "يرجى تفعيل صلاحية الوصول للموقع",
   "homeWaitingForLocation": "في انتظار تحديد الموقع...",
@@ -277,5 +283,127 @@
   "commonRetry": "إعادة المحاولة",
   "docsMyDocuments": "مستنداتي",
   "tapToCaptureVehiclePhoto": "اضغط لالتقاط أو اختيار صورة المركبة",
-  "photoAttached": "تم إرفاق الصورة"
+  "photoAttached": "تم إرفاق الصورة",
+  "notificationsTitle": "الإشعارات",
+  "notificationsAll": "الكل",
+  "notificationsUnread": "غير مقروء",
+  "notificationsMarkAllRead": "تحديد الكل كمقروء",
+  "notificationsNoNotifications": "لا توجد إشعارات بعد",
+  "notificationsYouAreCaughtUp": "أنت على اطلاع بكل جديد!",
+  "notificationsErrorFailed": "فشل تحميل الإشعارات",
+  "notificationsToday": "اليوم",
+  "notificationsYesterday": "أمس",
+  "notificationsEarlier": "سابقاً",
+  "notificationsDelete": "حذف",
+  "mapPickOriginLocation": "حدد موقع الانطلاق",
+  "mapPickDestinationLocation": "حدد موقع الوصول",
+  "mapConfirmLocation": "تأكيد الموقع",
+  "homeCreateSharedRide": "إنشاء رحلة مشاركة",
+  "sharedTripCompleted": "اكتملت الرحلة",
+  "sharedPassengers": "الركاب",
+  "sharedTotalDistance": "المسافة الكلية",
+  "sharedTime": "الوقت",
+  "sharedTotalEarnings": "إجمالي الأرباح",
+  "sharedClose": "إغلاق",
+  "sharedLobbyOpen": "غرفة الانتظار مفتوحة",
+  "sharedSeatsFilled": "{occupied} / {max} مقاعد ممتلئة",
+  "@sharedSeatsFilled": {
+    "placeholders": {
+      "occupied": {},
+      "max": {}
+    }
+  },
+  "sharedWaitingPassengers": "بانتظار انضمام الركاب...",
+  "sharedNoPassengersJoined": "لم ينضم أي راكب بعد.",
+  "sharedCancelRide": "إلغاء الرحلة",
+  "sharedStartBoarding": "بدء صعود الركاب",
+  "sharedBoardingPassengers": "صعود الركاب",
+  "sharedBoardedCount": "{boarded}/{total} تم صعودهم",
+  "@sharedBoardedCount": {
+    "placeholders": {
+      "boarded": {},
+      "total": {}
+    }
+  },
+  "sharedMarkPassengersInstruction": "قم بتحديد الركاب الذين صعدوا عند وصولهم.",
+  "sharedNoPassengersToBoard": "لا يوجد ركاب للصعود.",
+  "sharedStartTrip": "بدء الرحلة",
+  "sharedTripInProgress": "الرحلة قيد التنفيذ",
+  "sharedEnRouteDestinations": "في الطريق إلى الوجهات",
+  "sharedNoActivePassengers": "لا يوجد ركاب نشطون في الرحلة.",
+  "sharedEndTrip": "إنهاء الرحلة",
+  "sharedPassengerNumber": "الراكب #{id}",
+  "@sharedPassengerNumber": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "sharedSeatsCount": "المقاعد: {count}",
+  "@sharedSeatsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedStatus": "الحالة: {status}",
+  "@sharedStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedOnBoard": "صعد",
+  "sharedCheckIn": "تسجيل حضور",
+  "sharedRemove": "إزالة",
+  "sharedDropOff": "إنزال",
+  "sharedDroppedOff": "تم إنزاله",
+  "sharedCreateSharedRideTitle": "إنشاء رحلة مشاركة",
+  "sharedOrigin": "موقع الانطلاق",
+  "sharedDestination": "الوجهة",
+  "sharedMaxPassengers": "الحد الأقصى للركاب",
+  "sharedDepartureTime": "وقت المغادرة",
+  "sharedNotes": "ملاحظات / تفاصيل (اختياري)",
+  "sharedCreateAndOpenLobby": "إنشاء وفتح غرفة الانتظار",
+  "errorNoInternet": "لا يوجد اتصال بالإنترنت",
+  "errorServer": "خطأ في الخادم",
+  "errorValidation": "خطأ في البيانات المدخلة",
+  "errorUnauthorized": "غير مصرح",
+  "errorSomethingWentWrong": "حدث خطأ ما",
+  "authApprovalStatus": "حالة الموافقة على الحساب: {status}",
+  "@authApprovalStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedCurrentLocation": "الموقع الحالي",
+  "sharedSelectOriginHint": "حدد موقع الانطلاق",
+  "sharedCurrentGps": "الموقع الحالي (GPS)",
+  "sharedPickOnMap": "تحديد على الخريطة",
+  "sharedSelectDestinationHint": "حدد الوجهة",
+  "sharedMaxSeats": "الحد الأقصى للمقاعد",
+  "sharedSeatsOption": "{count} مقاعد",
+  "@sharedSeatsOption": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedNotesHint": "مثال: المغادرة بالقرب من البوابة 2",
+  "sharedRideCancelledToast": "تم إلغاء الرحلة المشتركة",
+  "sharedDistanceKmFormat": "{distance} كم",
+  "@sharedDistanceKmFormat": {
+    "placeholders": {
+      "distance": {}
+    }
+  },
+  "sharedDurationMinsFormat": "{mins} دقيقة",
+  "@sharedDurationMinsFormat": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "sharedFareAmountFormat": "{amount} {currency}",
+  "@sharedFareAmountFormat": {
+    "placeholders": {
+      "amount": {},
+      "currency": {}
+    }
+  }
 }

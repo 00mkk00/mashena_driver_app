@@ -23,4 +23,21 @@ class Endpoints {
   static const String ratingTags = '/rating-tags';
   static const String driverDocuments = '/driver-documents/me';
   static const String uploadNewDoc = '/driver-documents';
+  static const String createSharedRide = '/shared-rides';
+  static const String sharedRideReady = '/shared-rides/{id}/ready';
+  static const String sharedRideStart = '/shared-rides/{id}/start';
+  static const String sharedRideComplete = '/shared-rides/{id}/complete';
+  static const String sharedRideCancel = '/shared-rides/{id}/cancel';
+  static const String removeSharedRidePassenger =
+      '/shared-rides/{id}/passengers/{passengerId}/remove';
+  static const String checkInSharedRidePassenger =
+      '/shared-rides/{id}/passengers/{passengerId}/check-in';
+  static const String onBoardSharedRidePassenger =
+      '/shared-rides/{id}/passengers/{passengerId}/on-board';
+  static const String dropOffSharedRidePassenger =
+      '/shared-rides/{id}/passengers/{passengerId}/dropoff';
+  static const String notificationToken = '/notifications/token';
+  static const String notifications = '/notifications';
+  static const String markAllNotificationsRead = '/notifications/read-all';
+  static const String markNotificationRead = '/notifications/{id}/read';
 }

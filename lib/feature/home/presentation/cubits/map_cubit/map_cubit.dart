@@ -6,6 +6,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/services/location_geocoding_service.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/feature/home/data/services/routing_service.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
@@ -123,20 +125,34 @@ class MapCubit extends Cubit<MapState> {
     );
   }
 
+  bool _isValidLatLng(LatLng point) {
+    return !point.latitude.isNaN &&
+        !point.longitude.isNaN &&
+        !point.latitude.isInfinite &&
+        !point.longitude.isInfinite &&
+        (point.latitude != 0.0 || point.longitude != 0.0);
+  }
+
   void _fitRoute(List<LatLng> points) {
-    if (points.isEmpty || !state.isLoaded) return;
-    _mapController.fitCamera(
-      CameraFit.bounds(
-        bounds: LatLngBounds.fromPoints(points),
-        padding: EdgeInsets.all(60.r),
-      ),
-    );
+    final valid = points.where(_isValidLatLng).toList();
+    if (valid.length < 2 || !state.isLoaded) return;
+    try {
+      final bounds = LatLngBounds.fromPoints(valid);
+      if (bounds.southWest != bounds.northEast) {
+        final paddingVal = (60.r.isNaN || 60.r.isInfinite || 60.r <= 0)
+            ? 60.0
+            : 60.r;
+        _mapController.fitCamera(
+          CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(paddingVal)),
+        );
+      }
+    } catch (_) {}
   }
 
   Marker _buildPickupMarker(LatLng point) => Marker(
     point: point,
-    width: 70.r, // Increased to accommodate the pulsing aura
-    height: 70.r,
+    width: (70.r.isNaN || 70.r.isInfinite || 70.r <= 0) ? 70.0 : 70.r,
+    height: (70.r.isNaN || 70.r.isInfinite || 70.r <= 0) ? 70.0 : 70.r,
     child: AnimatedPulse(
       pulseColor: AppColors.online.withValues(alpha: .3),
       child: PremiumMapPin(
@@ -151,8 +167,8 @@ class MapCubit extends Cubit<MapState> {
 
   Marker _buildDestinationMarker(LatLng point) => Marker(
     point: point,
-    width: 45.r,
-    height: 45.r,
+    width: (45.r.isNaN || 45.r.isInfinite || 45.r <= 0) ? 45.0 : 45.r,
+    height: (45.r.isNaN || 45.r.isInfinite || 45.r <= 0) ? 45.0 : 45.r,
     child: PremiumMapPin(
       gradientColors: [
         AppColors.danger.withValues(alpha: .8),
@@ -164,8 +180,8 @@ class MapCubit extends Cubit<MapState> {
 
   Marker _buildStopMarker(LatLng point, int order) => Marker(
     point: point,
-    width: 45.r,
-    height: 45.r,
+    width: (45.r.isNaN || 45.r.isInfinite || 45.r <= 0) ? 45.0 : 45.r,
+    height: (45.r.isNaN || 45.r.isInfinite || 45.r <= 0) ? 45.0 : 45.r,
     child: PremiumMapPin(
       gradientColors: [
         AppColors.warning.withValues(alpha: .8),
@@ -324,6 +340,85 @@ class MapCubit extends Cubit<MapState> {
 
   void updatePolylines(List<Polyline> polylines) {
     emit(state.copyWith(polylines: polylines));
+  }
+
+  // ─── Location Picker Controls ──────────────────────────────────────────────
+
+  void startLocationPicking(MapPickerTarget target, {LatLng? initialLocation}) {
+    final startPos = initialLocation ?? state.currentPosition;
+    if (startPos != null && state.status == MapLoadStatus.loaded) {
+      _mapController.move(startPos, 16);
+    }
+    emit(
+      state.copyWith(
+        isPickingLocation: true,
+        pickerTarget: target,
+        pickedCenterLocation: startPos,
+      ),
+    );
+  }
+
+  void updatePickedCenterLocation(LatLng center) {
+    if (state.isPickingLocation) {
+      emit(state.copyWith(pickedCenterLocation: center));
+    }
+  }
+
+  Future<void> confirmLocationSelection({String? address}) async {
+    final center = state.pickedCenterLocation ?? state.currentPosition;
+    if (center == null || state.pickerTarget == null) return;
+
+    String formattedAddress = address?.trim() ?? '';
+    if (formattedAddress.isEmpty ||
+        formattedAddress.startsWith('Picked Location')) {
+      final geocodedName = await getIt<LocationGeocodingService>()
+          .getAddressFromCoordinates(center.latitude, center.longitude);
+      formattedAddress = geocodedName ?? 'Picked Location';
+    }
+
+    final selection = MapLocationSelection(
+      lat: center.latitude,
+      lng: center.longitude,
+      address: formattedAddress,
+    );
+
+    if (state.pickerTarget == MapPickerTarget.origin) {
+      emit(
+        state.copyWith(
+          isPickingLocation: false,
+          clearPickerTarget: true,
+          clearPickedCenterLocation: true,
+          draftOrigin: selection,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isPickingLocation: false,
+          clearPickerTarget: true,
+          clearPickedCenterLocation: true,
+          draftDestination: selection,
+        ),
+      );
+    }
+  }
+
+  void cancelLocationPicking() {
+    emit(
+      state.copyWith(
+        isPickingLocation: false,
+        clearPickerTarget: true,
+        clearPickedCenterLocation: true,
+      ),
+    );
+  }
+
+  void setDraftOrigin(MapLocationSelection selection) {
+    emit(state.copyWith(draftOrigin: selection));
+  }
+
+  void setDraftDestination(MapLocationSelection selection) {
+    emit(state.copyWith(draftDestination: selection));
   }
 
   // ─── Marker helpers ────────────────────────────────────────────────────────

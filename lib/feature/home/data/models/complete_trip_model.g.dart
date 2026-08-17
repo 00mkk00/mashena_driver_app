@@ -18,7 +18,11 @@ _$CompleteTripModelImpl _$$CompleteTripModelImplFromJson(
   discountAmount: json['discountAmount'] as num?,
   finalFare: json['finalFare'] as num?,
   fareTotal: json['fareTotal'] as String?,
-  appliedCoupon: json['appliedCoupon'] as bool?,
+  appliedCoupon: json['appliedCoupon'] == null
+      ? null
+      : AppliedCouponModel.fromJson(
+          json['appliedCoupon'] as Map<String, dynamic>,
+        ),
   platformCommission: json['platformCommission'] as num?,
 );
 
@@ -36,4 +40,26 @@ Map<String, dynamic> _$$CompleteTripModelImplToJson(
   'fareTotal': instance.fareTotal,
   'appliedCoupon': instance.appliedCoupon,
   'platformCommission': instance.platformCommission,
+};
+
+_$AppliedCouponModelImpl _$$AppliedCouponModelImplFromJson(
+  Map<String, dynamic> json,
+) => _$AppliedCouponModelImpl(
+  id: (json['id'] as num?)?.toInt(),
+  code: json['code'] as String?,
+  type: json['type'] as String?,
+  value: json['value'] as num?,
+  remainingUsages: (json['remainingUsages'] as num?)?.toInt(),
+  expiresAt: json['expiresAt'] as String?,
+);
+
+Map<String, dynamic> _$$AppliedCouponModelImplToJson(
+  _$AppliedCouponModelImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'code': instance.code,
+  'type': instance.type,
+  'value': instance.value,
+  'remainingUsages': instance.remainingUsages,
+  'expiresAt': instance.expiresAt,
 };

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:mashena_driver_app/core/theme/app_colors.dart';
 import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
+import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/driver_status_toggle.dart';
 
 class WaitingForRideCard extends StatefulWidget {
   const WaitingForRideCard({super.key});
@@ -33,147 +41,132 @@ class _WaitingForRideCardState extends State<WaitingForRideCard>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
-      padding: EdgeInsets.all(AppSpacing.md.r),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : AppColors.cardLight,
-        borderRadius: BorderRadius.circular(AppRadius.lg.r),
-        boxShadow: AppShadows.card,
-      ),
-      child: Row(
-        children: [
-          // ── Search icon ─────────────────────────────────────
-          Container(
-            width: 44.r,
-            height: 44.r,
-            decoration: BoxDecoration(
-              color: isDark
-                  ? AppColors.primaryLight.withValues(alpha: 0.15)
-                  : AppColors.primarySurface,
-              borderRadius: BorderRadius.circular(AppRadius.sm.r),
-            ),
-            child: Icon(
-              Icons.search_rounded,
-              color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
-              size: 22.r,
-            ),
+  Future<void> _handleToggle(BuildContext context) async {
+    var position = context.read<MapCubit>().state.currentPosition;
+    if (position == null) {
+      try {
+        final pos = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+        position = LatLng(pos.latitude, pos.longitude);
+      } catch (_) {
+        position = const LatLng(0, 0);
+      }
+    }
+    if (!context.mounted) return;
+    context.read<DriverStatusCubit>().toggleOnlineStatus(
+          GoOnlineParams(
+            lat: position.latitude,
+            lng: position.longitude,
           ),
-
-          SizedBox(width: AppSpacing.md.w),
-
-          // ── Labels ──────────────────────────────────────────
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  S.of(context).homeLookingForPassengers,
-                  style: AppTextStyles.w500_12.copyWith(
-                    color: isDark
-                        ? AppColors.onSurfaceDark
-                        : AppColors.onSurface,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                AnimatedBuilder(
-                  animation: _dotController,
-                  builder: (_, _) {
-                    final dots =
-                        '.' * ((_dotController.value * 4).floor().clamp(1, 3));
-                    return Text(
-                      '${S.of(context).homeSearching}$dots',
-                      style: AppTextStyles.w400_10.copyWith(
-                        color: isDark
-                            ? AppColors.primaryLight
-                            : AppColors.primaryColor,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          // ── Pulse ring ──────────────────────────────────────
-          const _PulseRing(),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Pulse Ring ───────────────────────────────────────────────────────────────
-class _PulseRing extends StatefulWidget {
-  const _PulseRing();
-
-  @override
-  State<_PulseRing> createState() => _PulseRingState();
-}
-
-class _PulseRingState extends State<_PulseRing>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _size;
-  late Animation<double> _opacity;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    )..repeat();
-    _size = Tween<double>(
-      begin: 20.r,
-      end: 36.r,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
-    _opacity = Tween<double>(
-      begin: 0.8,
-      end: 0.0,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _ctrl,
-      builder: (_, _) => Stack(
-        alignment: Alignment.center,
-        children: [
-          // ── Expanding ring ─────────────────────────────────
-          Container(
-            width: _size.value,
-            height: _size.value,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.primaryColor.withValues(alpha: _opacity.value),
-                width: 2,
+    return BlocBuilder<DriverStatusCubit, DriverStatusState>(
+      builder: (context, driverState) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final isOnline = driverState.isOnline;
+
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+          padding: EdgeInsets.all(AppSpacing.md.r),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.cardDark : AppColors.cardLight,
+            borderRadius: BorderRadius.circular(AppRadius.lg.r),
+            boxShadow: AppShadows.card,
+          ),
+          child: Row(
+            children: [
+              // ── Status Icon ─────────────────────────────────────
+              Container(
+                width: 44.r,
+                height: 44.r,
+                decoration: BoxDecoration(
+                  color: isOnline
+                      ? (isDark
+                          ? AppColors.primaryLight.withValues(alpha: 0.15)
+                          : AppColors.primarySurface)
+                      : (isDark
+                          ? AppColors.surfaceVariantDark
+                          : AppColors.offlineSurface),
+                  borderRadius: BorderRadius.circular(AppRadius.sm.r),
+                ),
+                child: Icon(
+                  isOnline
+                      ? Icons.search_rounded
+                      : Icons.power_settings_new_rounded,
+                  color: isOnline
+                      ? (isDark
+                          ? AppColors.primaryLight
+                          : AppColors.primaryColor)
+                      : AppColors.offline,
+                  size: 24.r,
+                ),
               ),
-            ),
+
+              SizedBox(width: AppSpacing.md.w),
+
+              // ── Labels ──────────────────────────────────────────
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      isOnline
+                          ? S.of(context).homeLookingForPassengers
+                          : S.of(context).homeOffline,
+                      style: AppTextStyles.w600_14.copyWith(
+                        color: isDark
+                            ? AppColors.onSurfaceDark
+                            : AppColors.onSurface,
+                      ),
+                    ),
+                    SizedBox(height: 3.h),
+                    if (isOnline)
+                      AnimatedBuilder(
+                        animation: _dotController,
+                        builder: (_, _) {
+                          final dots = '.' *
+                              ((_dotController.value * 4).floor().clamp(1, 3));
+                          return Text(
+                            '${S.of(context).homeSearching}$dots',
+                            style: AppTextStyles.w400_12.copyWith(
+                              color: isDark
+                                  ? AppColors.primaryLight
+                                  : AppColors.primaryColor,
+                            ),
+                          );
+                        },
+                      )
+                    else
+                      Text(
+                        S.of(context).homeGoOnlineHint,
+                        style: AppTextStyles.w400_12.copyWith(
+                          color: isDark
+                              ? AppColors.textGreyDark
+                              : AppColors.textGrey,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
+              ),
+
+              SizedBox(width: AppSpacing.sm.w),
+
+              // ── Status Toggle Button ──────────────────────────────
+              DriverStatusToggle(
+                state: driverState,
+                onTap: () => _handleToggle(context),
+              ),
+            ],
           ),
-          // ── Center dot ─────────────────────────────────────
-          Container(
-            width: 12.r,
-            height: 12.r,
-            decoration: const BoxDecoration(
-              color: AppColors.primaryColor,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

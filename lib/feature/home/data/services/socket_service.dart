@@ -10,6 +10,7 @@ void _log(String message) {
 
 class SocketService {
   io.Socket? _socket;
+  void Function(String accessToken)? onReconnectRequested;
 
   // ─── Connect ──────────────────────────────────────────────────────────────
 
@@ -31,15 +32,21 @@ class SocketService {
 
   void reconnect({required String accessToken}) {
     _log('Reconnecting with fresh token...');
-    _socket?.off('driver:registered');
-    _socket?.off('driver:register:error');
-    _socket?.off('ride:offer');
-    _socket?.off('driver:update-location:error');
-    _socket?.off('trip:cancelled');
-    _socket?.disconnect();
-    _socket?.dispose();
-    _socket = null;
-    connect(accessToken: accessToken);
+    if (onReconnectRequested != null) {
+      onReconnectRequested!(accessToken);
+    } else {
+      _socket?.off('driver:registered');
+      _socket?.off('driver:register:error');
+      _socket?.off('ride:offer');
+      _socket?.off('driver:update-location:error');
+      _socket?.off('trip:cancelled');
+      _socket?.off('shared_ride:passenger_joined');
+      _socket?.off('shared_ride:passenger_left');
+      _socket?.disconnect();
+      _socket?.dispose();
+      _socket = null;
+      connect(accessToken: accessToken);
+    }
   }
 
   void disconnect() {
@@ -137,6 +144,20 @@ class SocketService {
     });
   }
 
+  void onSharedRidePassengerJoined(JsonCallback handler) {
+    _on('shared_ride:passenger_joined', (data) {
+      _log('← shared_ride:passenger_joined $data');
+      handler(data);
+    });
+  }
+
+  void onSharedRidePassengerLeft(JsonCallback handler) {
+    _on('shared_ride:passenger_left', (data) {
+      _log('← shared_ride:passenger_left $data');
+      handler(data);
+    });
+  }
+
   // ─── Remove listeners ─────────────────────────────────────────────────────
 
   void offAll() {
@@ -146,6 +167,8 @@ class SocketService {
     _socket?.off('ride:offer');
     _socket?.off('driver:update-location:error');
     _socket?.off('trip:cancelled');
+    _socket?.off('shared_ride:passenger_joined');
+    _socket?.off('shared_ride:passenger_left');
   }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────

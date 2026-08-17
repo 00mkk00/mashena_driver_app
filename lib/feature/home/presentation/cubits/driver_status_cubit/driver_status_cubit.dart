@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
 import 'package:mashena_driver_app/core/errors/failure.dart';
+import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/update_radius_params.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/go_offline_use_case.dart';
@@ -173,11 +176,25 @@ class DriverStatusCubit extends Cubit<DriverStatusState> {
   //   emit(state.copyWith(isSosActive: false));
   // }
 
+  void startSharedRide() {
+    emit(state.copyWith(status: DriverStatus.onSharedRide));
+  }
+
+  void exitSharedRide() {
+    emit(state.copyWith(status: DriverStatus.onlineWaiting));
+  }
+
   String _mapFailureToMessage(Failure failure) {
+    final savedLocale = getIt<LocalStorage>().getString('app_locale');
+    final lang = (savedLocale != null && savedLocale.isNotEmpty)
+        ? savedLocale
+        : PlatformDispatcher.instance.locale.languageCode;
+    final isAr = lang.startsWith('ar');
+
     if (failure.code == FailureCode.networkConnection ||
         failure.code == FailureCode.networkTimeout) {
-      return "No internet connection";
+      return isAr ? 'لا يوجد اتصال بالإنترنت' : 'No internet connection';
     }
-    return failure.rawMessage ?? "Server error";
+    return failure.rawMessage ?? (isAr ? 'خطأ في الخادم' : 'Server error');
   }
 }

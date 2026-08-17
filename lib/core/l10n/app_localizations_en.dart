@@ -140,6 +140,25 @@ class SEn extends S {
   String get validationRequired => 'This field is required';
 
   @override
+  String get validationEmailRequired => 'Email is required';
+
+  @override
+  String get validationEmailInvalid => 'Invalid email address';
+
+  @override
+  String get validationPasswordRequired => 'Password is required';
+
+  @override
+  String get validationPasswordWeak =>
+      'Weak password (uppercase, lowercase, number, symbol)';
+
+  @override
+  String get validationPhoneRequired => 'Phone number is required';
+
+  @override
+  String get validationPhoneInvalid => 'Invalid phone number';
+
+  @override
   String get validationPasswordsNotMatch => 'Passwords do not match';
 
   @override
@@ -663,4 +682,232 @@ class SEn extends S {
 
   @override
   String get photoAttached => 'Photo Attached';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsAll => 'All';
+
+  @override
+  String get notificationsUnread => 'Unread';
+
+  @override
+  String get notificationsMarkAllRead => 'Mark all read';
+
+  @override
+  String get notificationsNoNotifications => 'No notifications yet';
+
+  @override
+  String get notificationsYouAreCaughtUp => 'You\'re all caught up!';
+
+  @override
+  String get notificationsErrorFailed => 'Failed to load notifications';
+
+  @override
+  String get notificationsToday => 'Today';
+
+  @override
+  String get notificationsYesterday => 'Yesterday';
+
+  @override
+  String get notificationsEarlier => 'Earlier';
+
+  @override
+  String get notificationsDelete => 'Delete';
+
+  @override
+  String get mapPickOriginLocation => 'Pick Origin Location';
+
+  @override
+  String get mapPickDestinationLocation => 'Pick Destination Location';
+
+  @override
+  String get mapConfirmLocation => 'Confirm Location';
+
+  @override
+  String get homeCreateSharedRide => 'Create Shared Ride';
+
+  @override
+  String get sharedTripCompleted => 'Trip Completed';
+
+  @override
+  String get sharedPassengers => 'Passengers';
+
+  @override
+  String get sharedTotalDistance => 'Total Distance';
+
+  @override
+  String get sharedTime => 'Time';
+
+  @override
+  String get sharedTotalEarnings => 'Total Earnings';
+
+  @override
+  String get sharedClose => 'Close';
+
+  @override
+  String get sharedLobbyOpen => 'Lobby Open';
+
+  @override
+  String sharedSeatsFilled(Object occupied, Object max) {
+    return '$occupied / $max Seats Filled';
+  }
+
+  @override
+  String get sharedWaitingPassengers => 'Waiting for passengers to join...';
+
+  @override
+  String get sharedNoPassengersJoined => 'No passengers joined yet.';
+
+  @override
+  String get sharedCancelRide => 'Cancel Ride';
+
+  @override
+  String get sharedStartBoarding => 'Start Boarding';
+
+  @override
+  String get sharedBoardingPassengers => 'Boarding Passengers';
+
+  @override
+  String sharedBoardedCount(Object boarded, Object total) {
+    return '$boarded/$total Boarded';
+  }
+
+  @override
+  String get sharedMarkPassengersInstruction =>
+      'Mark passengers as on board individually as they arrive.';
+
+  @override
+  String get sharedNoPassengersToBoard => 'No passengers to board.';
+
+  @override
+  String get sharedStartTrip => 'Start Trip';
+
+  @override
+  String get sharedTripInProgress => 'Trip in Progress';
+
+  @override
+  String get sharedEnRouteDestinations => 'En route to destinations';
+
+  @override
+  String get sharedNoActivePassengers => 'No active passengers in trip.';
+
+  @override
+  String get sharedEndTrip => 'End Trip';
+
+  @override
+  String sharedPassengerNumber(Object id) {
+    return 'Passenger #$id';
+  }
+
+  @override
+  String sharedSeatsCount(Object count) {
+    return 'Seats: $count';
+  }
+
+  @override
+  String sharedStatus(Object status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get sharedOnBoard => 'On Board';
+
+  @override
+  String get sharedCheckIn => 'Check In';
+
+  @override
+  String get sharedRemove => 'Remove';
+
+  @override
+  String get sharedDropOff => 'Drop Off';
+
+  @override
+  String get sharedDroppedOff => 'Dropped Off';
+
+  @override
+  String get sharedCreateSharedRideTitle => 'Create Shared Ride';
+
+  @override
+  String get sharedOrigin => 'Origin';
+
+  @override
+  String get sharedDestination => 'Destination';
+
+  @override
+  String get sharedMaxPassengers => 'Max Passengers';
+
+  @override
+  String get sharedDepartureTime => 'Departure Time';
+
+  @override
+  String get sharedNotes => 'Notes / Details (Optional)';
+
+  @override
+  String get sharedCreateAndOpenLobby => 'Create & Open Lobby';
+
+  @override
+  String get errorNoInternet => 'No internet connection';
+
+  @override
+  String get errorServer => 'Server error';
+
+  @override
+  String get errorValidation => 'Validation error';
+
+  @override
+  String get errorUnauthorized => 'Unauthorized';
+
+  @override
+  String get errorSomethingWentWrong => 'Something went wrong';
+
+  @override
+  String authApprovalStatus(Object status) {
+    return 'Account approval status: $status';
+  }
+
+  @override
+  String get sharedCurrentLocation => 'Current Location';
+
+  @override
+  String get sharedSelectOriginHint => 'Select origin location';
+
+  @override
+  String get sharedCurrentGps => 'Current GPS';
+
+  @override
+  String get sharedPickOnMap => 'Pick on Map';
+
+  @override
+  String get sharedSelectDestinationHint => 'Select destination location';
+
+  @override
+  String get sharedMaxSeats => 'Max Seats';
+
+  @override
+  String sharedSeatsOption(Object count) {
+    return '$count Seats';
+  }
+
+  @override
+  String get sharedNotesHint => 'e.g. Leaving near gate 2';
+
+  @override
+  String get sharedRideCancelledToast => 'Shared ride cancelled';
+
+  @override
+  String sharedDistanceKmFormat(Object distance) {
+    return '$distance km';
+  }
+
+  @override
+  String sharedDurationMinsFormat(Object mins) {
+    return '$mins mins';
+  }
+
+  @override
+  String sharedFareAmountFormat(Object amount, Object currency) {
+    return '$amount $currency';
+  }
 }

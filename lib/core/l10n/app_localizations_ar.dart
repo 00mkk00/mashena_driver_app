@@ -140,7 +140,26 @@ class SAr extends S {
   String get validationRequired => 'هذا الحقل مطلوب';
 
   @override
-  String get validationPasswordsNotMatch => 'كلمات المرور غير متطابقة';
+  String get validationEmailRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get validationEmailInvalid => 'بريد إلكتروني غير صالح';
+
+  @override
+  String get validationPasswordRequired => 'كلمة المرور مطلوبة';
+
+  @override
+  String get validationPasswordWeak =>
+      'كلمة المرور ضعيفة (حرف كبير، صغير، رقم، رمز)';
+
+  @override
+  String get validationPhoneRequired => 'رقم الهاتف مطلوب';
+
+  @override
+  String get validationPhoneInvalid => 'رقم هاتف غير صالح';
+
+  @override
+  String get validationPasswordsNotMatch => 'كلمتان المرور غير متطابقتين';
 
   @override
   String get homeGettingLocation => 'جاري الحصول على موقعك...';
@@ -662,4 +681,232 @@ class SAr extends S {
 
   @override
   String get photoAttached => 'تم إرفاق الصورة';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get notificationsAll => 'الكل';
+
+  @override
+  String get notificationsUnread => 'غير مقروء';
+
+  @override
+  String get notificationsMarkAllRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get notificationsNoNotifications => 'لا توجد إشعارات بعد';
+
+  @override
+  String get notificationsYouAreCaughtUp => 'أنت على اطلاع بكل جديد!';
+
+  @override
+  String get notificationsErrorFailed => 'فشل تحميل الإشعارات';
+
+  @override
+  String get notificationsToday => 'اليوم';
+
+  @override
+  String get notificationsYesterday => 'أمس';
+
+  @override
+  String get notificationsEarlier => 'سابقاً';
+
+  @override
+  String get notificationsDelete => 'حذف';
+
+  @override
+  String get mapPickOriginLocation => 'حدد موقع الانطلاق';
+
+  @override
+  String get mapPickDestinationLocation => 'حدد موقع الوصول';
+
+  @override
+  String get mapConfirmLocation => 'تأكيد الموقع';
+
+  @override
+  String get homeCreateSharedRide => 'إنشاء رحلة مشاركة';
+
+  @override
+  String get sharedTripCompleted => 'اكتملت الرحلة';
+
+  @override
+  String get sharedPassengers => 'الركاب';
+
+  @override
+  String get sharedTotalDistance => 'المسافة الكلية';
+
+  @override
+  String get sharedTime => 'الوقت';
+
+  @override
+  String get sharedTotalEarnings => 'إجمالي الأرباح';
+
+  @override
+  String get sharedClose => 'إغلاق';
+
+  @override
+  String get sharedLobbyOpen => 'غرفة الانتظار مفتوحة';
+
+  @override
+  String sharedSeatsFilled(Object occupied, Object max) {
+    return '$occupied / $max مقاعد ممتلئة';
+  }
+
+  @override
+  String get sharedWaitingPassengers => 'بانتظار انضمام الركاب...';
+
+  @override
+  String get sharedNoPassengersJoined => 'لم ينضم أي راكب بعد.';
+
+  @override
+  String get sharedCancelRide => 'إلغاء الرحلة';
+
+  @override
+  String get sharedStartBoarding => 'بدء صعود الركاب';
+
+  @override
+  String get sharedBoardingPassengers => 'صعود الركاب';
+
+  @override
+  String sharedBoardedCount(Object boarded, Object total) {
+    return '$boarded/$total تم صعودهم';
+  }
+
+  @override
+  String get sharedMarkPassengersInstruction =>
+      'قم بتحديد الركاب الذين صعدوا عند وصولهم.';
+
+  @override
+  String get sharedNoPassengersToBoard => 'لا يوجد ركاب للصعود.';
+
+  @override
+  String get sharedStartTrip => 'بدء الرحلة';
+
+  @override
+  String get sharedTripInProgress => 'الرحلة قيد التنفيذ';
+
+  @override
+  String get sharedEnRouteDestinations => 'في الطريق إلى الوجهات';
+
+  @override
+  String get sharedNoActivePassengers => 'لا يوجد ركاب نشطون في الرحلة.';
+
+  @override
+  String get sharedEndTrip => 'إنهاء الرحلة';
+
+  @override
+  String sharedPassengerNumber(Object id) {
+    return 'الراكب #$id';
+  }
+
+  @override
+  String sharedSeatsCount(Object count) {
+    return 'المقاعد: $count';
+  }
+
+  @override
+  String sharedStatus(Object status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get sharedOnBoard => 'صعد';
+
+  @override
+  String get sharedCheckIn => 'تسجيل حضور';
+
+  @override
+  String get sharedRemove => 'إزالة';
+
+  @override
+  String get sharedDropOff => 'إنزال';
+
+  @override
+  String get sharedDroppedOff => 'تم إنزاله';
+
+  @override
+  String get sharedCreateSharedRideTitle => 'إنشاء رحلة مشاركة';
+
+  @override
+  String get sharedOrigin => 'موقع الانطلاق';
+
+  @override
+  String get sharedDestination => 'الوجهة';
+
+  @override
+  String get sharedMaxPassengers => 'الحد الأقصى للركاب';
+
+  @override
+  String get sharedDepartureTime => 'وقت المغادرة';
+
+  @override
+  String get sharedNotes => 'ملاحظات / تفاصيل (اختياري)';
+
+  @override
+  String get sharedCreateAndOpenLobby => 'إنشاء وفتح غرفة الانتظار';
+
+  @override
+  String get errorNoInternet => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get errorServer => 'خطأ في الخادم';
+
+  @override
+  String get errorValidation => 'خطأ في البيانات المدخلة';
+
+  @override
+  String get errorUnauthorized => 'غير مصرح';
+
+  @override
+  String get errorSomethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String authApprovalStatus(Object status) {
+    return 'حالة الموافقة على الحساب: $status';
+  }
+
+  @override
+  String get sharedCurrentLocation => 'الموقع الحالي';
+
+  @override
+  String get sharedSelectOriginHint => 'حدد موقع الانطلاق';
+
+  @override
+  String get sharedCurrentGps => 'الموقع الحالي (GPS)';
+
+  @override
+  String get sharedPickOnMap => 'تحديد على الخريطة';
+
+  @override
+  String get sharedSelectDestinationHint => 'حدد الوجهة';
+
+  @override
+  String get sharedMaxSeats => 'الحد الأقصى للمقاعد';
+
+  @override
+  String sharedSeatsOption(Object count) {
+    return '$count مقاعد';
+  }
+
+  @override
+  String get sharedNotesHint => 'مثال: المغادرة بالقرب من البوابة 2';
+
+  @override
+  String get sharedRideCancelledToast => 'تم إلغاء الرحلة المشتركة';
+
+  @override
+  String sharedDistanceKmFormat(Object distance) {
+    return '$distance كم';
+  }
+
+  @override
+  String sharedDurationMinsFormat(Object mins) {
+    return '$mins دقيقة';
+  }
+
+  @override
+  String sharedFareAmountFormat(Object amount, Object currency) {
+    return '$amount $currency';
+  }
 }

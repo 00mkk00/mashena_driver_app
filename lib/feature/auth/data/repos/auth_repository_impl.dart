@@ -115,7 +115,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Unit>> logout() async {
     try {
       final refreshToken = _tokenManager.refreshToken;
-      await _remoteDataSource.logout(refreshToken: refreshToken ?? "");
+      await _remoteDataSource.logout(refreshToken: refreshToken ?? '');
       await _tokenManager.clearTokens(); // clear stored token
       await _localStorage.remove(
         AppConstants.driverUserKey,

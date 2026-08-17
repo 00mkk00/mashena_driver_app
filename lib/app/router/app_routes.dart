@@ -13,7 +13,7 @@ class AppRoutes {
   static const documentView = 'document-view';
   static const notificationView = 'notification-view';
   static const settingsView = 'settings-view';
-  static const historyView = 'histroy-view';
+  static const historyView = 'history-view';
 
   // route paths (للـ URL)
   static const onboardingPath = '/onboarding';

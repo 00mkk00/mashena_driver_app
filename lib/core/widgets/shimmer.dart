@@ -48,6 +48,7 @@ class _ShimmerCardState extends State<ShimmerCard>
     return AnimatedBuilder(
       animation: _shimmer,
       builder: (_, _) => Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
         width: widget.width,
         height: widget.height.h,
         decoration: BoxDecoration(

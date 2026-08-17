@@ -14,7 +14,20 @@ class CompleteTripEntity with _$CompleteTripEntity {
     double? discountAmount,
     double? finalFare,
     double? fareTotal, // parsed from String
-    bool? appliedCoupon,
+    AppliedCouponEntity? appliedCoupon,
     double? platformCommission,
   }) = _CompleteTripEntity;
 }
+
+@freezed
+class AppliedCouponEntity with _$AppliedCouponEntity {
+  const factory AppliedCouponEntity({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  }) = _AppliedCouponEntity;
+}
+

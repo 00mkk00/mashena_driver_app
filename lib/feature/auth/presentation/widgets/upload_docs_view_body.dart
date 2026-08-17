@@ -284,14 +284,6 @@ class _UploadDocsBodyState extends State<UploadDocsBody> {
 
             const SizedBox(height: 16),
 
-            /// 🚙 Type
-            Field(
-              controller: vehicleTypeController,
-              hint: S.of(context).vehicleType,
-            ),
-
-            const SizedBox(height: 16),
-
             /// 🧾 Model
             Field(
               controller: vehicleModelController,

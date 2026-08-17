@@ -42,6 +42,12 @@
   "otpResend": "Resend",
   "otpVerifyNow": "Verify Now",
   "validationRequired": "This field is required",
+  "validationEmailRequired": "Email is required",
+  "validationEmailInvalid": "Invalid email address",
+  "validationPasswordRequired": "Password is required",
+  "validationPasswordWeak": "Weak password (uppercase, lowercase, number, symbol)",
+  "validationPhoneRequired": "Phone number is required",
+  "validationPhoneInvalid": "Invalid phone number",
   "validationPasswordsNotMatch": "Passwords do not match",
   "homeGettingLocation": "Getting your location...",
   "homeEnableLocationPermission": "Enable location permission",
@@ -277,5 +283,127 @@
   "commonRetry": "Retry",
   "docsMyDocuments": "My Documents",
   "tapToCaptureVehiclePhoto": "Tap to capture or choose Vehicle photo",
-  "photoAttached": "Photo Attached"
+  "photoAttached": "Photo Attached",
+  "notificationsTitle": "Notifications",
+  "notificationsAll": "All",
+  "notificationsUnread": "Unread",
+  "notificationsMarkAllRead": "Mark all read",
+  "notificationsNoNotifications": "No notifications yet",
+  "notificationsYouAreCaughtUp": "You're all caught up!",
+  "notificationsErrorFailed": "Failed to load notifications",
+  "notificationsToday": "Today",
+  "notificationsYesterday": "Yesterday",
+  "notificationsEarlier": "Earlier",
+  "notificationsDelete": "Delete",
+  "mapPickOriginLocation": "Pick Origin Location",
+  "mapPickDestinationLocation": "Pick Destination Location",
+  "mapConfirmLocation": "Confirm Location",
+  "homeCreateSharedRide": "Create Shared Ride",
+  "sharedTripCompleted": "Trip Completed",
+  "sharedPassengers": "Passengers",
+  "sharedTotalDistance": "Total Distance",
+  "sharedTime": "Time",
+  "sharedTotalEarnings": "Total Earnings",
+  "sharedClose": "Close",
+  "sharedLobbyOpen": "Lobby Open",
+  "sharedSeatsFilled": "{occupied} / {max} Seats Filled",
+  "@sharedSeatsFilled": {
+    "placeholders": {
+      "occupied": {},
+      "max": {}
+    }
+  },
+  "sharedWaitingPassengers": "Waiting for passengers to join...",
+  "sharedNoPassengersJoined": "No passengers joined yet.",
+  "sharedCancelRide": "Cancel Ride",
+  "sharedStartBoarding": "Start Boarding",
+  "sharedBoardingPassengers": "Boarding Passengers",
+  "sharedBoardedCount": "{boarded}/{total} Boarded",
+  "@sharedBoardedCount": {
+    "placeholders": {
+      "boarded": {},
+      "total": {}
+    }
+  },
+  "sharedMarkPassengersInstruction": "Mark passengers as on board individually as they arrive.",
+  "sharedNoPassengersToBoard": "No passengers to board.",
+  "sharedStartTrip": "Start Trip",
+  "sharedTripInProgress": "Trip in Progress",
+  "sharedEnRouteDestinations": "En route to destinations",
+  "sharedNoActivePassengers": "No active passengers in trip.",
+  "sharedEndTrip": "End Trip",
+  "sharedPassengerNumber": "Passenger #{id}",
+  "@sharedPassengerNumber": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "sharedSeatsCount": "Seats: {count}",
+  "@sharedSeatsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedStatus": "Status: {status}",
+  "@sharedStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedOnBoard": "On Board",
+  "sharedCheckIn": "Check In",
+  "sharedRemove": "Remove",
+  "sharedDropOff": "Drop Off",
+  "sharedDroppedOff": "Dropped Off",
+  "sharedCreateSharedRideTitle": "Create Shared Ride",
+  "sharedOrigin": "Origin",
+  "sharedDestination": "Destination",
+  "sharedMaxPassengers": "Max Passengers",
+  "sharedDepartureTime": "Departure Time",
+  "sharedNotes": "Notes / Details (Optional)",
+  "sharedCreateAndOpenLobby": "Create & Open Lobby",
+  "errorNoInternet": "No internet connection",
+  "errorServer": "Server error",
+  "errorValidation": "Validation error",
+  "errorUnauthorized": "Unauthorized",
+  "errorSomethingWentWrong": "Something went wrong",
+  "authApprovalStatus": "Account approval status: {status}",
+  "@authApprovalStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedCurrentLocation": "Current Location",
+  "sharedSelectOriginHint": "Select origin location",
+  "sharedCurrentGps": "Current GPS",
+  "sharedPickOnMap": "Pick on Map",
+  "sharedSelectDestinationHint": "Select destination location",
+  "sharedMaxSeats": "Max Seats",
+  "sharedSeatsOption": "{count} Seats",
+  "@sharedSeatsOption": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedNotesHint": "e.g. Leaving near gate 2",
+  "sharedRideCancelledToast": "Shared ride cancelled",
+  "sharedDistanceKmFormat": "{distance} km",
+  "@sharedDistanceKmFormat": {
+    "placeholders": {
+      "distance": {}
+    }
+  },
+  "sharedDurationMinsFormat": "{mins} mins",
+  "@sharedDurationMinsFormat": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "sharedFareAmountFormat": "{amount} {currency}",
+  "@sharedFareAmountFormat": {
+    "placeholders": {
+      "amount": {},
+      "currency": {}
+    }
+  }
 }

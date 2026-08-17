@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/common/extension/responsive_context_x.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
+import 'package:mashena_driver_app/core/services/fcm_service.dart';
 import 'package:mashena_driver_app/core/utils/validators.dart';
 import 'package:mashena_driver_app/core/widgets/custom_elevated_button.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
@@ -71,13 +72,17 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   child: CustomElevatedButton(
                     title: S.of(context).authLogin,
                     isLoading: isLoading,
-                    onPressed: () {
+                    onPressed: () async {
                       if (_key.currentState!.validate()) {
-                        context.read<LoginCubit>().login(
-                          email: emailController.text,
-                          password: passwordController.text,
-                          fcmToken: "testfcmtoken",
-                        );
+                        final fcmToken =
+                            await FcmService.instance.getToken() ?? '';
+                        if (context.mounted) {
+                          context.read<LoginCubit>().login(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                fcmToken: fcmToken,
+                              );
+                        }
                       }
                     },
                   ),

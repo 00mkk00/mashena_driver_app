@@ -5,6 +5,7 @@ import 'package:mashena_driver_app/core/network/dio_client.dart';
 import 'package:mashena_driver_app/core/network/network_info.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/core/network/token_manager_impl.dart';
+import 'package:mashena_driver_app/core/services/location_geocoding_service.dart';
 import 'package:mashena_driver_app/core/storage/local_storage.dart';
 import 'package:mashena_driver_app/core/storage/local_storage_impl.dart';
 import 'package:mashena_driver_app/core/utils/image_picker.dart';
@@ -39,6 +40,16 @@ import 'package:mashena_driver_app/feature/home/domain/usecases/update_location_
 import 'package:mashena_driver_app/feature/home/domain/usecases/update_radius_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/upload_driver_docs_use_case.dart'
     as home_doc_usecase;
+import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_cubit.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/create_shared_ride_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/shared_ride_ready_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/shared_ride_start_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/shared_ride_complete_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/shared_ride_cancel_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/remove_shared_ride_passenger_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/check_in_shared_ride_passenger_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/on_board_shared_ride_passenger_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/drop_off_shared_ride_passenger_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_wallet_cubit/driver_wallet_cubit.dart';
@@ -55,6 +66,15 @@ import 'package:mashena_driver_app/feature/shared/domain/use_cases/app_settings_
 import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/cubits/locale_cubit.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/cubits/theme_cubit.dart';
+import 'package:mashena_driver_app/feature/notification/data/datasource/notification_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/notification/data/repos/notification_repository_impl.dart';
+import 'package:mashena_driver_app/feature/notification/domain/repos/notification_repository.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/delete_notification_token_use_case.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/get_notifications_use_case.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/mark_all_notifications_as_read_use_case.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/mark_notification_as_read_use_case.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/register_notification_token_use_case.dart';
+import 'package:mashena_driver_app/feature/notification/presentation/cubits/notification_cubit/notification_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -99,6 +119,10 @@ Future<void> configureDependencies() async {
 
   getIt.registerLazySingleton<TokenManager>(
     () => TokenManagerImpl(getIt<SharedPreferences>()),
+  );
+
+  getIt.registerLazySingleton<LocationGeocodingService>(
+    () => LocationGeocodingService(),
   );
 
   getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
@@ -165,7 +189,12 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(() => LogoutUseCase(getIt<AuthRepository>()));
 
   // Register LogoutCubit
-  getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt<LogoutUseCase>()));
+  getIt.registerFactory<LogoutCubit>(
+    () => LogoutCubit(
+      getIt<LogoutUseCase>(),
+      getIt<DeleteNotificationTokenUseCase>(),
+    ),
+  );
 
   ///////////////home/////////////////////
   getIt.registerLazySingleton<HomeRemoteDataSource>(
@@ -215,6 +244,33 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => home_doc_usecase.UploadDriverDocsUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(
+    () => CreateSharedRideUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => SharedRideReadyUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => SharedRideStartUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => SharedRideCompleteUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => SharedRideCancelUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => RemoveSharedRidePassengerUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => CheckInSharedRidePassengerUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => OnBoardSharedRidePassengerUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => DropOffSharedRidePassengerUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
     () => RideRequestCubit(
@@ -246,6 +302,20 @@ Future<void> configureDependencies() async {
     ),
   );
 
+  getIt.registerFactory<SharedRideCubit>(
+    () => SharedRideCubit(
+      createSharedRideUseCase: getIt<CreateSharedRideUseCase>(),
+      sharedRideReadyUseCase: getIt<SharedRideReadyUseCase>(),
+      sharedRideStartUseCase: getIt<SharedRideStartUseCase>(),
+      sharedRideCompleteUseCase: getIt<SharedRideCompleteUseCase>(),
+      sharedRideCancelUseCase: getIt<SharedRideCancelUseCase>(),
+      checkInSharedRidePassengerUseCase: getIt<CheckInSharedRidePassengerUseCase>(),
+      onBoardSharedRidePassengerUseCase: getIt<OnBoardSharedRidePassengerUseCase>(),
+      dropOffSharedRidePassengerUseCase: getIt<DropOffSharedRidePassengerUseCase>(),
+      removeSharedRidePassengerUseCase: getIt<RemoveSharedRidePassengerUseCase>(),
+    ),
+  );
+
   // ── Driver Status ────────────────────────────
 
   getIt.registerFactory(
@@ -263,6 +333,7 @@ Future<void> configureDependencies() async {
       service: getIt.get<SocketService>(),
       rideRequestCubit: params.rideRequestCubit,
       driverStatusCubit: params.driverStatusCubit,
+      sharedRideCubit: params.sharedRideCubit,
       tokenManager: getIt<TokenManager>(),
     ),
   );
@@ -301,6 +372,46 @@ Future<void> configureDependencies() async {
   getIt.registerFactory<AppSettingCubit>(
     () => AppSettingCubit(getIt<GetAppSettingUseCase>()),
   );
+
+  // notification ---------------------
+  getIt.registerLazySingleton<NotificationRemoteDataSource>(
+    () => NotificationRemoteDataSourceImpl(getIt<ApiClient>()),
+  );
+
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(
+      getIt<NotificationRemoteDataSource>(),
+      getIt<ApiClient>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<RegisterNotificationTokenUseCase>(
+    () => RegisterNotificationTokenUseCase(getIt<NotificationRepository>()),
+  );
+
+  getIt.registerLazySingleton<DeleteNotificationTokenUseCase>(
+    () => DeleteNotificationTokenUseCase(getIt<NotificationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetNotificationsUseCase>(
+    () => GetNotificationsUseCase(getIt<NotificationRepository>()),
+  );
+
+  getIt.registerLazySingleton<MarkAllNotificationsAsReadUseCase>(
+    () => MarkAllNotificationsAsReadUseCase(getIt<NotificationRepository>()),
+  );
+
+  getIt.registerLazySingleton<MarkNotificationAsReadUseCase>(
+    () => MarkNotificationAsReadUseCase(getIt<NotificationRepository>()),
+  );
+
+  getIt.registerLazySingleton<NotificationCubit>(
+    () => NotificationCubit(
+      getIt<GetNotificationsUseCase>(),
+      getIt<MarkNotificationAsReadUseCase>(),
+      getIt<MarkAllNotificationsAsReadUseCase>(),
+    ),
+  );
 }
 
 // ── Helper classes for parameterized factories ─────────────
@@ -308,10 +419,12 @@ Future<void> configureDependencies() async {
 class SocketCubitParams {
   final DriverStatusCubit driverStatusCubit;
   final RideRequestCubit rideRequestCubit;
+  final SharedRideCubit? sharedRideCubit;
 
   SocketCubitParams({
     required this.driverStatusCubit,
     required this.rideRequestCubit,
+    this.sharedRideCubit,
   });
 }
 

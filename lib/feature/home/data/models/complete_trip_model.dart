@@ -15,10 +15,25 @@ class CompleteTripModel with _$CompleteTripModel {
     num? discountAmount,
     num? finalFare,
     String? fareTotal,
-    bool? appliedCoupon,
+    AppliedCouponModel? appliedCoupon,
     num? platformCommission,
   }) = _CompleteTripModel;
 
   factory CompleteTripModel.fromJson(Map<String, dynamic> json) =>
       _$CompleteTripModelFromJson(json);
+}
+
+@freezed
+class AppliedCouponModel with _$AppliedCouponModel {
+  const factory AppliedCouponModel({
+    int? id,
+    String? code,
+    String? type,
+    num? value,
+    int? remainingUsages,
+    String? expiresAt,
+  }) = _AppliedCouponModel;
+
+  factory AppliedCouponModel.fromJson(Map<String, dynamic> json) =>
+      _$AppliedCouponModelFromJson(json);
 }

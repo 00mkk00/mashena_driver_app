@@ -9,7 +9,10 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_statu
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/socket_cubit/socket_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_cubit.dart';
 import 'package:mashena_driver_app/feature/shared/presentation/cubits/app_settings_cubit/app_settings_cubit.dart';
+
+import 'package:mashena_driver_app/feature/notification/presentation/cubits/notification_cubit/notification_cubit.dart';
 
 import '../widgets/home_view_body.dart';
 
@@ -22,11 +25,13 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final driverStatusCubit = getIt<DriverStatusCubit>();
     final rideRequestCubit = getIt<RideRequestCubit>();
+    final sharedRideCubit = getIt<SharedRideCubit>();
 
     final socketCubit = getIt.get<SocketCubit>(
       param1: SocketCubitParams(
         driverStatusCubit: driverStatusCubit,
         rideRequestCubit: rideRequestCubit,
+        sharedRideCubit: sharedRideCubit,
       ),
     );
 
@@ -35,7 +40,11 @@ class HomeView extends StatelessWidget {
         BlocProvider<LogoutCubit>(create: (_) => getIt<LogoutCubit>()),
         BlocProvider<DriverStatusCubit>(create: (_) => driverStatusCubit),
         BlocProvider<RideRequestCubit>(create: (_) => rideRequestCubit),
+        BlocProvider<SharedRideCubit>(create: (_) => sharedRideCubit),
         BlocProvider<SocketCubit>(create: (_) => socketCubit),
+        BlocProvider<NotificationCubit>.value(
+          value: getIt<NotificationCubit>()..fetchUnreadCount(),
+        ),
         BlocProvider<MapCubit>(
           create: (_) => getIt.get<MapCubit>(
             param1: MapCubitParams(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
@@ -9,9 +11,7 @@ import 'package:mashena_driver_app/core/theme/app_radius.dart';
 import 'package:mashena_driver_app/core/theme/app_shadows.dart';
 import 'package:mashena_driver_app/core/theme/app_spacing.dart';
 import 'package:mashena_driver_app/core/utils/app_font_styles.dart';
-import 'package:mashena_driver_app/core/widgets/shimmer.dart';
 import 'package:mashena_driver_app/feature/home/data/home_models.dart';
-import 'package:mashena_driver_app/feature/home/data/params/go_online_params.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/map_cubit/map_cubit.dart';
@@ -21,6 +21,8 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request
 import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/active_trip_card.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/driver_drawer.dart';
+import 'package:mashena_driver_app/feature/notification/presentation/cubits/notification_cubit/notification_cubit.dart';
+import 'package:mashena_driver_app/feature/notification/presentation/cubits/notification_cubit/notification_state.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/fab_button.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/home_top_bar.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/map_placeholder.dart';
@@ -31,6 +33,9 @@ import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_accept
 
 import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_entity.dart';
 import 'package:mashena_driver_app/feature/home/presentation/widgets/trip_summary_sheet.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_cubit.dart';
+import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/widgets/shared_ride/shared_ride_sheet_coordinator.dart';
 
 class HomeViewBody extends StatefulWidget {
   final DriverProfileModel driver;
@@ -48,6 +53,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
       drawer: DriverAppDrawer(driver: widget.driver),
       body: MultiBlocListener(
         listeners: [
@@ -79,6 +85,36 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               );
             },
           ),
+          // ── Listen for shared ride route drawing ───────────────────
+          BlocListener<SharedRideCubit, SharedRideState>(
+            listenWhen: (prev, curr) =>
+                prev.ride != curr.ride || prev.status != curr.status,
+            listener: (context, sharedRideState) {
+              final ride = sharedRideState.ride;
+              if (ride != null &&
+                  sharedRideState.status != SharedRideStatus.idle &&
+                  sharedRideState.status != SharedRideStatus.cancelled) {
+                final points = ride.routeGeometry?.points != null
+                    ? List<LatLng>.from(
+                        ride.routeGeometry!.points.map(
+                          (p) => LatLng(p.lat, p.lng),
+                        ),
+                      )
+                    : null;
+
+                context.read<MapCubit>().drawRoute(
+                  pickupLat: ride.originLat,
+                  pickupLng: ride.originLng,
+                  destinationLat: ride.destLat,
+                  destinationLng: ride.destLng,
+                  predefinedPoints: points,
+                );
+              } else if (sharedRideState.status == SharedRideStatus.idle ||
+                  sharedRideState.status == SharedRideStatus.cancelled) {
+                context.read<MapCubit>().clearRoute();
+              }
+            },
+          ),
         ],
         child: BlocConsumer<DriverStatusCubit, DriverStatusState>(
           // ── React to status transitions ──────────────────────────
@@ -103,9 +139,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   destinationLat: rideRequest.destLat,
                   destinationLng: rideRequest.destLng,
                   stops: stops,
-                  predefinedPoints: rideRequest.routeGeometry?.points
-                      .map((p) => LatLng(p.lat, p.lng))
-                      .toList(),
+                  predefinedPoints: rideRequest.routeGeometry?.points != null
+                      ? List<LatLng>.from(
+                          rideRequest.routeGeometry!.points.map(
+                            (p) => LatLng(p.lat, p.lng),
+                          ),
+                        )
+                      : null,
                 );
               }
             }
@@ -123,31 +163,36 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     // ── Layer 0: Map ───────────────────────────────
                     _buildMapLayer(mapState),
 
-                    // ── Layer 1: Overlay ───────────────────────────
+                    // ── Layer 0.5: Location Picker Center Pin ─────
+                    if (mapState.isPickingLocation)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 36.r),
+                          child: Icon(
+                            Icons.location_on_rounded,
+                            size: 48.r,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ),
+                    _buildRightFabs(context, driverState),
                     SafeArea(
                       child: Column(
                         children: [
-                          HomeTopBar(
-                            statusState: driverState,
-                            onToggleStatus: () {
-                              final position = context
-                                  .read<MapCubit>()
-                                  .state
-                                  .currentPosition;
-                              if (position == null) return;
-                              context
-                                  .read<DriverStatusCubit>()
-                                  .toggleOnlineStatus(
-                                    GoOnlineParams(
-                                      lat: position.latitude,
-                                      lng: position.longitude,
-                                    ),
-                                  );
+                          BlocBuilder<NotificationCubit, NotificationState>(
+                            buildWhen: (prev, curr) =>
+                                prev.unreadCount != curr.unreadCount,
+                            builder: (context, notificationState) {
+                              return HomeTopBar(
+                                onOpenDrawer: () =>
+                                    _scaffoldKey.currentState?.openDrawer(),
+                                onNotificationTap: () => context.pushNamed(
+                                  AppRoutes.notificationView,
+                                ),
+                                notificationCount:
+                                    notificationState.unreadCount,
+                              );
                             },
-                            onOpenDrawer: () =>
-                                _scaffoldKey.currentState?.openDrawer(),
-                            onNotificationTap: () {},
-                            notificationCount: 2,
                           ),
 
                           SizedBox(height: AppSpacing.sm.h),
@@ -164,9 +209,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         ],
                       ),
                     ),
-
-                    // ── Layer 2: Right FABs ────────────────────────
-                    _buildRightFabs(context, driverState),
                   ],
                 );
               },
@@ -242,15 +284,66 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
     return FlutterMap(
       mapController: mapState.controller!,
-      options: MapOptions(initialCenter: position, initialZoom: 16),
+      options: MapOptions(
+        initialCenter: position,
+        initialZoom: 16,
+        onPositionChanged: (camera, hasGesture) {
+          if (mapState.isPickingLocation) {
+            context.read<MapCubit>().updatePickedCenterLocation(camera.center);
+          }
+        },
+      ),
       children: [
         TileLayer(
           urlTemplate: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
           userAgentPackageName: 'com.example.mashena_driver_app',
+          tileBuilder: (context, tileWidget, tile) {
+            final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+            if (!isDarkMode) return tileWidget;
+            return ColorFiltered(
+              colorFilter: const ColorFilter.matrix([
+                -0.2126,
+                -0.7152,
+                -0.0722,
+                0,
+                255,
+                -0.2126,
+                -0.7152,
+                -0.0722,
+                0,
+                255,
+                -0.2126,
+                -0.7152,
+                -0.0722,
+                0,
+                255,
+                0,
+                0,
+                0,
+                1,
+                0,
+              ]),
+              child: tileWidget,
+            );
+          },
         ),
         CircleLayer(circles: mapState.circles),
         PolylineLayer(polylines: mapState.polylines),
-        MarkerLayer(markers: mapState.markers),
+        MarkerLayer(
+          markers: mapState.markers
+              .where(
+                (m) =>
+                    !m.point.latitude.isNaN &&
+                    !m.point.longitude.isNaN &&
+                    !m.point.latitude.isInfinite &&
+                    !m.point.longitude.isInfinite &&
+                    !m.width.isNaN &&
+                    !m.height.isNaN &&
+                    !m.width.isInfinite &&
+                    !m.height.isInfinite,
+              )
+              .toList(),
+        ),
       ],
     );
   }
@@ -260,14 +353,16 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     BuildContext context,
     DriverStatusState driverState,
   ) {
+    final mapState = context.read<MapCubit>().state;
+    if (mapState.isPickingLocation &&
+        driverState.status != DriverStatus.onSharedRide) {
+      return _buildMapPickerConfirmOverlay(context, mapState);
+    }
+
     switch (driverState.status) {
       case DriverStatus.offline:
-        return const _OfflineCard();
-
       case DriverStatus.goingOnline:
       case DriverStatus.goingOffline:
-        return ShimmerCard(height: 80.h);
-
       case DriverStatus.onlineWaiting:
         return const WaitingForRideCard();
 
@@ -291,9 +386,124 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           },
         );
 
+      case DriverStatus.onSharedRide:
+        return Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Visibility(
+              visible: !mapState.isPickingLocation,
+              maintainState: true,
+              child: SharedRideSheetCoordinator(
+                onClose: () =>
+                    context.read<DriverStatusCubit>().exitSharedRide(),
+              ),
+            ),
+            if (mapState.isPickingLocation)
+              _buildMapPickerConfirmOverlay(context, mapState),
+          ],
+        );
+
       default:
         return const SizedBox.shrink();
     }
+  }
+
+  // ─── Map Picker Confirm Overlay ───────────────────────────────────────────
+  Widget _buildMapPickerConfirmOverlay(
+    BuildContext context,
+    MapState mapState,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final center = mapState.pickedCenterLocation ?? mapState.currentPosition;
+    final isOrigin = mapState.pickerTarget == MapPickerTarget.origin;
+    final title = isOrigin
+        ? S.of(context).mapPickOriginLocation
+        : S.of(context).mapPickDestinationLocation;
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.md.r),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
+        borderRadius: BorderRadius.circular(AppRadius.lg.r),
+        boxShadow: AppShadows.card,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(
+                isOrigin ? Icons.location_on_rounded : Icons.flag_rounded,
+                color: AppColors.primaryColor,
+                size: 24.r,
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTextStyles.w600_16.copyWith(
+                    color: isDark
+                        ? AppColors.onSurfaceDark
+                        : AppColors.onSurface,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppSpacing.xs.h),
+          if (center != null)
+            Text(
+              '${center.latitude.toStringAsFixed(5)}, ${center.longitude.toStringAsFixed(5)}',
+              style: AppTextStyles.w400_14.copyWith(
+                color: isDark ? AppColors.textGreyDark : AppColors.textGrey,
+              ),
+            ),
+          SizedBox(height: AppSpacing.md.h),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () =>
+                      context.read<MapCubit>().cancelLocationPicking(),
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md.r),
+                    ),
+                  ),
+                  child: Text(
+                    S.of(context).commonCancel,
+                    style: AppTextStyles.w600_14,
+                  ),
+                ),
+              ),
+              SizedBox(width: AppSpacing.sm.w),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton(
+                  onPressed: () =>
+                      context.read<MapCubit>().confirmLocationSelection(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md.r),
+                    ),
+                  ),
+                  child: Text(
+                    S.of(context).mapConfirmLocation,
+                    style: AppTextStyles.w600_14.copyWith(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   // ─── Right FABs ────────────────────────────────────────────────────────────
@@ -323,77 +533,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             //     onActivate: () =>
             //         context.read<DriverStatusCubit>().triggerSos(),
             //   ),
+            if (driverState.isOnline) ...[
+              SizedBox(height: AppSpacing.sm.h),
+              FabButton(
+                icon: Icons.group_add_rounded,
+                onTap: () {
+                  context.read<DriverStatusCubit>().startSharedRide();
+                },
+                tooltip: S.of(context).homeCreateSharedRide,
+              ),
+            ],
           ],
         ),
       ),
-    );
-  }
-}
-
-// ─── Offline Card ──────────────────────────────────────────────────────────────
-class _OfflineCard extends StatelessWidget {
-  const _OfflineCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return BlocBuilder<DriverStatusCubit, DriverStatusState>(
-      builder: (context, state) {
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
-          padding: EdgeInsets.all(AppSpacing.md.r),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.cardDark : AppColors.cardLight,
-            borderRadius: BorderRadius.circular(AppRadius.lg.r),
-            boxShadow: AppShadows.card,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 44.r,
-                height: 44.r,
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? AppColors.surfaceVariantDark
-                      : AppColors.offlineSurface,
-                  borderRadius: BorderRadius.circular(AppRadius.sm.r),
-                ),
-                child: Icon(
-                  Icons.power_settings_new_rounded,
-                  color: AppColors.offline,
-                  size: 24.r,
-                ),
-              ),
-              SizedBox(width: AppSpacing.md.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      S.of(context).homeOffline,
-                      style: AppTextStyles.w600_14.copyWith(
-                        color: isDark
-                            ? AppColors.onSurfaceDark
-                            : AppColors.onSurface,
-                      ),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      S.of(context).homeGoOnlineHint,
-                      style: AppTextStyles.w400_12.copyWith(
-                        color: isDark
-                            ? AppColors.textGreyDark
-                            : AppColors.textGrey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

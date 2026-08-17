@@ -387,7 +387,15 @@ class TripSummarySheet extends StatelessWidget {
                                 summary.discountAmount! > 0)
                               _buildBreakdownRow(
                                 context,
-                                '${S.of(context).tripSummaryDiscount}${summary.appliedCoupon == true ? S.of(context).tripSummaryCoupon : ''}',
+                                summary.appliedCoupon != null
+                                    ? (summary.appliedCoupon!.code != null &&
+                                              summary
+                                                  .appliedCoupon!
+                                                  .code!
+                                                  .isNotEmpty
+                                          ? '${S.of(context).tripSummaryDiscount} (${summary.appliedCoupon!.code})'
+                                          : '${S.of(context).tripSummaryDiscount}${S.of(context).tripSummaryCoupon}')
+                                    : S.of(context).tripSummaryDiscount,
                                 summary.discountAmount!,
                                 isDiscount: true,
                               ),

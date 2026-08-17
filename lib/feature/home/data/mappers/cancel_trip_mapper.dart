@@ -3,6 +3,6 @@ import 'package:mashena_driver_app/feature/home/domain/entities/cancel_trip_enti
 
 extension CancelTripMapper on CancelTripModel {
   CancelTripEntity toEntity() {
-    return CancelTripEntity(message: message ?? "k");
+    return CancelTripEntity(message: message ?? 'k');
   }
 }

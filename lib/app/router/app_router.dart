@@ -9,6 +9,7 @@ import 'package:mashena_driver_app/feature/auth/domain/usecases/send_otp_usecase
 import 'package:mashena_driver_app/feature/auth/domain/usecases/signup_usecase.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/upload_docs.dart';
 import 'package:mashena_driver_app/feature/auth/domain/usecases/verify_otp_usecase.dart';
+import 'package:mashena_driver_app/feature/notification/domain/usecases/register_notification_token_use_case.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/signup_cubit/signup_cubit.dart';
 import 'package:mashena_driver_app/feature/auth/presentation/cubits/upload_docs_cubit/upload_docs_cubit.dart';
@@ -20,6 +21,7 @@ import 'package:mashena_driver_app/feature/auth/presentation/views/verify_otp_vi
 import 'package:mashena_driver_app/feature/home/presentation/views/edit_docments_view.dart';
 import 'package:mashena_driver_app/feature/home/presentation/views/history_view.dart';
 import 'package:mashena_driver_app/feature/home/presentation/views/home_view.dart';
+import 'package:mashena_driver_app/feature/home/presentation/views/notification_view.dart';
 import 'package:mashena_driver_app/feature/home/presentation/views/profile_view.dart';
 import 'package:mashena_driver_app/feature/home/presentation/views/wallet_view.dart';
 import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboarding_status_usecase.dart';
@@ -89,6 +91,8 @@ final class AppRouter {
           create: (context) => LoginCubit(
             loginUseCase: getIt<LoginUseCase>(),
             sendOtpUseCase: getIt<SendOtpUseCase>(),
+            registerNotificationTokenUseCase:
+                getIt<RegisterNotificationTokenUseCase>(),
           ),
           child: const LoginView(),
         ),
@@ -141,7 +145,7 @@ final class AppRouter {
 
       GoRoute(
         path: AppRoutes.walletViewPath,
-        name: AppRoutes.walletViewPath,
+        name: AppRoutes.walletView,
         builder: (context, state) => WalletView(),
       ),
       GoRoute(
@@ -162,8 +166,13 @@ final class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.historyViewPath,
-        name: AppRoutes.historyViewPath,
+        name: AppRoutes.historyView,
         builder: (context, state) => HistoryView(),
+      ),
+      GoRoute(
+        path: AppRoutes.notificationViewPath,
+        name: AppRoutes.notificationView,
+        builder: (context, state) => const NotificationsView(),
       ),
     ],
 

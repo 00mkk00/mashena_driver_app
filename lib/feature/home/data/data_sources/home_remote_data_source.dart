@@ -27,6 +27,16 @@ import 'package:mashena_driver_app/feature/home/data/params/get_driver_trip_hist
 import 'package:mashena_driver_app/feature/home/data/params/get_rating_tags_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/rate_trip_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/upload_driver_docs_params.dart';
+import 'package:mashena_driver_app/feature/home/data/models/shared_ride_model.dart';
+import 'package:mashena_driver_app/feature/home/data/params/create_shared_ride_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_ready_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_start_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_complete_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/shared_ride_cancel_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/remove_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/check_in_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/on_board_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/drop_off_shared_ride_passenger_params.dart';
 
 abstract class HomeRemoteDataSource {
   Future<void> goOnline(GoOnlineParams params);
@@ -46,6 +56,15 @@ abstract class HomeRemoteDataSource {
   Future<List<RatingTagModel>> getRatingTags(GetRatingTagsParams params);
   Future<List<DriverDocumentModel>> getDriverDocuments();
   Future<void> uploadDocuments(UploadDriverDocsParams params);
+  Future<SharedRideModel> createSharedRide(CreateSharedRideParams params);
+  Future<SharedRideModel> sharedRideReady(SharedRideReadyParams params);
+  Future<SharedRideModel> sharedRideStart(SharedRideStartParams params);
+  Future<SharedRideModel> sharedRideComplete(SharedRideCompleteParams params);
+  Future<SharedRideModel> sharedRideCancel(SharedRideCancelParams params);
+  Future<SharedRideModel> removeSharedRidePassenger(RemoveSharedRidePassengerParams params);
+  Future<SharedRidePassengerModel> checkInSharedRidePassenger(CheckInSharedRidePassengerParams params);
+  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(OnBoardSharedRidePassengerParams params);
+  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(DropOffSharedRidePassengerParams params);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -194,20 +213,135 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<void> uploadDocuments(UploadDriverDocsParams params) async {
     final Map<String, dynamic> map = {
-      "driverProfileId": params.driverProfileId,
-      "docType": params.docType.name,
-      "file": await MultipartFile.fromFile(params.filePath),
+      'driverProfileId': params.driverProfileId,
+      'docType': params.docType.name,
+      'file': await MultipartFile.fromFile(params.filePath),
     };
 
     if (params.issuedAt != null && params.issuedAt!.isNotEmpty) {
-      map["issuedAt"] = params.issuedAt;
+      map['issuedAt'] = params.issuedAt;
     }
     if (params.expiresAt != null && params.expiresAt!.isNotEmpty) {
-      map["expiresAt"] = params.expiresAt;
+      map['expiresAt'] = params.expiresAt;
     }
 
     final formData = FormData.fromMap(map);
 
     await apiClient.post(Endpoints.uploadNewDoc, body: formData);
+  }
+
+  @override
+  Future<SharedRideModel> createSharedRide(CreateSharedRideParams params) async {
+    final response = await apiClient.post(
+      Endpoints.createSharedRide,
+      body: params.toJson(),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRideModel> sharedRideReady(SharedRideReadyParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.sharedRideReady.replaceAll('{id}', params.id.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRideModel> sharedRideStart(SharedRideStartParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.sharedRideStart.replaceAll('{id}', params.id.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRideModel> sharedRideComplete(SharedRideCompleteParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.sharedRideComplete.replaceAll('{id}', params.id.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRideModel> sharedRideCancel(SharedRideCancelParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.sharedRideCancel.replaceAll('{id}', params.id.toString()),
+      body: params.reason != null ? {'reason': params.reason} : null,
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRideModel> removeSharedRidePassenger(RemoveSharedRidePassengerParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.removeSharedRidePassenger
+          .replaceAll('{id}', params.id.toString())
+          .replaceAll('{passengerId}', params.passengerId.toString()),
+      body: params.reason != null ? {'reason': params.reason} : null,
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRideModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRidePassengerModel> checkInSharedRidePassenger(CheckInSharedRidePassengerParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.checkInSharedRidePassenger
+          .replaceAll('{id}', params.id.toString())
+          .replaceAll('{passengerId}', params.passengerId.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(OnBoardSharedRidePassengerParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.onBoardSharedRidePassenger
+          .replaceAll('{id}', params.id.toString())
+          .replaceAll('{passengerId}', params.passengerId.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(DropOffSharedRidePassengerParams params) async {
+    final response = await apiClient.patch(
+      Endpoints.dropOffSharedRidePassenger
+          .replaceAll('{id}', params.id.toString())
+          .replaceAll('{passengerId}', params.passengerId.toString()),
+      body: {
+        'seatsToDrop': params.seatsToDrop,
+        'currentLat': params.currentLat,
+        'currentLng': params.currentLng,
+      },
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
   }
 }

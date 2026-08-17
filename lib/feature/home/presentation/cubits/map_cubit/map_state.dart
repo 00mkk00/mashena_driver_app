@@ -3,6 +3,20 @@ import 'package:latlong2/latlong.dart';
 
 enum MapLoadStatus { initial, loading, loaded, error, permissionDenied }
 
+enum MapPickerTarget { origin, destination }
+
+class MapLocationSelection {
+  final double lat;
+  final double lng;
+  final String address;
+
+  const MapLocationSelection({
+    required this.lat,
+    required this.lng,
+    required this.address,
+  });
+}
+
 class MapState {
   final MapLoadStatus status;
   final double? latitude;
@@ -16,6 +30,13 @@ class MapState {
   final String? errorMessage;
   final String? locationSyncError;
 
+  // ── Location Picking on Home Map ──
+  final bool isPickingLocation;
+  final MapPickerTarget? pickerTarget;
+  final LatLng? pickedCenterLocation;
+  final MapLocationSelection? draftOrigin;
+  final MapLocationSelection? draftDestination;
+
   const MapState({
     this.status = MapLoadStatus.initial,
     this.latitude,
@@ -28,6 +49,11 @@ class MapState {
     this.isDarkMode = false,
     this.errorMessage,
     this.locationSyncError,
+    this.isPickingLocation = false,
+    this.pickerTarget,
+    this.pickedCenterLocation,
+    this.draftOrigin,
+    this.draftDestination,
   });
 
   LatLng? get currentPosition => (latitude != null && longitude != null)
@@ -51,6 +77,15 @@ class MapState {
     bool clearErrorMessage = false,
     String? locationSyncError,
     bool clearLocationSyncError = false,
+    bool? isPickingLocation,
+    MapPickerTarget? pickerTarget,
+    bool clearPickerTarget = false,
+    LatLng? pickedCenterLocation,
+    bool clearPickedCenterLocation = false,
+    MapLocationSelection? draftOrigin,
+    bool clearDraftOrigin = false,
+    MapLocationSelection? draftDestination,
+    bool clearDraftDestination = false,
   }) => MapState(
     status: status ?? this.status,
     latitude: latitude ?? this.latitude,
@@ -65,5 +100,14 @@ class MapState {
     locationSyncError: clearLocationSyncError
         ? null
         : locationSyncError ?? this.locationSyncError,
+    isPickingLocation: isPickingLocation ?? this.isPickingLocation,
+    pickerTarget: clearPickerTarget ? null : (pickerTarget ?? this.pickerTarget),
+    pickedCenterLocation: clearPickedCenterLocation
+        ? null
+        : (pickedCenterLocation ?? this.pickedCenterLocation),
+    draftOrigin: clearDraftOrigin ? null : (draftOrigin ?? this.draftOrigin),
+    draftDestination: clearDraftDestination
+        ? null
+        : (draftDestination ?? this.draftDestination),
   );
 }

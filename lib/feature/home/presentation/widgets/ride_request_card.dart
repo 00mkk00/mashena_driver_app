@@ -117,7 +117,8 @@ class _RideRequestCardState extends State<RideRequestCard>
                         final id = context
                             .read<RideRequestCubit>()
                             .state
-                            .rideRequestId!;
+                            .rideRequestId;
+                        if (id == null) return;
                         final sent = context.read<SocketCubit>().acceptOffer(
                           id,
                         );
@@ -136,7 +137,8 @@ class _RideRequestCardState extends State<RideRequestCard>
                         final id = context
                             .read<RideRequestCubit>()
                             .state
-                            .rideRequestId!;
+                            .rideRequestId;
+                        if (id == null) return;
                         final sent = context.read<SocketCubit>().rejectOffer(
                           id,
                         );
