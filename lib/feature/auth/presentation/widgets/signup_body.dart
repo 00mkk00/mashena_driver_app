@@ -31,7 +31,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final cityController = TextEditingController();
 
   String? imagePath;
   final imageService = getIt<ImagePickerService>();
@@ -132,7 +131,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
     phoneController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    cityController.dispose();
     super.dispose();
   }
 
@@ -251,17 +249,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                 return null;
               },
             ),
-            const SizedBox(height: 20),
-            Field(
-              hint: S.of(context).authCity,
-              autofillHints: const [AutofillHints.addressCity],
-              keyboardType: TextInputType.text,
-              controller: cityController,
-              validator: (value) => Validators.requiredStringField(
-                value,
-                message: 'يرجى إدخال المدينة',
-              ),
-            ),
+           
             const SizedBox(height: 20),
             BlocBuilder<SignupCubit, SignupState>(
               builder: (context, state) {
@@ -281,7 +269,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                           email: emailController.text,
                           phoneNumber: phoneController.text,
                           password: passwordController.text,
-                          city: cityController.text,
                           file: imagePath,
                         );
                         await context.read<SignupCubit>().signup(params);

@@ -367,6 +367,7 @@
   "errorValidation": "خطأ في البيانات المدخلة",
   "errorUnauthorized": "غير مصرح",
   "errorSomethingWentWrong": "حدث خطأ ما",
+  "authNoApprovalRequest": "ليس لديك طلب موافقة حتى الآن.",
   "authApprovalStatus": "حالة الموافقة على الحساب: {status}",
   "@authApprovalStatus": {
     "placeholders": {

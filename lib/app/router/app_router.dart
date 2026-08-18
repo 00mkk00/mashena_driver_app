@@ -110,7 +110,7 @@ final class AppRouter {
         path: AppRoutes.verificationPath,
         name: AppRoutes.verification,
         builder: (context, state) {
-          final data = state.extra as Map<String, dynamic>;
+          final data = state.extra as Map<String, dynamic>?;
 
           return BlocProvider(
             create: (context) => VerifyOtpCubit(
@@ -118,8 +118,8 @@ final class AppRouter {
               sendOtpUseCase: getIt<SendOtpUseCase>(),
             ),
             child: VerificationView(
-              userId: data['userId'] is int ? data['userId'] : 0,
-              email: data['email'] ?? '',
+              userId: (data?['userId'] as num?)?.toInt() ?? 0,
+              email: data?['email'] as String? ?? '',
             ),
           );
         },
@@ -130,7 +130,7 @@ final class AppRouter {
 
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>?;
-          final userId = data?['userId'] ?? 0;
+          final userId = (data?['userId'] as num?)?.toInt() ?? 0;
           return BlocProvider(
             create: (_) => UploadDocsCubit(getIt<UploadDriverDocsUseCase>()),
             child: UploadDocsView(userId: userId),

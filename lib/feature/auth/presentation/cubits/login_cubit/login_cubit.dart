@@ -65,7 +65,8 @@ class LoginCubit extends Cubit<LoginState> {
             );
           } else if (!hasApprovalRequest) {
             // Verified but no documents uploaded → needs upload
-            emit(LoginState.needsUpload(null));
+            log(userId.toString());
+            emit(LoginState.needsUpload(userId: userId));
           } else {
             // Has a request → show approval status (pending / rejected / etc.)
             emit(LoginState.approvalStatus(approvalRequestStatus ?? ''));
@@ -93,6 +94,8 @@ class LoginCubit extends Cubit<LoginState> {
         if (info.approvalRequestStatus ==
             DriverApprovalRequestStatus.approved) {
           emit(LoginState.success(data));
+        } else if (!info.hasApprovalRequest) {
+          emit(LoginState.needsUpload(userId: data.user.id));
         } else {
           // Approved login but approval still pending/rejected → show status
           emit(

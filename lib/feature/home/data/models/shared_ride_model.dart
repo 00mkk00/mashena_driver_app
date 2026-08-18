@@ -9,6 +9,7 @@ class SharedRidePassengerModel with _$SharedRidePassengerModel {
     int? id,
     int? sharedRideId,
     int? riderProfileId,
+    String? riderName,
     String? status,
     String? paymentStatus,
     int? seatsNeeded,

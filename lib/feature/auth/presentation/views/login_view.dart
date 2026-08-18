@@ -29,18 +29,15 @@ class LoginView extends StatelessWidget {
               },
 
               /// 📤 Needs Upload
-              needsUpload: (auth) {
-                context.go(
-                  AppRoutes.uploadDocsPath,
-                  extra: {"userId": auth?.user.driverProfile.id ?? 0},
-                );
+              needsUpload: (userId) {
+                context.go(AppRoutes.uploadDocsPath, extra: {'userId': userId});
               },
 
               /// ℹ️ Approval Status
               approvalStatus: (status) {
                 if (status == 'no_approval_request') {
                   context.showInfoToast(
-                    "You don't have an approval request yet.",
+                    S.of(context).authNoApprovalRequest,
                   );
                 } else {
                   context.showInfoToast(
@@ -52,7 +49,7 @@ class LoginView extends StatelessWidget {
               requireOtp: (userId, email) {
                 context.pushNamed(
                   AppRoutes.verification,
-                  extra: {"userId": userId, "email": email},
+                  extra: {'userId': userId, 'email': email},
                 );
               },
 

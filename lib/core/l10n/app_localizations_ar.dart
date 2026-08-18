@@ -862,6 +862,9 @@ class SAr extends S {
   String get errorSomethingWentWrong => 'حدث خطأ ما';
 
   @override
+  String get authNoApprovalRequest => 'ليس لديك طلب موافقة حتى الآن.';
+
+  @override
   String authApprovalStatus(Object status) {
     return 'حالة الموافقة على الحساب: $status';
   }

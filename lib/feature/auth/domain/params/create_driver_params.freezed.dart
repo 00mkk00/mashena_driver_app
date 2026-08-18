@@ -25,7 +25,7 @@ mixin _$CreateDriverParams {
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  String get city => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
   String? get file => throw _privateConstructorUsedError;
 
   /// Serializes this CreateDriverParams to a JSON map.
@@ -50,7 +50,7 @@ abstract class $CreateDriverParamsCopyWith<$Res> {
     String email,
     String phoneNumber,
     String password,
-    String city,
+    String? city,
     String? file,
   });
 }
@@ -74,7 +74,7 @@ class _$CreateDriverParamsCopyWithImpl<$Res, $Val extends CreateDriverParams>
     Object? email = null,
     Object? phoneNumber = null,
     Object? password = null,
-    Object? city = null,
+    Object? city = freezed,
     Object? file = freezed,
   }) {
     return _then(
@@ -95,10 +95,10 @@ class _$CreateDriverParamsCopyWithImpl<$Res, $Val extends CreateDriverParams>
                 ? _value.password
                 : password // ignore: cast_nullable_to_non_nullable
                       as String,
-            city: null == city
+            city: freezed == city
                 ? _value.city
                 : city // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as String?,
             file: freezed == file
                 ? _value.file
                 : file // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$CreateDriverParamsImplCopyWith<$Res>
     String email,
     String phoneNumber,
     String password,
-    String city,
+    String? city,
     String? file,
   });
 }
@@ -146,7 +146,7 @@ class __$$CreateDriverParamsImplCopyWithImpl<$Res>
     Object? email = null,
     Object? phoneNumber = null,
     Object? password = null,
-    Object? city = null,
+    Object? city = freezed,
     Object? file = freezed,
   }) {
     return _then(
@@ -167,10 +167,10 @@ class __$$CreateDriverParamsImplCopyWithImpl<$Res>
             ? _value.password
             : password // ignore: cast_nullable_to_non_nullable
                   as String,
-        city: null == city
+        city: freezed == city
             ? _value.city
             : city // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as String?,
         file: freezed == file
             ? _value.file
             : file // ignore: cast_nullable_to_non_nullable
@@ -188,7 +188,7 @@ class _$CreateDriverParamsImpl implements _CreateDriverParams {
     required this.email,
     required this.phoneNumber,
     required this.password,
-    required this.city,
+    this.city,
     this.file,
   });
 
@@ -204,7 +204,7 @@ class _$CreateDriverParamsImpl implements _CreateDriverParams {
   @override
   final String password;
   @override
-  final String city;
+  final String? city;
   @override
   final String? file;
 
@@ -264,7 +264,7 @@ abstract class _CreateDriverParams implements CreateDriverParams {
     required final String email,
     required final String phoneNumber,
     required final String password,
-    required final String city,
+    final String? city,
     final String? file,
   }) = _$CreateDriverParamsImpl;
 
@@ -280,7 +280,7 @@ abstract class _CreateDriverParams implements CreateDriverParams {
   @override
   String get password;
   @override
-  String get city;
+  String? get city;
   @override
   String? get file;
 

@@ -26,6 +26,7 @@ mixin _$SharedRidePassengerModel {
   int? get id => throw _privateConstructorUsedError;
   int? get sharedRideId => throw _privateConstructorUsedError;
   int? get riderProfileId => throw _privateConstructorUsedError;
+  String? get riderName => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get paymentStatus => throw _privateConstructorUsedError;
   int? get seatsNeeded => throw _privateConstructorUsedError;
@@ -63,6 +64,7 @@ abstract class $SharedRidePassengerModelCopyWith<$Res> {
     int? id,
     int? sharedRideId,
     int? riderProfileId,
+    String? riderName,
     String? status,
     String? paymentStatus,
     int? seatsNeeded,
@@ -102,6 +104,7 @@ class _$SharedRidePassengerModelCopyWithImpl<
     Object? id = freezed,
     Object? sharedRideId = freezed,
     Object? riderProfileId = freezed,
+    Object? riderName = freezed,
     Object? status = freezed,
     Object? paymentStatus = freezed,
     Object? seatsNeeded = freezed,
@@ -132,6 +135,10 @@ class _$SharedRidePassengerModelCopyWithImpl<
                 ? _value.riderProfileId
                 : riderProfileId // ignore: cast_nullable_to_non_nullable
                       as int?,
+            riderName: freezed == riderName
+                ? _value.riderName
+                : riderName // ignore: cast_nullable_to_non_nullable
+                      as String?,
             status: freezed == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
@@ -211,6 +218,7 @@ abstract class _$$SharedRidePassengerModelImplCopyWith<$Res>
     int? id,
     int? sharedRideId,
     int? riderProfileId,
+    String? riderName,
     String? status,
     String? paymentStatus,
     int? seatsNeeded,
@@ -250,6 +258,7 @@ class __$$SharedRidePassengerModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? sharedRideId = freezed,
     Object? riderProfileId = freezed,
+    Object? riderName = freezed,
     Object? status = freezed,
     Object? paymentStatus = freezed,
     Object? seatsNeeded = freezed,
@@ -280,6 +289,10 @@ class __$$SharedRidePassengerModelImplCopyWithImpl<$Res>
             ? _value.riderProfileId
             : riderProfileId // ignore: cast_nullable_to_non_nullable
                   as int?,
+        riderName: freezed == riderName
+            ? _value.riderName
+            : riderName // ignore: cast_nullable_to_non_nullable
+                  as String?,
         status: freezed == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
@@ -352,6 +365,7 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
     this.id,
     this.sharedRideId,
     this.riderProfileId,
+    this.riderName,
     this.status,
     this.paymentStatus,
     this.seatsNeeded,
@@ -378,6 +392,8 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
   final int? sharedRideId;
   @override
   final int? riderProfileId;
+  @override
+  final String? riderName;
   @override
   final String? status;
   @override
@@ -411,7 +427,7 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
 
   @override
   String toString() {
-    return 'SharedRidePassengerModel(id: $id, sharedRideId: $sharedRideId, riderProfileId: $riderProfileId, status: $status, paymentStatus: $paymentStatus, seatsNeeded: $seatsNeeded, activeSeats: $activeSeats, totalPaidFare: $totalPaidFare, finalDistanceKm: $finalDistanceKm, finalDurationSec: $finalDurationSec, finalFare: $finalFare, joinedAt: $joinedAt, checkedInAt: $checkedInAt, onBoardAt: $onBoardAt, droppedOffAt: $droppedOffAt, canceledAt: $canceledAt, removedAt: $removedAt, removeReason: $removeReason)';
+    return 'SharedRidePassengerModel(id: $id, sharedRideId: $sharedRideId, riderProfileId: $riderProfileId, riderName: $riderName, status: $status, paymentStatus: $paymentStatus, seatsNeeded: $seatsNeeded, activeSeats: $activeSeats, totalPaidFare: $totalPaidFare, finalDistanceKm: $finalDistanceKm, finalDurationSec: $finalDurationSec, finalFare: $finalFare, joinedAt: $joinedAt, checkedInAt: $checkedInAt, onBoardAt: $onBoardAt, droppedOffAt: $droppedOffAt, canceledAt: $canceledAt, removedAt: $removedAt, removeReason: $removeReason)';
   }
 
   @override
@@ -424,6 +440,8 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
                 other.sharedRideId == sharedRideId) &&
             (identical(other.riderProfileId, riderProfileId) ||
                 other.riderProfileId == riderProfileId) &&
+            (identical(other.riderName, riderName) ||
+                other.riderName == riderName) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.paymentStatus, paymentStatus) ||
                 other.paymentStatus == paymentStatus) &&
@@ -457,11 +475,12 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     runtimeType,
     id,
     sharedRideId,
     riderProfileId,
+    riderName,
     status,
     paymentStatus,
     seatsNeeded,
@@ -477,7 +496,7 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
     canceledAt,
     removedAt,
     removeReason,
-  );
+  ]);
 
   /// Create a copy of SharedRidePassengerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -501,6 +520,7 @@ abstract class _SharedRidePassengerModel implements SharedRidePassengerModel {
     final int? id,
     final int? sharedRideId,
     final int? riderProfileId,
+    final String? riderName,
     final String? status,
     final String? paymentStatus,
     final int? seatsNeeded,
@@ -527,6 +547,8 @@ abstract class _SharedRidePassengerModel implements SharedRidePassengerModel {
   int? get sharedRideId;
   @override
   int? get riderProfileId;
+  @override
+  String? get riderName;
   @override
   String? get status;
   @override

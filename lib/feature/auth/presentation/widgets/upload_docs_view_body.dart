@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +69,7 @@ class _UploadDocsBodyState extends State<UploadDocsBody> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.userId.toString());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SingleChildScrollView(

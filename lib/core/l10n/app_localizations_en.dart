@@ -863,6 +863,10 @@ class SEn extends S {
   String get errorSomethingWentWrong => 'Something went wrong';
 
   @override
+  String get authNoApprovalRequest =>
+      'You don\'t have an approval request yet.';
+
+  @override
   String authApprovalStatus(Object status) {
     return 'Account approval status: $status';
   }

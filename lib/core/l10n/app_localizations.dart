@@ -1699,6 +1699,12 @@ abstract class S {
   /// **'Something went wrong'**
   String get errorSomethingWentWrong;
 
+  /// No description provided for @authNoApprovalRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have an approval request yet.'**
+  String get authNoApprovalRequest;
+
   /// No description provided for @authApprovalStatus.
   ///
   /// In en, this message translates to:

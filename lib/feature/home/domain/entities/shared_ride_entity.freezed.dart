@@ -20,6 +20,7 @@ mixin _$SharedRidePassengerEntity {
   int get id => throw _privateConstructorUsedError;
   int get sharedRideId => throw _privateConstructorUsedError;
   int get riderProfileId => throw _privateConstructorUsedError;
+  String get riderName => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get paymentStatus => throw _privateConstructorUsedError;
   int get seatsNeeded => throw _privateConstructorUsedError;
@@ -54,6 +55,7 @@ abstract class $SharedRidePassengerEntityCopyWith<$Res> {
     int id,
     int sharedRideId,
     int riderProfileId,
+    String riderName,
     String status,
     String paymentStatus,
     int seatsNeeded,
@@ -93,6 +95,7 @@ class _$SharedRidePassengerEntityCopyWithImpl<
     Object? id = null,
     Object? sharedRideId = null,
     Object? riderProfileId = null,
+    Object? riderName = null,
     Object? status = null,
     Object? paymentStatus = null,
     Object? seatsNeeded = null,
@@ -123,6 +126,10 @@ class _$SharedRidePassengerEntityCopyWithImpl<
                 ? _value.riderProfileId
                 : riderProfileId // ignore: cast_nullable_to_non_nullable
                       as int,
+            riderName: null == riderName
+                ? _value.riderName
+                : riderName // ignore: cast_nullable_to_non_nullable
+                      as String,
             status: null == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
@@ -202,6 +209,7 @@ abstract class _$$SharedRidePassengerEntityImplCopyWith<$Res>
     int id,
     int sharedRideId,
     int riderProfileId,
+    String riderName,
     String status,
     String paymentStatus,
     int seatsNeeded,
@@ -241,6 +249,7 @@ class __$$SharedRidePassengerEntityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? sharedRideId = null,
     Object? riderProfileId = null,
+    Object? riderName = null,
     Object? status = null,
     Object? paymentStatus = null,
     Object? seatsNeeded = null,
@@ -271,6 +280,10 @@ class __$$SharedRidePassengerEntityImplCopyWithImpl<$Res>
             ? _value.riderProfileId
             : riderProfileId // ignore: cast_nullable_to_non_nullable
                   as int,
+        riderName: null == riderName
+            ? _value.riderName
+            : riderName // ignore: cast_nullable_to_non_nullable
+                  as String,
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
@@ -343,6 +356,7 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
     required this.id,
     required this.sharedRideId,
     required this.riderProfileId,
+    required this.riderName,
     required this.status,
     required this.paymentStatus,
     required this.seatsNeeded,
@@ -366,6 +380,8 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
   final int sharedRideId;
   @override
   final int riderProfileId;
+  @override
+  final String riderName;
   @override
   final String status;
   @override
@@ -399,7 +415,7 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
 
   @override
   String toString() {
-    return 'SharedRidePassengerEntity(id: $id, sharedRideId: $sharedRideId, riderProfileId: $riderProfileId, status: $status, paymentStatus: $paymentStatus, seatsNeeded: $seatsNeeded, activeSeats: $activeSeats, totalPaidFare: $totalPaidFare, finalDistanceKm: $finalDistanceKm, finalDurationSec: $finalDurationSec, finalFare: $finalFare, joinedAt: $joinedAt, checkedInAt: $checkedInAt, onBoardAt: $onBoardAt, droppedOffAt: $droppedOffAt, canceledAt: $canceledAt, removedAt: $removedAt, removeReason: $removeReason)';
+    return 'SharedRidePassengerEntity(id: $id, sharedRideId: $sharedRideId, riderProfileId: $riderProfileId, riderName: $riderName, status: $status, paymentStatus: $paymentStatus, seatsNeeded: $seatsNeeded, activeSeats: $activeSeats, totalPaidFare: $totalPaidFare, finalDistanceKm: $finalDistanceKm, finalDurationSec: $finalDurationSec, finalFare: $finalFare, joinedAt: $joinedAt, checkedInAt: $checkedInAt, onBoardAt: $onBoardAt, droppedOffAt: $droppedOffAt, canceledAt: $canceledAt, removedAt: $removedAt, removeReason: $removeReason)';
   }
 
   @override
@@ -412,6 +428,8 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
                 other.sharedRideId == sharedRideId) &&
             (identical(other.riderProfileId, riderProfileId) ||
                 other.riderProfileId == riderProfileId) &&
+            (identical(other.riderName, riderName) ||
+                other.riderName == riderName) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.paymentStatus, paymentStatus) ||
                 other.paymentStatus == paymentStatus) &&
@@ -444,11 +462,12 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     runtimeType,
     id,
     sharedRideId,
     riderProfileId,
+    riderName,
     status,
     paymentStatus,
     seatsNeeded,
@@ -464,7 +483,7 @@ class _$SharedRidePassengerEntityImpl implements _SharedRidePassengerEntity {
     canceledAt,
     removedAt,
     removeReason,
-  );
+  ]);
 
   /// Create a copy of SharedRidePassengerEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -483,6 +502,7 @@ abstract class _SharedRidePassengerEntity implements SharedRidePassengerEntity {
     required final int id,
     required final int sharedRideId,
     required final int riderProfileId,
+    required final String riderName,
     required final String status,
     required final String paymentStatus,
     required final int seatsNeeded,
@@ -506,6 +526,8 @@ abstract class _SharedRidePassengerEntity implements SharedRidePassengerEntity {
   int get sharedRideId;
   @override
   int get riderProfileId;
+  @override
+  String get riderName;
   @override
   String get status;
   @override

@@ -28,7 +28,7 @@ class SignupCubit extends Cubit<SignupState> {
 
       /// ✅ Success
       (driver) {
-        emit(SignupState.requireOtp(driver.email, driver.driverProfile.id));
+        emit(SignupState.requireOtp(driver.email, driver.id));
       },
     );
   }

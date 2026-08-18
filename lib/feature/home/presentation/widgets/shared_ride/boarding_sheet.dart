@@ -236,7 +236,9 @@ class BoardingSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  S.of(context).sharedPassengerNumber(p.riderProfileId),
+                  p.riderName.isNotEmpty
+                      ? p.riderName
+                      : S.of(context).sharedPassengerNumber(p.riderProfileId),
                   style: AppTextStyles.w600_16.copyWith(
                     color: isDark
                         ? AppColors.onSurfaceDark

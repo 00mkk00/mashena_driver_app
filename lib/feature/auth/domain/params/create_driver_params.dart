@@ -10,7 +10,7 @@ class CreateDriverParams with _$CreateDriverParams {
     required String email,
     required String phoneNumber,
     required String password,
-    required String city,
+    String? city,
     String? file,
   }) = _CreateDriverParams;
 

@@ -9,6 +9,7 @@ class SharedRidePassengerEntity with _$SharedRidePassengerEntity {
     required int id,
     required int sharedRideId,
     required int riderProfileId,
+    required String riderName,
     required String status,
     required String paymentStatus,
     required int seatsNeeded,

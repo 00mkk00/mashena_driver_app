@@ -260,7 +260,11 @@ class OpenLobbySheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  S.of(context).sharedPassengerNumber(passenger.riderProfileId),
+                  passenger.riderName.isNotEmpty
+                      ? passenger.riderName
+                      : S
+                          .of(context)
+                          .sharedPassengerNumber(passenger.riderProfileId),
                   style: AppTextStyles.w600_16.copyWith(
                     color: isDark
                         ? AppColors.onSurfaceDark

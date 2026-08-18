@@ -166,7 +166,9 @@ class LiveTripSheet extends StatelessWidget {
           SizedBox(width: AppSpacing.md.w),
           Expanded(
             child: Text(
-              S.of(context).sharedPassengerNumber(p.riderProfileId),
+              p.riderName.isNotEmpty
+                  ? p.riderName
+                  : S.of(context).sharedPassengerNumber(p.riderProfileId),
               style: AppTextStyles.w600_16.copyWith(
                 color: isDroppedOff
                     ? AppColors.textGrey

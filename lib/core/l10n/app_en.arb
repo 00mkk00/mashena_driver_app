@@ -367,6 +367,7 @@
   "errorValidation": "Validation error",
   "errorUnauthorized": "Unauthorized",
   "errorSomethingWentWrong": "Something went wrong",
+  "authNoApprovalRequest": "You don't have an approval request yet.",
   "authApprovalStatus": "Account approval status: {status}",
   "@authApprovalStatus": {
     "placeholders": {

@@ -10,6 +10,7 @@ extension SharedRidePassengerMapper on SharedRidePassengerModel {
       id: id ?? 0,
       sharedRideId: sharedRideId ?? 0,
       riderProfileId: riderProfileId ?? 0,
+      riderName: riderName ?? '',
       status: status ?? '',
       paymentStatus: paymentStatus ?? '',
       seatsNeeded: seatsNeeded ?? 0,

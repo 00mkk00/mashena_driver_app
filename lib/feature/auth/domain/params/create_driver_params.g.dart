@@ -13,7 +13,7 @@ _$CreateDriverParamsImpl _$$CreateDriverParamsImplFromJson(
   email: json['email'] as String,
   phoneNumber: json['phoneNumber'] as String,
   password: json['password'] as String,
-  city: json['city'] as String,
+  city: json['city'] as String?,
   file: json['file'] as String?,
 );
 
