@@ -280,13 +280,14 @@ class SharedRideCubit extends Cubit<SharedRideState> {
   }
 
   // 8. Drop Off Passenger
-  Future<void> dropOffPassenger({
+  Future<SharedRidePassengerEntity?> dropOffPassenger({
     required int passengerId,
     required int seatsToDrop,
     required double currentLat,
     required double currentLng,
+    bool? accountHolderDroppedOff,
   }) async {
-    if (state.ride == null) return;
+    if (state.ride == null) return null;
     final updatedDroppingOff = Set<int>.from(state.droppingOffPassengers)
       ..add(passengerId);
     emit(
@@ -303,19 +304,23 @@ class SharedRideCubit extends Cubit<SharedRideState> {
         seatsToDrop: seatsToDrop,
         currentLat: currentLat,
         currentLng: currentLng,
+        accountHolderDroppedOff: accountHolderDroppedOff,
       ),
     );
 
     final doneDroppingOff = Set<int>.from(state.droppingOffPassengers)
       ..remove(passengerId);
 
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          droppingOffPassengers: doneDroppingOff,
-          errorMessage: failure.rawMessage ?? 'Failed to drop off passenger',
-        ),
-      ),
+    return result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            droppingOffPassengers: doneDroppingOff,
+            errorMessage: failure.rawMessage ?? 'Failed to drop off passenger',
+          ),
+        );
+        return null;
+      },
       (updatedPassenger) {
         final currentPassengers = List<SharedRidePassengerEntity>.from(
           state.ride!.passengers,
@@ -340,6 +345,7 @@ class SharedRideCubit extends Cubit<SharedRideState> {
             ride: state.ride!.copyWith(passengers: currentPassengers),
           ),
         );
+        return effectivePassenger;
       },
     );
   }

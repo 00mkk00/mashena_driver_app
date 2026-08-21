@@ -14,6 +14,7 @@ _$$DropOffSharedRidePassengerParamsImplFromJson(Map<String, dynamic> json) =>
       seatsToDrop: (json['seatsToDrop'] as num).toInt(),
       currentLat: (json['currentLat'] as num).toDouble(),
       currentLng: (json['currentLng'] as num).toDouble(),
+      accountHolderDroppedOff: json['accountHolderDroppedOff'] as bool?,
     );
 
 Map<String, dynamic> _$$DropOffSharedRidePassengerParamsImplToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$DropOffSharedRidePassengerParamsImplToJson(
   'seatsToDrop': instance.seatsToDrop,
   'currentLat': instance.currentLat,
   'currentLng': instance.currentLng,
+  'accountHolderDroppedOff': instance.accountHolderDroppedOff,
 };

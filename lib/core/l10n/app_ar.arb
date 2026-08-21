@@ -355,6 +355,7 @@
   "sharedRemove": "إزالة",
   "sharedDropOff": "إنزال",
   "sharedDroppedOff": "تم إنزاله",
+  "sharedAccountHolderDroppedOff": "إنزال صاحب الحساب",
   "sharedCreateSharedRideTitle": "إنشاء رحلة مشاركة",
   "sharedOrigin": "موقع الانطلاق",
   "sharedDestination": "الوجهة",

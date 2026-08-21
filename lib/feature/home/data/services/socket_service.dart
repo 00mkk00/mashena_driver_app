@@ -91,6 +91,13 @@ class SocketService {
   void onConnect(void Function() handler) {
     _socket?.onConnect((_) {
       _log('✅ Connected — socketId: ${_socket?.id}');
+      // Guard: only proceed if the socket is truly connected with a valid ID.
+      // socket_io_client may fire onConnect before the server auth handshake
+      // completes, resulting in a null socketId on rejected connections.
+      if (_socket?.id == null || _socket?.connected != true) {
+        _log('⚠️ onConnect fired but socket not fully ready — ignoring');
+        return;
+      }
       handler();
     });
   }

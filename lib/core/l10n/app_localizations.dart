@@ -1564,7 +1564,7 @@ abstract class S {
   /// No description provided for @sharedEnRouteDestinations.
   ///
   /// In en, this message translates to:
-  /// **'En route to destinations'**
+  /// **'On route to destinations'**
   String get sharedEnRouteDestinations;
 
   /// No description provided for @sharedNoActivePassengers.
@@ -1626,6 +1626,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Dropped Off'**
   String get sharedDroppedOff;
+
+  /// No description provided for @sharedAccountHolderDroppedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder dropped off'**
+  String get sharedAccountHolderDroppedOff;
 
   /// No description provided for @sharedCreateSharedRideTitle.
   ///

@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mashena_driver_app/app/config/env.dart';
+import 'package:mashena_driver_app/core/constants/endpoints.dart';
 import 'package:mashena_driver_app/core/network/token_manager.dart';
 import 'package:mashena_driver_app/feature/home/data/mappers/shared_ride_mapper.dart';
 import 'package:mashena_driver_app/feature/home/data/services/socket_service.dart';
 import 'package:mashena_driver_app/feature/home/data/models/shared_ride_model.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_state.dart';
+import 'package:mashena_driver_app/feature/home/presentation/enums/driver_status_enum.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/ride_request_cubit/ride_request_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_cubit.dart';
 import 'socket_state.dart';
@@ -22,6 +26,13 @@ class SocketCubit extends Cubit<SocketState> {
 
   /// Survives state resets (e.g., disconnect()); allows accept/reject after reconnect.
   int? _cachedDriverId;
+
+  /// Tracks consecutive auth-refresh reconnect attempts to prevent infinite loops.
+  int _authRetryCount = 0;
+  static const int _maxAuthRetries = 3;
+
+  /// Guards against concurrent token refresh attempts.
+  bool _isRefreshingToken = false;
 
   SocketCubit({
     required SocketService service,
@@ -44,6 +55,7 @@ class SocketCubit extends Cubit<SocketState> {
     // ✅ Wire socket service reconnect request (e.g. from token refresh)
     _service.onReconnectRequested = (freshToken) {
       log('🔌 SocketService requested reconnect with fresh token');
+      _authRetryCount = 0; // token was refreshed externally (e.g. by Dio)
       reconnect();
     };
 
@@ -53,16 +65,35 @@ class SocketCubit extends Cubit<SocketState> {
 
   // ─── Driver Status Listener ────────────────────────────────────────────────
 
+  /// Whether the driver status represents a confirmed-online state
+  /// (i.e. the go-online API call succeeded). Transitional states like
+  /// [DriverStatus.goingOnline] / [DriverStatus.goingOffline] are excluded
+  /// so we don't open the socket before the server confirms the driver is online.
+  bool _isConfirmedOnline(DriverStatusState s) {
+    switch (s.status) {
+      case DriverStatus.onlineWaiting:
+      case DriverStatus.newRequest:
+      case DriverStatus.tripAccepted:
+      case DriverStatus.onTrip:
+      case DriverStatus.sos:
+      case DriverStatus.onSharedRide:
+        return true;
+      default:
+        return false;
+    }
+  }
+
   void _listenToDriverStatus() {
     // Check current state immediately
     final currentStatus = _driverStatusCubit.state;
-    if (currentStatus.isOnline && state.status == SocketStatus.disconnected) {
+    if (_isConfirmedOnline(currentStatus) &&
+        state.status == SocketStatus.disconnected) {
       connect();
     }
 
     // Listen for future changes
     _driverStatusSubscription = _driverStatusCubit.stream.listen((statusState) {
-      if (statusState.isOnline && !state.isConnected) {
+      if (_isConfirmedOnline(statusState) && !state.isConnected) {
         log('🔌 Driver went online → connecting socket');
         connect();
       } else if (!statusState.isOnline && state.isConnected) {
@@ -91,12 +122,16 @@ class SocketCubit extends Cubit<SocketState> {
     });
 
     _service.onConnectError((error) {
-      emit(
-        state.copyWith(
-          status: SocketStatus.error,
-          errorMessage: error.toString(),
-        ),
-      );
+      final errorStr = error.toString();
+      log('🔌 ❌ Socket connection error: $errorStr');
+
+      // Detect "Unauthorized" errors from backend
+      if (_isUnauthorizedError(error)) {
+        _handleUnauthorizedError();
+        return;
+      }
+
+      emit(state.copyWith(status: SocketStatus.error, errorMessage: errorStr));
     });
 
     _service.onDriverRegistered((data) {
@@ -104,6 +139,10 @@ class SocketCubit extends Cubit<SocketState> {
       if (driverId != null) {
         _cachedDriverId = driverId;
       } // persist across reconnects
+
+      // ✅ Reset auth retry counter on successful registration
+      _authRetryCount = 0;
+
       emit(
         state.copyWith(
           status: SocketStatus.registered,
@@ -215,6 +254,110 @@ class SocketCubit extends Cubit<SocketState> {
     });
   }
 
+  // ─── Unauthorized Error Handling ───────────────────────────────────────────
+
+  /// Checks if the connection error is an "Unauthorized" error from the backend.
+  bool _isUnauthorizedError(dynamic error) {
+    final errorStr = error.toString().toLowerCase();
+    if (errorStr.contains('unauthorized')) return true;
+
+    // socket_io_client may pass error as a Map
+    if (error is Map) {
+      final message = (error['message'] ?? '').toString().toLowerCase();
+      return message.contains('unauthorized');
+    }
+    return false;
+  }
+
+  /// Handles unauthorized socket connection error by refreshing the token
+  /// and reconnecting with the new token.
+  Future<void> _handleUnauthorizedError() async {
+    // Guard: prevent concurrent refresh attempts
+    if (_isRefreshingToken) {
+      log('🔌 ⏳ Token refresh already in progress, skipping...');
+      return;
+    }
+
+    // Guard: check retry limit
+    if (_authRetryCount >= _maxAuthRetries) {
+      log('🔌 ❌ Max auth retries ($_maxAuthRetries) exceeded. Giving up.');
+      _authRetryCount = 0;
+      emit(
+        state.copyWith(
+          status: SocketStatus.error,
+          errorMessage: 'Session expired. Please login again.',
+        ),
+      );
+      return;
+    }
+
+    _authRetryCount++;
+    _isRefreshingToken = true;
+
+    log(
+      '🔌 🔄 Unauthorized error — refreshing token (attempt $_authRetryCount/$_maxAuthRetries)...',
+    );
+    emit(state.copyWith(status: SocketStatus.connecting, clearError: true));
+
+    try {
+      final refreshToken = await _tokenManager.getRefreshToken();
+      if (refreshToken == null || refreshToken.isEmpty) {
+        log('🔌 ❌ No refresh token available. Cannot refresh.');
+        _isRefreshingToken = false;
+        _authRetryCount = 0;
+        emit(
+          state.copyWith(
+            status: SocketStatus.error,
+            errorMessage: 'Session expired. Please login again.',
+          ),
+        );
+        return;
+      }
+
+      // Use a clean Dio instance to avoid interceptor recursion
+      final refreshDio = Dio(BaseOptions(baseUrl: Env.baseUrl));
+
+      final response = await refreshDio.post(
+        Endpoints.refresh,
+        data: {'refreshToken': refreshToken},
+      );
+
+      final data = response.data;
+      final newAccessToken = data['accessToken'] as String;
+      final newRefreshToken = data['refreshToken'] as String?;
+
+      // Save the new tokens
+      await _tokenManager.saveTokens(
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+      );
+
+      log('🔌 ✅ Token refreshed successfully. Reconnecting socket...');
+      _isRefreshingToken = false;
+
+      // Exponential backoff before reconnecting
+      final delay = Duration(milliseconds: 500 * _authRetryCount);
+      await Future.delayed(delay);
+
+      // Reconnect with the fresh token
+      if (!isClosed) {
+        reconnect();
+      }
+    } catch (e) {
+      log('🔌 ❌ Token refresh failed: $e');
+      _isRefreshingToken = false;
+      _authRetryCount = 0;
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            status: SocketStatus.error,
+            errorMessage: 'Session expired. Please login again.',
+          ),
+        );
+      }
+    }
+  }
+
   int? _parseDriverId(dynamic data) {
     if (data is! Map) return null;
     final raw =
@@ -231,6 +374,7 @@ class SocketCubit extends Cubit<SocketState> {
     _service.disconnect();
     connect();
   }
+
   // ─── Location ─────────────────────────────────────────────────────────────
 
   void updateLocation({required double lat, required double lng}) {
@@ -288,6 +432,7 @@ class SocketCubit extends Cubit<SocketState> {
   void disconnect() {
     _service.offAll();
     _service.disconnect();
+    _authRetryCount = 0;
     emit(const SocketState());
   }
 

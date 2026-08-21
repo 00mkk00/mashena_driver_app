@@ -18,6 +18,11 @@ class AvatarPicker extends StatelessWidget {
     this.onPickImage,
   });
 
+  bool get _hasValidImagePath =>
+      imagePath != null &&
+      imagePath!.trim().isNotEmpty &&
+      imagePath != 'picked';
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -41,20 +46,9 @@ class AvatarPicker extends StatelessWidget {
               ),
               boxShadow: AppShadows.card,
             ),
-            child: imagePath != null && imagePath != 'picked'
-                ? ClipOval(
-                    child: Image.file(File(imagePath!), fit: BoxFit.cover),
-                  )
-                : Center(
-                    child: Text(
-                      initials,
-                      style: AppTextStyles.w700_24.copyWith(
-                        color: isDark
-                            ? AppColors.primaryLight
-                            : AppColors.primaryColor,
-                      ),
-                    ),
-                  ),
+            child: ClipOval(
+              child: _buildAvatarContent(isDark),
+            ),
           ),
           if (onPickImage != null)
             Positioned(
@@ -87,6 +81,76 @@ class AvatarPicker extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAvatarContent(bool isDark) {
+    if (!_hasValidImagePath) {
+      return _buildPlaceholder(isDark);
+    }
+
+    final path = imagePath!.trim();
+    final isNetwork = path.startsWith('http://') || path.startsWith('https://');
+
+    if (isNetwork) {
+      return Image.network(
+        path,
+        fit: BoxFit.cover,
+        width: 100.r,
+        height: 100.r,
+        errorBuilder: (context, error, stackTrace) => _buildPlaceholder(isDark),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: SizedBox(
+              width: 24.r,
+              height: 24.r,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    try {
+      final file = File(path);
+      return Image.file(
+        file,
+        fit: BoxFit.cover,
+        width: 100.r,
+        height: 100.r,
+        errorBuilder: (context, error, stackTrace) => _buildPlaceholder(isDark),
+      );
+    } catch (_) {
+      return _buildPlaceholder(isDark);
+    }
+  }
+
+  Widget _buildPlaceholder(bool isDark) {
+    if (initials.trim().isNotEmpty) {
+      return Center(
+        child: Text(
+          initials.trim(),
+          style: AppTextStyles.w700_24.copyWith(
+            color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
+          ),
+        ),
+      );
+    }
+
+    return Center(
+      child: Icon(
+        Icons.person_rounded,
+        size: 48.r,
+        color: isDark ? AppColors.primaryLight : AppColors.primaryColor,
       ),
     );
   }

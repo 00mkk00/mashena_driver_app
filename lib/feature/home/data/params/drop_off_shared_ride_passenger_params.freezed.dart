@@ -28,6 +28,7 @@ mixin _$DropOffSharedRidePassengerParams {
   int get seatsToDrop => throw _privateConstructorUsedError;
   double get currentLat => throw _privateConstructorUsedError;
   double get currentLng => throw _privateConstructorUsedError;
+  bool? get accountHolderDroppedOff => throw _privateConstructorUsedError;
 
   /// Serializes this DropOffSharedRidePassengerParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,6 +57,7 @@ abstract class $DropOffSharedRidePassengerParamsCopyWith<$Res> {
     int seatsToDrop,
     double currentLat,
     double currentLng,
+    bool? accountHolderDroppedOff,
   });
 }
 
@@ -82,6 +84,7 @@ class _$DropOffSharedRidePassengerParamsCopyWithImpl<
     Object? seatsToDrop = null,
     Object? currentLat = null,
     Object? currentLng = null,
+    Object? accountHolderDroppedOff = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -105,6 +108,10 @@ class _$DropOffSharedRidePassengerParamsCopyWithImpl<
                 ? _value.currentLng
                 : currentLng // ignore: cast_nullable_to_non_nullable
                       as double,
+            accountHolderDroppedOff: freezed == accountHolderDroppedOff
+                ? _value.accountHolderDroppedOff
+                : accountHolderDroppedOff // ignore: cast_nullable_to_non_nullable
+                      as bool?,
           )
           as $Val,
     );
@@ -126,6 +133,7 @@ abstract class _$$DropOffSharedRidePassengerParamsImplCopyWith<$Res>
     int seatsToDrop,
     double currentLat,
     double currentLng,
+    bool? accountHolderDroppedOff,
   });
 }
 
@@ -152,6 +160,7 @@ class __$$DropOffSharedRidePassengerParamsImplCopyWithImpl<$Res>
     Object? seatsToDrop = null,
     Object? currentLat = null,
     Object? currentLng = null,
+    Object? accountHolderDroppedOff = freezed,
   }) {
     return _then(
       _$DropOffSharedRidePassengerParamsImpl(
@@ -175,6 +184,10 @@ class __$$DropOffSharedRidePassengerParamsImplCopyWithImpl<$Res>
             ? _value.currentLng
             : currentLng // ignore: cast_nullable_to_non_nullable
                   as double,
+        accountHolderDroppedOff: freezed == accountHolderDroppedOff
+            ? _value.accountHolderDroppedOff
+            : accountHolderDroppedOff // ignore: cast_nullable_to_non_nullable
+                  as bool?,
       ),
     );
   }
@@ -190,6 +203,7 @@ class _$DropOffSharedRidePassengerParamsImpl
     required this.seatsToDrop,
     required this.currentLat,
     required this.currentLng,
+    this.accountHolderDroppedOff,
   });
 
   factory _$DropOffSharedRidePassengerParamsImpl.fromJson(
@@ -206,10 +220,12 @@ class _$DropOffSharedRidePassengerParamsImpl
   final double currentLat;
   @override
   final double currentLng;
+  @override
+  final bool? accountHolderDroppedOff;
 
   @override
   String toString() {
-    return 'DropOffSharedRidePassengerParams(id: $id, passengerId: $passengerId, seatsToDrop: $seatsToDrop, currentLat: $currentLat, currentLng: $currentLng)';
+    return 'DropOffSharedRidePassengerParams(id: $id, passengerId: $passengerId, seatsToDrop: $seatsToDrop, currentLat: $currentLat, currentLng: $currentLng, accountHolderDroppedOff: $accountHolderDroppedOff)';
   }
 
   @override
@@ -225,7 +241,12 @@ class _$DropOffSharedRidePassengerParamsImpl
             (identical(other.currentLat, currentLat) ||
                 other.currentLat == currentLat) &&
             (identical(other.currentLng, currentLng) ||
-                other.currentLng == currentLng));
+                other.currentLng == currentLng) &&
+            (identical(
+                  other.accountHolderDroppedOff,
+                  accountHolderDroppedOff,
+                ) ||
+                other.accountHolderDroppedOff == accountHolderDroppedOff));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -237,6 +258,7 @@ class _$DropOffSharedRidePassengerParamsImpl
     seatsToDrop,
     currentLat,
     currentLng,
+    accountHolderDroppedOff,
   );
 
   /// Create a copy of DropOffSharedRidePassengerParams
@@ -266,6 +288,7 @@ abstract class _DropOffSharedRidePassengerParams
     required final int seatsToDrop,
     required final double currentLat,
     required final double currentLng,
+    final bool? accountHolderDroppedOff,
   }) = _$DropOffSharedRidePassengerParamsImpl;
 
   factory _DropOffSharedRidePassengerParams.fromJson(
@@ -282,6 +305,8 @@ abstract class _DropOffSharedRidePassengerParams
   double get currentLat;
   @override
   double get currentLng;
+  @override
+  bool? get accountHolderDroppedOff;
 
   /// Create a copy of DropOffSharedRidePassengerParams
   /// with the given fields replaced by the non-null parameter values.

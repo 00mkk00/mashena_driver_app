@@ -52,19 +52,52 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
     }
   }
 
-  RideStatus _mapStatus(String? statusStr) {
-    switch (statusStr?.toLowerCase()) {
-      case 'completed':
-        return RideStatus.completed;
-      case 'cancelled':
-        return RideStatus.cancelled;
-      case 'driver_cancelled':
-        return RideStatus.driverCancelled;
-      case 'in_progress':
-        return RideStatus.inProgress;
-      default:
-        return RideStatus.completed;
+  RideStatus _mapStatus(String? statusStr, String? cancelledBy) {
+    final s = statusStr?.trim().toLowerCase();
+    final cb = cancelledBy?.trim().toLowerCase();
+
+    if (s == null || s.isEmpty) {
+      return RideStatus.completed;
     }
+
+    // 1. Explicit Driver cancellation
+    if (cb == 'driver' ||
+        s == 'driver_cancelled' ||
+        s == 'driver_canceled' ||
+        s == 'cancelled_by_driver' ||
+        s == 'canceled_by_driver') {
+      return RideStatus.driverCancelled;
+    }
+
+    // 2. Cancellation (rider, admin, or general)
+    if (s == 'cancelled' ||
+        s == 'canceled' ||
+        s == 'rider_cancelled' ||
+        s == 'rider_canceled' ||
+        s == 'admin_cancelled' ||
+        s == 'admin_canceled' ||
+        s.contains('cancel')) {
+      return RideStatus.cancelled;
+    }
+
+    // 3. In progress / active trip states
+    if (s == 'in_progress' ||
+        s == 'started' ||
+        s == 'accepted' ||
+        s == 'arrived' ||
+        s == 'on_trip' ||
+        s == 'ongoing' ||
+        s == 'active' ||
+        s == 'en_route') {
+      return RideStatus.inProgress;
+    }
+
+    // 4. Completed
+    if (s == 'completed' || s == 'done' || s == 'finished') {
+      return RideStatus.completed;
+    }
+
+    return RideStatus.completed;
   }
 
   @override
@@ -161,7 +194,7 @@ class _HistoryViewBodyState extends State<_HistoryViewBody> {
 
                 final trip = state.trips[index];
                 return RideHistoryCard(
-                  status: _mapStatus(trip.status),
+                  status: _mapStatus(trip.status, trip.cancelledBy),
                   pickupAddress:
                       trip.pickupAddress ?? S.of(context).historyUnknownPickup,
                   destAddress:

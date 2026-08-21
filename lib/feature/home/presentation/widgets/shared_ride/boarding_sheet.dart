@@ -273,16 +273,18 @@ class BoardingSheet extends StatelessWidget {
             else
               const Icon(Icons.check_circle, color: AppColors.success),
 
-            IconButton(
-              icon: Icon(
-                Icons.remove_circle_outline,
-                color: AppColors.danger,
-                size: 20.r,
+            // Remove button is hidden once the passenger is onboarded
+            if (!isOnBoard)
+              IconButton(
+                icon: Icon(
+                  Icons.remove_circle_outline,
+                  color: AppColors.danger,
+                  size: 20.r,
+                ),
+                onPressed: () =>
+                    context.read<SharedRideCubit>().removePassenger(p.id),
+                tooltip: S.of(context).sharedRemove,
               ),
-              onPressed: () =>
-                  context.read<SharedRideCubit>().removePassenger(p.id),
-              tooltip: S.of(context).sharedRemove,
-            ),
           ],
         ],
       ),

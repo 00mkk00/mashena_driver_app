@@ -826,6 +826,9 @@ class SAr extends S {
   String get sharedDroppedOff => 'تم إنزاله';
 
   @override
+  String get sharedAccountHolderDroppedOff => 'إنزال صاحب الحساب';
+
+  @override
   String get sharedCreateSharedRideTitle => 'إنشاء رحلة مشاركة';
 
   @override

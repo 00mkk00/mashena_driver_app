@@ -337,11 +337,25 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         'seatsToDrop': params.seatsToDrop,
         'currentLat': params.currentLat,
         'currentLng': params.currentLng,
+        if (params.accountHolderDroppedOff != null)
+          'accountHolderDroppedOff': params.accountHolderDroppedOff,
       },
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
-        ? response['data']
-        : response;
-    return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
+    final Map<String, dynamic> raw = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data'] as Map<String, dynamic>
+        : (response is Map<String, dynamic> ? response : <String, dynamic>{});
+    final passengerMap = (raw['passenger'] is Map<String, dynamic>)
+        ? Map<String, dynamic>.from(raw['passenger'] as Map<String, dynamic>)
+        : Map<String, dynamic>.from(raw);
+    if (raw['fare'] != null && passengerMap['finalFare'] == null) {
+      passengerMap['finalFare'] = raw['fare'];
+    }
+    if (raw['totalFare'] != null && passengerMap['finalFare'] == null) {
+      passengerMap['finalFare'] = raw['totalFare'];
+    }
+    if (raw['totalPaidFare'] != null && passengerMap['totalPaidFare'] == null) {
+      passengerMap['totalPaidFare'] = raw['totalPaidFare'];
+    }
+    return SharedRidePassengerModel.fromJson(passengerMap);
   }
 }

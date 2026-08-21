@@ -11,8 +11,10 @@ class DropOffSharedRidePassengerParams with _$DropOffSharedRidePassengerParams {
     required int seatsToDrop,
     required double currentLat,
     required double currentLng,
+    bool? accountHolderDroppedOff,
   }) = _DropOffSharedRidePassengerParams;
 
-  factory DropOffSharedRidePassengerParams.fromJson(Map<String, dynamic> json) =>
-      _$DropOffSharedRidePassengerParamsFromJson(json);
+  factory DropOffSharedRidePassengerParams.fromJson(
+    Map<String, dynamic> json,
+  ) => _$DropOffSharedRidePassengerParamsFromJson(json);
 }

@@ -212,7 +212,7 @@ class _CreateRideSheetState extends State<CreateRideSheet> {
         address: _destAddressController.text.trim(),
       ),
       departureTime: _departureTime.toIso8601String(),
-      vehicleId: 1, // Default vehicle ID
+      vehicleId: 3, // Default vehicle ID
       maxPassengers: _maxPassengers,
       notes: _notesController.text.trim().isEmpty
           ? null

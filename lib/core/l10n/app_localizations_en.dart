@@ -788,7 +788,7 @@ class SEn extends S {
   String get sharedTripInProgress => 'Trip in Progress';
 
   @override
-  String get sharedEnRouteDestinations => 'En route to destinations';
+  String get sharedEnRouteDestinations => 'On route to destinations';
 
   @override
   String get sharedNoActivePassengers => 'No active passengers in trip.';
@@ -825,6 +825,9 @@ class SEn extends S {
 
   @override
   String get sharedDroppedOff => 'Dropped Off';
+
+  @override
+  String get sharedAccountHolderDroppedOff => 'Account holder dropped off';
 
   @override
   String get sharedCreateSharedRideTitle => 'Create Shared Ride';
