@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,6 +57,7 @@ class _ProfileViewState extends State<ProfileView> {
         _initialEmail = driver.email;
         _initialPhone = driver.phoneNumber;
         _avatarUrl = driver.avatarUrl;
+        log(_avatarUrl, name: 'avatarUrl');
 
         final nameParts = driver.fullName.trim().split(RegExp(r'\s+'));
         if (nameParts.length >= 2) {

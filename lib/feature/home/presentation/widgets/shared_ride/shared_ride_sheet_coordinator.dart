@@ -11,6 +11,7 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_
 import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_cubit/shared_ride_state.dart';
 
 import 'create_ride_sheet.dart';
+import 'available_passenger_pools_sheet.dart';
 import 'open_lobby_sheet.dart';
 import 'boarding_sheet.dart';
 import 'live_trip_sheet.dart';
@@ -151,6 +152,10 @@ class _SharedRideSheetCoordinatorState extends State<SharedRideSheetCoordinator>
       case SharedRideStatus.idle:
       case SharedRideStatus.creating:
         return const CreateRideSheet(key: ValueKey('createRide'));
+      case SharedRideStatus.availablePools:
+        return const AvailablePassengerPoolsSheet(
+          key: ValueKey('availablePools'),
+        );
       case SharedRideStatus.lobby:
         return const OpenLobbySheet(key: ValueKey('openLobby'));
       case SharedRideStatus.boarding:

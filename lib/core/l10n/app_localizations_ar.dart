@@ -1118,4 +1118,64 @@ class SAr extends S {
 
   @override
   String get moderationEvidenceLink => 'عرض مستند الإثبات المرفق';
+
+  @override
+  String get sharedCreateOption => 'إنشاء رحلة';
+
+  @override
+  String get sharedJoinOption => 'انضمام لمجموعة';
+
+  @override
+  String get sharedAvailablePoolsTitle => 'مجموعات الركاب المتاحة';
+
+  @override
+  String get sharedAvailablePoolsSubtitle => 'مجموعات ركاب قريبة بانتظار سائق';
+
+  @override
+  String get sharedNoAvailablePools => 'لا توجد مجموعات ركاب متاحة قريبة';
+
+  @override
+  String get sharedNoAvailablePoolsSubtitle =>
+      'لا توجد حالياً مجموعات ركاب ضمن نطاقك. يمكنك إنشاء رحلة مشتركة جديدة بدلاً من ذلك.';
+
+  @override
+  String get sharedJoinThisPool => 'انضمام للرحلة';
+
+  @override
+  String get sharedJoiningPool => 'جاري الانضمام...';
+
+  @override
+  String sharedPoolSeatsCount(Object current, Object max) {
+    return '$current/$max مقاعد';
+  }
+
+  @override
+  String get sharedMeetingPoint => 'نقطة اللقاء';
+
+  @override
+  String get sharedDestinationPoint => 'الوجهة';
+
+  @override
+  String get sharedRefresh => 'تحديث';
+
+  @override
+  String get sharedCreateInstead => 'إنشاء رحلة جديدة';
+
+  @override
+  String get missedRideTitle => 'طلب رحلة فائت';
+
+  @override
+  String get reconsiderRideButton => 'إعادة النظر والانضمام';
+
+  @override
+  String get rejoiningQueue => 'جارِ الانضمام...';
+
+  @override
+  String get rejoinedQueueSuccess => 'تمت إعادة الانضمام لطابور الطلب';
+
+  @override
+  String get reconsiderFailed => 'الطلب لم يعد متاحاً';
+
+  @override
+  String get dismiss => 'تجاهل';
 }

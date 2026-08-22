@@ -365,18 +365,18 @@ class _DriverDocumentCardState extends State<DriverDocumentCard> {
                   : AppColors.surfaceVariant.withValues(alpha: 0.4),
               child: Column(
                 children: [
-                  _buildDetailRow(
-                    context,
-                    label: S.of(context).docsDetailId,
-                    value: '#${doc.id}',
-                    isDark: isDark,
-                  ),
-                  _buildDetailRow(
-                    context,
-                    label: S.of(context).docsDetailProfileId,
-                    value: '#${doc.driverProfileId}',
-                    isDark: isDark,
-                  ),
+                  // _buildDetailRow(
+                  //   context,
+                  //   label: S.of(context).docsDetailId,
+                  //   value: '#${doc.id}',
+                  //   isDark: isDark,
+                  // ),
+                  // _buildDetailRow(
+                  //   context,
+                  //   label: S.of(context).docsDetailProfileId,
+                  //   value: '#${doc.driverProfileId}',
+                  //   isDark: isDark,
+                  // ),
                   if (doc.verifiedBy > 0)
                     _buildDetailRow(
                       context,

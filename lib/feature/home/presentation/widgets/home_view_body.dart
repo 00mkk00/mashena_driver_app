@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mashena_driver_app/app/router/app_routes.dart';
 import 'package:mashena_driver_app/core/l10n/app_localizations.dart';
@@ -535,18 +536,150 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             //   ),
             if (driverState.isOnline) ...[
               SizedBox(height: AppSpacing.sm.h),
-              FabButton(
-                icon: Icons.group_add_rounded,
-                onTap: () {
-                  context.read<DriverStatusCubit>().startSharedRide();
+              Builder(
+                builder: (fabContext) {
+                  return FabButton(
+                    icon: Icons.group_add_rounded,
+                    onTap: () => _showSharedRideMenu(fabContext, driverState),
+                    tooltip: S.of(context).homeCreateSharedRide,
+                  );
                 },
-                tooltip: S.of(context).homeCreateSharedRide,
               ),
             ],
           ],
         ),
       ),
     );
+  }
+
+  void _showSharedRideMenu(
+    BuildContext fabContext,
+    DriverStatusState driverState,
+  ) {
+    final isDark = Theme.of(fabContext).brightness == Brightness.dark;
+    final renderBox = fabContext.findRenderObject() as RenderBox?;
+    final overlay =
+        Overlay.of(fabContext).context.findRenderObject() as RenderBox?;
+    if (renderBox == null || overlay == null) return;
+
+    final buttonOffset =
+        renderBox.localToGlobal(Offset.zero, ancestor: overlay);
+    final buttonSize = renderBox.size;
+
+    // Anchor menu slightly to the left of the FAB button
+    final position = RelativeRect.fromLTRB(
+      buttonOffset.dx - 150.w,
+      buttonOffset.dy - 10.h,
+      overlay.size.width - buttonOffset.dx,
+      overlay.size.height - (buttonOffset.dy + buttonSize.height),
+    );
+
+    final sharedRideCubit = fabContext.read<SharedRideCubit>();
+    final driverStatusCubit = fabContext.read<DriverStatusCubit>();
+    final mapCubit = fabContext.read<MapCubit>();
+
+    showMenu<String>(
+      context: fabContext,
+      position: position,
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.lg.r),
+        side: BorderSide(
+          color: isDark ? AppColors.borderColorDark : AppColors.borderColor,
+        ),
+      ),
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
+      items: [
+        PopupMenuItem<String>(
+          value: 'create',
+          height: 44.h,
+          child: Row(
+            children: [
+              Icon(
+                Icons.add_circle_outline_rounded,
+                color: AppColors.primaryColor,
+                size: 20.r,
+              ),
+              SizedBox(width: 10.w),
+              Text(
+                S.of(fabContext).sharedCreateOption,
+                style: AppTextStyles.w600_14.copyWith(
+                  color:
+                      isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const PopupMenuDivider(height: 1),
+        PopupMenuItem<String>(
+          value: 'join',
+          height: 44.h,
+          child: Row(
+            children: [
+              Icon(
+                Icons.groups_rounded,
+                color:
+                    isDark ? AppColors.primaryLight : AppColors.primaryColor,
+                size: 20.r,
+              ),
+              SizedBox(width: 10.w),
+              Text(
+                S.of(fabContext).sharedJoinOption,
+                style: AppTextStyles.w600_14.copyWith(
+                  color:
+                      isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ).then((value) {
+      if (value == 'create') {
+        sharedRideCubit.reset();
+        driverStatusCubit.startSharedRide();
+      } else if (value == 'join') {
+        _onJoinSharedRide(
+          driverState: driverState,
+          sharedRideCubit: sharedRideCubit,
+          driverStatusCubit: driverStatusCubit,
+          mapCubit: mapCubit,
+        );
+      }
+    });
+  }
+
+  void _onJoinSharedRide({
+    required DriverStatusState driverState,
+    required SharedRideCubit sharedRideCubit,
+    required DriverStatusCubit driverStatusCubit,
+    required MapCubit mapCubit,
+  }) {
+    final mapState = mapCubit.state;
+    final currentPos = mapState.currentPosition;
+    final radius = driverState.radiusKm.toDouble();
+
+    // 1. Enter shared ride mode
+    driverStatusCubit.startSharedRide();
+
+    // 2. Fetch available pools directly with current location & radius without showing to user
+    if (currentPos != null) {
+      sharedRideCubit.fetchAvailablePools(
+        lat: currentPos.latitude,
+        lng: currentPos.longitude,
+        radiusKm: radius,
+      );
+    } else {
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((pos) {
+        sharedRideCubit.fetchAvailablePools(
+          lat: pos.latitude,
+          lng: pos.longitude,
+          radiusKm: radius,
+        );
+      }).catchError((_) {});
+    }
   }
 }
 

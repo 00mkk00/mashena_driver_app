@@ -58,6 +58,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
         countdownSeconds: timeoutSec,
         isLoadingDetails: true,
         clearErrorMessage: true,
+        clearLastExpiredRideRequest: true,
       ),
     );
 
@@ -98,6 +99,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
       state.copyWith(
         status: RideRequestStatus.accepted,
         isBottomSheetExpanded: true,
+        clearLastExpiredRideRequest: true,
       ),
     );
     // Do NOT call _scheduleReset here — the accepted state must persist
@@ -305,6 +307,52 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     _scheduleReset(); // only rejected/expired should reset back to idle
   }
 
+  // ─── Reconsider Offer ──────────────────────────────────────────────────────
+
+  void startReconsidering() {
+    emit(
+      state.copyWith(
+        isReconsidering: true,
+        clearReconsiderErrorMessage: true,
+        clearReconsiderSuccessMessage: true,
+      ),
+    );
+  }
+
+  void dismissExpiredRide() {
+    emit(
+      state.copyWith(
+        clearLastExpiredRideRequest: true,
+        isReconsidering: false,
+        clearReconsiderErrorMessage: true,
+        clearReconsiderSuccessMessage: true,
+      ),
+    );
+  }
+
+  void onOfferReconsiderSuccess({
+    int? rideRequestId,
+    required String message,
+  }) {
+    emit(
+      state.copyWith(
+        isReconsidering: false,
+        reconsiderSuccessMessage: message,
+        clearReconsiderErrorMessage: true,
+      ),
+    );
+  }
+
+  void onOfferReconsiderError({required String message}) {
+    emit(
+      state.copyWith(
+        isReconsidering: false,
+        reconsiderErrorMessage: message,
+        clearLastExpiredRideRequest: true,
+      ),
+    );
+  }
+
   // ─── Toggle bottom sheet ───────────────────────────────────────────────────
 
   void toggleBottomSheet() {
@@ -341,12 +389,18 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     if (state.status == RideRequestStatus.accepted) return;
 
     final rideRequestId = state.rideRequestId;
+    final expiredEntity = state.rideRequestEntity;
     if (rideRequestId != null) {
       onAutoReject?.call(rideRequestId);
     }
 
     emit(
-      state.copyWith(status: RideRequestStatus.expired, countdownSeconds: 0),
+      state.copyWith(
+        status: RideRequestStatus.expired,
+        countdownSeconds: 0,
+        lastExpiredRideRequest: expiredEntity,
+        lastExpiredRideRequestId: rideRequestId,
+      ),
     );
 
     _scheduleReset();
@@ -358,7 +412,14 @@ class RideRequestCubit extends Cubit<RideRequestState> {
   void _scheduleReset() {
     _resetTimer?.cancel();
     _resetTimer = Timer(const Duration(milliseconds: 600), () {
-      if (!isClosed) emit(const RideRequestState());
+      if (!isClosed) {
+        emit(
+          RideRequestState(
+            lastExpiredRideRequest: state.lastExpiredRideRequest,
+            lastExpiredRideRequestId: state.lastExpiredRideRequestId,
+          ),
+        );
+      }
     });
   }
 

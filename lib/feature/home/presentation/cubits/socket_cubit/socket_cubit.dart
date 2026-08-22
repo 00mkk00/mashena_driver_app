@@ -192,6 +192,28 @@ class SocketCubit extends Cubit<SocketState> {
       _rideRequestCubit.onTripCancelledByServer(cancelledBy: cancelledBy);
     });
 
+    _service.onOfferReconsiderSuccess((data) {
+      log('✅ driver:offer:reconsider:success $data');
+      final rideRequestId = (data['rideRequestId'] is num)
+          ? (data['rideRequestId'] as num).toInt()
+          : (data['rideRequestId'] is String
+                ? int.tryParse(data['rideRequestId'] as String)
+                : null);
+      final message =
+          (data['message'] as String?) ?? 'Rejoined queue for ride request';
+      _rideRequestCubit.onOfferReconsiderSuccess(
+        rideRequestId: rideRequestId,
+        message: message,
+      );
+    });
+
+    _service.onOfferReconsiderError((data) {
+      log('❌ driver:offer:reconsider:error $data');
+      final message =
+          (data['message'] as String?) ?? 'Ride request is no longer available';
+      _rideRequestCubit.onOfferReconsiderError(message: message);
+    });
+
     _service.onSharedRidePassengerJoined((data) {
       log('👥 shared_ride:passenger_joined data: $data');
       try {
@@ -425,6 +447,17 @@ class SocketCubit extends Cubit<SocketState> {
       driverId: driverId,
       accepted: false,
     );
+  }
+
+  bool reconsiderOffer(int rideRequestId) {
+    if (!_service.isConnected) {
+      log(
+        '⚠️ Cannot reconsider offer — socket not connected. Triggering reconnect.',
+      );
+      if (!state.isConnected) reconnect();
+      return false;
+    }
+    return _service.reconsiderOffer(rideRequestId: rideRequestId);
   }
 
   // ─── Disconnect ────────────────────────────────────────────────────────────

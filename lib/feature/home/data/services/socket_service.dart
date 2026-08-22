@@ -38,6 +38,8 @@ class SocketService {
       _socket?.off('driver:registered');
       _socket?.off('driver:register:error');
       _socket?.off('ride:offer');
+      _socket?.off('driver:offer:reconsider:success');
+      _socket?.off('driver:offer:reconsider:error');
       _socket?.off('driver:update-location:error');
       _socket?.off('trip:cancelled');
       _socket?.off('shared_ride:passenger_joined');
@@ -83,6 +85,13 @@ class SocketService {
       'rideRequestId': rideRequestId,
       'driverId': driverId,
       'accepted': accepted,
+    });
+  }
+
+  bool reconsiderOffer({required int rideRequestId}) {
+    _log('Emitting → driver:offer:reconsider { rideRequestId: $rideRequestId }');
+    return _emit('driver:offer:reconsider', {
+      'rideRequestId': rideRequestId,
     });
   }
 
@@ -151,6 +160,20 @@ class SocketService {
     });
   }
 
+  void onOfferReconsiderSuccess(JsonCallback handler) {
+    _on('driver:offer:reconsider:success', (data) {
+      _log('← driver:offer:reconsider:success $data');
+      handler(data);
+    });
+  }
+
+  void onOfferReconsiderError(JsonCallback handler) {
+    _on('driver:offer:reconsider:error', (data) {
+      _log('← driver:offer:reconsider:error $data');
+      handler(data);
+    });
+  }
+
   void onSharedRidePassengerJoined(JsonCallback handler) {
     _on('shared_ride:passenger_joined', (data) {
       _log('← shared_ride:passenger_joined $data');
@@ -172,6 +195,8 @@ class SocketService {
     _socket?.off('driver:registered');
     _socket?.off('driver:register:error');
     _socket?.off('ride:offer');
+    _socket?.off('driver:offer:reconsider:success');
+    _socket?.off('driver:offer:reconsider:error');
     _socket?.off('driver:update-location:error');
     _socket?.off('trip:cancelled');
     _socket?.off('shared_ride:passenger_joined');

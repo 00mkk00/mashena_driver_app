@@ -494,5 +494,30 @@
   "moderationRecentViolations": "Recent Violations",
   "moderationPenaltyStarts": "Starts",
   "moderationPenaltyExpires": "Expires",
-  "moderationEvidenceLink": "View Attached Evidence"
+  "moderationEvidenceLink": "View Attached Evidence",
+  "sharedCreateOption": "Create Ride",
+  "sharedJoinOption": "Join Pool",
+  "sharedAvailablePoolsTitle": "Available Pools",
+  "sharedAvailablePoolsSubtitle": "Nearby passenger groups waiting for a driver",
+  "sharedNoAvailablePools": "No available passenger pools nearby",
+  "sharedNoAvailablePoolsSubtitle": "There are currently no passenger groups within your radius. You can create a new shared ride instead.",
+  "sharedJoinThisPool": "Join Pool",
+  "sharedJoiningPool": "Joining...",
+  "sharedPoolSeatsCount": "{current}/{max} Seats",
+  "@sharedPoolSeatsCount": {
+    "placeholders": {
+      "current": {},
+      "max": {}
+    }
+  },
+  "sharedMeetingPoint": "Meeting Point",
+  "sharedDestinationPoint": "Destination",
+  "sharedRefresh": "Refresh",
+  "sharedCreateInstead": "Create Ride Instead",
+  "missedRideTitle": "Missed Ride Request",
+  "reconsiderRideButton": "Reconsider & Rejoin",
+  "rejoiningQueue": "Rejoining...",
+  "rejoinedQueueSuccess": "Rejoined queue for ride request",
+  "reconsiderFailed": "Ride is no longer available",
+  "dismiss": "Dismiss"
 }

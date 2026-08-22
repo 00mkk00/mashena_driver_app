@@ -52,7 +52,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       Endpoints.login,
       body: params.toJson(),
     );
-
     return LoginModel.fromJson(response);
   }
 

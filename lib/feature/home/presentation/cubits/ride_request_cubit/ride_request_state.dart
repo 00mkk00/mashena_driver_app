@@ -34,6 +34,13 @@ class RideRequestState {
   /// Non-null when the server cancelled the trip. Value is 'rider' or 'admin'.
   final String? tripCancelledBy;
 
+  /// Retained when an offer expires so the driver can reconsider and rejoin queue.
+  final RideRequestEntity? lastExpiredRideRequest;
+  final int? lastExpiredRideRequestId;
+  final bool isReconsidering;
+  final String? reconsiderSuccessMessage;
+  final String? reconsiderErrorMessage;
+
   const RideRequestState({
     this.status = RideRequestStatus.idle,
     this.rideRequestId,
@@ -54,10 +61,16 @@ class RideRequestState {
     this.isResolvingAddresses = false,
     this.freeWaitTimeSeconds = 0,
     this.tripCancelledBy,
+    this.lastExpiredRideRequest,
+    this.lastExpiredRideRequestId,
+    this.isReconsidering = false,
+    this.reconsiderSuccessMessage,
+    this.reconsiderErrorMessage,
   });
 
   bool get isIdle => status == RideRequestStatus.idle;
   bool get hasDetails => rideRequestEntity != null;
+  bool get hasExpiredRide => lastExpiredRideRequestId != null;
 
   RideRequestState copyWith({
     RideRequestStatus? status,
@@ -86,6 +99,14 @@ class RideRequestState {
     int? freeWaitTimeSeconds,
     String? tripCancelledBy,
     bool clearTripCancelled = false,
+    RideRequestEntity? lastExpiredRideRequest,
+    int? lastExpiredRideRequestId,
+    bool clearLastExpiredRideRequest = false,
+    bool? isReconsidering,
+    String? reconsiderSuccessMessage,
+    bool clearReconsiderSuccessMessage = false,
+    String? reconsiderErrorMessage,
+    bool clearReconsiderErrorMessage = false,
   }) => RideRequestState(
     status: status ?? this.status,
     rideRequestId: clearRideRequestId
@@ -118,5 +139,18 @@ class RideRequestState {
     tripCancelledBy: clearTripCancelled
         ? null
         : tripCancelledBy ?? this.tripCancelledBy,
+    lastExpiredRideRequest: clearLastExpiredRideRequest
+        ? null
+        : lastExpiredRideRequest ?? this.lastExpiredRideRequest,
+    lastExpiredRideRequestId: clearLastExpiredRideRequest
+        ? null
+        : lastExpiredRideRequestId ?? this.lastExpiredRideRequestId,
+    isReconsidering: isReconsidering ?? this.isReconsidering,
+    reconsiderSuccessMessage: clearReconsiderSuccessMessage
+        ? null
+        : reconsiderSuccessMessage ?? this.reconsiderSuccessMessage,
+    reconsiderErrorMessage: clearReconsiderErrorMessage
+        ? null
+        : reconsiderErrorMessage ?? this.reconsiderErrorMessage,
   );
 }

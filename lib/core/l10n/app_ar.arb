@@ -494,5 +494,30 @@
   "moderationRecentViolations": "أحدث المخالفات",
   "moderationPenaltyStarts": "يبدأ في",
   "moderationPenaltyExpires": "ينتهي في",
-  "moderationEvidenceLink": "عرض مستند الإثبات المرفق"
+  "moderationEvidenceLink": "عرض مستند الإثبات المرفق",
+  "sharedCreateOption": "إنشاء رحلة",
+  "sharedJoinOption": "انضمام لمجموعة",
+  "sharedAvailablePoolsTitle": "مجموعات الركاب المتاحة",
+  "sharedAvailablePoolsSubtitle": "مجموعات ركاب قريبة بانتظار سائق",
+  "sharedNoAvailablePools": "لا توجد مجموعات ركاب متاحة قريبة",
+  "sharedNoAvailablePoolsSubtitle": "لا توجد حالياً مجموعات ركاب ضمن نطاقك. يمكنك إنشاء رحلة مشتركة جديدة بدلاً من ذلك.",
+  "sharedJoinThisPool": "انضمام للرحلة",
+  "sharedJoiningPool": "جاري الانضمام...",
+  "sharedPoolSeatsCount": "{current}/{max} مقاعد",
+  "@sharedPoolSeatsCount": {
+    "placeholders": {
+      "current": {},
+      "max": {}
+    }
+  },
+  "sharedMeetingPoint": "نقطة اللقاء",
+  "sharedDestinationPoint": "الوجهة",
+  "sharedRefresh": "تحديث",
+  "sharedCreateInstead": "إنشاء رحلة جديدة",
+  "missedRideTitle": "طلب رحلة فائت",
+  "reconsiderRideButton": "إعادة النظر والانضمام",
+  "rejoiningQueue": "جارِ الانضمام...",
+  "rejoinedQueueSuccess": "تمت إعادة الانضمام لطابور الطلب",
+  "reconsiderFailed": "الطلب لم يعد متاحاً",
+  "dismiss": "تجاهل"
 }

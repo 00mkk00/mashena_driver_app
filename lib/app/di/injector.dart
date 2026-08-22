@@ -335,6 +335,8 @@ Future<void> configureDependencies() async {
       onBoardSharedRidePassengerUseCase: getIt<OnBoardSharedRidePassengerUseCase>(),
       dropOffSharedRidePassengerUseCase: getIt<DropOffSharedRidePassengerUseCase>(),
       removeSharedRidePassengerUseCase: getIt<RemoveSharedRidePassengerUseCase>(),
+      getAvailablePassengerPoolsUseCase: getIt<GetAvailablePassengerPoolsUseCase>(),
+      acceptPassengerPoolUseCase: getIt<AcceptPassengerPoolUseCase>(),
     ),
   );
 

@@ -1121,4 +1121,65 @@ class SEn extends S {
 
   @override
   String get moderationEvidenceLink => 'View Attached Evidence';
+
+  @override
+  String get sharedCreateOption => 'Create Ride';
+
+  @override
+  String get sharedJoinOption => 'Join Pool';
+
+  @override
+  String get sharedAvailablePoolsTitle => 'Available Pools';
+
+  @override
+  String get sharedAvailablePoolsSubtitle =>
+      'Nearby passenger groups waiting for a driver';
+
+  @override
+  String get sharedNoAvailablePools => 'No available passenger pools nearby';
+
+  @override
+  String get sharedNoAvailablePoolsSubtitle =>
+      'There are currently no passenger groups within your radius. You can create a new shared ride instead.';
+
+  @override
+  String get sharedJoinThisPool => 'Join Pool';
+
+  @override
+  String get sharedJoiningPool => 'Joining...';
+
+  @override
+  String sharedPoolSeatsCount(Object current, Object max) {
+    return '$current/$max Seats';
+  }
+
+  @override
+  String get sharedMeetingPoint => 'Meeting Point';
+
+  @override
+  String get sharedDestinationPoint => 'Destination';
+
+  @override
+  String get sharedRefresh => 'Refresh';
+
+  @override
+  String get sharedCreateInstead => 'Create Ride Instead';
+
+  @override
+  String get missedRideTitle => 'Missed Ride Request';
+
+  @override
+  String get reconsiderRideButton => 'Reconsider & Rejoin';
+
+  @override
+  String get rejoiningQueue => 'Rejoining...';
+
+  @override
+  String get rejoinedQueueSuccess => 'Rejoined queue for ride request';
+
+  @override
+  String get reconsiderFailed => 'Ride is no longer available';
+
+  @override
+  String get dismiss => 'Dismiss';
 }

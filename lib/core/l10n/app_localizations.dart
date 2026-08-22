@@ -2160,6 +2160,120 @@ abstract class S {
   /// In en, this message translates to:
   /// **'View Attached Evidence'**
   String get moderationEvidenceLink;
+
+  /// No description provided for @sharedCreateOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Ride'**
+  String get sharedCreateOption;
+
+  /// No description provided for @sharedJoinOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Pool'**
+  String get sharedJoinOption;
+
+  /// No description provided for @sharedAvailablePoolsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Pools'**
+  String get sharedAvailablePoolsTitle;
+
+  /// No description provided for @sharedAvailablePoolsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby passenger groups waiting for a driver'**
+  String get sharedAvailablePoolsSubtitle;
+
+  /// No description provided for @sharedNoAvailablePools.
+  ///
+  /// In en, this message translates to:
+  /// **'No available passenger pools nearby'**
+  String get sharedNoAvailablePools;
+
+  /// No description provided for @sharedNoAvailablePoolsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'There are currently no passenger groups within your radius. You can create a new shared ride instead.'**
+  String get sharedNoAvailablePoolsSubtitle;
+
+  /// No description provided for @sharedJoinThisPool.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Pool'**
+  String get sharedJoinThisPool;
+
+  /// No description provided for @sharedJoiningPool.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining...'**
+  String get sharedJoiningPool;
+
+  /// No description provided for @sharedPoolSeatsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{max} Seats'**
+  String sharedPoolSeatsCount(Object current, Object max);
+
+  /// No description provided for @sharedMeetingPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Point'**
+  String get sharedMeetingPoint;
+
+  /// No description provided for @sharedDestinationPoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get sharedDestinationPoint;
+
+  /// No description provided for @sharedRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get sharedRefresh;
+
+  /// No description provided for @sharedCreateInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Ride Instead'**
+  String get sharedCreateInstead;
+
+  /// No description provided for @missedRideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed Ride Request'**
+  String get missedRideTitle;
+
+  /// No description provided for @reconsiderRideButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconsider & Rejoin'**
+  String get reconsiderRideButton;
+
+  /// No description provided for @rejoiningQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejoining...'**
+  String get rejoiningQueue;
+
+  /// No description provided for @rejoinedQueueSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejoined queue for ride request'**
+  String get rejoinedQueueSuccess;
+
+  /// No description provided for @reconsiderFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride is no longer available'**
+  String get reconsiderFailed;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

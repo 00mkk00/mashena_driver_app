@@ -77,30 +77,32 @@ class _RadiusSelectorDialogState extends State<RadiusSelectorDialog> {
                   ),
                 ),
                 SizedBox(width: AppSpacing.sm.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      S.of(context).radiusTitle,
-                      style: AppTextStyles.w700_16.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        S.of(context).radiusTitle,
+                        style: AppTextStyles.w700_16.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppSpacing.xs.h),
-                    Text(
-                      S.of(context).radiusSubtitle,
-                      style: AppTextStyles.w400_12.copyWith(
-                        color: isDark
-                            ? AppColors.textGreyDark
-                            : AppColors.textGrey,
+                      SizedBox(height: AppSpacing.xs.h),
+                      Text(
+                        S.of(context).radiusSubtitle,
+                        style: AppTextStyles.w400_12.copyWith(
+                          color: isDark
+                              ? AppColors.textGreyDark
+                              : AppColors.textGrey,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const Spacer(),
+                SizedBox(width: AppSpacing.xs.w),
                 // Live km badge
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
                     color: isDark
                         ? AppColors.primaryLight.withValues(alpha: 0.15)
