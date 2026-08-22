@@ -20,7 +20,7 @@ class SignupView extends StatelessWidget {
               requireOtp: (email, userId) {
                 context.pushNamed(
                   AppRoutes.verification,
-                  extra: {"email": email, 'userId': userId},
+                  extra: {'email': email, 'userId': userId},
                 );
               },
               error: (message) {

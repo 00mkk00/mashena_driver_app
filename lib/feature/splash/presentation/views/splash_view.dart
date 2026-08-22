@@ -97,7 +97,7 @@ class _SplashViewState extends State<SplashView>
                 child: SlideTransition(
                   position: _textSlide,
                   child: Text(
-                    "Mashena",
+                    'Mashena',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.w600_24,
                   ),

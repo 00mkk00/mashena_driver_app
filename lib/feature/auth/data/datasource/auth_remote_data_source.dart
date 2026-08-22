@@ -59,17 +59,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> uploadDocuments(UploadDriverDocsParams params) async {
     final formData = FormData.fromMap({
-      "userId": params.userId,
-      "nationalIdNumber": params.nationalIdNumber,
-      "driverLicenseNumber": params.driverLicenseNumber,
-      "mechanicCardNumber": params.mechanicCardNumber,
-      "vehiclePlateNumber": params.vehiclePlateNumber,
-      "insurancePolicyNumber": params.insurancePolicyNumber,
-      "vehicleType": params.vehicleType,
-      "vehicleModel": params.vehicleModel,
-      "vehicleColor": params.vehicleColor,
-      "vehicleYear": params.vehicleYear,
-      "image": await MultipartFile.fromFile(params.imagePath),
+      'userId': params.userId,
+      'nationalIdNumber': params.nationalIdNumber,
+      'driverLicenseNumber': params.driverLicenseNumber,
+      'mechanicCardNumber': params.mechanicCardNumber,
+      'vehiclePlateNumber': params.vehiclePlateNumber,
+      'insurancePolicyNumber': params.insurancePolicyNumber,
+      'vehicleType': params.vehicleType,
+      'vehicleModel': params.vehicleModel,
+      'vehicleColor': params.vehicleColor,
+      'vehicleYear': params.vehicleYear,
+      'image': await MultipartFile.fromFile(params.imagePath),
     });
 
     await apiClient.post(Endpoints.uploadDocs, body: formData);
