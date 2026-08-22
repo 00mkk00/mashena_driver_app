@@ -407,5 +407,92 @@
       "amount": {},
       "currency": {}
     }
-  }
+  },
+  "drawerModeration": "مركز الانضباط والامتثال",
+  "moderationTitle": "مركز الانضباط والامتثال",
+  "moderationOverview": "نظرة عامة",
+  "moderationViolations": "المخالفات",
+  "moderationPenalties": "العقوبات",
+  "moderationRestrictions": "القيود",
+  "moderationAppeals": "الطعون والالتماسات",
+  "moderationAccountStatus": "حالة الحساب",
+  "moderationStatusActive": "نشط وطبيعي",
+  "moderationStatusSuspended": "معلق مؤقتاً",
+  "moderationStatusBanned": "محظور",
+  "moderationStatusWarning": "تحذير",
+  "moderationWarningsCount": "الإنذارات",
+  "moderationTotalViolations": "إجمالي المخالفات",
+  "moderationActivePenalties": "العقوبات النشطة",
+  "moderationActiveRestrictions": "القيود الحالية",
+  "moderationActiveAppeals": "الطعون النشطة",
+  "moderationNoRestrictions": "حسابك لا يحتوي على أي قيود نشطة حالياً",
+  "moderationRestrictionsAlert": "تنبيه: توجد قيود نشطة على حسابك",
+  "moderationRestrictionExpires": "ينتهي بتاريخ: {date}",
+  "@moderationRestrictionExpires": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationRestrictionStarts": "بدأ بتاريخ: {date}",
+  "@moderationRestrictionStarts": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmitAppeal": "تقديم طعن / التماس",
+  "moderationAppealReason": "سبب الطعن",
+  "moderationAppealReasonHint": "اشرح بالتفصيل سبب طلب مراجعة العقوبة...",
+  "moderationAppealEvidence": "رابط الإثبات أو التقرير (اختياري)",
+  "moderationAppealEvidenceHint": "https://example.com/proof.pdf",
+  "moderationAppealSubmitBtn": "إرسال الطعن",
+  "moderationAppealSubmitting": "جاري الإرسال...",
+  "moderationAppealSuccess": "تم تقديم الطعن بنجاح وسيتم مراجعته من الإدارة",
+  "moderationAppealFailure": "فشل تقديم الطعن، يرجى المحاولة لاحقاً",
+  "moderationAppealPending": "قيد المراجعة",
+  "moderationAppealUnderReview": "جاري الفحص",
+  "moderationAppealApproved": "تم القبول",
+  "moderationAppealRejected": "تم الرفض",
+  "moderationAdminNotes": "ملاحظات الإدارة",
+  "moderationAdminDecision": "قرار الإدارة",
+  "moderationReviewedAt": "تمت المراجعة في: {date}",
+  "@moderationReviewedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmittedAt": "تاريخ التقديم: {date}",
+  "@moderationSubmittedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSeverity": "مستوى الخطورة",
+  "moderationSeverityLow": "منخفض",
+  "moderationSeverityMedium": "متوسط",
+  "moderationSeverityHigh": "مرتفع",
+  "moderationSeverityCritical": "حرج جداً",
+  "moderationPenaltyWarning": "إنذار",
+  "moderationPenaltyTempSuspension": "إيقاف مؤقت",
+  "moderationPenaltyPermanentBan": "حظر دائم",
+  "moderationStatusProcessed": "تمت المعالجة",
+  "moderationSourceTrip": "رحلة #{id}",
+  "@moderationSourceTrip": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "moderationNoViolations": "لا توجد أي مخالفات مسجلة",
+  "moderationNoViolationsDesc": "عمل رائع! حافظ على معايير السلامة والانضباط ليبقى سجلك نظيفاً دائماً.",
+  "moderationNoPenalties": "لا توجد أي عقوبات على حسابك",
+  "moderationNoPenaltiesDesc": "سجلك التأديبي خالٍ من أي عقوبات.",
+  "moderationNoAppeals": "لا توجد أي طعون سابقة",
+  "moderationNoAppealsDesc": "لم تقم بتقديم أي التماسات أو طعون بعد.",
+  "moderationAppealDetailsTitle": "تفاصيل الطعن",
+  "moderationLinkedPenalty": "العقوبة المرتبطة بالطعن",
+  "moderationReasonValidation": "يرجى كتابة 10 أحرف على الأقل لشرح سبب الطعن.",
+  "moderationAppealAlreadySubmitted": "تم تقديم طعن مسبقاً لهذه العقوبة",
+  "moderationRecentViolations": "أحدث المخالفات",
+  "moderationPenaltyStarts": "يبدأ في",
+  "moderationPenaltyExpires": "ينتهي في",
+  "moderationEvidenceLink": "عرض مستند الإثبات المرفق"
 }

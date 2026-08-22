@@ -14,6 +14,7 @@ class AppRoutes {
   static const notificationView = 'notification-view';
   static const settingsView = 'settings-view';
   static const historyView = 'history-view';
+  static const moderationView = 'moderation-view';
 
   // route paths (للـ URL)
   static const onboardingPath = '/onboarding';
@@ -30,4 +31,5 @@ class AppRoutes {
   static const notificationViewPath = '/notification-view';
   static const settingsViewPath = '/settings-view';
   static const historyViewPath = '/history-view';
+  static const moderationViewPath = '/moderation-view';
 }

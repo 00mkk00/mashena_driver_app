@@ -917,4 +917,208 @@ class SEn extends S {
   String sharedFareAmountFormat(Object amount, Object currency) {
     return '$amount $currency';
   }
+
+  @override
+  String get drawerModeration => 'Moderation & Compliance';
+
+  @override
+  String get moderationTitle => 'Moderation Center';
+
+  @override
+  String get moderationOverview => 'Overview';
+
+  @override
+  String get moderationViolations => 'Violations';
+
+  @override
+  String get moderationPenalties => 'Penalties';
+
+  @override
+  String get moderationRestrictions => 'Restrictions';
+
+  @override
+  String get moderationAppeals => 'Appeals';
+
+  @override
+  String get moderationAccountStatus => 'Account Status';
+
+  @override
+  String get moderationStatusActive => 'Active';
+
+  @override
+  String get moderationStatusSuspended => 'Suspended';
+
+  @override
+  String get moderationStatusBanned => 'Banned';
+
+  @override
+  String get moderationStatusWarning => 'Warning';
+
+  @override
+  String get moderationWarningsCount => 'Warnings';
+
+  @override
+  String get moderationTotalViolations => 'Total Violations';
+
+  @override
+  String get moderationActivePenalties => 'Active Penalties';
+
+  @override
+  String get moderationActiveRestrictions => 'Active Restrictions';
+
+  @override
+  String get moderationActiveAppeals => 'Active Appeals';
+
+  @override
+  String get moderationNoRestrictions =>
+      'Your account has no active restrictions';
+
+  @override
+  String get moderationRestrictionsAlert =>
+      'Active Restrictions on your Account';
+
+  @override
+  String moderationRestrictionExpires(Object date) {
+    return 'Expires on: $date';
+  }
+
+  @override
+  String moderationRestrictionStarts(Object date) {
+    return 'Started on: $date';
+  }
+
+  @override
+  String get moderationSubmitAppeal => 'Submit Appeal';
+
+  @override
+  String get moderationAppealReason => 'Appeal Reason';
+
+  @override
+  String get moderationAppealReasonHint =>
+      'Explain why this penalty should be reviewed...';
+
+  @override
+  String get moderationAppealEvidence => 'Evidence / Proof URL (Optional)';
+
+  @override
+  String get moderationAppealEvidenceHint => 'https://example.com/proof.pdf';
+
+  @override
+  String get moderationAppealSubmitBtn => 'Submit Appeal';
+
+  @override
+  String get moderationAppealSubmitting => 'Submitting...';
+
+  @override
+  String get moderationAppealSuccess => 'Appeal submitted successfully';
+
+  @override
+  String get moderationAppealFailure => 'Failed to submit appeal';
+
+  @override
+  String get moderationAppealPending => 'Pending Review';
+
+  @override
+  String get moderationAppealUnderReview => 'Under Review';
+
+  @override
+  String get moderationAppealApproved => 'Approved';
+
+  @override
+  String get moderationAppealRejected => 'Rejected';
+
+  @override
+  String get moderationAdminNotes => 'Admin Notes';
+
+  @override
+  String get moderationAdminDecision => 'Admin Decision';
+
+  @override
+  String moderationReviewedAt(Object date) {
+    return 'Reviewed at: $date';
+  }
+
+  @override
+  String moderationSubmittedAt(Object date) {
+    return 'Submitted: $date';
+  }
+
+  @override
+  String get moderationSeverity => 'Severity';
+
+  @override
+  String get moderationSeverityLow => 'Low';
+
+  @override
+  String get moderationSeverityMedium => 'Medium';
+
+  @override
+  String get moderationSeverityHigh => 'High';
+
+  @override
+  String get moderationSeverityCritical => 'Critical';
+
+  @override
+  String get moderationPenaltyWarning => 'Warning';
+
+  @override
+  String get moderationPenaltyTempSuspension => 'Temporary Suspension';
+
+  @override
+  String get moderationPenaltyPermanentBan => 'Permanent Ban';
+
+  @override
+  String get moderationStatusProcessed => 'Processed';
+
+  @override
+  String moderationSourceTrip(Object id) {
+    return 'Trip #$id';
+  }
+
+  @override
+  String get moderationNoViolations => 'No violations recorded';
+
+  @override
+  String get moderationNoViolationsDesc =>
+      'Great job! Keep following platform safety rules to maintain a clean record.';
+
+  @override
+  String get moderationNoPenalties => 'No penalties on your account';
+
+  @override
+  String get moderationNoPenaltiesDesc =>
+      'You have a clean disciplinary record.';
+
+  @override
+  String get moderationNoAppeals => 'No appeals found';
+
+  @override
+  String get moderationNoAppealsDesc =>
+      'You haven\'t submitted any appeals yet.';
+
+  @override
+  String get moderationAppealDetailsTitle => 'Appeal Details';
+
+  @override
+  String get moderationLinkedPenalty => 'Linked Penalty';
+
+  @override
+  String get moderationReasonValidation =>
+      'Please enter at least 10 characters explaining your appeal.';
+
+  @override
+  String get moderationAppealAlreadySubmitted =>
+      'Appeal already submitted for this penalty';
+
+  @override
+  String get moderationRecentViolations => 'Recent Violations';
+
+  @override
+  String get moderationPenaltyStarts => 'Starts';
+
+  @override
+  String get moderationPenaltyExpires => 'Expires';
+
+  @override
+  String get moderationEvidenceLink => 'View Attached Evidence';
 }

@@ -407,5 +407,92 @@
       "amount": {},
       "currency": {}
     }
-  }
+  },
+  "drawerModeration": "Moderation & Compliance",
+  "moderationTitle": "Moderation Center",
+  "moderationOverview": "Overview",
+  "moderationViolations": "Violations",
+  "moderationPenalties": "Penalties",
+  "moderationRestrictions": "Restrictions",
+  "moderationAppeals": "Appeals",
+  "moderationAccountStatus": "Account Status",
+  "moderationStatusActive": "Active",
+  "moderationStatusSuspended": "Suspended",
+  "moderationStatusBanned": "Banned",
+  "moderationStatusWarning": "Warning",
+  "moderationWarningsCount": "Warnings",
+  "moderationTotalViolations": "Total Violations",
+  "moderationActivePenalties": "Active Penalties",
+  "moderationActiveRestrictions": "Active Restrictions",
+  "moderationActiveAppeals": "Active Appeals",
+  "moderationNoRestrictions": "Your account has no active restrictions",
+  "moderationRestrictionsAlert": "Active Restrictions on your Account",
+  "moderationRestrictionExpires": "Expires on: {date}",
+  "@moderationRestrictionExpires": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationRestrictionStarts": "Started on: {date}",
+  "@moderationRestrictionStarts": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmitAppeal": "Submit Appeal",
+  "moderationAppealReason": "Appeal Reason",
+  "moderationAppealReasonHint": "Explain why this penalty should be reviewed...",
+  "moderationAppealEvidence": "Evidence / Proof URL (Optional)",
+  "moderationAppealEvidenceHint": "https://example.com/proof.pdf",
+  "moderationAppealSubmitBtn": "Submit Appeal",
+  "moderationAppealSubmitting": "Submitting...",
+  "moderationAppealSuccess": "Appeal submitted successfully",
+  "moderationAppealFailure": "Failed to submit appeal",
+  "moderationAppealPending": "Pending Review",
+  "moderationAppealUnderReview": "Under Review",
+  "moderationAppealApproved": "Approved",
+  "moderationAppealRejected": "Rejected",
+  "moderationAdminNotes": "Admin Notes",
+  "moderationAdminDecision": "Admin Decision",
+  "moderationReviewedAt": "Reviewed at: {date}",
+  "@moderationReviewedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmittedAt": "Submitted: {date}",
+  "@moderationSubmittedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSeverity": "Severity",
+  "moderationSeverityLow": "Low",
+  "moderationSeverityMedium": "Medium",
+  "moderationSeverityHigh": "High",
+  "moderationSeverityCritical": "Critical",
+  "moderationPenaltyWarning": "Warning",
+  "moderationPenaltyTempSuspension": "Temporary Suspension",
+  "moderationPenaltyPermanentBan": "Permanent Ban",
+  "moderationStatusProcessed": "Processed",
+  "moderationSourceTrip": "Trip #{id}",
+  "@moderationSourceTrip": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "moderationNoViolations": "No violations recorded",
+  "moderationNoViolationsDesc": "Great job! Keep following platform safety rules to maintain a clean record.",
+  "moderationNoPenalties": "No penalties on your account",
+  "moderationNoPenaltiesDesc": "You have a clean disciplinary record.",
+  "moderationNoAppeals": "No appeals found",
+  "moderationNoAppealsDesc": "You haven't submitted any appeals yet.",
+  "moderationAppealDetailsTitle": "Appeal Details",
+  "moderationLinkedPenalty": "Linked Penalty",
+  "moderationReasonValidation": "Please enter at least 10 characters explaining your appeal.",
+  "moderationAppealAlreadySubmitted": "Appeal already submitted for this penalty",
+  "moderationRecentViolations": "Recent Violations",
+  "moderationPenaltyStarts": "Starts",
+  "moderationPenaltyExpires": "Expires",
+  "moderationEvidenceLink": "View Attached Evidence"
 }

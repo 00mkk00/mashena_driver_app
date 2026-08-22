@@ -915,4 +915,207 @@ class SAr extends S {
   String sharedFareAmountFormat(Object amount, Object currency) {
     return '$amount $currency';
   }
+
+  @override
+  String get drawerModeration => 'مركز الانضباط والامتثال';
+
+  @override
+  String get moderationTitle => 'مركز الانضباط والامتثال';
+
+  @override
+  String get moderationOverview => 'نظرة عامة';
+
+  @override
+  String get moderationViolations => 'المخالفات';
+
+  @override
+  String get moderationPenalties => 'العقوبات';
+
+  @override
+  String get moderationRestrictions => 'القيود';
+
+  @override
+  String get moderationAppeals => 'الطعون والالتماسات';
+
+  @override
+  String get moderationAccountStatus => 'حالة الحساب';
+
+  @override
+  String get moderationStatusActive => 'نشط وطبيعي';
+
+  @override
+  String get moderationStatusSuspended => 'معلق مؤقتاً';
+
+  @override
+  String get moderationStatusBanned => 'محظور';
+
+  @override
+  String get moderationStatusWarning => 'تحذير';
+
+  @override
+  String get moderationWarningsCount => 'الإنذارات';
+
+  @override
+  String get moderationTotalViolations => 'إجمالي المخالفات';
+
+  @override
+  String get moderationActivePenalties => 'العقوبات النشطة';
+
+  @override
+  String get moderationActiveRestrictions => 'القيود الحالية';
+
+  @override
+  String get moderationActiveAppeals => 'الطعون النشطة';
+
+  @override
+  String get moderationNoRestrictions =>
+      'حسابك لا يحتوي على أي قيود نشطة حالياً';
+
+  @override
+  String get moderationRestrictionsAlert => 'تنبيه: توجد قيود نشطة على حسابك';
+
+  @override
+  String moderationRestrictionExpires(Object date) {
+    return 'ينتهي بتاريخ: $date';
+  }
+
+  @override
+  String moderationRestrictionStarts(Object date) {
+    return 'بدأ بتاريخ: $date';
+  }
+
+  @override
+  String get moderationSubmitAppeal => 'تقديم طعن / التماس';
+
+  @override
+  String get moderationAppealReason => 'سبب الطعن';
+
+  @override
+  String get moderationAppealReasonHint =>
+      'اشرح بالتفصيل سبب طلب مراجعة العقوبة...';
+
+  @override
+  String get moderationAppealEvidence => 'رابط الإثبات أو التقرير (اختياري)';
+
+  @override
+  String get moderationAppealEvidenceHint => 'https://example.com/proof.pdf';
+
+  @override
+  String get moderationAppealSubmitBtn => 'إرسال الطعن';
+
+  @override
+  String get moderationAppealSubmitting => 'جاري الإرسال...';
+
+  @override
+  String get moderationAppealSuccess =>
+      'تم تقديم الطعن بنجاح وسيتم مراجعته من الإدارة';
+
+  @override
+  String get moderationAppealFailure => 'فشل تقديم الطعن، يرجى المحاولة لاحقاً';
+
+  @override
+  String get moderationAppealPending => 'قيد المراجعة';
+
+  @override
+  String get moderationAppealUnderReview => 'جاري الفحص';
+
+  @override
+  String get moderationAppealApproved => 'تم القبول';
+
+  @override
+  String get moderationAppealRejected => 'تم الرفض';
+
+  @override
+  String get moderationAdminNotes => 'ملاحظات الإدارة';
+
+  @override
+  String get moderationAdminDecision => 'قرار الإدارة';
+
+  @override
+  String moderationReviewedAt(Object date) {
+    return 'تمت المراجعة في: $date';
+  }
+
+  @override
+  String moderationSubmittedAt(Object date) {
+    return 'تاريخ التقديم: $date';
+  }
+
+  @override
+  String get moderationSeverity => 'مستوى الخطورة';
+
+  @override
+  String get moderationSeverityLow => 'منخفض';
+
+  @override
+  String get moderationSeverityMedium => 'متوسط';
+
+  @override
+  String get moderationSeverityHigh => 'مرتفع';
+
+  @override
+  String get moderationSeverityCritical => 'حرج جداً';
+
+  @override
+  String get moderationPenaltyWarning => 'إنذار';
+
+  @override
+  String get moderationPenaltyTempSuspension => 'إيقاف مؤقت';
+
+  @override
+  String get moderationPenaltyPermanentBan => 'حظر دائم';
+
+  @override
+  String get moderationStatusProcessed => 'تمت المعالجة';
+
+  @override
+  String moderationSourceTrip(Object id) {
+    return 'رحلة #$id';
+  }
+
+  @override
+  String get moderationNoViolations => 'لا توجد أي مخالفات مسجلة';
+
+  @override
+  String get moderationNoViolationsDesc =>
+      'عمل رائع! حافظ على معايير السلامة والانضباط ليبقى سجلك نظيفاً دائماً.';
+
+  @override
+  String get moderationNoPenalties => 'لا توجد أي عقوبات على حسابك';
+
+  @override
+  String get moderationNoPenaltiesDesc => 'سجلك التأديبي خالٍ من أي عقوبات.';
+
+  @override
+  String get moderationNoAppeals => 'لا توجد أي طعون سابقة';
+
+  @override
+  String get moderationNoAppealsDesc =>
+      'لم تقم بتقديم أي التماسات أو طعون بعد.';
+
+  @override
+  String get moderationAppealDetailsTitle => 'تفاصيل الطعن';
+
+  @override
+  String get moderationLinkedPenalty => 'العقوبة المرتبطة بالطعن';
+
+  @override
+  String get moderationReasonValidation =>
+      'يرجى كتابة 10 أحرف على الأقل لشرح سبب الطعن.';
+
+  @override
+  String get moderationAppealAlreadySubmitted =>
+      'تم تقديم طعن مسبقاً لهذه العقوبة';
+
+  @override
+  String get moderationRecentViolations => 'أحدث المخالفات';
+
+  @override
+  String get moderationPenaltyStarts => 'يبدأ في';
+
+  @override
+  String get moderationPenaltyExpires => 'ينتهي في';
+
+  @override
+  String get moderationEvidenceLink => 'عرض مستند الإثبات المرفق';
 }

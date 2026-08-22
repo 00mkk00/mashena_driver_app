@@ -48,6 +48,11 @@ import 'package:mashena_driver_app/feature/home/data/params/remove_shared_ride_p
 import 'package:mashena_driver_app/feature/home/data/params/check_in_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/on_board_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/drop_off_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_available_passenger_pools_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/accept_passenger_pool_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/passenger_pool_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/accept_passenger_pool_response_entity.dart';
+import 'package:mashena_driver_app/feature/home/data/mappers/passenger_pool_mapper.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource _remoteDataSource;
@@ -382,6 +387,34 @@ class HomeRepositoryImpl implements HomeRepository {
   ) async {
     try {
       final model = await _remoteDataSource.dropOffSharedRidePassenger(params);
+      return Right(model.toEntity());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PassengerPoolEntity>>> getAvailablePassengerPools(
+    GetAvailablePassengerPoolsParams params,
+  ) async {
+    try {
+      final models = await _remoteDataSource.getAvailablePassengerPools(params);
+      return Right(models.map((e) => e.toEntity()).toList());
+    } on ApiException catch (e) {
+      return Left(mapApiExceptionToFailure(e, _apiClient));
+    } catch (e) {
+      return Left(Failure(FailureCode.unknown, rawMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AcceptPassengerPoolResponseEntity>> acceptPassengerPool(
+    AcceptPassengerPoolParams params,
+  ) async {
+    try {
+      final model = await _remoteDataSource.acceptPassengerPool(params);
       return Right(model.toEntity());
     } on ApiException catch (e) {
       return Left(mapApiExceptionToFailure(e, _apiClient));

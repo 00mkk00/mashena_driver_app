@@ -110,6 +110,14 @@ class DriverAppDrawer extends StatelessWidget {
                       },
                     ),
                     _DrawerItem(
+                      icon: Icons.shield_outlined,
+                      label: S.of(context).drawerModeration,
+                      onTap: () {
+                        context.pop();
+                        context.push(AppRoutes.moderationViewPath);
+                      },
+                    ),
+                    _DrawerItem(
                       icon: Icons.settings_outlined,
                       label: S.of(context).drawerSettings,
                       onTap: () {

@@ -33,6 +33,10 @@ import 'package:mashena_driver_app/feature/home/data/params/remove_shared_ride_p
 import 'package:mashena_driver_app/feature/home/data/params/check_in_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/on_board_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/drop_off_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_available_passenger_pools_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/accept_passenger_pool_params.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/passenger_pool_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/accept_passenger_pool_response_entity.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, Unit>> goOnline(GoOnlineParams params);
@@ -88,5 +92,11 @@ abstract class HomeRepository {
   );
   Future<Either<Failure, SharedRidePassengerEntity>> dropOffSharedRidePassenger(
     DropOffSharedRidePassengerParams params,
+  );
+  Future<Either<Failure, List<PassengerPoolEntity>>> getAvailablePassengerPools(
+    GetAvailablePassengerPoolsParams params,
+  );
+  Future<Either<Failure, AcceptPassengerPoolResponseEntity>> acceptPassengerPool(
+    AcceptPassengerPoolParams params,
   );
 }

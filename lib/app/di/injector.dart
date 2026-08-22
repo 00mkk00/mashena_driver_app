@@ -50,6 +50,8 @@ import 'package:mashena_driver_app/feature/home/domain/usecases/remove_shared_ri
 import 'package:mashena_driver_app/feature/home/domain/usecases/check_in_shared_ride_passenger_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/on_board_shared_ride_passenger_use_case.dart';
 import 'package:mashena_driver_app/feature/home/domain/usecases/drop_off_shared_ride_passenger_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/get_available_passenger_pools_use_case.dart';
+import 'package:mashena_driver_app/feature/home/domain/usecases/accept_passenger_pool_use_case.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_documents_cubit/driver_documents_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_status_cubit/driver_status_cubit.dart';
 import 'package:mashena_driver_app/feature/home/presentation/cubits/driver_wallet_cubit/driver_wallet_cubit.dart';
@@ -75,6 +77,20 @@ import 'package:mashena_driver_app/feature/notification/domain/usecases/mark_all
 import 'package:mashena_driver_app/feature/notification/domain/usecases/mark_notification_as_read_use_case.dart';
 import 'package:mashena_driver_app/feature/notification/domain/usecases/register_notification_token_use_case.dart';
 import 'package:mashena_driver_app/feature/notification/presentation/cubits/notification_cubit/notification_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/data/datasource/moderation_remote_data_source.dart';
+import 'package:mashena_driver_app/feature/moderation/data/repos/moderation_repository_impl.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/repos/moderation_repository.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_active_restrictions_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_appeal_details_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_appeals_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_moderation_overview_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_penalties_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/get_violations_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/domain/usecases/submit_appeal_use_case.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/appeals_cubit/appeals_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/moderation_overview_cubit/moderation_overview_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/penalties_cubit/penalties_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/violations_cubit/violations_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -271,6 +287,12 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton(
     () => DropOffSharedRidePassengerUseCase(getIt<HomeRepository>()),
   );
+  getIt.registerLazySingleton(
+    () => GetAvailablePassengerPoolsUseCase(getIt<HomeRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => AcceptPassengerPoolUseCase(getIt<HomeRepository>()),
+  );
   // DI
   getIt.registerFactory<RideRequestCubit>(
     () => RideRequestCubit(
@@ -410,6 +432,69 @@ Future<void> configureDependencies() async {
       getIt<GetNotificationsUseCase>(),
       getIt<MarkNotificationAsReadUseCase>(),
       getIt<MarkAllNotificationsAsReadUseCase>(),
+    ),
+  );
+
+  // moderation ---------------------
+  getIt.registerLazySingleton<ModerationRemoteDataSource>(
+    () => ModerationRemoteDataSourceImpl(getIt<ApiClient>()),
+  );
+
+  getIt.registerLazySingleton<ModerationRepository>(
+    () => ModerationRepositoryImpl(
+      getIt<ModerationRemoteDataSource>(),
+      getIt<ApiClient>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<GetModerationOverviewUseCase>(
+    () => GetModerationOverviewUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetViolationsUseCase>(
+    () => GetViolationsUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetPenaltiesUseCase>(
+    () => GetPenaltiesUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetActiveRestrictionsUseCase>(
+    () => GetActiveRestrictionsUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetAppealsUseCase>(
+    () => GetAppealsUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<SubmitAppealUseCase>(
+    () => SubmitAppealUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetAppealDetailsUseCase>(
+    () => GetAppealDetailsUseCase(getIt<ModerationRepository>()),
+  );
+
+  getIt.registerFactory<ModerationOverviewCubit>(
+    () => ModerationOverviewCubit(
+      getModerationOverviewUseCase: getIt<GetModerationOverviewUseCase>(),
+      getActiveRestrictionsUseCase: getIt<GetActiveRestrictionsUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<ViolationsCubit>(
+    () => ViolationsCubit(getIt<GetViolationsUseCase>()),
+  );
+
+  getIt.registerFactory<PenaltiesCubit>(
+    () => PenaltiesCubit(getIt<GetPenaltiesUseCase>()),
+  );
+
+  getIt.registerFactory<AppealsCubit>(
+    () => AppealsCubit(
+      getAppealsUseCase: getIt<GetAppealsUseCase>(),
+      submitAppealUseCase: getIt<SubmitAppealUseCase>(),
+      getAppealDetailsUseCase: getIt<GetAppealDetailsUseCase>(),
     ),
   );
 }

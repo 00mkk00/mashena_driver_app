@@ -40,4 +40,15 @@ class Endpoints {
   static const String notifications = '/notifications';
   static const String markAllNotificationsRead = '/notifications/read-all';
   static const String markNotificationRead = '/notifications/{id}/read';
+  static const String availablePassengerPools = '/passenger-pools/available';
+  static const String acceptPassengerPool = '/passenger-pools/{id}/accept';
+
+  // Moderation
+  static const String moderationOverview = '/me/moderation';
+  static const String moderationViolations = '/me/violations';
+  static const String moderationPenalties = '/me/penalties';
+  static const String moderationRestrictions = '/me/restrictions';
+  static const String moderationAppeals = '/me/appeals';
+  static const String moderationSubmitAppeal = '/me/penalties/{id}/appeal';
+  static const String moderationAppealDetails = '/me/appeals/{id}';
 }

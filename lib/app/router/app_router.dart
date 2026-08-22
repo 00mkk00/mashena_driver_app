@@ -28,6 +28,11 @@ import 'package:mashena_driver_app/feature/onboarding/domain/usecases/get_onboar
 import 'package:mashena_driver_app/feature/onboarding/presentation/views/onboarding_view.dart';
 import 'package:mashena_driver_app/feature/splash/presentation/views/splash_view.dart';
 import 'package:mashena_driver_app/feature/settings/presentation/views/settings_view.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/appeals_cubit/appeals_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/moderation_overview_cubit/moderation_overview_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/penalties_cubit/penalties_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/cubits/violations_cubit/violations_cubit.dart';
+import 'package:mashena_driver_app/feature/moderation/presentation/views/moderation_view.dart';
 
 final class AppRouter {
   const AppRouter._();
@@ -173,6 +178,27 @@ final class AppRouter {
         path: AppRoutes.notificationViewPath,
         name: AppRoutes.notificationView,
         builder: (context, state) => const NotificationsView(),
+      ),
+      GoRoute(
+        path: AppRoutes.moderationViewPath,
+        name: AppRoutes.moderationView,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => getIt<ModerationOverviewCubit>(),
+            ),
+            BlocProvider(
+              create: (_) => getIt<ViolationsCubit>(),
+            ),
+            BlocProvider(
+              create: (_) => getIt<PenaltiesCubit>(),
+            ),
+            BlocProvider(
+              create: (_) => getIt<AppealsCubit>(),
+            ),
+          ],
+          child: const ModerationView(),
+        ),
       ),
     ],
 

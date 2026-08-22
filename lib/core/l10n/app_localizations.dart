@@ -1788,6 +1788,378 @@ abstract class S {
   /// In en, this message translates to:
   /// **'{amount} {currency}'**
   String sharedFareAmountFormat(Object amount, Object currency);
+
+  /// No description provided for @drawerModeration.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderation & Compliance'**
+  String get drawerModeration;
+
+  /// No description provided for @moderationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderation Center'**
+  String get moderationTitle;
+
+  /// No description provided for @moderationOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get moderationOverview;
+
+  /// No description provided for @moderationViolations.
+  ///
+  /// In en, this message translates to:
+  /// **'Violations'**
+  String get moderationViolations;
+
+  /// No description provided for @moderationPenalties.
+  ///
+  /// In en, this message translates to:
+  /// **'Penalties'**
+  String get moderationPenalties;
+
+  /// No description provided for @moderationRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Restrictions'**
+  String get moderationRestrictions;
+
+  /// No description provided for @moderationAppeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeals'**
+  String get moderationAppeals;
+
+  /// No description provided for @moderationAccountStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Status'**
+  String get moderationAccountStatus;
+
+  /// No description provided for @moderationStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get moderationStatusActive;
+
+  /// No description provided for @moderationStatusSuspended.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspended'**
+  String get moderationStatusSuspended;
+
+  /// No description provided for @moderationStatusBanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Banned'**
+  String get moderationStatusBanned;
+
+  /// No description provided for @moderationStatusWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get moderationStatusWarning;
+
+  /// No description provided for @moderationWarningsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Warnings'**
+  String get moderationWarningsCount;
+
+  /// No description provided for @moderationTotalViolations.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Violations'**
+  String get moderationTotalViolations;
+
+  /// No description provided for @moderationActivePenalties.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Penalties'**
+  String get moderationActivePenalties;
+
+  /// No description provided for @moderationActiveRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Restrictions'**
+  String get moderationActiveRestrictions;
+
+  /// No description provided for @moderationActiveAppeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Appeals'**
+  String get moderationActiveAppeals;
+
+  /// No description provided for @moderationNoRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has no active restrictions'**
+  String get moderationNoRestrictions;
+
+  /// No description provided for @moderationRestrictionsAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Restrictions on your Account'**
+  String get moderationRestrictionsAlert;
+
+  /// No description provided for @moderationRestrictionExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on: {date}'**
+  String moderationRestrictionExpires(Object date);
+
+  /// No description provided for @moderationRestrictionStarts.
+  ///
+  /// In en, this message translates to:
+  /// **'Started on: {date}'**
+  String moderationRestrictionStarts(Object date);
+
+  /// No description provided for @moderationSubmitAppeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Appeal'**
+  String get moderationSubmitAppeal;
+
+  /// No description provided for @moderationAppealReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal Reason'**
+  String get moderationAppealReason;
+
+  /// No description provided for @moderationAppealReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain why this penalty should be reviewed...'**
+  String get moderationAppealReasonHint;
+
+  /// No description provided for @moderationAppealEvidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Evidence / Proof URL (Optional)'**
+  String get moderationAppealEvidence;
+
+  /// No description provided for @moderationAppealEvidenceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'https://example.com/proof.pdf'**
+  String get moderationAppealEvidenceHint;
+
+  /// No description provided for @moderationAppealSubmitBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Appeal'**
+  String get moderationAppealSubmitBtn;
+
+  /// No description provided for @moderationAppealSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting...'**
+  String get moderationAppealSubmitting;
+
+  /// No description provided for @moderationAppealSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal submitted successfully'**
+  String get moderationAppealSuccess;
+
+  /// No description provided for @moderationAppealFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit appeal'**
+  String get moderationAppealFailure;
+
+  /// No description provided for @moderationAppealPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Review'**
+  String get moderationAppealPending;
+
+  /// No description provided for @moderationAppealUnderReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Review'**
+  String get moderationAppealUnderReview;
+
+  /// No description provided for @moderationAppealApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get moderationAppealApproved;
+
+  /// No description provided for @moderationAppealRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get moderationAppealRejected;
+
+  /// No description provided for @moderationAdminNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Notes'**
+  String get moderationAdminNotes;
+
+  /// No description provided for @moderationAdminDecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Decision'**
+  String get moderationAdminDecision;
+
+  /// No description provided for @moderationReviewedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed at: {date}'**
+  String moderationReviewedAt(Object date);
+
+  /// No description provided for @moderationSubmittedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted: {date}'**
+  String moderationSubmittedAt(Object date);
+
+  /// No description provided for @moderationSeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get moderationSeverity;
+
+  /// No description provided for @moderationSeverityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get moderationSeverityLow;
+
+  /// No description provided for @moderationSeverityMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get moderationSeverityMedium;
+
+  /// No description provided for @moderationSeverityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get moderationSeverityHigh;
+
+  /// No description provided for @moderationSeverityCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get moderationSeverityCritical;
+
+  /// No description provided for @moderationPenaltyWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get moderationPenaltyWarning;
+
+  /// No description provided for @moderationPenaltyTempSuspension.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary Suspension'**
+  String get moderationPenaltyTempSuspension;
+
+  /// No description provided for @moderationPenaltyPermanentBan.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanent Ban'**
+  String get moderationPenaltyPermanentBan;
+
+  /// No description provided for @moderationStatusProcessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Processed'**
+  String get moderationStatusProcessed;
+
+  /// No description provided for @moderationSourceTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip #{id}'**
+  String moderationSourceTrip(Object id);
+
+  /// No description provided for @moderationNoViolations.
+  ///
+  /// In en, this message translates to:
+  /// **'No violations recorded'**
+  String get moderationNoViolations;
+
+  /// No description provided for @moderationNoViolationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job! Keep following platform safety rules to maintain a clean record.'**
+  String get moderationNoViolationsDesc;
+
+  /// No description provided for @moderationNoPenalties.
+  ///
+  /// In en, this message translates to:
+  /// **'No penalties on your account'**
+  String get moderationNoPenalties;
+
+  /// No description provided for @moderationNoPenaltiesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You have a clean disciplinary record.'**
+  String get moderationNoPenaltiesDesc;
+
+  /// No description provided for @moderationNoAppeals.
+  ///
+  /// In en, this message translates to:
+  /// **'No appeals found'**
+  String get moderationNoAppeals;
+
+  /// No description provided for @moderationNoAppealsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t submitted any appeals yet.'**
+  String get moderationNoAppealsDesc;
+
+  /// No description provided for @moderationAppealDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal Details'**
+  String get moderationAppealDetailsTitle;
+
+  /// No description provided for @moderationLinkedPenalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked Penalty'**
+  String get moderationLinkedPenalty;
+
+  /// No description provided for @moderationReasonValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter at least 10 characters explaining your appeal.'**
+  String get moderationReasonValidation;
+
+  /// No description provided for @moderationAppealAlreadySubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Appeal already submitted for this penalty'**
+  String get moderationAppealAlreadySubmitted;
+
+  /// No description provided for @moderationRecentViolations.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Violations'**
+  String get moderationRecentViolations;
+
+  /// No description provided for @moderationPenaltyStarts.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get moderationPenaltyStarts;
+
+  /// No description provided for @moderationPenaltyExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get moderationPenaltyExpires;
+
+  /// No description provided for @moderationEvidenceLink.
+  ///
+  /// In en, this message translates to:
+  /// **'View Attached Evidence'**
+  String get moderationEvidenceLink;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

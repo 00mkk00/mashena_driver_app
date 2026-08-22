@@ -37,6 +37,10 @@ import 'package:mashena_driver_app/feature/home/data/params/remove_shared_ride_p
 import 'package:mashena_driver_app/feature/home/data/params/check_in_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/on_board_shared_ride_passenger_params.dart';
 import 'package:mashena_driver_app/feature/home/data/params/drop_off_shared_ride_passenger_params.dart';
+import 'package:mashena_driver_app/feature/home/data/models/passenger_pool_model.dart';
+import 'package:mashena_driver_app/feature/home/data/models/accept_passenger_pool_response_model.dart';
+import 'package:mashena_driver_app/feature/home/data/params/get_available_passenger_pools_params.dart';
+import 'package:mashena_driver_app/feature/home/data/params/accept_passenger_pool_params.dart';
 
 abstract class HomeRemoteDataSource {
   Future<void> goOnline(GoOnlineParams params);
@@ -65,6 +69,12 @@ abstract class HomeRemoteDataSource {
   Future<SharedRidePassengerModel> checkInSharedRidePassenger(CheckInSharedRidePassengerParams params);
   Future<SharedRidePassengerModel> onBoardSharedRidePassenger(OnBoardSharedRidePassengerParams params);
   Future<SharedRidePassengerModel> dropOffSharedRidePassenger(DropOffSharedRidePassengerParams params);
+  Future<List<PassengerPoolModel>> getAvailablePassengerPools(
+    GetAvailablePassengerPoolsParams params,
+  );
+  Future<AcceptPassengerPoolResponseModel> acceptPassengerPool(
+    AcceptPassengerPoolParams params,
+  );
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -357,5 +367,43 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       passengerMap['totalPaidFare'] = raw['totalPaidFare'];
     }
     return SharedRidePassengerModel.fromJson(passengerMap);
+  }
+
+  @override
+  Future<List<PassengerPoolModel>> getAvailablePassengerPools(
+    GetAvailablePassengerPoolsParams params,
+  ) async {
+    final queryParams = <String, dynamic>{
+      'lat': params.lat,
+      'lng': params.lng,
+    };
+    if (params.radiusKm != null) {
+      queryParams['radiusKm'] = params.radiusKm;
+    }
+    final response = await apiClient.get(
+      Endpoints.availablePassengerPools,
+      query: queryParams,
+    );
+    final list = (response is List)
+        ? response
+        : (response is Map<String, dynamic> && response['data'] is List
+            ? response['data'] as List
+            : <dynamic>[]);
+    return list
+        .map((e) => PassengerPoolModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<AcceptPassengerPoolResponseModel> acceptPassengerPool(
+    AcceptPassengerPoolParams params,
+  ) async {
+    final response = await apiClient.post(
+      Endpoints.acceptPassengerPool.replaceAll('{id}', params.id.toString()),
+    );
+    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+        ? response['data']
+        : response;
+    return AcceptPassengerPoolResponseModel.fromJson(data as Map<String, dynamic>);
   }
 }
