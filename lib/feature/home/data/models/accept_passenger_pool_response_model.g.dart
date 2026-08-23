@@ -12,7 +12,7 @@ _$$AcceptPassengerPoolResponseModelImplFromJson(Map<String, dynamic> json) =>
       room: json['room'] == null
           ? null
           : PassengerPoolModel.fromJson(json['room'] as Map<String, dynamic>),
-      sharedRideId: (json['sharedRideId'] as num?)?.toInt(),
+      sharedRideId: parseIntFromJson(json['sharedRideId']),
     );
 
 Map<String, dynamic> _$$AcceptPassengerPoolResponseModelImplToJson(

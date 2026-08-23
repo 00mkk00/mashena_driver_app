@@ -23,17 +23,26 @@ SharedRidePassengerModel _$SharedRidePassengerModelFromJson(
 
 /// @nodoc
 mixin _$SharedRidePassengerModel {
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId => throw _privateConstructorUsedError;
   String? get riderName => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get paymentStatus => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get seatsNeeded => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get activeSeats => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalPaidFare => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalDistanceKm => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalDurationSec => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalFare => throw _privateConstructorUsedError;
   String? get joinedAt => throw _privateConstructorUsedError;
   String? get checkedInAt => throw _privateConstructorUsedError;
@@ -61,18 +70,18 @@ abstract class $SharedRidePassengerModelCopyWith<$Res> {
   ) = _$SharedRidePassengerModelCopyWithImpl<$Res, SharedRidePassengerModel>;
   @useResult
   $Res call({
-    int? id,
-    int? sharedRideId,
-    int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
     String? riderName,
     String? status,
     String? paymentStatus,
-    int? seatsNeeded,
-    int? activeSeats,
-    num? totalPaidFare,
-    num? finalDistanceKm,
-    num? finalDurationSec,
-    num? finalFare,
+    @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) int? activeSeats,
+    @JsonKey(fromJson: parseNumFromJson) num? totalPaidFare,
+    @JsonKey(fromJson: parseNumFromJson) num? finalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? finalDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) num? finalFare,
     String? joinedAt,
     String? checkedInAt,
     String? onBoardAt,
@@ -215,18 +224,18 @@ abstract class _$$SharedRidePassengerModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    int? id,
-    int? sharedRideId,
-    int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
     String? riderName,
     String? status,
     String? paymentStatus,
-    int? seatsNeeded,
-    int? activeSeats,
-    num? totalPaidFare,
-    num? finalDistanceKm,
-    num? finalDurationSec,
-    num? finalFare,
+    @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) int? activeSeats,
+    @JsonKey(fromJson: parseNumFromJson) num? totalPaidFare,
+    @JsonKey(fromJson: parseNumFromJson) num? finalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? finalDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) num? finalFare,
     String? joinedAt,
     String? checkedInAt,
     String? onBoardAt,
@@ -362,18 +371,18 @@ class __$$SharedRidePassengerModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
   const _$SharedRidePassengerModelImpl({
-    this.id,
-    this.sharedRideId,
-    this.riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) this.id,
+    @JsonKey(fromJson: parseIntFromJson) this.sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) this.riderProfileId,
     this.riderName,
     this.status,
     this.paymentStatus,
-    this.seatsNeeded,
-    this.activeSeats,
-    this.totalPaidFare,
-    this.finalDistanceKm,
-    this.finalDurationSec,
-    this.finalFare,
+    @JsonKey(fromJson: parseIntFromJson) this.seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) this.activeSeats,
+    @JsonKey(fromJson: parseNumFromJson) this.totalPaidFare,
+    @JsonKey(fromJson: parseNumFromJson) this.finalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) this.finalDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) this.finalFare,
     this.joinedAt,
     this.checkedInAt,
     this.onBoardAt,
@@ -387,10 +396,13 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
       _$$SharedRidePassengerModelImplFromJson(json);
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? sharedRideId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? riderProfileId;
   @override
   final String? riderName;
@@ -399,16 +411,22 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
   @override
   final String? paymentStatus;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? seatsNeeded;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? activeSeats;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? totalPaidFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? finalDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? finalDurationSec;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? finalFare;
   @override
   final String? joinedAt;
@@ -517,18 +535,18 @@ class _$SharedRidePassengerModelImpl implements _SharedRidePassengerModel {
 
 abstract class _SharedRidePassengerModel implements SharedRidePassengerModel {
   const factory _SharedRidePassengerModel({
-    final int? id,
-    final int? sharedRideId,
-    final int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) final int? id,
+    @JsonKey(fromJson: parseIntFromJson) final int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) final int? riderProfileId,
     final String? riderName,
     final String? status,
     final String? paymentStatus,
-    final int? seatsNeeded,
-    final int? activeSeats,
-    final num? totalPaidFare,
-    final num? finalDistanceKm,
-    final num? finalDurationSec,
-    final num? finalFare,
+    @JsonKey(fromJson: parseIntFromJson) final int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) final int? activeSeats,
+    @JsonKey(fromJson: parseNumFromJson) final num? totalPaidFare,
+    @JsonKey(fromJson: parseNumFromJson) final num? finalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) final num? finalDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) final num? finalFare,
     final String? joinedAt,
     final String? checkedInAt,
     final String? onBoardAt,
@@ -542,10 +560,13 @@ abstract class _SharedRidePassengerModel implements SharedRidePassengerModel {
       _$SharedRidePassengerModelImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId;
   @override
   String? get riderName;
@@ -554,16 +575,22 @@ abstract class _SharedRidePassengerModel implements SharedRidePassengerModel {
   @override
   String? get paymentStatus;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get seatsNeeded;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get activeSeats;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalPaidFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalDurationSec;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get finalFare;
   @override
   String? get joinedAt;
@@ -594,31 +621,49 @@ SharedRideModel _$SharedRideModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SharedRideModel {
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get driverProfileId => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get vehicleId => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get endedBy => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get originLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get originLng => throw _privateConstructorUsedError;
   String? get originAddress => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destLng => throw _privateConstructorUsedError;
   String? get destAddress => throw _privateConstructorUsedError;
   String? get departureTime => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get maxPassengers => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get occupiedSeats => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalDistanceKm => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalDurationSec => throw _privateConstructorUsedError;
   dynamic get routeGeometry => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get actualDistanceKm => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get actualDurationSec => throw _privateConstructorUsedError;
   dynamic get actualRouteGeometry => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get baseTripFare => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get remainingTripCost => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get occupiedSeatsAtStart => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get fullRouteSeatFare => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseNumFromJson)
   num? get minimumSeatFare => throw _privateConstructorUsedError;
   String? get startedAt => throw _privateConstructorUsedError;
   String? get completedAt => throw _privateConstructorUsedError;
@@ -647,32 +692,32 @@ abstract class $SharedRideModelCopyWith<$Res> {
   ) = _$SharedRideModelCopyWithImpl<$Res, SharedRideModel>;
   @useResult
   $Res call({
-    int? id,
-    int? driverProfileId,
-    int? vehicleId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? vehicleId,
     String? status,
     String? endedBy,
     String? notes,
-    double? originLat,
-    double? originLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? originLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? originLng,
     String? originAddress,
-    double? destLat,
-    double? destLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destLng,
     String? destAddress,
     String? departureTime,
-    int? maxPassengers,
-    int? occupiedSeats,
-    num? totalDistanceKm,
-    num? totalDurationSec,
+    @JsonKey(fromJson: parseIntFromJson) int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? occupiedSeats,
+    @JsonKey(fromJson: parseNumFromJson) num? totalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? totalDurationSec,
     dynamic routeGeometry,
-    num? actualDistanceKm,
-    num? actualDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) num? actualDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? actualDurationSec,
     dynamic actualRouteGeometry,
-    num? baseTripFare,
-    num? remainingTripCost,
-    int? occupiedSeatsAtStart,
-    num? fullRouteSeatFare,
-    num? minimumSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) num? baseTripFare,
+    @JsonKey(fromJson: parseNumFromJson) num? remainingTripCost,
+    @JsonKey(fromJson: parseIntFromJson) int? occupiedSeatsAtStart,
+    @JsonKey(fromJson: parseNumFromJson) num? fullRouteSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) num? minimumSeatFare,
     String? startedAt,
     String? completedAt,
     String? canceledAt,
@@ -882,32 +927,32 @@ abstract class _$$SharedRideModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    int? id,
-    int? driverProfileId,
-    int? vehicleId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? vehicleId,
     String? status,
     String? endedBy,
     String? notes,
-    double? originLat,
-    double? originLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? originLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? originLng,
     String? originAddress,
-    double? destLat,
-    double? destLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destLng,
     String? destAddress,
     String? departureTime,
-    int? maxPassengers,
-    int? occupiedSeats,
-    num? totalDistanceKm,
-    num? totalDurationSec,
+    @JsonKey(fromJson: parseIntFromJson) int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? occupiedSeats,
+    @JsonKey(fromJson: parseNumFromJson) num? totalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? totalDurationSec,
     dynamic routeGeometry,
-    num? actualDistanceKm,
-    num? actualDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) num? actualDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) num? actualDurationSec,
     dynamic actualRouteGeometry,
-    num? baseTripFare,
-    num? remainingTripCost,
-    int? occupiedSeatsAtStart,
-    num? fullRouteSeatFare,
-    num? minimumSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) num? baseTripFare,
+    @JsonKey(fromJson: parseNumFromJson) num? remainingTripCost,
+    @JsonKey(fromJson: parseIntFromJson) int? occupiedSeatsAtStart,
+    @JsonKey(fromJson: parseNumFromJson) num? fullRouteSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) num? minimumSeatFare,
     String? startedAt,
     String? completedAt,
     String? canceledAt,
@@ -1109,32 +1154,32 @@ class __$$SharedRideModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SharedRideModelImpl implements _SharedRideModel {
   const _$SharedRideModelImpl({
-    this.id,
-    this.driverProfileId,
-    this.vehicleId,
+    @JsonKey(fromJson: parseIntFromJson) this.id,
+    @JsonKey(fromJson: parseIntFromJson) this.driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) this.vehicleId,
     this.status,
     this.endedBy,
     this.notes,
-    this.originLat,
-    this.originLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.originLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.originLng,
     this.originAddress,
-    this.destLat,
-    this.destLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.destLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.destLng,
     this.destAddress,
     this.departureTime,
-    this.maxPassengers,
-    this.occupiedSeats,
-    this.totalDistanceKm,
-    this.totalDurationSec,
+    @JsonKey(fromJson: parseIntFromJson) this.maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) this.occupiedSeats,
+    @JsonKey(fromJson: parseNumFromJson) this.totalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) this.totalDurationSec,
     this.routeGeometry,
-    this.actualDistanceKm,
-    this.actualDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) this.actualDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) this.actualDurationSec,
     this.actualRouteGeometry,
-    this.baseTripFare,
-    this.remainingTripCost,
-    this.occupiedSeatsAtStart,
-    this.fullRouteSeatFare,
-    this.minimumSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) this.baseTripFare,
+    @JsonKey(fromJson: parseNumFromJson) this.remainingTripCost,
+    @JsonKey(fromJson: parseIntFromJson) this.occupiedSeatsAtStart,
+    @JsonKey(fromJson: parseNumFromJson) this.fullRouteSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) this.minimumSeatFare,
     this.startedAt,
     this.completedAt,
     this.canceledAt,
@@ -1148,10 +1193,13 @@ class _$SharedRideModelImpl implements _SharedRideModel {
       _$$SharedRideModelImplFromJson(json);
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? driverProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? vehicleId;
   @override
   final String? status;
@@ -1160,44 +1208,59 @@ class _$SharedRideModelImpl implements _SharedRideModel {
   @override
   final String? notes;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? originLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? originLng;
   @override
   final String? originAddress;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? destLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? destLng;
   @override
   final String? destAddress;
   @override
   final String? departureTime;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? maxPassengers;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? occupiedSeats;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? totalDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? totalDurationSec;
   @override
   final dynamic routeGeometry;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? actualDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? actualDurationSec;
   @override
   final dynamic actualRouteGeometry;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? baseTripFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? remainingTripCost;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? occupiedSeatsAtStart;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? fullRouteSeatFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   final num? minimumSeatFare;
   @override
   final String? startedAt;
@@ -1356,32 +1419,32 @@ class _$SharedRideModelImpl implements _SharedRideModel {
 
 abstract class _SharedRideModel implements SharedRideModel {
   const factory _SharedRideModel({
-    final int? id,
-    final int? driverProfileId,
-    final int? vehicleId,
+    @JsonKey(fromJson: parseIntFromJson) final int? id,
+    @JsonKey(fromJson: parseIntFromJson) final int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) final int? vehicleId,
     final String? status,
     final String? endedBy,
     final String? notes,
-    final double? originLat,
-    final double? originLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? originLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? originLng,
     final String? originAddress,
-    final double? destLat,
-    final double? destLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? destLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? destLng,
     final String? destAddress,
     final String? departureTime,
-    final int? maxPassengers,
-    final int? occupiedSeats,
-    final num? totalDistanceKm,
-    final num? totalDurationSec,
+    @JsonKey(fromJson: parseIntFromJson) final int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) final int? occupiedSeats,
+    @JsonKey(fromJson: parseNumFromJson) final num? totalDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) final num? totalDurationSec,
     final dynamic routeGeometry,
-    final num? actualDistanceKm,
-    final num? actualDurationSec,
+    @JsonKey(fromJson: parseNumFromJson) final num? actualDistanceKm,
+    @JsonKey(fromJson: parseNumFromJson) final num? actualDurationSec,
     final dynamic actualRouteGeometry,
-    final num? baseTripFare,
-    final num? remainingTripCost,
-    final int? occupiedSeatsAtStart,
-    final num? fullRouteSeatFare,
-    final num? minimumSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) final num? baseTripFare,
+    @JsonKey(fromJson: parseNumFromJson) final num? remainingTripCost,
+    @JsonKey(fromJson: parseIntFromJson) final int? occupiedSeatsAtStart,
+    @JsonKey(fromJson: parseNumFromJson) final num? fullRouteSeatFare,
+    @JsonKey(fromJson: parseNumFromJson) final num? minimumSeatFare,
     final String? startedAt,
     final String? completedAt,
     final String? canceledAt,
@@ -1395,10 +1458,13 @@ abstract class _SharedRideModel implements SharedRideModel {
       _$SharedRideModelImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get driverProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get vehicleId;
   @override
   String? get status;
@@ -1407,44 +1473,59 @@ abstract class _SharedRideModel implements SharedRideModel {
   @override
   String? get notes;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get originLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get originLng;
   @override
   String? get originAddress;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destLng;
   @override
   String? get destAddress;
   @override
   String? get departureTime;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get maxPassengers;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get occupiedSeats;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get totalDurationSec;
   @override
   dynamic get routeGeometry;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get actualDistanceKm;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get actualDurationSec;
   @override
   dynamic get actualRouteGeometry;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get baseTripFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get remainingTripCost;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get occupiedSeatsAtStart;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get fullRouteSeatFare;
   @override
+  @JsonKey(fromJson: parseNumFromJson)
   num? get minimumSeatFare;
   @override
   String? get startedAt;

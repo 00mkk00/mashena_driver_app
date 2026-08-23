@@ -24,6 +24,7 @@ AcceptPassengerPoolResponseModel _$AcceptPassengerPoolResponseModelFromJson(
 /// @nodoc
 mixin _$AcceptPassengerPoolResponseModel {
   PassengerPoolModel? get room => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId => throw _privateConstructorUsedError;
 
   /// Serializes this AcceptPassengerPoolResponseModel to a JSON map.
@@ -47,7 +48,10 @@ abstract class $AcceptPassengerPoolResponseModelCopyWith<$Res> {
         AcceptPassengerPoolResponseModel
       >;
   @useResult
-  $Res call({PassengerPoolModel? room, int? sharedRideId});
+  $Res call({
+    PassengerPoolModel? room,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
+  });
 
   $PassengerPoolModelCopyWith<$Res>? get room;
 }
@@ -109,7 +113,10 @@ abstract class _$$AcceptPassengerPoolResponseModelImplCopyWith<$Res>
   ) = __$$AcceptPassengerPoolResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PassengerPoolModel? room, int? sharedRideId});
+  $Res call({
+    PassengerPoolModel? room,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
+  });
 
   @override
   $PassengerPoolModelCopyWith<$Res>? get room;
@@ -152,7 +159,10 @@ class __$$AcceptPassengerPoolResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AcceptPassengerPoolResponseModelImpl
     implements _AcceptPassengerPoolResponseModel {
-  const _$AcceptPassengerPoolResponseModelImpl({this.room, this.sharedRideId});
+  const _$AcceptPassengerPoolResponseModelImpl({
+    this.room,
+    @JsonKey(fromJson: parseIntFromJson) this.sharedRideId,
+  });
 
   factory _$AcceptPassengerPoolResponseModelImpl.fromJson(
     Map<String, dynamic> json,
@@ -161,6 +171,7 @@ class _$AcceptPassengerPoolResponseModelImpl
   @override
   final PassengerPoolModel? room;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? sharedRideId;
 
   @override
@@ -205,7 +216,7 @@ abstract class _AcceptPassengerPoolResponseModel
     implements AcceptPassengerPoolResponseModel {
   const factory _AcceptPassengerPoolResponseModel({
     final PassengerPoolModel? room,
-    final int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) final int? sharedRideId,
   }) = _$AcceptPassengerPoolResponseModelImpl;
 
   factory _AcceptPassengerPoolResponseModel.fromJson(
@@ -215,6 +226,7 @@ abstract class _AcceptPassengerPoolResponseModel
   @override
   PassengerPoolModel? get room;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId;
 
   /// Create a copy of AcceptPassengerPoolResponseModel

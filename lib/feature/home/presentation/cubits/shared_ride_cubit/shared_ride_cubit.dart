@@ -418,7 +418,8 @@ class SharedRideCubit extends Cubit<SharedRideState> {
     );
 
     result.fold(
-      (failure) => emit(
+      (failure) =>
+      emit(
         state.copyWith(
           isLoadingPools: false,
           poolsErrorMessage:

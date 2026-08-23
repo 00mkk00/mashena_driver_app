@@ -23,12 +23,18 @@ PassengerPoolMemberModel _$PassengerPoolMemberModelFromJson(
 
 /// @nodoc
 mixin _$PassengerPoolMemberModel {
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get roomId => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get seatsNeeded => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get pickupLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get pickupLng => throw _privateConstructorUsedError;
   String? get joinedAt => throw _privateConstructorUsedError;
   String? get leftAt => throw _privateConstructorUsedError;
@@ -51,13 +57,13 @@ abstract class $PassengerPoolMemberModelCopyWith<$Res> {
   ) = _$PassengerPoolMemberModelCopyWithImpl<$Res, PassengerPoolMemberModel>;
   @useResult
   $Res call({
-    int? id,
-    int? roomId,
-    int? riderProfileId,
-    int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,
-    double? pickupLat,
-    double? pickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLng,
     String? joinedAt,
     String? leftAt,
   });
@@ -145,13 +151,13 @@ abstract class _$$PassengerPoolMemberModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    int? id,
-    int? roomId,
-    int? riderProfileId,
-    int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,
-    double? pickupLat,
-    double? pickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLng,
     String? joinedAt,
     String? leftAt,
   });
@@ -232,13 +238,13 @@ class __$$PassengerPoolMemberModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
   const _$PassengerPoolMemberModelImpl({
-    this.id,
-    this.roomId,
-    this.riderProfileId,
-    this.seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) this.id,
+    @JsonKey(fromJson: parseIntFromJson) this.roomId,
+    @JsonKey(fromJson: parseIntFromJson) this.riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) this.seatsNeeded,
     this.status,
-    this.pickupLat,
-    this.pickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.pickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.pickupLng,
     this.joinedAt,
     this.leftAt,
   });
@@ -247,18 +253,24 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
       _$$PassengerPoolMemberModelImplFromJson(json);
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? roomId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? riderProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? seatsNeeded;
   @override
   final String? status;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? pickupLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? pickupLng;
   @override
   final String? joinedAt;
@@ -325,13 +337,13 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
 
 abstract class _PassengerPoolMemberModel implements PassengerPoolMemberModel {
   const factory _PassengerPoolMemberModel({
-    final int? id,
-    final int? roomId,
-    final int? riderProfileId,
-    final int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) final int? id,
+    @JsonKey(fromJson: parseIntFromJson) final int? roomId,
+    @JsonKey(fromJson: parseIntFromJson) final int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) final int? seatsNeeded,
     final String? status,
-    final double? pickupLat,
-    final double? pickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? pickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? pickupLng,
     final String? joinedAt,
     final String? leftAt,
   }) = _$PassengerPoolMemberModelImpl;
@@ -340,18 +352,24 @@ abstract class _PassengerPoolMemberModel implements PassengerPoolMemberModel {
       _$PassengerPoolMemberModelImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get roomId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get seatsNeeded;
   @override
   String? get status;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get pickupLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get pickupLng;
   @override
   String? get joinedAt;
@@ -372,25 +390,41 @@ PassengerPoolModel _$PassengerPoolModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PassengerPoolModel {
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get creatorRiderProfileId => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get driverProfileId => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId => throw _privateConstructorUsedError;
   String? get driverAcceptedAt => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get creatorPickupLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get creatorPickupLng => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get meetingLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get meetingLng => throw _privateConstructorUsedError;
   String? get meetingAddress => throw _privateConstructorUsedError;
   String? get meetingPlaceName => throw _privateConstructorUsedError;
   String? get meetingPlaceProvider => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destinationLat => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destinationLng => throw _privateConstructorUsedError;
   String? get destinationAddress => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get maxPassengers => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
   int? get currentPassengers => throw _privateConstructorUsedError;
   String? get departureTime => throw _privateConstructorUsedError;
   String? get expiresAt => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get distanceToMeetingKm => throw _privateConstructorUsedError;
   List<PassengerPoolMemberModel>? get members =>
       throw _privateConstructorUsedError;
 
@@ -412,25 +446,28 @@ abstract class $PassengerPoolModelCopyWith<$Res> {
   ) = _$PassengerPoolModelCopyWithImpl<$Res, PassengerPoolModel>;
   @useResult
   $Res call({
-    int? id,
-    int? creatorRiderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? creatorRiderProfileId,
     String? status,
-    int? driverProfileId,
-    int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
     String? driverAcceptedAt,
-    double? meetingLat,
-    double? meetingLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLng,
     String? meetingAddress,
     String? meetingPlaceName,
     String? meetingPlaceProvider,
-    double? destinationLat,
-    double? destinationLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLng,
     String? destinationAddress,
-    int? maxPassengers,
-    int? currentPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? currentPassengers,
     String? departureTime,
     String? expiresAt,
     String? createdAt,
+    @JsonKey(fromJson: parseDoubleFromJson) double? distanceToMeetingKm,
     List<PassengerPoolMemberModel>? members,
   });
 }
@@ -456,6 +493,8 @@ class _$PassengerPoolModelCopyWithImpl<$Res, $Val extends PassengerPoolModel>
     Object? driverProfileId = freezed,
     Object? sharedRideId = freezed,
     Object? driverAcceptedAt = freezed,
+    Object? creatorPickupLat = freezed,
+    Object? creatorPickupLng = freezed,
     Object? meetingLat = freezed,
     Object? meetingLng = freezed,
     Object? meetingAddress = freezed,
@@ -469,6 +508,7 @@ class _$PassengerPoolModelCopyWithImpl<$Res, $Val extends PassengerPoolModel>
     Object? departureTime = freezed,
     Object? expiresAt = freezed,
     Object? createdAt = freezed,
+    Object? distanceToMeetingKm = freezed,
     Object? members = freezed,
   }) {
     return _then(
@@ -497,6 +537,14 @@ class _$PassengerPoolModelCopyWithImpl<$Res, $Val extends PassengerPoolModel>
                 ? _value.driverAcceptedAt
                 : driverAcceptedAt // ignore: cast_nullable_to_non_nullable
                       as String?,
+            creatorPickupLat: freezed == creatorPickupLat
+                ? _value.creatorPickupLat
+                : creatorPickupLat // ignore: cast_nullable_to_non_nullable
+                      as double?,
+            creatorPickupLng: freezed == creatorPickupLng
+                ? _value.creatorPickupLng
+                : creatorPickupLng // ignore: cast_nullable_to_non_nullable
+                      as double?,
             meetingLat: freezed == meetingLat
                 ? _value.meetingLat
                 : meetingLat // ignore: cast_nullable_to_non_nullable
@@ -549,6 +597,10 @@ class _$PassengerPoolModelCopyWithImpl<$Res, $Val extends PassengerPoolModel>
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
                       as String?,
+            distanceToMeetingKm: freezed == distanceToMeetingKm
+                ? _value.distanceToMeetingKm
+                : distanceToMeetingKm // ignore: cast_nullable_to_non_nullable
+                      as double?,
             members: freezed == members
                 ? _value.members
                 : members // ignore: cast_nullable_to_non_nullable
@@ -569,25 +621,28 @@ abstract class _$$PassengerPoolModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    int? id,
-    int? creatorRiderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? creatorRiderProfileId,
     String? status,
-    int? driverProfileId,
-    int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
     String? driverAcceptedAt,
-    double? meetingLat,
-    double? meetingLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLng,
     String? meetingAddress,
     String? meetingPlaceName,
     String? meetingPlaceProvider,
-    double? destinationLat,
-    double? destinationLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLng,
     String? destinationAddress,
-    int? maxPassengers,
-    int? currentPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? currentPassengers,
     String? departureTime,
     String? expiresAt,
     String? createdAt,
+    @JsonKey(fromJson: parseDoubleFromJson) double? distanceToMeetingKm,
     List<PassengerPoolMemberModel>? members,
   });
 }
@@ -612,6 +667,8 @@ class __$$PassengerPoolModelImplCopyWithImpl<$Res>
     Object? driverProfileId = freezed,
     Object? sharedRideId = freezed,
     Object? driverAcceptedAt = freezed,
+    Object? creatorPickupLat = freezed,
+    Object? creatorPickupLng = freezed,
     Object? meetingLat = freezed,
     Object? meetingLng = freezed,
     Object? meetingAddress = freezed,
@@ -625,6 +682,7 @@ class __$$PassengerPoolModelImplCopyWithImpl<$Res>
     Object? departureTime = freezed,
     Object? expiresAt = freezed,
     Object? createdAt = freezed,
+    Object? distanceToMeetingKm = freezed,
     Object? members = freezed,
   }) {
     return _then(
@@ -653,6 +711,14 @@ class __$$PassengerPoolModelImplCopyWithImpl<$Res>
             ? _value.driverAcceptedAt
             : driverAcceptedAt // ignore: cast_nullable_to_non_nullable
                   as String?,
+        creatorPickupLat: freezed == creatorPickupLat
+            ? _value.creatorPickupLat
+            : creatorPickupLat // ignore: cast_nullable_to_non_nullable
+                  as double?,
+        creatorPickupLng: freezed == creatorPickupLng
+            ? _value.creatorPickupLng
+            : creatorPickupLng // ignore: cast_nullable_to_non_nullable
+                  as double?,
         meetingLat: freezed == meetingLat
             ? _value.meetingLat
             : meetingLat // ignore: cast_nullable_to_non_nullable
@@ -705,6 +771,10 @@ class __$$PassengerPoolModelImplCopyWithImpl<$Res>
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
                   as String?,
+        distanceToMeetingKm: freezed == distanceToMeetingKm
+            ? _value.distanceToMeetingKm
+            : distanceToMeetingKm // ignore: cast_nullable_to_non_nullable
+                  as double?,
         members: freezed == members
             ? _value._members
             : members // ignore: cast_nullable_to_non_nullable
@@ -718,25 +788,28 @@ class __$$PassengerPoolModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PassengerPoolModelImpl implements _PassengerPoolModel {
   const _$PassengerPoolModelImpl({
-    this.id,
-    this.creatorRiderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) this.id,
+    @JsonKey(fromJson: parseIntFromJson) this.creatorRiderProfileId,
     this.status,
-    this.driverProfileId,
-    this.sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) this.driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) this.sharedRideId,
     this.driverAcceptedAt,
-    this.meetingLat,
-    this.meetingLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.creatorPickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.creatorPickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.meetingLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.meetingLng,
     this.meetingAddress,
     this.meetingPlaceName,
     this.meetingPlaceProvider,
-    this.destinationLat,
-    this.destinationLng,
+    @JsonKey(fromJson: parseDoubleFromJson) this.destinationLat,
+    @JsonKey(fromJson: parseDoubleFromJson) this.destinationLng,
     this.destinationAddress,
-    this.maxPassengers,
-    this.currentPassengers,
+    @JsonKey(fromJson: parseIntFromJson) this.maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) this.currentPassengers,
     this.departureTime,
     this.expiresAt,
     this.createdAt,
+    @JsonKey(fromJson: parseDoubleFromJson) this.distanceToMeetingKm,
     final List<PassengerPoolMemberModel>? members,
   }) : _members = members;
 
@@ -744,20 +817,32 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
       _$$PassengerPoolModelImplFromJson(json);
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? creatorRiderProfileId;
   @override
   final String? status;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? driverProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? sharedRideId;
   @override
   final String? driverAcceptedAt;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  final double? creatorPickupLat;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  final double? creatorPickupLng;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? meetingLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? meetingLng;
   @override
   final String? meetingAddress;
@@ -766,14 +851,18 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
   @override
   final String? meetingPlaceProvider;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? destinationLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   final double? destinationLng;
   @override
   final String? destinationAddress;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? maxPassengers;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   final int? currentPassengers;
   @override
   final String? departureTime;
@@ -781,6 +870,9 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
   final String? expiresAt;
   @override
   final String? createdAt;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  final double? distanceToMeetingKm;
   final List<PassengerPoolMemberModel>? _members;
   @override
   List<PassengerPoolMemberModel>? get members {
@@ -793,7 +885,7 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
 
   @override
   String toString() {
-    return 'PassengerPoolModel(id: $id, creatorRiderProfileId: $creatorRiderProfileId, status: $status, driverProfileId: $driverProfileId, sharedRideId: $sharedRideId, driverAcceptedAt: $driverAcceptedAt, meetingLat: $meetingLat, meetingLng: $meetingLng, meetingAddress: $meetingAddress, meetingPlaceName: $meetingPlaceName, meetingPlaceProvider: $meetingPlaceProvider, destinationLat: $destinationLat, destinationLng: $destinationLng, destinationAddress: $destinationAddress, maxPassengers: $maxPassengers, currentPassengers: $currentPassengers, departureTime: $departureTime, expiresAt: $expiresAt, createdAt: $createdAt, members: $members)';
+    return 'PassengerPoolModel(id: $id, creatorRiderProfileId: $creatorRiderProfileId, status: $status, driverProfileId: $driverProfileId, sharedRideId: $sharedRideId, driverAcceptedAt: $driverAcceptedAt, creatorPickupLat: $creatorPickupLat, creatorPickupLng: $creatorPickupLng, meetingLat: $meetingLat, meetingLng: $meetingLng, meetingAddress: $meetingAddress, meetingPlaceName: $meetingPlaceName, meetingPlaceProvider: $meetingPlaceProvider, destinationLat: $destinationLat, destinationLng: $destinationLng, destinationAddress: $destinationAddress, maxPassengers: $maxPassengers, currentPassengers: $currentPassengers, departureTime: $departureTime, expiresAt: $expiresAt, createdAt: $createdAt, distanceToMeetingKm: $distanceToMeetingKm, members: $members)';
   }
 
   @override
@@ -811,6 +903,10 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
                 other.sharedRideId == sharedRideId) &&
             (identical(other.driverAcceptedAt, driverAcceptedAt) ||
                 other.driverAcceptedAt == driverAcceptedAt) &&
+            (identical(other.creatorPickupLat, creatorPickupLat) ||
+                other.creatorPickupLat == creatorPickupLat) &&
+            (identical(other.creatorPickupLng, creatorPickupLng) ||
+                other.creatorPickupLng == creatorPickupLng) &&
             (identical(other.meetingLat, meetingLat) ||
                 other.meetingLat == meetingLat) &&
             (identical(other.meetingLng, meetingLng) ||
@@ -837,6 +933,8 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
                 other.expiresAt == expiresAt) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.distanceToMeetingKm, distanceToMeetingKm) ||
+                other.distanceToMeetingKm == distanceToMeetingKm) &&
             const DeepCollectionEquality().equals(other._members, _members));
   }
 
@@ -850,6 +948,8 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
     driverProfileId,
     sharedRideId,
     driverAcceptedAt,
+    creatorPickupLat,
+    creatorPickupLng,
     meetingLat,
     meetingLng,
     meetingAddress,
@@ -863,6 +963,7 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
     departureTime,
     expiresAt,
     createdAt,
+    distanceToMeetingKm,
     const DeepCollectionEquality().hash(_members),
   ]);
 
@@ -885,25 +986,28 @@ class _$PassengerPoolModelImpl implements _PassengerPoolModel {
 
 abstract class _PassengerPoolModel implements PassengerPoolModel {
   const factory _PassengerPoolModel({
-    final int? id,
-    final int? creatorRiderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) final int? id,
+    @JsonKey(fromJson: parseIntFromJson) final int? creatorRiderProfileId,
     final String? status,
-    final int? driverProfileId,
-    final int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) final int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) final int? sharedRideId,
     final String? driverAcceptedAt,
-    final double? meetingLat,
-    final double? meetingLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? creatorPickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? creatorPickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? meetingLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? meetingLng,
     final String? meetingAddress,
     final String? meetingPlaceName,
     final String? meetingPlaceProvider,
-    final double? destinationLat,
-    final double? destinationLng,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? destinationLat,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? destinationLng,
     final String? destinationAddress,
-    final int? maxPassengers,
-    final int? currentPassengers,
+    @JsonKey(fromJson: parseIntFromJson) final int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) final int? currentPassengers,
     final String? departureTime,
     final String? expiresAt,
     final String? createdAt,
+    @JsonKey(fromJson: parseDoubleFromJson) final double? distanceToMeetingKm,
     final List<PassengerPoolMemberModel>? members,
   }) = _$PassengerPoolModelImpl;
 
@@ -911,20 +1015,32 @@ abstract class _PassengerPoolModel implements PassengerPoolModel {
       _$PassengerPoolModelImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get id;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get creatorRiderProfileId;
   @override
   String? get status;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get driverProfileId;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get sharedRideId;
   @override
   String? get driverAcceptedAt;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get creatorPickupLat;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get creatorPickupLng;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get meetingLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get meetingLng;
   @override
   String? get meetingAddress;
@@ -933,14 +1049,18 @@ abstract class _PassengerPoolModel implements PassengerPoolModel {
   @override
   String? get meetingPlaceProvider;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destinationLat;
   @override
+  @JsonKey(fromJson: parseDoubleFromJson)
   double? get destinationLng;
   @override
   String? get destinationAddress;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get maxPassengers;
   @override
+  @JsonKey(fromJson: parseIntFromJson)
   int? get currentPassengers;
   @override
   String? get departureTime;
@@ -948,6 +1068,9 @@ abstract class _PassengerPoolModel implements PassengerPoolModel {
   String? get expiresAt;
   @override
   String? get createdAt;
+  @override
+  @JsonKey(fromJson: parseDoubleFromJson)
+  double? get distanceToMeetingKm;
   @override
   List<PassengerPoolMemberModel>? get members;
 

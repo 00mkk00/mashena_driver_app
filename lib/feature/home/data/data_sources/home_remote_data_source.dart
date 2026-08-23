@@ -65,10 +65,18 @@ abstract class HomeRemoteDataSource {
   Future<SharedRideModel> sharedRideStart(SharedRideStartParams params);
   Future<SharedRideModel> sharedRideComplete(SharedRideCompleteParams params);
   Future<SharedRideModel> sharedRideCancel(SharedRideCancelParams params);
-  Future<SharedRideModel> removeSharedRidePassenger(RemoveSharedRidePassengerParams params);
-  Future<SharedRidePassengerModel> checkInSharedRidePassenger(CheckInSharedRidePassengerParams params);
-  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(OnBoardSharedRidePassengerParams params);
-  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(DropOffSharedRidePassengerParams params);
+  Future<SharedRideModel> removeSharedRidePassenger(
+    RemoveSharedRidePassengerParams params,
+  );
+  Future<SharedRidePassengerModel> checkInSharedRidePassenger(
+    CheckInSharedRidePassengerParams params,
+  );
+  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(
+    OnBoardSharedRidePassengerParams params,
+  );
+  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(
+    DropOffSharedRidePassengerParams params,
+  );
   Future<List<PassengerPoolModel>> getAvailablePassengerPools(
     GetAvailablePassengerPoolsParams params,
   );
@@ -241,12 +249,16 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<SharedRideModel> createSharedRide(CreateSharedRideParams params) async {
+  Future<SharedRideModel> createSharedRide(
+    CreateSharedRideParams params,
+  ) async {
     final response = await apiClient.post(
       Endpoints.createSharedRide,
       body: params.toJson(),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
@@ -257,7 +269,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     final response = await apiClient.patch(
       Endpoints.sharedRideReady.replaceAll('{id}', params.id.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
@@ -268,77 +282,101 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     final response = await apiClient.patch(
       Endpoints.sharedRideStart.replaceAll('{id}', params.id.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRideModel> sharedRideComplete(SharedRideCompleteParams params) async {
+  Future<SharedRideModel> sharedRideComplete(
+    SharedRideCompleteParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.sharedRideComplete.replaceAll('{id}', params.id.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRideModel> sharedRideCancel(SharedRideCancelParams params) async {
+  Future<SharedRideModel> sharedRideCancel(
+    SharedRideCancelParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.sharedRideCancel.replaceAll('{id}', params.id.toString()),
       body: params.reason != null ? {'reason': params.reason} : null,
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRideModel> removeSharedRidePassenger(RemoveSharedRidePassengerParams params) async {
+  Future<SharedRideModel> removeSharedRidePassenger(
+    RemoveSharedRidePassengerParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.removeSharedRidePassenger
           .replaceAll('{id}', params.id.toString())
           .replaceAll('{passengerId}', params.passengerId.toString()),
       body: params.reason != null ? {'reason': params.reason} : null,
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRideModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRidePassengerModel> checkInSharedRidePassenger(CheckInSharedRidePassengerParams params) async {
+  Future<SharedRidePassengerModel> checkInSharedRidePassenger(
+    CheckInSharedRidePassengerParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.checkInSharedRidePassenger
           .replaceAll('{id}', params.id.toString())
           .replaceAll('{passengerId}', params.passengerId.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(OnBoardSharedRidePassengerParams params) async {
+  Future<SharedRidePassengerModel> onBoardSharedRidePassenger(
+    OnBoardSharedRidePassengerParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.onBoardSharedRidePassenger
           .replaceAll('{id}', params.id.toString())
           .replaceAll('{passengerId}', params.passengerId.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data']
         : response;
     return SharedRidePassengerModel.fromJson(data as Map<String, dynamic>);
   }
 
   @override
-  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(DropOffSharedRidePassengerParams params) async {
+  Future<SharedRidePassengerModel> dropOffSharedRidePassenger(
+    DropOffSharedRidePassengerParams params,
+  ) async {
     final response = await apiClient.patch(
       Endpoints.dropOffSharedRidePassenger
           .replaceAll('{id}', params.id.toString())
@@ -351,7 +389,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           'accountHolderDroppedOff': params.accountHolderDroppedOff,
       },
     );
-    final Map<String, dynamic> raw = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final Map<String, dynamic> raw =
+        (response is Map<String, dynamic> &&
+            response['data'] is Map<String, dynamic>)
         ? response['data'] as Map<String, dynamic>
         : (response is Map<String, dynamic> ? response : <String, dynamic>{});
     final passengerMap = (raw['passenger'] is Map<String, dynamic>)
@@ -373,10 +413,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<List<PassengerPoolModel>> getAvailablePassengerPools(
     GetAvailablePassengerPoolsParams params,
   ) async {
-    final queryParams = <String, dynamic>{
-      'lat': params.lat,
-      'lng': params.lng,
-    };
+    final queryParams = <String, dynamic>{'lat': params.lat, 'lng': params.lng};
     if (params.radiusKm != null) {
       queryParams['radiusKm'] = params.radiusKm;
     }
@@ -386,12 +423,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     );
     final list = (response is List)
         ? response
-        : (response is Map<String, dynamic> && response['data'] is List
+        : (response is Map && response['data'] is List
             ? response['data'] as List
             : <dynamic>[]);
-    return list
-        .map((e) => PassengerPoolModel.fromJson(e as Map<String, dynamic>))
-        .toList();
+    return list.map((e) {
+      final map = e is Map<String, dynamic>
+          ? e
+          : Map<String, dynamic>.from(e as Map);
+      return PassengerPoolModel.fromJson(map);
+    }).toList();
   }
 
   @override
@@ -401,9 +441,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     final response = await apiClient.post(
       Endpoints.acceptPassengerPool.replaceAll('{id}', params.id.toString()),
     );
-    final data = (response is Map<String, dynamic> && response['data'] is Map<String, dynamic>)
+    final data = (response is Map && response['data'] is Map)
         ? response['data']
         : response;
-    return AcceptPassengerPoolResponseModel.fromJson(data as Map<String, dynamic>);
+    final map = data is Map<String, dynamic>
+        ? data
+        : Map<String, dynamic>.from(data as Map);
+    return AcceptPassengerPoolResponseModel.fromJson(map);
   }
 }

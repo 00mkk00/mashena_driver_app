@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mashena_driver_app/core/utils/json_helper.dart';
 
 part 'passenger_pool_model.freezed.dart';
 part 'passenger_pool_model.g.dart';
@@ -6,13 +7,13 @@ part 'passenger_pool_model.g.dart';
 @freezed
 class PassengerPoolMemberModel with _$PassengerPoolMemberModel {
   const factory PassengerPoolMemberModel({
-    int? id,
-    int? roomId,
-    int? riderProfileId,
-    int? seatsNeeded,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,
-    double? pickupLat,
-    double? pickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? pickupLng,
     String? joinedAt,
     String? leftAt,
   }) = _PassengerPoolMemberModel;
@@ -24,25 +25,28 @@ class PassengerPoolMemberModel with _$PassengerPoolMemberModel {
 @freezed
 class PassengerPoolModel with _$PassengerPoolModel {
   const factory PassengerPoolModel({
-    int? id,
-    int? creatorRiderProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? id,
+    @JsonKey(fromJson: parseIntFromJson) int? creatorRiderProfileId,
     String? status,
-    int? driverProfileId,
-    int? sharedRideId,
+    @JsonKey(fromJson: parseIntFromJson) int? driverProfileId,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRideId,
     String? driverAcceptedAt,
-    double? meetingLat,
-    double? meetingLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? creatorPickupLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? meetingLng,
     String? meetingAddress,
     String? meetingPlaceName,
     String? meetingPlaceProvider,
-    double? destinationLat,
-    double? destinationLng,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLat,
+    @JsonKey(fromJson: parseDoubleFromJson) double? destinationLng,
     String? destinationAddress,
-    int? maxPassengers,
-    int? currentPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? maxPassengers,
+    @JsonKey(fromJson: parseIntFromJson) int? currentPassengers,
     String? departureTime,
     String? expiresAt,
     String? createdAt,
+    @JsonKey(fromJson: parseDoubleFromJson) double? distanceToMeetingKm,
     List<PassengerPoolMemberModel>? members,
   }) = _PassengerPoolModel;
 
