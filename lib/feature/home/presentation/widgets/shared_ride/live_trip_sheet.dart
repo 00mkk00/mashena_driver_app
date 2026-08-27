@@ -15,6 +15,17 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_
 class LiveTripSheet extends StatelessWidget {
   const LiveTripSheet({super.key});
 
+  bool _isRemovedOrCancelled(SharedRidePassengerEntity p) {
+    final s = p.status.toLowerCase();
+    return s == 'removed' ||
+        s == 'left' ||
+        s == 'canceled' ||
+        s == 'cancelled' ||
+        p.removedAt != null ||
+        p.canceledAt != null ||
+        (p.activeSeats <= 0 && s != 'dropped_off' && s != 'droppedoff');
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -22,7 +33,10 @@ class LiveTripSheet extends StatelessWidget {
     return BlocBuilder<SharedRideCubit, SharedRideState>(
       builder: (context, state) {
         final ride = state.ride;
-        final passengers = ride?.passengers ?? [];
+        final allPassengers = ride?.passengers ?? [];
+        final passengers = allPassengers
+            .where((p) => !_isRemovedOrCancelled(p))
+            .toList();
         final allDroppedOff =
             passengers.isNotEmpty &&
             passengers.every((p) => p.status.toLowerCase() == 'dropped_off');

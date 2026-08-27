@@ -9,6 +9,8 @@ class PassengerPoolMemberModel with _$PassengerPoolMemberModel {
   const factory PassengerPoolMemberModel({
     @JsonKey(fromJson: parseIntFromJson) int? id,
     @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    String? riderName,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRidePassengerId,
     @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
     @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,

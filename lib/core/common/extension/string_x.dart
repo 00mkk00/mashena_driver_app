@@ -48,4 +48,15 @@ extension StringX on String {
     final middle = maskChar * (t.length - showStart - showEnd);
     return '${t.substring(0, showStart)}$middle${t.substring(t.length - showEnd)}';
   }
+
+  /// Limit string to a specified number of words
+  String limitWords(int maxWords) {
+    if (isBlank) return this;
+    final words = trimmed
+        .split(RegExp(r'\s+'))
+        .where((w) => w.isNotEmpty)
+        .toList();
+    if (words.length <= maxWords) return trimmed;
+    return words.take(maxWords).join(' ');
+  }
 }

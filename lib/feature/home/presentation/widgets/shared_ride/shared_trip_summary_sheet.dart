@@ -21,14 +21,37 @@ class SharedTripSummarySheet extends StatelessWidget {
     return BlocBuilder<SharedRideCubit, SharedRideState>(
       builder: (context, state) {
         final ride = state.ride;
-        final passengerCount = ride?.passengers.length ?? 0;
+        final completedPassengers =
+            ride?.passengers.where((p) {
+              final s = p.status.toLowerCase();
+              return s == 'dropped_off' ||
+                  s == 'droppedoff' ||
+                  p.finalFare > 0 ||
+                  p.totalPaidFare > 0;
+            }).toList() ??
+            [];
+        final passengerCount =
+            (ride?.occupiedSeatsAtStart != null &&
+                ride!.occupiedSeatsAtStart > 0)
+            ? ride.occupiedSeatsAtStart
+            : (ride?.occupiedSeats != null && ride!.occupiedSeats > 0
+                  ? ride.occupiedSeats
+                  : (completedPassengers.isNotEmpty
+                        ? completedPassengers.fold<int>(
+                            0,
+                            (sum, p) =>
+                                sum + (p.seatsNeeded > 0 ? p.seatsNeeded : 1),
+                          )
+                        : completedPassengers.length));
         final totalDistance =
             ride?.actualDistanceKm ?? ride?.totalDistanceKm ?? 0;
         final totalDurationMins =
             ((ride?.actualDurationSec ?? ride?.totalDurationSec ?? 0) / 60)
                 .round();
-        final fare =
-            ride?.passengers.fold<num>(0, (sum, p) => sum + p.finalFare) ?? 0;
+        final fare = completedPassengers.fold<num>(
+          0,
+          (sum, p) => sum + p.finalFare,
+        );
 
         return Padding(
           padding: EdgeInsets.all(AppSpacing.md.r),
@@ -64,17 +87,19 @@ class SharedTripSummarySheet extends StatelessWidget {
                     SizedBox(height: AppSpacing.sm.h),
                     _buildSummaryRow(
                       S.of(context).sharedTotalDistance,
-                      S.of(context).sharedDistanceKmFormat(
-                        totalDistance.toStringAsFixed(1),
-                      ),
+                      S
+                          .of(context)
+                          .sharedDistanceKmFormat(
+                            totalDistance.toStringAsFixed(1),
+                          ),
                       isDark,
                     ),
                     SizedBox(height: AppSpacing.sm.h),
                     _buildSummaryRow(
                       S.of(context).sharedTime,
-                      S.of(context).sharedDurationMinsFormat(
-                        '$totalDurationMins',
-                      ),
+                      S
+                          .of(context)
+                          .sharedDurationMinsFormat('$totalDurationMins'),
                       isDark,
                     ),
                     Divider(
@@ -83,10 +108,12 @@ class SharedTripSummarySheet extends StatelessWidget {
                     ),
                     _buildSummaryRow(
                       S.of(context).sharedTotalEarnings,
-                      S.of(context).sharedFareAmountFormat(
-                        fare.toStringAsFixed(0),
-                        S.of(context).commonCurrencySyria,
-                      ),
+                      S
+                          .of(context)
+                          .sharedFareAmountFormat(
+                            fare.toStringAsFixed(0),
+                            S.of(context).commonCurrencySyria,
+                          ),
                       isDark,
                       isBold: true,
                     ),

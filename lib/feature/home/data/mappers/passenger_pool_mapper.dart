@@ -8,6 +8,8 @@ extension PassengerPoolMemberMapper on PassengerPoolMemberModel {
     return PassengerPoolMemberEntity(
       id: id ?? 0,
       roomId: roomId ?? 0,
+      riderName: riderName,
+      sharedRidePassengerId: sharedRidePassengerId,
       riderProfileId: riderProfileId ?? 0,
       seatsNeeded: seatsNeeded ?? 0,
       status: status ?? '',

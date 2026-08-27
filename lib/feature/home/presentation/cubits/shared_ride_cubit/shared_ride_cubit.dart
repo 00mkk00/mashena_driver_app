@@ -88,13 +88,24 @@ class SharedRideCubit extends Cubit<SharedRideState> {
           errorMessage: failure.rawMessage ?? 'Failed to set ride ready',
         ),
       ),
-      (ride) => emit(
-        state.copyWith(
-          isReadying: false,
-          ride: ride,
-          status: SharedRideStatus.boarding,
-        ),
-      ),
+      (ride) {
+        final activePassengers = ride.passengers.where((p) {
+          final s = p.status.toLowerCase();
+          return s != 'removed' &&
+              s != 'left' &&
+              s != 'canceled' &&
+              s != 'cancelled' &&
+              p.removedAt == null &&
+              p.canceledAt == null;
+        }).toList();
+        emit(
+          state.copyWith(
+            isReadying: false,
+            ride: ride.copyWith(passengers: activePassengers),
+            status: SharedRideStatus.boarding,
+          ),
+        );
+      },
     );
   }
 
@@ -112,13 +123,27 @@ class SharedRideCubit extends Cubit<SharedRideState> {
           errorMessage: failure.rawMessage ?? 'Failed to start shared ride',
         ),
       ),
-      (ride) => emit(
-        state.copyWith(
-          isStarting: false,
-          ride: ride,
-          status: SharedRideStatus.liveTrip,
-        ),
-      ),
+      (ride) {
+        final activePassengers = ride.passengers.where((p) {
+          final s = p.status.toLowerCase();
+          return s != 'removed' &&
+              s != 'left' &&
+              s != 'canceled' &&
+              s != 'cancelled' &&
+              p.removedAt == null &&
+              p.canceledAt == null &&
+              !(p.activeSeats <= 0 &&
+                  s != 'dropped_off' &&
+                  s != 'droppedoff');
+        }).toList();
+        emit(
+          state.copyWith(
+            isStarting: false,
+            ride: ride.copyWith(passengers: activePassengers),
+            status: SharedRideStatus.liveTrip,
+          ),
+        );
+      },
     );
   }
 
@@ -389,9 +414,24 @@ class SharedRideCubit extends Cubit<SharedRideState> {
           errorMessage: failure.rawMessage ?? 'Failed to remove passenger',
         ),
       ),
-      (updatedRide) => emit(
-        state.copyWith(removingPassengers: doneRemoving, ride: updatedRide),
-      ),
+      (updatedRide) {
+        final filteredPassengers = updatedRide.passengers.where((p) {
+          final s = p.status.toLowerCase();
+          return p.id != passengerId &&
+              s != 'removed' &&
+              s != 'left' &&
+              s != 'canceled' &&
+              s != 'cancelled' &&
+              p.removedAt == null &&
+              p.canceledAt == null;
+        }).toList();
+        emit(
+          state.copyWith(
+            removingPassengers: doneRemoving,
+            ride: updatedRide.copyWith(passengers: filteredPassengers),
+          ),
+        );
+      },
     );
   }
 
@@ -410,16 +450,11 @@ class SharedRideCubit extends Cubit<SharedRideState> {
     );
 
     final result = await getAvailablePassengerPoolsUseCase(
-      GetAvailablePassengerPoolsParams(
-        lat: lat,
-        lng: lng,
-        radiusKm: radiusKm,
-      ),
+      GetAvailablePassengerPoolsParams(lat: lat, lng: lng, radiusKm: radiusKm),
     );
 
     result.fold(
-      (failure) =>
-      emit(
+      (failure) => emit(
         state.copyWith(
           isLoadingPools: false,
           poolsErrorMessage:
@@ -438,12 +473,7 @@ class SharedRideCubit extends Cubit<SharedRideState> {
 
   // 11. Accept Passenger Pool (Join Pool & Navigate to Boarding)
   Future<void> acceptPassengerPool(int poolId) async {
-    emit(
-      state.copyWith(
-        acceptingPoolId: poolId,
-        clearErrorMessage: true,
-      ),
-    );
+    emit(state.copyWith(acceptingPoolId: poolId, clearErrorMessage: true));
 
     final result = await acceptPassengerPoolUseCase(
       AcceptPassengerPoolParams(id: poolId),
@@ -515,11 +545,17 @@ class SharedRideCubit extends Cubit<SharedRideState> {
   ) {
     final effectiveRideId = sharedRideId ?? room.sharedRideId ?? room.id;
     final passengers = room.members.map((m) {
+      final passengerId =
+          (m.sharedRidePassengerId != null && m.sharedRidePassengerId! > 0)
+          ? m.sharedRidePassengerId!
+          : m.id;
       return SharedRidePassengerEntity(
-        id: m.id,
+        id: passengerId,
         sharedRideId: effectiveRideId,
         riderProfileId: m.riderProfileId,
-        riderName: 'Passenger #${m.riderProfileId}',
+        riderName: (m.riderName != null && m.riderName!.trim().isNotEmpty)
+            ? m.riderName!.trim()
+            : 'Passenger #${m.riderProfileId}',
         status: m.status.isNotEmpty ? m.status : 'joined',
         paymentStatus: 'pending',
         seatsNeeded: m.seatsNeeded > 0 ? m.seatsNeeded : 1,
@@ -558,8 +594,7 @@ class SharedRideCubit extends Cubit<SharedRideState> {
       destAddress: room.destinationAddress,
       departureTime: room.departureTime,
       maxPassengers: room.maxPassengers > 0 ? room.maxPassengers : 4,
-      occupiedSeats:
-          totalOccupied > 0 ? totalOccupied : room.currentPassengers,
+      occupiedSeats: totalOccupied > 0 ? totalOccupied : room.currentPassengers,
       totalDistanceKm: 0,
       totalDurationSec: 0,
       routeGeometry: null,
@@ -568,8 +603,9 @@ class SharedRideCubit extends Cubit<SharedRideState> {
       actualRouteGeometry: null,
       baseTripFare: 0,
       remainingTripCost: 0,
-      occupiedSeatsAtStart:
-          totalOccupied > 0 ? totalOccupied : room.currentPassengers,
+      occupiedSeatsAtStart: totalOccupied > 0
+          ? totalOccupied
+          : room.currentPassengers,
       fullRouteSeatFare: 0,
       minimumSeatFare: 0,
       startedAt: null,
@@ -640,4 +676,3 @@ class SharedRideCubit extends Cubit<SharedRideState> {
     emit(const SharedRideState());
   }
 }
-

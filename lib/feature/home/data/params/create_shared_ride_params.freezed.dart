@@ -226,7 +226,6 @@ mixin _$CreateSharedRideParams {
   SharedRideLocationParams get destination =>
       throw _privateConstructorUsedError;
   String get departureTime => throw _privateConstructorUsedError;
-  int get vehicleId => throw _privateConstructorUsedError;
   int get maxPassengers => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
 
@@ -251,7 +250,6 @@ abstract class $CreateSharedRideParamsCopyWith<$Res> {
     SharedRideLocationParams origin,
     SharedRideLocationParams destination,
     String departureTime,
-    int vehicleId,
     int maxPassengers,
     String? notes,
   });
@@ -281,7 +279,6 @@ class _$CreateSharedRideParamsCopyWithImpl<
     Object? origin = null,
     Object? destination = null,
     Object? departureTime = null,
-    Object? vehicleId = null,
     Object? maxPassengers = null,
     Object? notes = freezed,
   }) {
@@ -299,10 +296,6 @@ class _$CreateSharedRideParamsCopyWithImpl<
                 ? _value.departureTime
                 : departureTime // ignore: cast_nullable_to_non_nullable
                       as String,
-            vehicleId: null == vehicleId
-                ? _value.vehicleId
-                : vehicleId // ignore: cast_nullable_to_non_nullable
-                      as int,
             maxPassengers: null == maxPassengers
                 ? _value.maxPassengers
                 : maxPassengers // ignore: cast_nullable_to_non_nullable
@@ -350,7 +343,6 @@ abstract class _$$CreateSharedRideParamsImplCopyWith<$Res>
     SharedRideLocationParams origin,
     SharedRideLocationParams destination,
     String departureTime,
-    int vehicleId,
     int maxPassengers,
     String? notes,
   });
@@ -379,7 +371,6 @@ class __$$CreateSharedRideParamsImplCopyWithImpl<$Res>
     Object? origin = null,
     Object? destination = null,
     Object? departureTime = null,
-    Object? vehicleId = null,
     Object? maxPassengers = null,
     Object? notes = freezed,
   }) {
@@ -397,10 +388,6 @@ class __$$CreateSharedRideParamsImplCopyWithImpl<$Res>
             ? _value.departureTime
             : departureTime // ignore: cast_nullable_to_non_nullable
                   as String,
-        vehicleId: null == vehicleId
-            ? _value.vehicleId
-            : vehicleId // ignore: cast_nullable_to_non_nullable
-                  as int,
         maxPassengers: null == maxPassengers
             ? _value.maxPassengers
             : maxPassengers // ignore: cast_nullable_to_non_nullable
@@ -421,7 +408,6 @@ class _$CreateSharedRideParamsImpl implements _CreateSharedRideParams {
     required this.origin,
     required this.destination,
     required this.departureTime,
-    required this.vehicleId,
     required this.maxPassengers,
     this.notes,
   });
@@ -436,15 +422,13 @@ class _$CreateSharedRideParamsImpl implements _CreateSharedRideParams {
   @override
   final String departureTime;
   @override
-  final int vehicleId;
-  @override
   final int maxPassengers;
   @override
   final String? notes;
 
   @override
   String toString() {
-    return 'CreateSharedRideParams(origin: $origin, destination: $destination, departureTime: $departureTime, vehicleId: $vehicleId, maxPassengers: $maxPassengers, notes: $notes)';
+    return 'CreateSharedRideParams(origin: $origin, destination: $destination, departureTime: $departureTime, maxPassengers: $maxPassengers, notes: $notes)';
   }
 
   @override
@@ -457,8 +441,6 @@ class _$CreateSharedRideParamsImpl implements _CreateSharedRideParams {
                 other.destination == destination) &&
             (identical(other.departureTime, departureTime) ||
                 other.departureTime == departureTime) &&
-            (identical(other.vehicleId, vehicleId) ||
-                other.vehicleId == vehicleId) &&
             (identical(other.maxPassengers, maxPassengers) ||
                 other.maxPassengers == maxPassengers) &&
             (identical(other.notes, notes) || other.notes == notes));
@@ -471,7 +453,6 @@ class _$CreateSharedRideParamsImpl implements _CreateSharedRideParams {
     origin,
     destination,
     departureTime,
-    vehicleId,
     maxPassengers,
     notes,
   );
@@ -499,7 +480,6 @@ abstract class _CreateSharedRideParams implements CreateSharedRideParams {
     required final SharedRideLocationParams origin,
     required final SharedRideLocationParams destination,
     required final String departureTime,
-    required final int vehicleId,
     required final int maxPassengers,
     final String? notes,
   }) = _$CreateSharedRideParamsImpl;
@@ -513,8 +493,6 @@ abstract class _CreateSharedRideParams implements CreateSharedRideParams {
   SharedRideLocationParams get destination;
   @override
   String get departureTime;
-  @override
-  int get vehicleId;
   @override
   int get maxPassengers;
   @override

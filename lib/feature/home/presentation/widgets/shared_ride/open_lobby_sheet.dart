@@ -14,6 +14,17 @@ import 'package:mashena_driver_app/feature/home/presentation/cubits/shared_ride_
 class OpenLobbySheet extends StatelessWidget {
   const OpenLobbySheet({super.key});
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -21,7 +32,16 @@ class OpenLobbySheet extends StatelessWidget {
     return BlocBuilder<SharedRideCubit, SharedRideState>(
       builder: (context, state) {
         final ride = state.ride;
-        final passengers = ride?.passengers ?? [];
+        final allPassengers = ride?.passengers ?? [];
+        final passengers = allPassengers.where((p) {
+          final s = p.status.toLowerCase();
+          return s != 'removed' &&
+              s != 'left' &&
+              s != 'canceled' &&
+              s != 'cancelled' &&
+              p.removedAt == null &&
+              p.canceledAt == null;
+        }).toList();
         final calculatedOccupied = passengers.fold<int>(
           0,
           (sum, p) => sum + (p.seatsNeeded > 0 ? p.seatsNeeded : 1),
@@ -85,7 +105,7 @@ class OpenLobbySheet extends StatelessWidget {
                         SizedBox(width: AppSpacing.xs.w),
                         Expanded(
                           child: Text(
-                            ride.originAddress,
+                            _untilFirstComma(ride.originAddress),
                             style: AppTextStyles.w500_14.copyWith(
                               color: isDark
                                   ? AppColors.onSurfaceDark
@@ -108,7 +128,7 @@ class OpenLobbySheet extends StatelessWidget {
                         SizedBox(width: AppSpacing.xs.w),
                         Expanded(
                           child: Text(
-                            ride.destAddress,
+                            _untilFirstComma(ride.destAddress),
                             style: AppTextStyles.w500_14.copyWith(
                               color: isDark
                                   ? AppColors.onSurfaceDark
@@ -263,8 +283,8 @@ class OpenLobbySheet extends StatelessWidget {
                   passenger.riderName.isNotEmpty
                       ? passenger.riderName
                       : S
-                          .of(context)
-                          .sharedPassengerNumber(passenger.riderProfileId),
+                            .of(context)
+                            .sharedPassengerNumber(passenger.riderProfileId),
                   style: AppTextStyles.w600_16.copyWith(
                     color: isDark
                         ? AppColors.onSurfaceDark

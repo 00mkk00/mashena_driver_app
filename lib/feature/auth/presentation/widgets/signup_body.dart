@@ -270,6 +270,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                           phoneNumber: phoneController.text,
                           password: passwordController.text,
                           file: imagePath,
+                          city: '',
                         );
                         await context.read<SignupCubit>().signup(params);
                       }

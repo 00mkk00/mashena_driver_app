@@ -7,6 +7,8 @@ class PassengerPoolMemberEntity with _$PassengerPoolMemberEntity {
   const factory PassengerPoolMemberEntity({
     required int id,
     required int roomId,
+    required String? riderName,
+    required int? sharedRidePassengerId,
     required int riderProfileId,
     required int seatsNeeded,
     required String status,

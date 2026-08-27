@@ -11,6 +11,8 @@ _$PassengerPoolMemberModelImpl _$$PassengerPoolMemberModelImplFromJson(
 ) => _$PassengerPoolMemberModelImpl(
   id: parseIntFromJson(json['id']),
   roomId: parseIntFromJson(json['roomId']),
+  riderName: json['riderName'] as String?,
+  sharedRidePassengerId: parseIntFromJson(json['sharedRidePassengerId']),
   riderProfileId: parseIntFromJson(json['riderProfileId']),
   seatsNeeded: parseIntFromJson(json['seatsNeeded']),
   status: json['status'] as String?,
@@ -25,6 +27,8 @@ Map<String, dynamic> _$$PassengerPoolMemberModelImplToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'roomId': instance.roomId,
+  'riderName': instance.riderName,
+  'sharedRidePassengerId': instance.sharedRidePassengerId,
   'riderProfileId': instance.riderProfileId,
   'seatsNeeded': instance.seatsNeeded,
   'status': instance.status,

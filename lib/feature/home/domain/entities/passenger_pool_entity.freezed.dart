@@ -19,6 +19,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PassengerPoolMemberEntity {
   int get id => throw _privateConstructorUsedError;
   int get roomId => throw _privateConstructorUsedError;
+  String? get riderName => throw _privateConstructorUsedError;
+  int? get sharedRidePassengerId => throw _privateConstructorUsedError;
   int get riderProfileId => throw _privateConstructorUsedError;
   int get seatsNeeded => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
@@ -44,6 +46,8 @@ abstract class $PassengerPoolMemberEntityCopyWith<$Res> {
   $Res call({
     int id,
     int roomId,
+    String? riderName,
+    int? sharedRidePassengerId,
     int riderProfileId,
     int seatsNeeded,
     String status,
@@ -74,6 +78,8 @@ class _$PassengerPoolMemberEntityCopyWithImpl<
   $Res call({
     Object? id = null,
     Object? roomId = null,
+    Object? riderName = freezed,
+    Object? sharedRidePassengerId = freezed,
     Object? riderProfileId = null,
     Object? seatsNeeded = null,
     Object? status = null,
@@ -92,6 +98,14 @@ class _$PassengerPoolMemberEntityCopyWithImpl<
                 ? _value.roomId
                 : roomId // ignore: cast_nullable_to_non_nullable
                       as int,
+            riderName: freezed == riderName
+                ? _value.riderName
+                : riderName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            sharedRidePassengerId: freezed == sharedRidePassengerId
+                ? _value.sharedRidePassengerId
+                : sharedRidePassengerId // ignore: cast_nullable_to_non_nullable
+                      as int?,
             riderProfileId: null == riderProfileId
                 ? _value.riderProfileId
                 : riderProfileId // ignore: cast_nullable_to_non_nullable
@@ -138,6 +152,8 @@ abstract class _$$PassengerPoolMemberEntityImplCopyWith<$Res>
   $Res call({
     int id,
     int roomId,
+    String? riderName,
+    int? sharedRidePassengerId,
     int riderProfileId,
     int seatsNeeded,
     String status,
@@ -168,6 +184,8 @@ class __$$PassengerPoolMemberEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? roomId = null,
+    Object? riderName = freezed,
+    Object? sharedRidePassengerId = freezed,
     Object? riderProfileId = null,
     Object? seatsNeeded = null,
     Object? status = null,
@@ -186,6 +204,14 @@ class __$$PassengerPoolMemberEntityImplCopyWithImpl<$Res>
             ? _value.roomId
             : roomId // ignore: cast_nullable_to_non_nullable
                   as int,
+        riderName: freezed == riderName
+            ? _value.riderName
+            : riderName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        sharedRidePassengerId: freezed == sharedRidePassengerId
+            ? _value.sharedRidePassengerId
+            : sharedRidePassengerId // ignore: cast_nullable_to_non_nullable
+                  as int?,
         riderProfileId: null == riderProfileId
             ? _value.riderProfileId
             : riderProfileId // ignore: cast_nullable_to_non_nullable
@@ -225,6 +251,8 @@ class _$PassengerPoolMemberEntityImpl implements _PassengerPoolMemberEntity {
   const _$PassengerPoolMemberEntityImpl({
     required this.id,
     required this.roomId,
+    required this.riderName,
+    required this.sharedRidePassengerId,
     required this.riderProfileId,
     required this.seatsNeeded,
     required this.status,
@@ -238,6 +266,10 @@ class _$PassengerPoolMemberEntityImpl implements _PassengerPoolMemberEntity {
   final int id;
   @override
   final int roomId;
+  @override
+  final String? riderName;
+  @override
+  final int? sharedRidePassengerId;
   @override
   final int riderProfileId;
   @override
@@ -255,7 +287,7 @@ class _$PassengerPoolMemberEntityImpl implements _PassengerPoolMemberEntity {
 
   @override
   String toString() {
-    return 'PassengerPoolMemberEntity(id: $id, roomId: $roomId, riderProfileId: $riderProfileId, seatsNeeded: $seatsNeeded, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, joinedAt: $joinedAt, leftAt: $leftAt)';
+    return 'PassengerPoolMemberEntity(id: $id, roomId: $roomId, riderName: $riderName, sharedRidePassengerId: $sharedRidePassengerId, riderProfileId: $riderProfileId, seatsNeeded: $seatsNeeded, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, joinedAt: $joinedAt, leftAt: $leftAt)';
   }
 
   @override
@@ -265,6 +297,10 @@ class _$PassengerPoolMemberEntityImpl implements _PassengerPoolMemberEntity {
             other is _$PassengerPoolMemberEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.riderName, riderName) ||
+                other.riderName == riderName) &&
+            (identical(other.sharedRidePassengerId, sharedRidePassengerId) ||
+                other.sharedRidePassengerId == sharedRidePassengerId) &&
             (identical(other.riderProfileId, riderProfileId) ||
                 other.riderProfileId == riderProfileId) &&
             (identical(other.seatsNeeded, seatsNeeded) ||
@@ -284,6 +320,8 @@ class _$PassengerPoolMemberEntityImpl implements _PassengerPoolMemberEntity {
     runtimeType,
     id,
     roomId,
+    riderName,
+    sharedRidePassengerId,
     riderProfileId,
     seatsNeeded,
     status,
@@ -309,6 +347,8 @@ abstract class _PassengerPoolMemberEntity implements PassengerPoolMemberEntity {
   const factory _PassengerPoolMemberEntity({
     required final int id,
     required final int roomId,
+    required final String? riderName,
+    required final int? sharedRidePassengerId,
     required final int riderProfileId,
     required final int seatsNeeded,
     required final String status,
@@ -322,6 +362,10 @@ abstract class _PassengerPoolMemberEntity implements PassengerPoolMemberEntity {
   int get id;
   @override
   int get roomId;
+  @override
+  String? get riderName;
+  @override
+  int? get sharedRidePassengerId;
   @override
   int get riderProfileId;
   @override

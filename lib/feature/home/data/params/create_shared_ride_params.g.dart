@@ -32,7 +32,6 @@ _$CreateSharedRideParamsImpl _$$CreateSharedRideParamsImplFromJson(
     json['destination'] as Map<String, dynamic>,
   ),
   departureTime: json['departureTime'] as String,
-  vehicleId: (json['vehicleId'] as num).toInt(),
   maxPassengers: (json['maxPassengers'] as num).toInt(),
   notes: json['notes'] as String?,
 );
@@ -43,7 +42,6 @@ Map<String, dynamic> _$$CreateSharedRideParamsImplToJson(
   'origin': instance.origin,
   'destination': instance.destination,
   'departureTime': instance.departureTime,
-  'vehicleId': instance.vehicleId,
   'maxPassengers': instance.maxPassengers,
   'notes': instance.notes,
 };

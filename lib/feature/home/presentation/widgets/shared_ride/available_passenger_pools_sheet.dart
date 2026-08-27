@@ -326,6 +326,17 @@ class _PoolCard extends StatelessWidget {
     required this.onJoin,
   });
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -461,10 +472,14 @@ class _PoolCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      pool.meetingPlaceName ??
-                          (pool.meetingAddress.isNotEmpty
-                              ? pool.meetingAddress
-                              : S.of(context).homeMyLocation),
+                      _untilFirstComma(
+                        pool.meetingAddress.isNotEmpty
+                            ? pool.meetingAddress
+                            : (pool.meetingPlaceName != null &&
+                                    pool.meetingPlaceName!.isNotEmpty
+                                ? pool.meetingPlaceName!
+                                : S.of(context).homeMyLocation),
+                      ),
                       style: AppTextStyles.w600_14.copyWith(
                         color: isDark
                             ? AppColors.onSurfaceDark
@@ -509,9 +524,11 @@ class _PoolCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      pool.destinationAddress.isNotEmpty
-                          ? pool.destinationAddress
-                          : S.of(context).sharedDestinationPoint,
+                      _untilFirstComma(
+                        pool.destinationAddress.isNotEmpty
+                            ? pool.destinationAddress
+                            : S.of(context).sharedDestinationPoint,
+                      ),
                       style: AppTextStyles.w600_14.copyWith(
                         color: isDark
                             ? AppColors.onSurfaceDark

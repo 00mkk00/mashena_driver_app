@@ -134,6 +134,17 @@ class _StopsTimeline extends StatelessWidget {
   final List<RideRequestStopEntity> stops;
   const _StopsTimeline({required this.stops});
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -233,7 +244,7 @@ class _StopsTimeline extends StatelessWidget {
                               ),
                               SizedBox(height: 2.h),
                               Text(
-                                stop.address,
+                                _untilFirstComma(stop.address),
                                 style: AppTextStyles.w400_12.copyWith(
                                   color: isDark
                                       ? AppColors.onSurfaceDark

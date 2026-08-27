@@ -21,7 +21,6 @@ class CreateSharedRideParams with _$CreateSharedRideParams {
     required SharedRideLocationParams origin,
     required SharedRideLocationParams destination,
     required String departureTime,
-    required int vehicleId,
     required int maxPassengers,
     String? notes,
   }) = _CreateSharedRideParams;

@@ -10,6 +10,17 @@ class RouteRow extends StatelessWidget {
   final RideRequestEntity trip;
   const RouteRow({super.key, required this.trip});
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -55,12 +66,12 @@ class RouteRow extends StatelessWidget {
             children: [
               _AddressItem(
                 label: S.of(context).rideRequestPickup,
-                address: trip.pickupAddress, // ✅ real address from API
+                address: _untilFirstComma(trip.pickupAddress), // ✅ real address from API
               ),
               SizedBox(height: AppSpacing.sm.h),
               _AddressItem(
                 label: S.of(context).rideRequestDropOff,
-                address: trip.destAddress, // ✅ real address from API
+                address: _untilFirstComma(trip.destAddress), // ✅ real address from API
               ),
             ],
           ),

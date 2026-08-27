@@ -486,6 +486,17 @@ class _RouteSection extends StatelessWidget {
   final RideRequestEntity ride;
   const _RouteSection({required this.ride});
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -528,12 +539,12 @@ class _RouteSection extends StatelessWidget {
             children: [
               _AddressItem(
                 label: S.of(context).rideRequestPickup,
-                address: ride.pickupAddress,
+                address: _untilFirstComma(ride.pickupAddress),
               ),
               SizedBox(height: AppSpacing.sm.h),
               _AddressItem(
                 label: S.of(context).rideRequestDropOff,
-                address: ride.destAddress,
+                address: _untilFirstComma(ride.destAddress),
               ),
             ],
           ),

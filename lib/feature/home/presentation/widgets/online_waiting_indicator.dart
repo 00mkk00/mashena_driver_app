@@ -236,6 +236,17 @@ class _MissedRideSection extends StatelessWidget {
     required this.isReconsidering,
   });
 
+  String _untilFirstComma(String address) {
+    final trimmed = address.trim();
+    if (trimmed.isEmpty) return trimmed;
+    final commaIndex = trimmed.indexOf(RegExp(r'[,،]'));
+    if (commaIndex != -1) {
+      final part = trimmed.substring(0, commaIndex).trim();
+      if (part.isNotEmpty) return part;
+    }
+    return trimmed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -320,7 +331,7 @@ class _MissedRideSection extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Expanded(
                   child: Text(
-                    ride!.pickupAddress,
+                    _untilFirstComma(ride!.pickupAddress),
                     style: AppTextStyles.w400_12.copyWith(
                       color: isDark
                           ? AppColors.onSurfaceVariantDark
@@ -343,7 +354,7 @@ class _MissedRideSection extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      ride!.destAddress,
+                      _untilFirstComma(ride!.destAddress),
                       style: AppTextStyles.w400_12.copyWith(
                         color: isDark
                             ? AppColors.onSurfaceVariantDark

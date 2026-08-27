@@ -25,12 +25,7 @@ class BoardingSheet extends StatelessWidget {
 
   bool _isRemovedStatus(String status) {
     final s = status.toLowerCase();
-    return s == 'removed' ||
-        s == 'left' ||
-        s == 'canceled' ||
-        s == 'cancelled' ||
-        s == 'dropped_off' ||
-        s == 'droppedoff';
+    return s == 'removed' || s == 'left' || s == 'canceled' || s == 'cancelled';
   }
 
   @override
@@ -40,10 +35,18 @@ class BoardingSheet extends StatelessWidget {
     return BlocBuilder<SharedRideCubit, SharedRideState>(
       builder: (context, state) {
         final ride = state.ride;
-        final passengers = ride?.passengers ?? [];
+        final allPassengers = ride?.passengers ?? [];
+        final passengers = allPassengers.where((p) {
+          return !_isRemovedStatus(p.status) &&
+              p.removedAt == null &&
+              p.canceledAt == null;
+        }).toList();
         final hasOnBoardedPassenger = passengers.any(
           (p) => _isOnBoardStatus(p.status),
         );
+        final allPassengersOnBoard =
+            passengers.isNotEmpty &&
+            passengers.every((p) => _isOnBoardStatus(p.status));
 
         return Padding(
           padding: EdgeInsets.all(AppSpacing.md.r),
@@ -127,7 +130,7 @@ class BoardingSheet extends StatelessWidget {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: state.isCancelling
+                      onPressed: (state.isCancelling || hasOnBoardedPassenger)
                           ? null
                           : () {
                               context
@@ -136,7 +139,16 @@ class BoardingSheet extends StatelessWidget {
                             },
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.danger,
-                        side: const BorderSide(color: AppColors.danger),
+                        disabledForegroundColor: isDark
+                            ? AppColors.textGreyDark
+                            : AppColors.textGrey,
+                        side: BorderSide(
+                          color: hasOnBoardedPassenger
+                              ? (isDark
+                                    ? AppColors.borderColorDark
+                                    : AppColors.borderColor)
+                              : AppColors.danger,
+                        ),
                         padding: EdgeInsets.symmetric(vertical: 14.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.md.r),
@@ -155,7 +167,7 @@ class BoardingSheet extends StatelessWidget {
                   SizedBox(width: AppSpacing.md.w),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: (state.isStarting || !hasOnBoardedPassenger)
+                      onPressed: (state.isStarting || !allPassengersOnBoard)
                           ? null
                           : () => context
                                 .read<SharedRideCubit>()
@@ -178,7 +190,7 @@ class BoardingSheet extends StatelessWidget {
                           : Text(
                               S.of(context).sharedStartTrip,
                               style: AppTextStyles.w600_16.copyWith(
-                                color: hasOnBoardedPassenger
+                                color: allPassengersOnBoard
                                     ? Colors.white
                                     : (isDark
                                           ? AppColors.textGreyDark

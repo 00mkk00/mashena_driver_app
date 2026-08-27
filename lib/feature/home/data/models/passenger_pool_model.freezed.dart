@@ -27,6 +27,9 @@ mixin _$PassengerPoolMemberModel {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(fromJson: parseIntFromJson)
   int? get roomId => throw _privateConstructorUsedError;
+  String? get riderName => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: parseIntFromJson)
+  int? get sharedRidePassengerId => throw _privateConstructorUsedError;
   @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId => throw _privateConstructorUsedError;
   @JsonKey(fromJson: parseIntFromJson)
@@ -59,6 +62,8 @@ abstract class $PassengerPoolMemberModelCopyWith<$Res> {
   $Res call({
     @JsonKey(fromJson: parseIntFromJson) int? id,
     @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    String? riderName,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRidePassengerId,
     @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
     @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,
@@ -89,6 +94,8 @@ class _$PassengerPoolMemberModelCopyWithImpl<
   $Res call({
     Object? id = freezed,
     Object? roomId = freezed,
+    Object? riderName = freezed,
+    Object? sharedRidePassengerId = freezed,
     Object? riderProfileId = freezed,
     Object? seatsNeeded = freezed,
     Object? status = freezed,
@@ -106,6 +113,14 @@ class _$PassengerPoolMemberModelCopyWithImpl<
             roomId: freezed == roomId
                 ? _value.roomId
                 : roomId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            riderName: freezed == riderName
+                ? _value.riderName
+                : riderName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            sharedRidePassengerId: freezed == sharedRidePassengerId
+                ? _value.sharedRidePassengerId
+                : sharedRidePassengerId // ignore: cast_nullable_to_non_nullable
                       as int?,
             riderProfileId: freezed == riderProfileId
                 ? _value.riderProfileId
@@ -153,6 +168,8 @@ abstract class _$$PassengerPoolMemberModelImplCopyWith<$Res>
   $Res call({
     @JsonKey(fromJson: parseIntFromJson) int? id,
     @JsonKey(fromJson: parseIntFromJson) int? roomId,
+    String? riderName,
+    @JsonKey(fromJson: parseIntFromJson) int? sharedRidePassengerId,
     @JsonKey(fromJson: parseIntFromJson) int? riderProfileId,
     @JsonKey(fromJson: parseIntFromJson) int? seatsNeeded,
     String? status,
@@ -183,6 +200,8 @@ class __$$PassengerPoolMemberModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? roomId = freezed,
+    Object? riderName = freezed,
+    Object? sharedRidePassengerId = freezed,
     Object? riderProfileId = freezed,
     Object? seatsNeeded = freezed,
     Object? status = freezed,
@@ -200,6 +219,14 @@ class __$$PassengerPoolMemberModelImplCopyWithImpl<$Res>
         roomId: freezed == roomId
             ? _value.roomId
             : roomId // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        riderName: freezed == riderName
+            ? _value.riderName
+            : riderName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        sharedRidePassengerId: freezed == sharedRidePassengerId
+            ? _value.sharedRidePassengerId
+            : sharedRidePassengerId // ignore: cast_nullable_to_non_nullable
                   as int?,
         riderProfileId: freezed == riderProfileId
             ? _value.riderProfileId
@@ -240,6 +267,8 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
   const _$PassengerPoolMemberModelImpl({
     @JsonKey(fromJson: parseIntFromJson) this.id,
     @JsonKey(fromJson: parseIntFromJson) this.roomId,
+    this.riderName,
+    @JsonKey(fromJson: parseIntFromJson) this.sharedRidePassengerId,
     @JsonKey(fromJson: parseIntFromJson) this.riderProfileId,
     @JsonKey(fromJson: parseIntFromJson) this.seatsNeeded,
     this.status,
@@ -258,6 +287,11 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
   @override
   @JsonKey(fromJson: parseIntFromJson)
   final int? roomId;
+  @override
+  final String? riderName;
+  @override
+  @JsonKey(fromJson: parseIntFromJson)
+  final int? sharedRidePassengerId;
   @override
   @JsonKey(fromJson: parseIntFromJson)
   final int? riderProfileId;
@@ -279,7 +313,7 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
 
   @override
   String toString() {
-    return 'PassengerPoolMemberModel(id: $id, roomId: $roomId, riderProfileId: $riderProfileId, seatsNeeded: $seatsNeeded, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, joinedAt: $joinedAt, leftAt: $leftAt)';
+    return 'PassengerPoolMemberModel(id: $id, roomId: $roomId, riderName: $riderName, sharedRidePassengerId: $sharedRidePassengerId, riderProfileId: $riderProfileId, seatsNeeded: $seatsNeeded, status: $status, pickupLat: $pickupLat, pickupLng: $pickupLng, joinedAt: $joinedAt, leftAt: $leftAt)';
   }
 
   @override
@@ -289,6 +323,10 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
             other is _$PassengerPoolMemberModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.riderName, riderName) ||
+                other.riderName == riderName) &&
+            (identical(other.sharedRidePassengerId, sharedRidePassengerId) ||
+                other.sharedRidePassengerId == sharedRidePassengerId) &&
             (identical(other.riderProfileId, riderProfileId) ||
                 other.riderProfileId == riderProfileId) &&
             (identical(other.seatsNeeded, seatsNeeded) ||
@@ -309,6 +347,8 @@ class _$PassengerPoolMemberModelImpl implements _PassengerPoolMemberModel {
     runtimeType,
     id,
     roomId,
+    riderName,
+    sharedRidePassengerId,
     riderProfileId,
     seatsNeeded,
     status,
@@ -339,6 +379,8 @@ abstract class _PassengerPoolMemberModel implements PassengerPoolMemberModel {
   const factory _PassengerPoolMemberModel({
     @JsonKey(fromJson: parseIntFromJson) final int? id,
     @JsonKey(fromJson: parseIntFromJson) final int? roomId,
+    final String? riderName,
+    @JsonKey(fromJson: parseIntFromJson) final int? sharedRidePassengerId,
     @JsonKey(fromJson: parseIntFromJson) final int? riderProfileId,
     @JsonKey(fromJson: parseIntFromJson) final int? seatsNeeded,
     final String? status,
@@ -357,6 +399,11 @@ abstract class _PassengerPoolMemberModel implements PassengerPoolMemberModel {
   @override
   @JsonKey(fromJson: parseIntFromJson)
   int? get roomId;
+  @override
+  String? get riderName;
+  @override
+  @JsonKey(fromJson: parseIntFromJson)
+  int? get sharedRidePassengerId;
   @override
   @JsonKey(fromJson: parseIntFromJson)
   int? get riderProfileId;
