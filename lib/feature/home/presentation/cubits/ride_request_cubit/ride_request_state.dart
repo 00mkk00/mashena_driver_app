@@ -1,0 +1,156 @@
+import 'package:mashena_driver_app/feature/home/domain/entities/complete_trip_entity.dart';
+import 'package:mashena_driver_app/feature/home/domain/entities/ride_request_entity.dart';
+
+enum RideRequestStatus {
+  idle,
+  incoming,
+  accepted,
+  rejected,
+  expired,
+  arrived,
+  started,
+}
+
+class RideRequestState {
+  final RideRequestStatus status;
+  final int? rideRequestId;
+  final int countdownSeconds;
+  final bool isBottomSheetExpanded;
+  final bool isLoadingDetails;
+  final bool isArrivingTrip;
+  final bool isCancelingTrip;
+  final bool isStartingTrip;
+  final bool isCompletingTrip;
+  final bool isRatingTrip;
+  final bool isTripRated;
+  final RideRequestEntity? rideRequestEntity;
+  final CompleteTripEntity? completedTripSummary;
+  final String? errorMessage;
+  final String? pickupAddress; // 👈 resolved from lat/lng
+  final String? destinationAddress; // 👈 resolved from lat/lng
+  final bool isResolvingAddresses;
+  final int freeWaitTimeSeconds;
+
+  /// Non-null when the server cancelled the trip. Value is 'rider' or 'admin'.
+  final String? tripCancelledBy;
+
+  /// Retained when an offer expires so the driver can reconsider and rejoin queue.
+  final RideRequestEntity? lastExpiredRideRequest;
+  final int? lastExpiredRideRequestId;
+  final bool isReconsidering;
+  final String? reconsiderSuccessMessage;
+  final String? reconsiderErrorMessage;
+
+  const RideRequestState({
+    this.status = RideRequestStatus.idle,
+    this.rideRequestId,
+    this.countdownSeconds = 0,
+    this.isBottomSheetExpanded = false,
+    this.isLoadingDetails = false,
+    this.isArrivingTrip = false,
+    this.isCancelingTrip = false,
+    this.isStartingTrip = false,
+    this.isCompletingTrip = false,
+    this.isRatingTrip = false,
+    this.isTripRated = false,
+    this.rideRequestEntity,
+    this.completedTripSummary,
+    this.errorMessage,
+    this.pickupAddress,
+    this.destinationAddress,
+    this.isResolvingAddresses = false,
+    this.freeWaitTimeSeconds = 0,
+    this.tripCancelledBy,
+    this.lastExpiredRideRequest,
+    this.lastExpiredRideRequestId,
+    this.isReconsidering = false,
+    this.reconsiderSuccessMessage,
+    this.reconsiderErrorMessage,
+  });
+
+  bool get isIdle => status == RideRequestStatus.idle;
+  bool get hasDetails => rideRequestEntity != null;
+  bool get hasExpiredRide => lastExpiredRideRequestId != null;
+
+  RideRequestState copyWith({
+    RideRequestStatus? status,
+    int? rideRequestId,
+    bool clearRideRequestId = false,
+    int? countdownSeconds,
+    bool? isBottomSheetExpanded,
+    bool? isLoadingDetails,
+    bool? isArrivingTrip,
+    bool? isCancelingTrip,
+    bool? isStartingTrip,
+    bool? isCompletingTrip,
+    bool? isRatingTrip,
+    bool? isTripRated,
+    RideRequestEntity? rideRequest,
+    CompleteTripEntity? completedTripSummary,
+    bool clearCompletedTripSummary = false,
+    bool clearTripDetails = false,
+    String? errorMessage,
+    bool clearErrorMessage = false,
+    String? pickupAddress,
+    bool clearPickupAddress = false,
+    String? destinationAddress,
+    bool clearDestinationAddress = false,
+    bool? isResolvingAddresses,
+    int? freeWaitTimeSeconds,
+    String? tripCancelledBy,
+    bool clearTripCancelled = false,
+    RideRequestEntity? lastExpiredRideRequest,
+    int? lastExpiredRideRequestId,
+    bool clearLastExpiredRideRequest = false,
+    bool? isReconsidering,
+    String? reconsiderSuccessMessage,
+    bool clearReconsiderSuccessMessage = false,
+    String? reconsiderErrorMessage,
+    bool clearReconsiderErrorMessage = false,
+  }) => RideRequestState(
+    status: status ?? this.status,
+    rideRequestId: clearRideRequestId
+        ? null
+        : rideRequestId ?? this.rideRequestId,
+    countdownSeconds: countdownSeconds ?? this.countdownSeconds,
+    isBottomSheetExpanded: isBottomSheetExpanded ?? this.isBottomSheetExpanded,
+    isLoadingDetails: isLoadingDetails ?? this.isLoadingDetails,
+    isArrivingTrip: isArrivingTrip ?? this.isArrivingTrip,
+    isCancelingTrip: isCancelingTrip ?? this.isCancelingTrip,
+    isStartingTrip: isStartingTrip ?? this.isStartingTrip,
+    isCompletingTrip: isCompletingTrip ?? this.isCompletingTrip,
+    isRatingTrip: isRatingTrip ?? this.isRatingTrip,
+    isTripRated: isTripRated ?? this.isTripRated,
+    rideRequestEntity: clearTripDetails
+        ? null
+        : rideRequest ?? rideRequestEntity,
+    completedTripSummary: clearCompletedTripSummary
+        ? null
+        : completedTripSummary ?? this.completedTripSummary,
+    errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+    pickupAddress: clearPickupAddress
+        ? null
+        : pickupAddress ?? this.pickupAddress,
+    destinationAddress: clearDestinationAddress
+        ? null
+        : destinationAddress ?? this.destinationAddress,
+    isResolvingAddresses: isResolvingAddresses ?? this.isResolvingAddresses,
+    freeWaitTimeSeconds: freeWaitTimeSeconds ?? this.freeWaitTimeSeconds,
+    tripCancelledBy: clearTripCancelled
+        ? null
+        : tripCancelledBy ?? this.tripCancelledBy,
+    lastExpiredRideRequest: clearLastExpiredRideRequest
+        ? null
+        : lastExpiredRideRequest ?? this.lastExpiredRideRequest,
+    lastExpiredRideRequestId: clearLastExpiredRideRequest
+        ? null
+        : lastExpiredRideRequestId ?? this.lastExpiredRideRequestId,
+    isReconsidering: isReconsidering ?? this.isReconsidering,
+    reconsiderSuccessMessage: clearReconsiderSuccessMessage
+        ? null
+        : reconsiderSuccessMessage ?? this.reconsiderSuccessMessage,
+    reconsiderErrorMessage: clearReconsiderErrorMessage
+        ? null
+        : reconsiderErrorMessage ?? this.reconsiderErrorMessage,
+  );
+}

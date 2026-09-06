@@ -1,23 +1,31 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mashena_driver_app/app/di/injector.dart';
+import 'package:mashena_driver_app/core/network/token_manager.dart';
+import 'package:mashena_driver_app/core/services/fcm_service.dart';
+import 'package:mashena_driver_app/firebase_options.dart';
 
-void main() {
-  runApp(const MashenaApp());
-}
+import 'app/app.dart';
 
-class MashenaApp extends StatelessWidget {
-  const MashenaApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: const Test());
-  }
-}
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: '.env');
+  await configureDependencies();
+  await getIt<TokenManager>().loadTokens();
+  await FcmService.instance.init();
 
-class Test extends StatelessWidget {
-  const Test({super.key});
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("welcome")));
-  }
+  runApp(ScreenUtilInit(designSize: const Size(428, 926), child: const App()));
 }

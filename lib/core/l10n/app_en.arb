@@ -1,0 +1,523 @@
+{
+  "@@locale": "en",
+  "commonCancel": "Cancel",
+  "commonReject": "Reject",
+  "commonAccept": "Accept",
+  "commonNext": "Next",
+  "commonError": "Something went wrong",
+  "onboardingTitle1": "Boost your earnings with every trip",
+  "onboardingSubtitle1": "Accept suitable requests and choose trips that fit your schedule.",
+  "onboardingTitle2": "Full control while driving",
+  "onboardingSubtitle2": "See passenger location and the optimal route for faster deliveries.",
+  "onboardingTitle3": "Guaranteed payments",
+  "onboardingSubtitle3": "Receive your earnings clearly and transparently with detailed reports.",
+  "authLogin": "Login",
+  "authLogout": "Logout",
+  "authCity": "city",
+  "authFullName": "Full Name",
+  "authPhone": "Phone Number",
+  "authSignUp": "Sign Up",
+  "authPassword": "Password",
+  "authOtpSuccess": "Verification successful",
+  "uploadedSuccessfully": "Uploaded Successfully",
+  "uploadYourInformation": "Upload your Information",
+  "nationalId": "National ID",
+  "driverLicense": "Driver License",
+  "mechanicCard": "Mechanic Card",
+  "vehiclePlate": "Vehicle Plate",
+  "insurancePolicy": "Insurance Policy",
+  "vehicleType": "Vehicle Type",
+  "vehicleModel": "Vehicle Model",
+  "vehicleColor": "Vehicle Color",
+  "vehicleYear": "Vehicle Year",
+  "pickImage": "Pick Image",
+  "uploadDocuments": "Upload Documents",
+  "imageIsRequired": "Image is required",
+  "profileProfile": "Profile",
+  "email": "Email",
+  "otpTitle": "Enter verification code",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "confirmPassword": "Confirm Password",
+  "otpSubtitle": "A code has been sent to {phone}",
+  "otpResend": "Resend",
+  "otpVerifyNow": "Verify Now",
+  "validationRequired": "This field is required",
+  "validationEmailRequired": "Email is required",
+  "validationEmailInvalid": "Invalid email address",
+  "validationPasswordRequired": "Password is required",
+  "validationPasswordWeak": "Weak password (uppercase, lowercase, number, symbol)",
+  "validationPhoneRequired": "Phone number is required",
+  "validationPhoneInvalid": "Invalid phone number",
+  "validationPasswordsNotMatch": "Passwords do not match",
+  "homeGettingLocation": "Getting your location...",
+  "homeEnableLocationPermission": "Enable location permission",
+  "homeWaitingForLocation": "Waiting for location...",
+  "homeMyLocation": "My Location",
+  "homeOffline": "You're Offline",
+  "homeGoOnlineHint": "Go online to start accepting rides",
+  "homeStatusOnline": "Online",
+  "homeStatusGoOnline": "Go Online",
+  "homeLookingForPassengers": "Looking for passengers",
+  "homeSearching": "Searching",
+  "homeSos": "SOS",
+  "commonGotIt": "Got it",
+  "commonDone": "Done",
+  "commonSubmitting": "Submitting...",
+  "commonMin": "min",
+  "commonCurrencySyria": "S.P",
+  "radiusTitle": "Ride Radius",
+  "radiusSubtitle": "How far will you accept rides?",
+  "radiusConfirm": "Confirm Radius",
+  "radiusKm": "{count} km",
+  "@radiusKm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "rideRequestNew": "New Ride Request",
+  "rideRequestFailedToLoad": "Failed to load",
+  "rideRequestSeconds": "{seconds}s",
+  "@rideRequestSeconds": {
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "rideRequestNight": "Night",
+  "rideRequestPickup": "Pickup",
+  "rideRequestDropOff": "Drop-off",
+  "rideRequestAccept": "Accept Ride",
+  "rideRequestStopsAlongTheWay": "{count} stop{suffix} along the way",
+  "@rideRequestStopsAlongTheWay": {
+    "placeholders": {
+      "count": {},
+      "suffix": {}
+    }
+  },
+  "tripArrivedCheck": "Arrived ✓",
+  "tripAcceptedCheck": "Trip Accepted ✓",
+  "tripId": "ID #{id}",
+  "@tripId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "tripMarkAsArrived": "Mark as Arrived",
+  "tripSlideToStart": "Slide to start trip",
+  "tripOnTrip": "On Trip",
+  "tripElapsed": "elapsed",
+  "tripSlideToEnd": "Slide to end trip",
+  "tripStopLabel": "STOP {order}",
+  "@tripStopLabel": {
+    "placeholders": {
+      "order": {}
+    }
+  },
+  "tripCancelTitle": "Cancel Trip",
+  "tripCancelConfirm": "Are you sure you want to cancel this trip? This action cannot be undone.",
+  "tripCancelNo": "No, Keep it",
+  "tripCancelYes": "Yes, Cancel",
+  "tripFreeWaitTime": "Free wait time: {time}",
+  "@tripFreeWaitTime": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tripWaitTimeExceeded": "Wait time exceeded",
+  "tripSummaryTotalFare": "Total Fare",
+  "tripSummaryDistance": "Distance",
+  "tripSummaryDuration": "Duration",
+  "tripSummaryOriginalFare": "Original Fare",
+  "tripSummaryDiscount": "Discount",
+  "tripSummaryCoupon": " (Coupon)",
+  "tripSummaryCommission": "Platform Commission",
+  "tripSummaryEarnings": "Your Earnings",
+  "tripSummaryTripRated": "Trip Rated",
+  "tripSummaryDurationFormatMinsSecs": "{mins}m {secs}s",
+  "@tripSummaryDurationFormatMinsSecs": {
+    "placeholders": {
+      "mins": {},
+      "secs": {}
+    }
+  },
+  "tripSummaryDurationFormatMins": "{mins} min",
+  "@tripSummaryDurationFormatMins": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "tripSummaryDurationFormatSecs": "{secs} sec",
+  "@tripSummaryDurationFormatSecs": {
+    "placeholders": {
+      "secs": {}
+    }
+  },
+  "tripCancelledByAdmin": "Trip Cancelled by Admin",
+  "tripCancelledByRider": "Trip Cancelled by Rider",
+  "tripCancelledByAdminSubtitle": "An administrator has ended this trip. You are now available for new rides.",
+  "tripCancelledByRiderSubtitle": "The rider has cancelled the trip. You are now available for new rides.",
+  "drawerMyProfile": "My Profile",
+  "drawerWallet": "Wallet",
+  "drawerRideHistory": "Ride History",
+  "drawerDocuments": "Documents",
+  "drawerSettings": "Settings",
+  "drawerLogout": "Logout",
+  "drawerLogoutConfirm": "Are you sure you want to log out?",
+  "drawerLogoutFailed": "Logout failed",
+  "docsUploadDocument": "Upload Document",
+  "docsFilterAll": "All Documents",
+  "docsFilterVerified": "Verified",
+  "docsFilterPending": "Pending",
+  "docsFilterRejected": "Rejected",
+  "docsFilterExpired": "Expired",
+  "docsNoDocumentsFound": "No Documents Found",
+  "docsNoDocumentsSubtitle": "You have no uploaded driver documents registered at this time.",
+  "docsReloadDocuments": "Reload Documents",
+  "docsNoMatchFilter": "No documents match this filter",
+  "docsResetFilter": "Reset Filter to All",
+  "docsFailedToLoad": "Failed to Load Documents",
+  "docsFailedToLoadSubtitle": "An unexpected error occurred while fetching your documents.",
+  "docsTypeLicense": "Driver License",
+  "docsTypeInsurance": "Vehicle Insurance",
+  "docsTypeMechanic": "Mechanic Card",
+  "docsTypeIdentity": "National Identity Card",
+  "docsTypeOther": "Other Document",
+  "docsImageRequired": "Document image file is required",
+  "docsUploadSuccess": "Document uploaded successfully!",
+  "docsUploadNewHeader": "Upload New Document",
+  "docsUploadNewSubtitle": "Submit document for verification",
+  "docsTypeLabel": "Document Type",
+  "docsIssuedDateLabel": "Issued Date (Optional)",
+  "docsExpirationDateLabel": "Expiration Date (Optional)",
+  "docsTapToChoose": "Tap to choose document image",
+  "docsStatusOverview": "Document Status Overview",
+  "docsFailedToLoadImage": "Failed to load image",
+  "docsZoomHint": "Use tow fingers to zoom",
+  "docsStatusPendingApproval": "Pending Approval",
+  "docsRejectionReasonLabel": "Rejection Reason",
+  "docsIssuedDateStat": "Issued Date",
+  "docsExpiryDateStat": "Expiry Date",
+  "docsHideTechDetails": "Hide Technical Details",
+  "docsViewDetails": "View Details",
+  "docsDetailId": "Document ID",
+  "docsDetailProfileId": "Driver Profile ID",
+  "docsDetailAdminId": "Verified By Admin ID",
+  "docsDetailVerifiedAt": "Verified At",
+  "docsDetailUploadedAt": "Uploaded At",
+  "docsDetailMeta": "Meta JSON",
+  "profileCity": "City",
+  "profileSaveChanges": "Save Changes",
+  "walletFailedToLoad": "Failed to load wallet data",
+  "walletEarningsSummary": "Earnings Summary",
+  "walletRecentTransactions": "Recent Transactions",
+  "walletNoTransactions": "No recent transactions",
+  "walletAvailableBalance": "Available Balance",
+  "walletTotalEarned": "Total Earned",
+  "walletTotalWithdrawn": "Total Withdrawn",
+  "walletToday": "Today",
+  "walletThisWeek": "This Week",
+  "walletThisMonth": "This Month",
+  "walletTripsCount": "{count} trips",
+  "@walletTripsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "walletWithdraw": "Withdraw",
+  "walletHistory": "History",
+  "walletStatement": "Statement",
+  "ratingCommentRequiredError": "A comment or at least one tag is required for ratings of 2 stars or below.",
+  "ratingWhatStoodOut": "What stood out? (optional)",
+  "ratingWhatWentWrong": "What went wrong? (Tag or comment required)",
+  "ratingMore": "More...",
+  "ratingRateRiderName": "Rate {name}",
+  "@ratingRateRiderName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "ratingRateRider": "Rate Rider",
+  "ratingSelectScore": "Select a rating score for this trip",
+  "ratingCommentRequiredLabel": "Comment (Tag or comment required)",
+  "ratingCommentOptional": "Comment (optional)",
+  "ratingCommentHint": "Add a note about this trip…",
+  "ratingSubmit": "Submit Rating",
+  "settingsPreferences": "Preferences",
+  "settingsLanguage": "Language",
+  "settingsDarkThemeEnabled": "Dark theme enabled",
+  "settingsLightThemeEnabled": "Light theme enabled",
+  "historyTitle": "Ride History",
+  "historyFailedToLoad": "Failed to load history",
+  "historyNoRides": "No rides found",
+  "historyUnknownPickup": "Unknown Pickup",
+  "historyUnknownDestination": "Unknown Destination",
+  "historyUnknownRider": "Unknown Rider",
+  "historyStatusCompleted": "Completed",
+  "historyStatusCancelled": "Cancelled",
+  "historyStatusDriverCancelled": "Cancelled by you",
+  "historyStatusInProgress": "In progress",
+  "historyDurationMins": "{mins}m",
+  "@historyDurationMins": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "historyDurationHours": "{hours}h",
+  "@historyDurationHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "historyDurationHoursMins": "{hours}h {mins}m",
+  "@historyDurationHoursMins": {
+    "placeholders": {
+      "hours": {},
+      "mins": {}
+    }
+  },
+  "historyRatingDetails": "Rating Details",
+  "historyYouRated": "You rated",
+  "historyRiderRatedYou": "Rider rated you",
+  "historyNoRatingYet": "No rating yet",
+  "settingsSettings": "Settings",
+  "settingsDarkMode": "Dark Mode",
+  "commonRetry": "Retry",
+  "docsMyDocuments": "My Documents",
+  "tapToCaptureVehiclePhoto": "Tap to capture or choose Vehicle photo",
+  "photoAttached": "Photo Attached",
+  "notificationsTitle": "Notifications",
+  "notificationsAll": "All",
+  "notificationsUnread": "Unread",
+  "notificationsMarkAllRead": "Mark all read",
+  "notificationsNoNotifications": "No notifications yet",
+  "notificationsYouAreCaughtUp": "You're all caught up!",
+  "notificationsErrorFailed": "Failed to load notifications",
+  "notificationsToday": "Today",
+  "notificationsYesterday": "Yesterday",
+  "notificationsEarlier": "Earlier",
+  "notificationsDelete": "Delete",
+  "mapPickOriginLocation": "Pick Origin Location",
+  "mapPickDestinationLocation": "Pick Destination Location",
+  "mapConfirmLocation": "Confirm Location",
+  "homeCreateSharedRide": "Create Shared Ride",
+  "sharedTripCompleted": "Trip Completed",
+  "sharedPassengers": "Passengers",
+  "sharedTotalDistance": "Total Distance",
+  "sharedTime": "Time",
+  "sharedTotalEarnings": "Total Earnings",
+  "sharedClose": "Close",
+  "sharedLobbyOpen": "Lobby Open",
+  "sharedSeatsFilled": "{occupied} / {max} Seats Filled",
+  "@sharedSeatsFilled": {
+    "placeholders": {
+      "occupied": {},
+      "max": {}
+    }
+  },
+  "sharedWaitingPassengers": "Waiting for passengers to join...",
+  "sharedNoPassengersJoined": "No passengers joined yet.",
+  "sharedCancelRide": "Cancel Ride",
+  "sharedStartBoarding": "Start Boarding",
+  "sharedBoardingPassengers": "Boarding Passengers",
+  "sharedBoardedCount": "{boarded}/{total} Boarded",
+  "@sharedBoardedCount": {
+    "placeholders": {
+      "boarded": {},
+      "total": {}
+    }
+  },
+  "sharedMarkPassengersInstruction": "Mark passengers as on board individually as they arrive.",
+  "sharedNoPassengersToBoard": "No passengers to board.",
+  "sharedStartTrip": "Start Trip",
+  "sharedTripInProgress": "Trip in Progress",
+  "sharedEnRouteDestinations": "On route to destinations",
+  "sharedNoActivePassengers": "No active passengers in trip.",
+  "sharedEndTrip": "End Trip",
+  "sharedPassengerNumber": "Passenger #{id}",
+  "@sharedPassengerNumber": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "sharedSeatsCount": "Seats: {count}",
+  "@sharedSeatsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedStatus": "Status: {status}",
+  "@sharedStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedOnBoard": "On Board",
+  "sharedCheckIn": "Check In",
+  "sharedRemove": "Remove",
+  "sharedDropOff": "Drop Off",
+  "sharedDroppedOff": "Dropped Off",
+  "sharedAccountHolderDroppedOff": "Account holder dropped off",
+  "sharedCreateSharedRideTitle": "Create Shared Ride",
+  "sharedOrigin": "Origin",
+  "sharedDestination": "Destination",
+  "sharedMaxPassengers": "Max Passengers",
+  "sharedDepartureTime": "Departure Time",
+  "sharedNotes": "Notes / Details (Optional)",
+  "sharedCreateAndOpenLobby": "Create & Open Lobby",
+  "errorNoInternet": "No internet connection",
+  "errorServer": "Server error",
+  "errorValidation": "Validation error",
+  "errorUnauthorized": "Unauthorized",
+  "errorSomethingWentWrong": "Something went wrong",
+  "authNoApprovalRequest": "You don't have an approval request yet.",
+  "authApprovalStatus": "Account approval status: {status}",
+  "@authApprovalStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedCurrentLocation": "Current Location",
+  "sharedSelectOriginHint": "Select origin location",
+  "sharedCurrentGps": "Current GPS",
+  "sharedPickOnMap": "Pick on Map",
+  "sharedSelectDestinationHint": "Select destination location",
+  "sharedMaxSeats": "Max Seats",
+  "sharedSeatsOption": "{count} Seats",
+  "@sharedSeatsOption": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedNotesHint": "e.g. Leaving near gate 2",
+  "sharedRideCancelledToast": "Shared ride cancelled",
+  "sharedDistanceKmFormat": "{distance} km",
+  "@sharedDistanceKmFormat": {
+    "placeholders": {
+      "distance": {}
+    }
+  },
+  "sharedDurationMinsFormat": "{mins} mins",
+  "@sharedDurationMinsFormat": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "sharedFareAmountFormat": "{amount} {currency}",
+  "@sharedFareAmountFormat": {
+    "placeholders": {
+      "amount": {},
+      "currency": {}
+    }
+  },
+  "drawerModeration": "Moderation & Compliance",
+  "moderationTitle": "Moderation Center",
+  "moderationOverview": "Overview",
+  "moderationViolations": "Violations",
+  "moderationPenalties": "Penalties",
+  "moderationRestrictions": "Restrictions",
+  "moderationAppeals": "Appeals",
+  "moderationAccountStatus": "Account Status",
+  "moderationStatusActive": "Active",
+  "moderationStatusSuspended": "Suspended",
+  "moderationStatusBanned": "Banned",
+  "moderationStatusWarning": "Warning",
+  "moderationWarningsCount": "Warnings",
+  "moderationTotalViolations": "Total Violations",
+  "moderationActivePenalties": "Active Penalties",
+  "moderationActiveRestrictions": "Active Restrictions",
+  "moderationActiveAppeals": "Active Appeals",
+  "moderationNoRestrictions": "Your account has no active restrictions",
+  "moderationRestrictionsAlert": "Active Restrictions on your Account",
+  "moderationRestrictionExpires": "Expires on: {date}",
+  "@moderationRestrictionExpires": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationRestrictionStarts": "Started on: {date}",
+  "@moderationRestrictionStarts": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmitAppeal": "Submit Appeal",
+  "moderationAppealReason": "Appeal Reason",
+  "moderationAppealReasonHint": "Explain why this penalty should be reviewed...",
+  "moderationAppealEvidence": "Evidence / Proof URL (Optional)",
+  "moderationAppealEvidenceHint": "https://example.com/proof.pdf",
+  "moderationAppealSubmitBtn": "Submit Appeal",
+  "moderationAppealSubmitting": "Submitting...",
+  "moderationAppealSuccess": "Appeal submitted successfully",
+  "moderationAppealFailure": "Failed to submit appeal",
+  "moderationAppealPending": "Pending Review",
+  "moderationAppealUnderReview": "Under Review",
+  "moderationAppealApproved": "Approved",
+  "moderationAppealRejected": "Rejected",
+  "moderationAdminNotes": "Admin Notes",
+  "moderationAdminDecision": "Admin Decision",
+  "moderationReviewedAt": "Reviewed at: {date}",
+  "@moderationReviewedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmittedAt": "Submitted: {date}",
+  "@moderationSubmittedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSeverity": "Severity",
+  "moderationSeverityLow": "Low",
+  "moderationSeverityMedium": "Medium",
+  "moderationSeverityHigh": "High",
+  "moderationSeverityCritical": "Critical",
+  "moderationPenaltyWarning": "Warning",
+  "moderationPenaltyTempSuspension": "Temporary Suspension",
+  "moderationPenaltyPermanentBan": "Permanent Ban",
+  "moderationStatusProcessed": "Processed",
+  "moderationSourceTrip": "Trip #{id}",
+  "@moderationSourceTrip": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "moderationNoViolations": "No violations recorded",
+  "moderationNoViolationsDesc": "Great job! Keep following platform safety rules to maintain a clean record.",
+  "moderationNoPenalties": "No penalties on your account",
+  "moderationNoPenaltiesDesc": "You have a clean disciplinary record.",
+  "moderationNoAppeals": "No appeals found",
+  "moderationNoAppealsDesc": "You haven't submitted any appeals yet.",
+  "moderationAppealDetailsTitle": "Appeal Details",
+  "moderationLinkedPenalty": "Linked Penalty",
+  "moderationReasonValidation": "Please enter at least 10 characters explaining your appeal.",
+  "moderationAppealAlreadySubmitted": "Appeal already submitted for this penalty",
+  "moderationRecentViolations": "Recent Violations",
+  "moderationPenaltyStarts": "Starts",
+  "moderationPenaltyExpires": "Expires",
+  "moderationEvidenceLink": "View Attached Evidence",
+  "sharedCreateOption": "Create Ride",
+  "sharedJoinOption": "Join Pool",
+  "sharedAvailablePoolsTitle": "Available Pools",
+  "sharedAvailablePoolsSubtitle": "Nearby passenger groups waiting for a driver",
+  "sharedNoAvailablePools": "No available passenger pools nearby",
+  "sharedNoAvailablePoolsSubtitle": "There are currently no passenger groups within your radius. You can create a new shared ride instead.",
+  "sharedJoinThisPool": "Join Pool",
+  "sharedJoiningPool": "Joining...",
+  "sharedPoolSeatsCount": "{current}/{max} Seats",
+  "@sharedPoolSeatsCount": {
+    "placeholders": {
+      "current": {},
+      "max": {}
+    }
+  },
+  "sharedMeetingPoint": "Meeting Point",
+  "sharedDestinationPoint": "Destination",
+  "sharedRefresh": "Refresh",
+  "sharedCreateInstead": "Create Ride Instead",
+  "missedRideTitle": "Missed Ride Request",
+  "reconsiderRideButton": "Reconsider & Rejoin",
+  "rejoiningQueue": "Rejoining...",
+  "rejoinedQueueSuccess": "Rejoined queue for ride request",
+  "reconsiderFailed": "Ride is no longer available",
+  "dismiss": "Dismiss"
+}

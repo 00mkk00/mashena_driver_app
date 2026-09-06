@@ -1,0 +1,523 @@
+{
+  "@@locale": "ar",
+  "commonCancel": "إلغاء",
+  "commonReject": "رفض",
+  "commonAccept": "قبول",
+  "commonNext": "التالي",
+  "commonError": "حدث خطأ ما",
+  "onboardingTitle1": "استقبل طلبات قريبة منك",
+  "onboardingSubtitle1": "استلم طلبات الركاب في منطقتك وابدأ الرحلة خلال ثوانٍ.",
+  "onboardingTitle2": "إدارة رحلاتك بسهولة",
+  "onboardingSubtitle2": "تتبّع حالة الرحلة، موقع الراكب، ومسار الوصول بكل سلاسة.",
+  "onboardingTitle3": "أرباح واضحة وآمنة",
+  "onboardingSubtitle3": "تابع أرباحك اليومية واستلم مستحقاتك بسرعة وأمان.",
+  "authLogin": "تسجيل الدخول",
+  "authLogout": "تسجيل الخروج",
+  "authFullName": " الاسم الكامل",
+  "authPhone": "رقم الهاتف",
+  "authCity": "المدينة",
+  "authSignUp": "تسجيل",
+  "authPassword": "كلمة المرور",
+  "authOtpSuccess": "تم تأكيد رمز التحقق",
+  "profileProfile": "الملف الشخصي",
+  "email": "البريد الإلكتروني",
+  "otpTitle": "أدخل رمز التحقق",
+  "otpSubtitle": "تم إرسال رمز إلى {phone}",
+  "confirmPassword": "تاكيد كلمة المرور",
+  "alreadyHaveAnAccount": "لديك حساب؟",
+  "otpResend": "إعادة الإرسال",
+  "otpVerifyNow": "تحقق الآن",
+  "validationRequired": "هذا الحقل مطلوب",
+  "validationEmailRequired": "البريد الإلكتروني مطلوب",
+  "validationEmailInvalid": "بريد إلكتروني غير صالح",
+  "validationPasswordRequired": "كلمة المرور مطلوبة",
+  "validationPasswordWeak": "كلمة المرور ضعيفة (حرف كبير، صغير، رقم، رمز)",
+  "validationPhoneRequired": "رقم الهاتف مطلوب",
+  "validationPhoneInvalid": "رقم هاتف غير صالح",
+  "validationPasswordsNotMatch": "كلمتان المرور غير متطابقتين",
+  "homeGettingLocation": "جاري الحصول على موقعك...",
+  "homeEnableLocationPermission": "يرجى تفعيل صلاحية الوصول للموقع",
+  "homeWaitingForLocation": "في انتظار تحديد الموقع...",
+  "homeMyLocation": "موقعي",
+  "homeOffline": "أنت غير متصل ",
+  "homeGoOnlineHint": "اتصل  لبدء قبول الرحلات",
+  "homeStatusOnline": "متصل",
+  "homeStatusGoOnline": "اتصل الآن",
+  "homeLookingForPassengers": "بحث عن ركاب",
+  "homeSearching": "جاري البحث",
+  "homeSos": "طوارئ",
+  "commonGotIt": "فهمت",
+  "commonDone": "تم",
+  "commonSubmitting": "جاري الإرسال...",
+  "commonMin": "دقيقة",
+  "commonCurrencySyria": "ل.س",
+  "radiusTitle": "نطاق الطلبات",
+  "radiusSubtitle": "ما هي أقصى مسافة لطلب الرحلات؟",
+  "radiusConfirm": "تأكيد النطاق",
+  "radiusKm": "{count} كم",
+  "@radiusKm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "rideRequestNew": "طلب رحلة جديد",
+  "rideRequestFailedToLoad": "فشل التحميل",
+  "rideRequestSeconds": "{seconds}ث",
+  "@rideRequestSeconds": {
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "rideRequestNight": "ليلي",
+  "rideRequestPickup": "نقطة الركوب",
+  "rideRequestDropOff": "نقطة النزول",
+  "rideRequestAccept": "قبول الرحلة",
+  "rideRequestStopsAlongTheWay": "{count} محطة توقف في الطريق",
+  "@rideRequestStopsAlongTheWay": {
+    "placeholders": {
+      "count": {},
+      "suffix": {}
+    }
+  },
+  "tripArrivedCheck": "وصلت ✓",
+  "tripAcceptedCheck": "تم قبول الرحلة ✓",
+  "tripId": "الرقم #{id}",
+  "@tripId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "tripMarkAsArrived": "تأكيد الوصول",
+  "tripSlideToStart": "اسحب لبدء الرحلة",
+  "tripOnTrip": "في الرحلة",
+  "tripElapsed": "الوقت المنقضي",
+  "tripSlideToEnd": "اسحب لإنهاء الرحلة",
+  "tripStopLabel": "محطة {order}",
+  "@tripStopLabel": {
+    "placeholders": {
+      "order": {}
+    }
+  },
+  "tripCancelTitle": "إلغاء الرحلة",
+  "tripCancelConfirm": "هل أنت متأكد من إلغاء هذه الرحلة؟ لا يمكن التراجع عن هذا الإجراء.",
+  "tripCancelNo": "لا، أبقِ عليها",
+  "tripCancelYes": "نعم، إلغاء",
+  "tripFreeWaitTime": "وقت الانتظار المجاني: {time}",
+  "@tripFreeWaitTime": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tripWaitTimeExceeded": "تجاوز وقت الانتظار",
+  "tripSummaryTotalFare": "إجمالي الأجرة",
+  "tripSummaryDistance": "المسافة",
+  "tripSummaryDuration": "المدة",
+  "tripSummaryOriginalFare": "الأجرة الأساسية",
+  "tripSummaryDiscount": "الخصم",
+  "tripSummaryCoupon": " (كوبون)",
+  "tripSummaryCommission": "عمولة المنصة",
+  "tripSummaryEarnings": "أرباحك",
+  "tripSummaryTripRated": "تم تقييم الرحلة",
+  "tripSummaryDurationFormatMinsSecs": "{mins}د {secs}ث",
+  "@tripSummaryDurationFormatMinsSecs": {
+    "placeholders": {
+      "mins": {},
+      "secs": {}
+    }
+  },
+  "tripSummaryDurationFormatMins": "{mins} دقيقة",
+  "@tripSummaryDurationFormatMins": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "tripSummaryDurationFormatSecs": "{secs} ثانية",
+  "@tripSummaryDurationFormatSecs": {
+    "placeholders": {
+      "secs": {}
+    }
+  },
+  "tripCancelledByAdmin": "تم إلغاء الرحلة من قبل المسؤول",
+  "tripCancelledByRider": "تم إلغاء الرحلة من قبل الراكب",
+  "tripCancelledByAdminSubtitle": "أنهى المسؤول هذه الرحلة. أنت الآن متاح لاستقبال رحلات جديدة.",
+  "tripCancelledByRiderSubtitle": "ألغى الراكب الرحلة. أنت الآن متاح لاستقبال رحلات جديدة.",
+  "drawerMyProfile": "ملفي الشخصي",
+  "drawerWallet": "المحفظة",
+  "drawerRideHistory": "سجل الرحلات",
+  "drawerDocuments": "المستندات",
+  "drawerSettings": "الإعدادات",
+  "drawerLogout": "تسجيل الخروج",
+  "drawerLogoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "drawerLogoutFailed": "فشل تسجيل الخروج",
+  "docsUploadDocument": "تحميل المستند",
+  "docsFilterAll": "جميع المستندات",
+  "docsFilterVerified": "تم التحقق",
+  "docsFilterPending": "قيد الانتظار",
+  "docsFilterRejected": "مرفوض",
+  "docsFilterExpired": "منتهي الصلاحية",
+  "docsNoDocumentsFound": "لم يتم العثور على مستندات",
+  "docsNoDocumentsSubtitle": "ليس لديك أي مستندات سائق مرفوعة مسجلة في الوقت الحالي.",
+  "docsReloadDocuments": "إعادة تحميل المستندات",
+  "docsNoMatchFilter": "لا توجد مستندات تطابق هذا التصفية",
+  "docsResetFilter": "إعادة تعيين التصفية للكل",
+  "docsFailedToLoad": "فشل تحميل المستندات",
+  "docsFailedToLoadSubtitle": "حدث خطأ غير متوقع أثناء جلب مستنداتك.",
+  "docsTypeLicense": "رخصة القيادة",
+  "docsTypeInsurance": "وثيقة التأمين",
+  "docsTypeMechanic": "رخصة سير المركبة",
+  "docsTypeIdentity": "الهوية الوطنية / جواز السفر",
+  "docsTypeOther": "مستند آخر",
+  "docsImageRequired": "صورة المستند مطلوبة",
+  "docsUploadSuccess": "تم رفع المستند بنجاح!",
+  "docsUploadNewHeader": "تحميل مستند جديد",
+  "docsUploadNewSubtitle": "تقديم المستند للتحقق منه",
+  "docsTypeLabel": "نوع المستند",
+  "docsIssuedDateLabel": "تاريخ الإصدار (اختياري)",
+  "docsExpirationDateLabel": "تاريخ انتهاء الصلاحية (اختياري)",
+  "docsTapToChoose": "اضغط لاختيار صورة المستند",
+  "docsStatusOverview": "نظرة عامة على حالة المستندات",
+  "docsFailedToLoadImage": "فشل تحميل الصورة",
+  "docsZoomHint": "استخدم اصبعين للتكبير",
+  "docsStatusPendingApproval": "في انتظار الموافقة",
+  "docsRejectionReasonLabel": "سبب الرفض",
+  "docsIssuedDateStat": "تاريخ الإصدار",
+  "docsExpiryDateStat": "تاريخ الانتهاء",
+  "docsHideTechDetails": "إخفاء التفاصيل التقنية",
+  "docsViewDetails": "عرض التفاصيل",
+  "docsDetailId": "معرف المستند",
+  "docsDetailProfileId": "معرف ملف السائق",
+  "docsDetailAdminId": "معرف المسؤول المعتمد",
+  "docsDetailVerifiedAt": "تم التحقق في",
+  "docsDetailUploadedAt": "تم الرفع في",
+  "docsDetailMeta": "بيانات JSON",
+  "profileCity": "المدينة",
+  "profileSaveChanges": "حفظ التغييرات",
+  "walletFailedToLoad": "فشل تحميل بيانات المحفظة",
+  "walletEarningsSummary": "ملخص الأرباح",
+  "walletRecentTransactions": "المعالملات الأخيرة",
+  "walletNoTransactions": "لا توجد معاملات أخيرة",
+  "walletAvailableBalance": "الرصيد المتاح",
+  "walletTotalEarned": "إجمالي الأرباح",
+  "walletTotalWithdrawn": "إجمالي السحوبات",
+  "walletToday": "اليوم",
+  "walletThisWeek": "هذا الأسبوع",
+  "walletThisMonth": "هذا الشهر",
+  "walletTripsCount": "{count} رحلات",
+  "@walletTripsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "walletWithdraw": "سحب",
+  "walletHistory": "السجل",
+  "walletStatement": "كشف حساب",
+  "ratingCommentRequiredError": "التعليق أو وسم واحد على الأقل مطلوب للتقييمات بنجمتين أو أقل.",
+  "ratingWhatStoodOut": "ما المميز؟ (اختياري)",
+  "ratingWhatWentWrong": "ما الخطأ الذي حدث؟ (الوسم أو التعليق مطلوب)",
+  "ratingMore": "المزيد...",
+  "ratingRateRiderName": "تقييم {name}",
+  "@ratingRateRiderName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "ratingRateRider": "تقييم الراكب",
+  "ratingSelectScore": "اختر درجة تقييم لهذه الرحلة",
+  "ratingCommentRequiredLabel": "تعليق (الوسم أو التعليق مطلوب)",
+  "ratingCommentOptional": "تعليق (اختياري)",
+  "ratingCommentHint": "أضف ملاحظة حول هذه الرحلة...",
+  "ratingSubmit": "إرسال التقييم",
+  "uploadedSuccessfully": "تم الرفع بنجاح",
+  "uploadYourInformation": "تحميل معلوماتك",
+  "nationalId": "الهوية الوطنية",
+  "driverLicense": "رخصة القيادة",
+  "mechanicCard": "البطاقة الميكانيكية",
+  "vehiclePlate": "لوحة المركبة",
+  "insurancePolicy": "بوليصة التأمين",
+  "vehicleType": "نوع المركبة",
+  "vehicleModel": "طراز المركبة",
+  "vehicleColor": "لون المركبة",
+  "vehicleYear": "سنة الصنع",
+  "pickImage": "اختيار صورة",
+  "uploadDocuments": "رفع المستندات",
+  "imageIsRequired": "الصورة مطلوبة",
+  "settingsPreferences": "التفضيلات",
+  "settingsLanguage": "اللغة",
+  "settingsDarkThemeEnabled": "تم تفعيل المظهر الداكن",
+  "settingsLightThemeEnabled": "تم تفعيل المظهر الفاتح",
+  "historyTitle": "سجل الرحلات",
+  "historyFailedToLoad": "فشل في تحميل السجل",
+  "historyNoRides": "لم يتم العثور على رحلات",
+  "historyUnknownPickup": "موقع استلام غير معروف",
+  "historyUnknownDestination": "وجهة غير معروفة",
+  "historyUnknownRider": "راكب غير معروف",
+  "historyStatusCompleted": "مكتملة",
+  "historyStatusCancelled": "ملغاة",
+  "historyStatusDriverCancelled": "ملغاة من قبلك",
+  "historyStatusInProgress": "قيد التنفيذ",
+  "historyDurationMins": "{mins} د",
+  "@historyDurationMins": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "historyDurationHours": "{hours} س",
+  "@historyDurationHours": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "historyDurationHoursMins": "{hours} س {mins} د",
+  "@historyDurationHoursMins": {
+    "placeholders": {
+      "hours": {},
+      "mins": {}
+    }
+  },
+  "historyRatingDetails": "تفاصيل التقييم",
+  "historyYouRated": "تقييمك",
+  "historyRiderRatedYou": "تقييم الراكب لك",
+  "historyNoRatingYet": "لا يوجد تقييم بعد",
+  "settingsSettings": "الإعدادات",
+  "settingsDarkMode": "المظهر الداكن",
+  "commonRetry": "إعادة المحاولة",
+  "docsMyDocuments": "مستنداتي",
+  "tapToCaptureVehiclePhoto": "اضغط لالتقاط أو اختيار صورة المركبة",
+  "photoAttached": "تم إرفاق الصورة",
+  "notificationsTitle": "الإشعارات",
+  "notificationsAll": "الكل",
+  "notificationsUnread": "غير مقروء",
+  "notificationsMarkAllRead": "تحديد الكل كمقروء",
+  "notificationsNoNotifications": "لا توجد إشعارات بعد",
+  "notificationsYouAreCaughtUp": "أنت على اطلاع بكل جديد!",
+  "notificationsErrorFailed": "فشل تحميل الإشعارات",
+  "notificationsToday": "اليوم",
+  "notificationsYesterday": "أمس",
+  "notificationsEarlier": "سابقاً",
+  "notificationsDelete": "حذف",
+  "mapPickOriginLocation": "حدد موقع الانطلاق",
+  "mapPickDestinationLocation": "حدد موقع الوصول",
+  "mapConfirmLocation": "تأكيد الموقع",
+  "homeCreateSharedRide": "إنشاء رحلة مشاركة",
+  "sharedTripCompleted": "اكتملت الرحلة",
+  "sharedPassengers": "الركاب",
+  "sharedTotalDistance": "المسافة الكلية",
+  "sharedTime": "الوقت",
+  "sharedTotalEarnings": "إجمالي الأرباح",
+  "sharedClose": "إغلاق",
+  "sharedLobbyOpen": "غرفة الانتظار مفتوحة",
+  "sharedSeatsFilled": "{occupied} / {max} مقاعد ممتلئة",
+  "@sharedSeatsFilled": {
+    "placeholders": {
+      "occupied": {},
+      "max": {}
+    }
+  },
+  "sharedWaitingPassengers": "بانتظار انضمام الركاب...",
+  "sharedNoPassengersJoined": "لم ينضم أي راكب بعد.",
+  "sharedCancelRide": "إلغاء الرحلة",
+  "sharedStartBoarding": "بدء صعود الركاب",
+  "sharedBoardingPassengers": "صعود الركاب",
+  "sharedBoardedCount": "{boarded}/{total} تم صعودهم",
+  "@sharedBoardedCount": {
+    "placeholders": {
+      "boarded": {},
+      "total": {}
+    }
+  },
+  "sharedMarkPassengersInstruction": "قم بتحديد الركاب الذين صعدوا عند وصولهم.",
+  "sharedNoPassengersToBoard": "لا يوجد ركاب للصعود.",
+  "sharedStartTrip": "بدء الرحلة",
+  "sharedTripInProgress": "الرحلة قيد التنفيذ",
+  "sharedEnRouteDestinations": "في الطريق إلى الوجهات",
+  "sharedNoActivePassengers": "لا يوجد ركاب نشطون في الرحلة.",
+  "sharedEndTrip": "إنهاء الرحلة",
+  "sharedPassengerNumber": "الراكب #{id}",
+  "@sharedPassengerNumber": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "sharedSeatsCount": "المقاعد: {count}",
+  "@sharedSeatsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedStatus": "الحالة: {status}",
+  "@sharedStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedOnBoard": "صعد",
+  "sharedCheckIn": "تسجيل حضور",
+  "sharedRemove": "إزالة",
+  "sharedDropOff": "إنزال",
+  "sharedDroppedOff": "تم إنزاله",
+  "sharedAccountHolderDroppedOff": "إنزال صاحب الحساب",
+  "sharedCreateSharedRideTitle": "إنشاء رحلة مشاركة",
+  "sharedOrigin": "موقع الانطلاق",
+  "sharedDestination": "الوجهة",
+  "sharedMaxPassengers": "الحد الأقصى للركاب",
+  "sharedDepartureTime": "وقت المغادرة",
+  "sharedNotes": "ملاحظات / تفاصيل (اختياري)",
+  "sharedCreateAndOpenLobby": "إنشاء وفتح غرفة الانتظار",
+  "errorNoInternet": "لا يوجد اتصال بالإنترنت",
+  "errorServer": "خطأ في الخادم",
+  "errorValidation": "خطأ في البيانات المدخلة",
+  "errorUnauthorized": "غير مصرح",
+  "errorSomethingWentWrong": "حدث خطأ ما",
+  "authNoApprovalRequest": "ليس لديك طلب موافقة حتى الآن.",
+  "authApprovalStatus": "حالة الموافقة على الحساب: {status}",
+  "@authApprovalStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "sharedCurrentLocation": "الموقع الحالي",
+  "sharedSelectOriginHint": "حدد موقع الانطلاق",
+  "sharedCurrentGps": "الموقع الحالي (GPS)",
+  "sharedPickOnMap": "تحديد على الخريطة",
+  "sharedSelectDestinationHint": "حدد الوجهة",
+  "sharedMaxSeats": "الحد الأقصى للمقاعد",
+  "sharedSeatsOption": "{count} مقاعد",
+  "@sharedSeatsOption": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "sharedNotesHint": "مثال: المغادرة بالقرب من البوابة 2",
+  "sharedRideCancelledToast": "تم إلغاء الرحلة المشتركة",
+  "sharedDistanceKmFormat": "{distance} كم",
+  "@sharedDistanceKmFormat": {
+    "placeholders": {
+      "distance": {}
+    }
+  },
+  "sharedDurationMinsFormat": "{mins} دقيقة",
+  "@sharedDurationMinsFormat": {
+    "placeholders": {
+      "mins": {}
+    }
+  },
+  "sharedFareAmountFormat": "{amount} {currency}",
+  "@sharedFareAmountFormat": {
+    "placeholders": {
+      "amount": {},
+      "currency": {}
+    }
+  },
+  "drawerModeration": "مركز الانضباط والامتثال",
+  "moderationTitle": "مركز الانضباط والامتثال",
+  "moderationOverview": "نظرة عامة",
+  "moderationViolations": "المخالفات",
+  "moderationPenalties": "العقوبات",
+  "moderationRestrictions": "القيود",
+  "moderationAppeals": "الطعون والالتماسات",
+  "moderationAccountStatus": "حالة الحساب",
+  "moderationStatusActive": "نشط وطبيعي",
+  "moderationStatusSuspended": "معلق مؤقتاً",
+  "moderationStatusBanned": "محظور",
+  "moderationStatusWarning": "تحذير",
+  "moderationWarningsCount": "الإنذارات",
+  "moderationTotalViolations": "إجمالي المخالفات",
+  "moderationActivePenalties": "العقوبات النشطة",
+  "moderationActiveRestrictions": "القيود الحالية",
+  "moderationActiveAppeals": "الطعون النشطة",
+  "moderationNoRestrictions": "حسابك لا يحتوي على أي قيود نشطة حالياً",
+  "moderationRestrictionsAlert": "تنبيه: توجد قيود نشطة على حسابك",
+  "moderationRestrictionExpires": "ينتهي بتاريخ: {date}",
+  "@moderationRestrictionExpires": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationRestrictionStarts": "بدأ بتاريخ: {date}",
+  "@moderationRestrictionStarts": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmitAppeal": "تقديم طعن / التماس",
+  "moderationAppealReason": "سبب الطعن",
+  "moderationAppealReasonHint": "اشرح بالتفصيل سبب طلب مراجعة العقوبة...",
+  "moderationAppealEvidence": "رابط الإثبات أو التقرير (اختياري)",
+  "moderationAppealEvidenceHint": "https://example.com/proof.pdf",
+  "moderationAppealSubmitBtn": "إرسال الطعن",
+  "moderationAppealSubmitting": "جاري الإرسال...",
+  "moderationAppealSuccess": "تم تقديم الطعن بنجاح وسيتم مراجعته من الإدارة",
+  "moderationAppealFailure": "فشل تقديم الطعن، يرجى المحاولة لاحقاً",
+  "moderationAppealPending": "قيد المراجعة",
+  "moderationAppealUnderReview": "جاري الفحص",
+  "moderationAppealApproved": "تم القبول",
+  "moderationAppealRejected": "تم الرفض",
+  "moderationAdminNotes": "ملاحظات الإدارة",
+  "moderationAdminDecision": "قرار الإدارة",
+  "moderationReviewedAt": "تمت المراجعة في: {date}",
+  "@moderationReviewedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSubmittedAt": "تاريخ التقديم: {date}",
+  "@moderationSubmittedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "moderationSeverity": "مستوى الخطورة",
+  "moderationSeverityLow": "منخفض",
+  "moderationSeverityMedium": "متوسط",
+  "moderationSeverityHigh": "مرتفع",
+  "moderationSeverityCritical": "حرج جداً",
+  "moderationPenaltyWarning": "إنذار",
+  "moderationPenaltyTempSuspension": "إيقاف مؤقت",
+  "moderationPenaltyPermanentBan": "حظر دائم",
+  "moderationStatusProcessed": "تمت المعالجة",
+  "moderationSourceTrip": "رحلة #{id}",
+  "@moderationSourceTrip": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "moderationNoViolations": "لا توجد أي مخالفات مسجلة",
+  "moderationNoViolationsDesc": "عمل رائع! حافظ على معايير السلامة والانضباط ليبقى سجلك نظيفاً دائماً.",
+  "moderationNoPenalties": "لا توجد أي عقوبات على حسابك",
+  "moderationNoPenaltiesDesc": "سجلك التأديبي خالٍ من أي عقوبات.",
+  "moderationNoAppeals": "لا توجد أي طعون سابقة",
+  "moderationNoAppealsDesc": "لم تقم بتقديم أي التماسات أو طعون بعد.",
+  "moderationAppealDetailsTitle": "تفاصيل الطعن",
+  "moderationLinkedPenalty": "العقوبة المرتبطة بالطعن",
+  "moderationReasonValidation": "يرجى كتابة 10 أحرف على الأقل لشرح سبب الطعن.",
+  "moderationAppealAlreadySubmitted": "تم تقديم طعن مسبقاً لهذه العقوبة",
+  "moderationRecentViolations": "أحدث المخالفات",
+  "moderationPenaltyStarts": "يبدأ في",
+  "moderationPenaltyExpires": "ينتهي في",
+  "moderationEvidenceLink": "عرض مستند الإثبات المرفق",
+  "sharedCreateOption": "إنشاء رحلة",
+  "sharedJoinOption": "انضمام لمجموعة",
+  "sharedAvailablePoolsTitle": "مجموعات الركاب المتاحة",
+  "sharedAvailablePoolsSubtitle": "مجموعات ركاب قريبة بانتظار سائق",
+  "sharedNoAvailablePools": "لا توجد مجموعات ركاب متاحة قريبة",
+  "sharedNoAvailablePoolsSubtitle": "لا توجد حالياً مجموعات ركاب ضمن نطاقك. يمكنك إنشاء رحلة مشتركة جديدة بدلاً من ذلك.",
+  "sharedJoinThisPool": "انضمام للرحلة",
+  "sharedJoiningPool": "جاري الانضمام...",
+  "sharedPoolSeatsCount": "{current}/{max} مقاعد",
+  "@sharedPoolSeatsCount": {
+    "placeholders": {
+      "current": {},
+      "max": {}
+    }
+  },
+  "sharedMeetingPoint": "نقطة اللقاء",
+  "sharedDestinationPoint": "الوجهة",
+  "sharedRefresh": "تحديث",
+  "sharedCreateInstead": "إنشاء رحلة جديدة",
+  "missedRideTitle": "طلب رحلة فائت",
+  "reconsiderRideButton": "إعادة النظر والانضمام",
+  "rejoiningQueue": "جارِ الانضمام...",
+  "rejoinedQueueSuccess": "تمت إعادة الانضمام لطابور الطلب",
+  "reconsiderFailed": "الطلب لم يعد متاحاً",
+  "dismiss": "تجاهل"
+}

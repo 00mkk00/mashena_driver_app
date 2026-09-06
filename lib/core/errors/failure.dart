@@ -1,9 +1,28 @@
-abstract class Failure {
-  final String message;
-
-  Failure(this.message);
+enum FailureCode {
+  networkTimeout,
+  networkConnection,
+  requestCancelled,
+  unauthorized,
+  forbidden,
+  notFound,
+  validation,
+  server,
+  cache,
+  unknown,
 }
 
-class ServerFailure extends Failure {
-  ServerFailure(super.message);
+final class Failure {
+  const Failure(
+    this.code, {
+    this.statusCode,
+    this.args = const [],
+    this.rawMessage,
+    this.data,
+  });
+
+  final FailureCode code;
+  final int? statusCode;
+  final List<String> args;
+  final String? rawMessage;
+  final Map<String, dynamic>? data;
 }

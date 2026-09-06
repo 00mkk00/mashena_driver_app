@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1054047692408",
+    "project_id": "mashena-e39bd",
+    "storage_bucket": "mashena-e39bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054047692408:android:94a6f8535ec63088576f8d",
+        "android_client_info": {
+          "package_name": "com.example.mashena_driver_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTPAC4d458mFIHxWbPngjuTHcSnOklFvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
